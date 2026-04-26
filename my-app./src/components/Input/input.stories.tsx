@@ -11,7 +11,19 @@ import {
   type InputSize,
 } from "./input";
 import { TextArea } from "./textarea";
+import { figmaNodeUrl } from "@/stories/story-figma-urls";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
+import {
+  storyDocsGuideTableStyle,
+  storyDocsGuideTdStyle,
+  storyDocsGuideThStyle,
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsCode,
   StoryDocsMatrixPage,
@@ -21,28 +33,14 @@ import {
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
-/* =================================================================
- * Meta
- *   title: "Components/Input" 아래 4개 스토리.
- *     ├─ Default (Docs Primary + Controls)
- *     ├─ Matrix
- *     └─ Guidelines
- *   + autodocs 로 사이드바 상단에 "Docs" 페이지가 자동 생성된다.
- *     (Docs 타이틀 옆 Figma 버튼은 전역 DocsPageWithFigma 로 주입됨.)
- * =============================================================== */
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
   component: Input,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma `Input` (node [4771:26367](https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=4771-26367&m=dev), Anatomy 12210:7424). **Matrix** 는 상단 표(Size×State × Type)와 하단 **In-line Message**·**In-line Counter** 매트릭스를 포함합니다. `forceState` 는 Storybook 전용 시각 고정입니다.",
-      },
-    },
+    figma: figmaNodeUrl("4771:26367"),
+    docs: { disable: true },
   },
-  tags: ["autodocs"],
   argTypes: {
     size: { control: "inline-radio", options: ["medium", "large"] },
     tone: { control: "inline-radio", options: ["normal", "success", "error"] },
@@ -87,13 +85,6 @@ const fieldColumnStyle: CSSProperties = {
   flexDirection: "column",
   gap: 8,
   width: 280,
-};
-
-const sectionLabelStyle: CSSProperties = {
-  fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface-hint)",
-  marginBottom: 8,
-  fontWeight: 500,
 };
 
 const forceStates = [
@@ -192,7 +183,7 @@ function MatrixChipField({
   const chipLabels = showChips
     ? layout === "2line"
       ? ["Tag1", "Tag2", "Tag Name 긴 경우", "Tag4"]
-      : ["Tag1", "Tag2", "Tag3"]
+      : ["Tag1", "Tag2"]
     : [];
   const chipState =
     state === "disable"
@@ -233,35 +224,9 @@ function MatrixChipField({
   );
 }
 
-const matrixColHeaderStyle: CSSProperties = {
-  fontSize: 11,
-  fontWeight: 600,
-  letterSpacing: "0.04em",
-  textAlign: "left",
-  padding: "10px 12px",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  color: "#7c3aed",
-  whiteSpace: "nowrap",
-};
-
-const matrixRowHeaderStyle: CSSProperties = {
-  fontSize: 12,
-  fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-  padding: "12px 16px 12px 0",
-  whiteSpace: "nowrap",
-  verticalAlign: "middle",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-};
-
-const matrixCellStyle: CSSProperties = {
-  padding: "12px 16px",
-  verticalAlign: "middle",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-};
+const matrixColHeaderStyle = storyMatrixColHeaderStyle;
+const matrixRowHeaderStyle = storyMatrixRowHeaderStyle;
+const matrixCellStyle = storyMatrixCellStyle;
 
 const MATRIX_COLUMNS = [
   { id: "normal", header: "Normal" },
@@ -274,13 +239,7 @@ const MATRIX_COLUMNS = [
 
 type MatrixColumnId = (typeof MATRIX_COLUMNS)[number]["id"];
 
-const matrixStickyCornerStyle: CSSProperties = {
-  position: "sticky",
-  left: 0,
-  zIndex: 1,
-  background: "var(--context-background-surface-bg-surface-base)",
-  boxShadow: "6px 0 12px -8px rgba(20, 21, 24, 0.12)",
-};
+const matrixStickyCornerStyle = storyMatrixStickyCornerStyle;
 
 /** Figma 매트릭스 보라 라벨 (In-line Message / Counter 구역) */
 const matrixFigmaSectionTitleStyle: CSSProperties = {
@@ -421,23 +380,8 @@ export const Matrix: Story = {
         nodeId="4771-26367"
         caption="Components / Input — Variant × Size × State 매트릭스 원본"
       />
-      <div
-        style={{
-          overflowX: "auto",
-          paddingBottom: 8,
-          marginLeft: -8,
-          marginRight: -8,
-          paddingLeft: 8,
-          paddingRight: 8,
-        }}
-      >
-        <table
-          style={{
-            borderCollapse: "collapse",
-            width: "max-content",
-            background: "var(--context-background-surface-bg-surface-base)",
-          }}
-        >
+      <div style={storyMatrixScrollWrap}>
+        <table style={storyMatrixTableBase}>
           <thead>
             <tr>
               <th
@@ -620,7 +564,7 @@ export const Matrix: Story = {
 };
 
 /* =================================================================
- * 2. Guidelines
+ *  Guideline — Input Anatomy (12210:7424) + InlineMessage
  * =============================================================== */
 const guideBlockStyle: CSSProperties = {
   padding: 16,
@@ -629,34 +573,14 @@ const guideBlockStyle: CSSProperties = {
   background: "var(--context-background-surface-bg-surface-base)",
 };
 
-const guideTableStyle: CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse",
-  fontSize: 13,
-  lineHeight: 1.5,
-  color: "var(--context-foreground-surface-on-surface-base)",
-};
+const guideTableStyle = storyDocsGuideTableStyle;
+const thStyle = storyDocsGuideThStyle;
+const tdStyle = storyDocsGuideTdStyle;
 
-const thStyle: CSSProperties = {
-  textAlign: "left",
-  fontWeight: 600,
-  fontSize: 12,
-  padding: "8px 12px",
-  borderBottom: "1px solid var(--border-border-surface-border-surface)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-};
+const FIGMA_INPUT_ANATOMY = figmaNodeUrl("12210:7424");
 
-const tdStyle: CSSProperties = {
-  padding: "10px 12px",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  verticalAlign: "top",
-};
-
-/** Figma 12210:7424 Common 영역과 동일한 세로 스택(간격 4px). PNG는 public 에 두고 img 주석 해제. */
-const FIGMA_INPUT_ANATOMY_PNG = "/guidelines/input-anatomy-12210-7424.png";
-
-function FigmaAnatomyLivePreview() {
+/** Figma 12210:7424 Common — Label · Input/TextArea · InlineMessage (4px 스택) */
+function InputAnatomyLivePreview() {
   const surface: CSSProperties = {
     ...guideBlockStyle,
     marginBottom: 16,
@@ -678,63 +602,37 @@ function FigmaAnatomyLivePreview() {
     alignItems: "flex-start",
   };
   return (
-    <div>
-      <div style={surface}>
-        <p
-          style={{
-            ...sectionLabelStyle,
-            marginTop: 0,
-            marginBottom: 12,
-          }}
-        >
-          Common — Figma와 동일 구성(라이브)
-        </p>
-        <div style={row}>
-          <div style={col}>
-            <Label size="small" mandatory infoIcon={false} label="Label" />
-            <Input
-              size="medium"
-              forceState="focus"
-              defaultValue="Text"
-              counter={{ max: 50, current: 1 }}
-              leadingIcon
-              trailingIcon
-              clearable
-            />
-            <InlineMessage type="info" text="In-line message." />
-          </div>
-          <div style={col}>
-            <Label size="small" mandatory infoIcon={false} label="Label" />
-            <TextArea placeholder="Text" trailingIcon />
-            <InlineMessage type="info" text="In-line message." />
-          </div>
-        </div>
-      </div>
+    <div style={surface}>
       <p
         style={{
-          margin: "0 0 8px",
+          margin: "0 0 12px",
           fontSize: 12,
-          lineHeight: 1.5,
+          fontWeight: 500,
           color: "var(--context-foreground-surface-on-surface-hint)",
         }}
       >
-        픽셀 단위로 Figma 캡처를 쓰려면 해당 프레임을 PNG로보낸 뒤{" "}
-        <code>public{FIGMA_INPUT_ANATOMY_PNG}</code> 에 저장하고, 아래{" "}
-        <code>img</code> 줄의 주석을 제거하세요.
+        Common — Figma 12210:7424와 동일 구성(라이브)
       </p>
-      {/* Figma PNG 배치 후 주석 해제
-      <img
-        src={FIGMA_INPUT_ANATOMY_PNG}
-        alt="Figma Input Anatomy (node 12210:7424)"
-        style={{
-          maxWidth: "100%",
-          height: "auto",
-          display: "block",
-          borderRadius: 6,
-          border: "1px solid var(--border-border-surface-border-surface)",
-        }}
-      />
-      */}
+      <div style={row}>
+        <div style={col}>
+          <Label size="small" mandatory infoIcon={false} label="Label" />
+          <Input
+            size="medium"
+            forceState="focus"
+            defaultValue="Text"
+            counter={{ max: 50, current: 1 }}
+            leadingIcon
+            trailingIcon
+            clearable
+          />
+          <InlineMessage type="info" text="In-line message." />
+        </div>
+        <div style={col}>
+          <Label size="small" mandatory infoIcon={false} label="Label" />
+          <TextArea placeholder="Text" trailingIcon />
+          <InlineMessage type="info" text="In-line message." />
+        </div>
+      </div>
     </div>
   );
 }
@@ -747,29 +645,39 @@ export const Guideline: Story = {
     actions: { disable: true },
   },
   render: () => (
-    <StoryDocsPage title="Input" description="한 줄 텍스트 입력 필드 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          한 줄 텍스트 입력 필드입니다. 검색·로그인·폼 레이블과 함께 쓰이며, tone 과 trailing
-          아이콘으로 검증 결과를 시각적으로 전달합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Figma 가이드 — Anatomy · Common">
-        <p style={{ margin: "0 0 12px", fontSize: 13, lineHeight: 1.6 }}>
-          아래 항목은{" "}
+    <StoryDocsPage
+      title="Input"
+      description={
+        <>
           <a
-            href="https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=12210-7424&m=dev"
+            href={FIGMA_INPUT_ANATOMY}
             target="_blank"
             rel="noreferrer"
             style={{ color: "var(--context-foreground-primary-on-primary-base)" }}
           >
-            Physical AI Platform Design Guideline — Input Anatomy
-          </a>{" "}
-          (node <code>12210:7424</code>)의 Common 섹션을 한국어로 정리한 것입니다.
-        </p>
+            Input Anatomy (12210:7424)
+          </a>
+          의 Common과 필드 하단 <strong>InlineMessage</strong> 가이드를 정리했습니다.
+          Size·State·타입 매트릭스는 <strong>Matrix</strong> 스토리를 참고하세요.
+        </>
+      }
+    >
+      <FigmaLinkCard
+        nodeId="12210-7424"
+        caption="Physical AI Platform Design Guideline — Input Anatomy (Common)"
+      />
 
-        <FigmaAnatomyLivePreview />
+      <StoryDocsSection
+        title="Input Anatomy — Common"
+        description={
+          <>
+            한 줄 필드와 여러 줄 필드 모두 <strong>레이블 → 필드 → 인라인 메시지</strong> 순으로
+            세로 간격 <strong>4px</strong>를 둡니다. 아래는 현재 <code>Label</code>,{" "}
+            <code>Input</code>, <code>TextArea</code>, <code>InlineMessage</code> 조합 예시입니다.
+          </>
+        }
+      >
+        <InputAnatomyLivePreview />
 
         <div style={guideBlockStyle}>
           <p
@@ -800,8 +708,8 @@ export const Guideline: Story = {
               <strong>입력 텍스트</strong>
             </li>
             <li style={{ marginBottom: 8 }}>
-              <strong>입력 내용 삭제 아이콘</strong> — medium <strong>16px</strong>
-              , large <strong>18px</strong>
+              <strong>입력 내용 삭제 아이콘</strong> — medium <strong>16px</strong>, large{" "}
+              <strong>18px</strong>
             </li>
             <li style={{ marginBottom: 8 }}>
               <strong>트레일링 아이콘</strong> — medium <strong>16px</strong>, large{" "}
@@ -838,9 +746,8 @@ export const Guideline: Story = {
               <strong>글자 수 카운터</strong>
             </li>
             <li style={{ marginBottom: 0 }}>
-              <strong>기본 너비</strong> — 목록·데이터 테이블 뷰에서 쓰는 필터 등은
-              고정된 기본 너비를 사용합니다. (*콘텐츠 영역에서는 내용에 맞게 너비를
-              조정할 수 있습니다.)
+              <strong>기본 너비</strong> — 목록·데이터 테이블 뷰에서 쓰는 필터 등은 고정된 기본
+              너비를 사용합니다. (*콘텐츠 영역에서는 내용에 맞게 너비를 조정할 수 있습니다.)
               <br />
               <span style={{ marginTop: 6, display: "inline-block" }}>
                 · 검색(Search) 박스: <strong>240px</strong> (고정) — 디자인 상 표기:{" "}
@@ -859,7 +766,7 @@ export const Guideline: Story = {
             Tag (같은 문서 섹션 요약)
           </p>
           <ol
-                style={{
+            style={{
               margin: 0,
               paddingLeft: 22,
               fontSize: 13,
@@ -868,119 +775,109 @@ export const Guideline: Story = {
             }}
           >
             <li style={{ marginBottom: 8 }}>
-              새 태그 추가: 입력 영역을 클릭한 뒤 태그 이름을 입력하고{" "}
-              <kbd>Enter</kbd>를 누르면 새 태그가 만들어집니다.
+              새 태그 추가: 입력 영역을 클릭한 뒤 태그 이름을 입력하고 <kbd>Enter</kbd>를 누르면
+              새 태그가 만들어집니다.
             </li>
             <li style={{ marginBottom: 8 }}>
-              이미 태그가 있으면 입력 필드를 클릭했을 때 기존 태그 목록이 드롭다운으로
-              표시됩니다.
+              이미 태그가 있으면 입력 필드를 클릭했을 때 기존 태그 목록이 드롭다운으로 표시됩니다.
             </li>
             <li style={{ marginBottom: 8 }}>
-              입력값으로 새 태그가 만들어지면 입력 필드 앞쪽에 붙고, 같은 방식으로
-              이어서 추가 태그를 만들 수 있습니다.
+              입력값으로 새 태그가 만들어지면 입력 필드 앞쪽에 붙고, 같은 방식으로 이어서 추가
+              태그를 만들 수 있습니다.
             </li>
             <li style={{ marginBottom: 0 }}>
-              목록에 보이는 태그는 클릭해 선택할 수 있으며, 항목에 마우스를 올리면
-              휴지통 아이콘이 나타나 삭제할 수 있습니다.
+              목록에 보이는 태그는 클릭해 선택할 수 있으며, 항목에 마우스를 올리면 휴지통 아이콘이
+              나타나 삭제할 수 있습니다.
             </li>
           </ol>
+          <div
+            style={{
+              marginTop: 14,
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 12,
+                color: "var(--context-foreground-surface-on-surface-hint)",
+              }}
+            >
+              예시 (<code>InputChip</code>):
+            </span>
+            <InputChip size="medium" closeIcon>
+              Tag
+            </InputChip>
+            <InputChip size="medium" closeIcon>
+              Tag 2
+            </InputChip>
           </div>
+        </div>
       </StoryDocsSection>
 
-      <StoryDocsSection title="주요 옵션">
+      <FigmaLinkCard
+        nodeId="5983-232959"
+        caption="Components / Input · InlineMessage — Type 매트릭스 원본"
+      />
+
+      <StoryDocsSection title="InlineMessage 개요">
+        <StoryDocsParagraph>
+          입력 필드 바로 아래에 짧은 설명·검증 결과·로딩 상태를 붙일 때 사용합니다. 아이콘
+          16px + 본문, gap 4px 레이아웃입니다.
+        </StoryDocsParagraph>
+      </StoryDocsSection>
+
+      <StoryDocsSection title="type 선택 기준">
         <div style={guideBlockStyle}>
           <table style={guideTableStyle}>
             <thead>
               <tr>
-                <th style={thStyle}>옵션</th>
-                <th style={thStyle}>설명</th>
+                <th style={thStyle}>type</th>
+                <th style={thStyle}>쓰임</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td style={tdStyle}>
-                  <code>size</code>
+                  <InlineMessage type="info" text="info" />
                 </td>
-                <td style={tdStyle}>
-                  <code>medium</code> (32px) · <code>large</code> (40px) 높이.
-                </td>
+                <td style={tdStyle}>힌트·중립 안내.</td>
               </tr>
               <tr>
                 <td style={tdStyle}>
-                  <code>width</code>
+                  <InlineMessage type="success" text="success" />
                 </td>
-                <td style={tdStyle}>
-                  래퍼 기본 너비 <code>{INPUT_WRAPPER_DEFAULT_WIDTH_PX}px</code>.
-                  숫자·문자열로 덮어쓸 수 있으며, <code>style.width</code> 로도
-                  조정 가능합니다.
-                </td>
+                <td style={tdStyle}>저장 완료·조건 충족.</td>
               </tr>
               <tr>
                 <td style={tdStyle}>
-                  <code>tone</code>
+                  <InlineMessage type="warning" text="warning" />
                 </td>
-                <td style={tdStyle}>
-                  <code>normal</code> / <code>success</code> /{" "}
-                  <code>error</code> — 테두리·아이콘 톤 연동.
-                </td>
+                <td style={tdStyle}>주의·재확인 요청.</td>
               </tr>
               <tr>
                 <td style={tdStyle}>
-                  <code>leadingIcon</code> · <code>trailingIcon</code>
+                  <InlineMessage type="error" text="error" />
                 </td>
-                <td style={tdStyle}>
-                  기본은 검색(leading) + tone 별 정보 아이콘(trailing).{" "}
-                  <code>false</code> 로 끌 수 있습니다.
-                </td>
+                <td style={tdStyle}>검증 실패·차단 사유.</td>
               </tr>
               <tr>
                 <td style={tdStyle}>
-                  <code>counter</code>
+                  <InlineMessage type="loading" text="loading" />
                 </td>
-                <td style={tdStyle}>
-                  <code>true</code> 또는 <code>{"{ current, max }"}</code> 로
-                  인라인 글자 수 표시. 초과 시 카운터가 error 색으로 강조됩니다.
-                </td>
-              </tr>
-              <tr>
-                <td style={tdStyle}>
-                  <code>clearable</code>
-                </td>
-                <td style={tdStyle}>
-                  포커스/입력값이 있을 때 우측 클리어(x) 버튼 표시.
-                </td>
-              </tr>
-              <tr>
-                <td style={tdStyle}>
-                  <code>type=&quot;password&quot;</code>
-                </td>
-                <td style={tdStyle}>
-                  비밀번호 필드 + eye 토글(<code>passwordToggle</code>, 기본
-                  on).
-                </td>
-              </tr>
-              <tr>
-                <td style={tdStyle}>
-                  <code>forceState</code>
-                </td>
-                <td style={tdStyle}>
-                  Storybook 전용 시각 고정용. 프로덕션에서는 사용하지 않는 것을
-                  권장합니다.
-                </td>
+                <td style={tdStyle}>비동기 처리 중.</td>
               </tr>
             </tbody>
           </table>
         </div>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Input } from "@/components/Input/input";
+      <StoryDocsSection title="InlineMessage 코드 예시">
+        <StoryDocsCode>{`import { InlineMessage } from "@/components/Input/inlinemessage";
 
-<Input size="medium" tone="normal" placeholder="Text" />
-
-<Input tone="error" counter={{ current: 51, max: 50 }} defaultValue="…" />
-
-<Input type="password" placeholder="Password" leadingIcon={false} />`}</StoryDocsCode>
+<InlineMessage type="error" text="Invalid value." />`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

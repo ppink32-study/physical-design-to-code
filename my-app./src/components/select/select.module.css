@@ -2,7 +2,7 @@
  * Select (Trigger) — Figma MCP 매핑 (node 4811:29737)
  * -----------------------------------------------------------------------------
  * 공통 구조
- *   [label?][input(placeholder|value|chips|more)][tone-icon?][x-button?][chevron]
+ *   [label?][input(placeholder|value|chips|more)][x-button?][tone-icon?][chevron]
  *
  * Medium (32px)
  *   height: 32, padding: 0 13px (py 0), gap: 4
@@ -18,14 +18,15 @@
  *
  * State
  *   default  : placeholder = on-surface-hint
- *   focus    : border = border-primary, 4px focus-ring (tone 별 색)
+ *   focus    : border + Focus Ring 토큰 (Primary / Form Valid / Form Invalid)
  *   filled   : value/chip 영역 노출, text = on-surface-base
  *   label(meta): Body/Md-Medium, on-surface-hint (Figma Label 타입 좌측)
- *   disable  : bg = bg-surface-base-disabled, text/icon = disabled
+ *   disable  : bg = bg-surface-base-disabled, text/chevron/clear = disabled;
+ *              tone(success/error) 아이콘은 Input 과 동일하게 그린/레드 유지
  *   readonly : bg = bg-surface-base-disabled, text = on-surface-base 유지
  *
  * Multiple
- *   1line    : chips 가로 나열 + (+N) + x-button + chevron
+ *   1line    : chips 가로 나열 + (+N) + x-button + tone-icon + chevron
  *   2line    : 컨테이너 flex-wrap + py 5px, chip wrap
  * ========================================================================== */
 
@@ -155,7 +156,7 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Tone icon (success / error) — placed before chevron
+ * Tone icon (success / error) — clear 뒤, chevron 앞
  * ------------------------------------------------------------------------- */
 .toneIcon {
   flex-shrink: 0;
@@ -243,27 +244,27 @@
 /* ---------------------------------------------------------------------------
  * State — focus / filled / disable / readonly
  * ------------------------------------------------------------------------- */
-/* Focus (실제 focus 와 data-state="focus", open="true" 모두 적용) */
+/* Focus — Figma Focus Ring / Primary → --shadow-focus-ring-primary */
 .trigger:focus-visible,
 .trigger[data-state="focus"],
 .trigger[data-open="true"] {
   outline: none;
   border-color: var(--border-border-primary);
-  box-shadow: 0 0 0 4px var(--color-opacity-primary-15, rgba(67, 198, 193, 0.15));
+  box-shadow: var(--shadow-focus-ring-primary);
 }
-/* tone=success 에서의 focus ring 은 green 계열 */
+/* Focus Ring / Form Valid */
 .trigger[data-tone="success"]:focus-visible,
 .trigger[data-tone="success"][data-state="focus"],
 .trigger[data-tone="success"][data-open="true"] {
   border-color: var(--border-border-valid);
-  box-shadow: 0 0 0 4px var(--seed-color-green-100, #cef0cc);
+  box-shadow: var(--shadow-focus-ring-form-valid);
 }
-/* tone=error focus ring = red */
+/* Focus Ring / Form Invalid */
 .trigger[data-tone="error"]:focus-visible,
 .trigger[data-tone="error"][data-state="focus"],
 .trigger[data-tone="error"][data-open="true"] {
   border-color: var(--border-border-invalid);
-  box-shadow: 0 0 0 4px var(--seed-color-red-100, #ffd6d5);
+  box-shadow: var(--shadow-focus-ring-form-invalid);
 }
 
 /* Filled 상태는 placeholder 대신 value/chips 노출만 달라지며,
@@ -292,9 +293,6 @@
 .trigger[data-state="disable"] .chevron,
 .trigger[aria-disabled="true"] .chevron,
 .trigger:disabled .chevron,
-.trigger[data-state="disable"] .toneIcon,
-.trigger[aria-disabled="true"] .toneIcon,
-.trigger:disabled .toneIcon,
 .trigger[data-state="disable"] .clear,
 .trigger[aria-disabled="true"] .clear,
 .trigger:disabled .clear {

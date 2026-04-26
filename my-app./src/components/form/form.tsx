@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Form / FormField — Figma node 5714:108005 기반 배치 가이드
+ * Form / FormField — Figma: 레이아웃 매트릭스 5714:108005, Form 가이드라인 7119:411152
  * ----------------------------------------------------------------
  * Form 자체는 새로운 시각 컴포넌트가 아니라, 이미 존재하는 컨트롤들
  * (Input, TextArea, Select, Checkbox/CheckboxGroup, Radio/RadioGroup,

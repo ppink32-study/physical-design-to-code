@@ -5,10 +5,16 @@ import { Fragment, useState } from "react";
 import { Radio, RadioGroup } from "./radio";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
+  storyDocsGuideTableStyle,
+  storyDocsGuideTdStyle,
+  storyDocsGuideThStyle,
+} from "@/stories/story-matrix-table-styles";
+import {
   StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
+  StoryDocsPanelInset,
   StoryDocsParagraph,
   StoryDocsSection,
   StoryPlaygroundFrame,
@@ -17,15 +23,9 @@ import {
 const meta: Meta<typeof Radio> = {
   title: "Components/Radio",
   component: Radio,
-  tags: ["autodocs"],
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma MCP 기반 Radio. 16x16 원형 입력 + 라벨. `RadioGroup` 으로 묶어 value/onChange 를 관리하거나 단독(uncontrolled)으로 사용할 수 있습니다. (Figma node 17995:61609 / 17995:61649 / 17995:61676)",
-      },
-    },
+    docs: { disable: true },
   },
   argTypes: {
     value: { control: "text" },
@@ -100,12 +100,12 @@ const ROWS: Array<{
   { key: "disabled", label: "Disabled", disabled: true },
 ];
 
-function VerticalGroupDemo() {
+function ControlledRadioVerticalDemo() {
   const [value, setValue] = useState("mobile");
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       <RadioGroup
-        name="device"
+        name="device-matrix"
         orientation="vertical"
         value={value}
         onChange={(v) => setValue(v)}
@@ -114,32 +114,15 @@ function VerticalGroupDemo() {
         <Radio value="tablet">Tablet</Radio>
         <Radio value="desktop">Desktop</Radio>
       </RadioGroup>
-      <div style={{ ...rowLabelStyle, marginTop: 8 }}>
-        selected: <b>{value}</b>
-      </div>
+      <code style={{ fontSize: 12, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+        value = {JSON.stringify(value)}
+      </code>
     </div>
   );
 }
 
-function HorizontalGroupDemo() {
-  const [value, setValue] = useState("b");
-  return (
-    <RadioGroup
-      name="opt"
-      orientation="horizontal"
-      value={value}
-      onChange={(v) => setValue(v)}
-    >
-      <Radio value="a">Option A</Radio>
-      <Radio value="b">Option B</Radio>
-      <Radio value="c">Option C</Radio>
-      <Radio value="d">Option D</Radio>
-    </RadioGroup>
-  );
-}
-
 /* =================================================================
- * 0. Default — Docs Primary + Controls
+ * 0. Playground — Controls
  * =============================================================== */
 export const Playground: Story = {
   decorators: [
@@ -152,7 +135,7 @@ export const Playground: Story = {
 };
 
 /* =================================================================
- * 1. Matrix — 상태 표 + RadioGroup (테마는 툴바)
+ * 1. Matrix — 상태 표 + Controlled 예시 (테마는 툴바)
  * =============================================================== */
 export const Matrix: Story = {
   name: "Matrix",
@@ -160,7 +143,7 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="Radio"
-      description="행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. 테마는 상단 툴바에서 전환합니다."
+      description="행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."
       figmaNode="17995-61609"
     >
       <FigmaLinkCard
@@ -177,63 +160,164 @@ export const Matrix: Story = {
           justifyItems: "start",
         }}
       >
-          <div />
-          {COLS.map((c) => (
-            <div key={c.key} style={headerStyle}>
-              {c.label}
-            </div>
-          ))}
+        <div />
+        {COLS.map((c) => (
+          <div key={c.key} style={headerStyle}>
+            {c.label}
+          </div>
+        ))}
 
-          {ROWS.map((r) => (
-            <Fragment key={r.key}>
-              <div style={rowLabelStyle}>{r.label}</div>
-              {COLS.map((c) => (
-                <div key={`${r.key}-${c.key}`} style={cellStyle}>
-                  <Radio
-                    value={`${r.key}-${c.key}`}
-                    checked={c.checked}
-                    disabled={r.disabled}
-                    forceState={r.forceState}
-                    readOnly
-                  >
-                    Label
-                  </Radio>
-                </div>
-              ))}
-            </Fragment>
-          ))}
+        {ROWS.map((r) => (
+          <Fragment key={r.key}>
+            <div style={rowLabelStyle}>{r.label}</div>
+            {COLS.map((c) => (
+              <div key={`${r.key}-${c.key}`} style={cellStyle}>
+                <Radio
+                  value={`${r.key}-${c.key}`}
+                  checked={c.checked}
+                  disabled={r.disabled}
+                  forceState={r.forceState}
+                  readOnly
+                >
+                  Label
+                </Radio>
+              </div>
+            ))}
+          </Fragment>
+        ))}
       </div>
 
-      <SectionFrame title="RadioGroup">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 28,
-            maxWidth: 560,
-          }}
-        >
-          <div>
-            <div style={{ ...rowLabelStyle, marginBottom: 8, fontWeight: 600 }}>
-              Vertical
-            </div>
-            <VerticalGroupDemo />
-          </div>
-          <div>
-            <div style={{ ...rowLabelStyle, marginBottom: 8, fontWeight: 600 }}>
-              Horizontal
-            </div>
-            <HorizontalGroupDemo />
-          </div>
-        </div>
+      <SectionFrame title="Controlled · RadioGroup (vertical)">
+        <ControlledRadioVerticalDemo />
       </SectionFrame>
     </StoryDocsMatrixPage>
   ),
 };
 
-/* =================================================================
- * 2. Guidelines
- * =============================================================== */
+function ControlledRadioGroupSnippet() {
+  const [value, setValue] = useState("b");
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <RadioGroup
+        name="opts-c"
+        value={value}
+        onChange={(v) => setValue(v)}
+        orientation="horizontal"
+      >
+        <Radio value="a">A</Radio>
+        <Radio value="b">B</Radio>
+        <Radio value="c">C</Radio>
+      </RadioGroup>
+      <code style={{ fontSize: 12, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+        value = {JSON.stringify(value)}
+      </code>
+    </div>
+  );
+}
+
+/* -----------------------------------------------------------------
+ * RadioGroup 간격 — radio.module.css 의 .group 과 동일 (vertical 4px / horizontal 16px)
+ * ----------------------------------------------------------------- */
+const groupSpacingCardLabelStyle: CSSProperties = {
+  margin: 0,
+  fontSize: 15,
+  fontWeight: 700,
+  letterSpacing: "-0.02em",
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
+const groupSpacingCardDescStyle: CSSProperties = {
+  margin: 0,
+  fontSize: 14,
+  lineHeight: 1.65,
+  color: "var(--context-foreground-surface-on-surface-secondary)",
+};
+
+const groupSpacingPreviewBoxStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  boxSizing: "border-box",
+  width: "100%",
+  minHeight: 176,
+  height: 176,
+};
+
+const RADIO_GROUP_SPACING: Array<{
+  key: string;
+  label: string;
+  description: ReactNode;
+  orientation: "vertical" | "horizontal";
+}> = [
+  {
+    key: "vertical",
+    label: "Vertical (column)",
+    description: (
+      <>
+        세로로 쌓을 때 항목 사이 간격은 <strong>4px</strong>입니다. (
+        <StoryDocsInlineCode>--spacing-2xs</StoryDocsInlineCode> ·{" "}
+        <StoryDocsInlineCode>radio.module.css</StoryDocsInlineCode> 의{" "}
+        <StoryDocsInlineCode>.group</StoryDocsInlineCode> 기본 <StoryDocsInlineCode>gap</StoryDocsInlineCode>)
+      </>
+    ),
+    orientation: "vertical",
+  },
+  {
+    key: "horizontal",
+    label: "Horizontal (row)",
+    description: (
+      <>
+        가로로 나란히 둘 때 항목 사이 간격은 <strong>16px</strong>입니다. (
+        <StoryDocsInlineCode>--spacing-lg</StoryDocsInlineCode> ·{" "}
+        <StoryDocsInlineCode>data-orientation=&quot;horizontal&quot;</StoryDocsInlineCode> 일 때{" "}
+        <StoryDocsInlineCode>gap</StoryDocsInlineCode>)
+      </>
+    ),
+    orientation: "horizontal",
+  },
+];
+
+function RadioGroupSpacingCard({
+  label,
+  description,
+  orientation,
+}: {
+  label: string;
+  description: ReactNode;
+  orientation: "vertical" | "horizontal";
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
+      <div style={groupSpacingCardLabelStyle}>{label}</div>
+      <p style={groupSpacingCardDescStyle}>{description}</p>
+      <StoryDocsPanelInset>
+        <div style={groupSpacingPreviewBoxStyle}>
+          <RadioGroup
+            name={`radio-spacing-demo-${orientation}`}
+            orientation={orientation}
+            aria-label="Radio spacing demo"
+          >
+            <Radio value="apple" defaultChecked={orientation === "horizontal"}>
+              Apple
+            </Radio>
+            <Radio value="banana" defaultChecked={orientation === "vertical"}>
+              Banana
+            </Radio>
+            <Radio value="cherry">Cherry</Radio>
+          </RadioGroup>
+        </div>
+      </StoryDocsPanelInset>
+    </div>
+  );
+}
+
+const groupExampleLabelStyle: CSSProperties = {
+  marginBottom: 8,
+  fontSize: 13,
+  fontWeight: 600,
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
 const guideBlockStyle: CSSProperties = {
   padding: 16,
   borderRadius: 8,
@@ -241,30 +325,13 @@ const guideBlockStyle: CSSProperties = {
   background: "var(--context-background-surface-bg-surface-base)",
 };
 
-const guideTableStyle: CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse",
-  fontSize: 13,
-  lineHeight: 1.5,
-  color: "var(--context-foreground-surface-on-surface-base)",
-};
+const guideTableStyle = storyDocsGuideTableStyle;
+const thStyle = storyDocsGuideThStyle;
+const tdStyle = storyDocsGuideTdStyle;
 
-const thStyle: CSSProperties = {
-  textAlign: "left",
-  fontWeight: 600,
-  fontSize: 12,
-  padding: "8px 12px",
-  borderBottom: "1px solid var(--border-border-surface-border-surface)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-};
-
-const tdStyle: CSSProperties = {
-  padding: "10px 12px",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  verticalAlign: "top",
-};
-
+/* =================================================================
+ * 2. Guideline
+ * =============================================================== */
 export const Guideline: Story = {
   name: "Guideline",
   parameters: {
@@ -282,6 +349,69 @@ export const Guideline: Story = {
           <StoryDocsInlineCode>value</StoryDocsInlineCode> /{" "}
           <StoryDocsInlineCode>onChange</StoryDocsInlineCode>로 선택 상태를 맞춥니다.
         </StoryDocsParagraph>
+      </StoryDocsSection>
+
+      <StoryDocsSection
+        title="RadioGroup 간격"
+        description="RadioGroup 은 orientation 에 따라 항목 간 gap 이 다릅니다. 구현은 radio.module.css 의 .group 과 동일합니다 (CheckboxGroup 과 동일 토큰)."
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 24,
+          }}
+        >
+          {RADIO_GROUP_SPACING.map((item) => (
+            <RadioGroupSpacingCard key={item.key} {...item} />
+          ))}
+        </div>
+      </StoryDocsSection>
+
+      <StoryDocsSection
+        title="RadioGroup 예시"
+        description="Horizontal · Vertical · Controlled · 그룹 비활성화 조합입니다."
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 560 }}>
+          <div>
+            <div style={groupExampleLabelStyle}>Horizontal</div>
+            <RadioGroup
+              name="guide-radio-h"
+              orientation="horizontal"
+              aria-label="Fruits"
+            >
+              <Radio value="apple" defaultChecked>
+                Apple
+              </Radio>
+              <Radio value="banana">Banana</Radio>
+              <Radio value="cherry">Cherry</Radio>
+            </RadioGroup>
+          </div>
+          <div>
+            <div style={groupExampleLabelStyle}>Vertical</div>
+            <RadioGroup name="guide-radio-v" orientation="vertical" aria-label="Fruits">
+              <Radio value="apple">Apple</Radio>
+              <Radio value="banana" defaultChecked>
+                Banana
+              </Radio>
+              <Radio value="cherry">Cherry</Radio>
+            </RadioGroup>
+          </div>
+          <div>
+            <div style={groupExampleLabelStyle}>Controlled</div>
+            <ControlledRadioGroupSnippet />
+          </div>
+          <div>
+            <div style={groupExampleLabelStyle}>Group disabled</div>
+            <RadioGroup name="guide-radio-d" orientation="horizontal" disabled>
+              <Radio value="apple" defaultChecked>
+                Apple
+              </Radio>
+              <Radio value="banana">Banana</Radio>
+              <Radio value="cherry">Cherry</Radio>
+            </RadioGroup>
+          </div>
+        </div>
       </StoryDocsSection>
 
       <StoryDocsSection title="Radio vs Checkbox">
@@ -310,9 +440,9 @@ export const Guideline: Story = {
       <StoryDocsSection title="코드 예시">
         <StoryDocsCode>{`import { Radio, RadioGroup } from "@/components/radio/radio";
 
-<RadioGroup name="plan" defaultValue="pro" orientation="vertical">
+<RadioGroup name="plan" orientation="vertical">
   <Radio value="free">Free</Radio>
-  <Radio value="pro">Pro</Radio>
+  <Radio value="pro" defaultChecked>Pro</Radio>
 </RadioGroup>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>

@@ -1,0 +1,32 @@
+/**
+ * Full-page loading overlay — Figma node 18219:10393
+ * Dimmed layer: BlackOpacity_50 + backdrop blur 4px; Loader centered (48px / large).
+ */
+
+.rootViewport {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+}
+
+.rootParent {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.dim {
+  position: absolute;
+  inset: 0;
+  background: var(--Opacity-BlackOpacity_50, rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 0;
+}

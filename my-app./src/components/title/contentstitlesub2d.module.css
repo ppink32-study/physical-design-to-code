@@ -1,6 +1,8 @@
 /* =============================================================================
  * ContentsTitleSub2D — Contents Title / Sub (2d) (Figma node 7544:663)
  * -----------------------------------------------------------------------------
+ * Frame: width 1496px (max-width 100%)
+ *
  * Tokens
  *   - title    : Body/Base_SemiB (14/20 semibold) on-surface-base
  *   - bullet   : 4×4 circle, --accent-red-accent-red (#ff312e)
@@ -18,7 +20,8 @@
   height: var(--size-base-4xl, 32px);
   gap: var(--spacing-5xl, 40px);
   box-sizing: border-box;
-  width: 100%;
+  width: 1496px;
+  max-width: 100%;
 }
 
 /* ---------------------------------------------------------------------------

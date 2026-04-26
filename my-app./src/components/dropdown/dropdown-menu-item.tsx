@@ -5,10 +5,9 @@
  * ----------------------------------------------------------------
  * Figma node: 13292:55986 — Dropdown / Menu item
  *
- * 3개 컴포넌트를 함께 export 합니다.
+ * 함께 export 합니다.
  *   - <DropdownMenuItem />     : 일반 항목 (level 1·2·3)
  *   - <DropdownMenuHeader />   : 섹션 라벨 (non-interactive)
- *   - <DropdownMenuDivider />  : 구분선
  *
  * 인터랙션은 atom 단계에서 외부 의존성 없이 자체 구현합니다.
  *   - click / Enter / Space → onSelect
@@ -58,8 +57,6 @@ export type DropdownMenuItemProps = Omit<
 export type DropdownMenuHeaderProps = HTMLAttributes<HTMLDivElement> & {
   children?: ReactNode;
 };
-
-export type DropdownMenuDividerProps = HTMLAttributes<HTMLDivElement>;
 
 /* -----------------------------------------------------------------
  * Helpers
@@ -219,30 +216,5 @@ export const DropdownMenuHeader = forwardRef<
   DropdownMenuHeaderProps
 >(DropdownMenuHeaderInner);
 DropdownMenuHeader.displayName = "DropdownMenuHeader";
-
-/* -----------------------------------------------------------------
- * DropdownMenuDivider
- * --------------------------------------------------------------- */
-function DropdownMenuDividerInner(
-  props: DropdownMenuDividerProps,
-  ref: ForwardedRef<HTMLDivElement>,
-) {
-  const { className, ...rest } = props;
-  return (
-    <div
-      {...rest}
-      ref={ref}
-      role="separator"
-      aria-orientation="horizontal"
-      className={joinClasses(styles.divider, className)}
-    />
-  );
-}
-
-export const DropdownMenuDivider = forwardRef<
-  HTMLDivElement,
-  DropdownMenuDividerProps
->(DropdownMenuDividerInner);
-DropdownMenuDivider.displayName = "DropdownMenuDivider";
 
 export default DropdownMenuItem;

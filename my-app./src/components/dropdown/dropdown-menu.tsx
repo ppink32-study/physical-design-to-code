@@ -8,7 +8,7 @@
  *
  * 본 컴포넌트는 "container" 만 담당합니다.
  *   - padding / border / shadow / radius / bg / scroll / arrow
- *   - children 으로 DropdownMenuItem · DropdownMenuHeader · DropdownMenuDivider
+ *   - children 으로 DropdownMenuItem · DropdownMenuHeader
  * 다음 단계에서 다룹니다.
  *   - 위치 결정 / open-close / focus trap → Composite (Step 6)
  *
@@ -30,6 +30,8 @@ import type {
   ReactNode,
 } from "react";
 import { forwardRef } from "react";
+
+import { ScrollArea } from "@/components/scroll/scroll";
 
 import styles from "./dropdown-menu.module.css";
 
@@ -110,10 +112,13 @@ function ArrowSvg({ position }: { position: "top" | "bottom" }) {
       fill="none"
       aria-hidden="true"
     >
-      <path d={fillPath} fill="var(--color-surface-base)" />
+      <path
+        d={fillPath}
+        fill="var(--context-background-surface-bg-surface-base, #fff)"
+      />
       <path
         d={strokePath}
-        stroke="var(--color-border-surface)"
+        stroke="var(--border-border-surface-border-surface, #d7d8dc)"
         strokeWidth="1"
         strokeLinejoin="round"
         strokeLinecap="square"
@@ -175,8 +180,24 @@ function DropdownMenuInner(
         </div>
       ) : null}
 
-      <div role="none" className={styles.list}>
-        {children}
+      <div
+        role="none"
+        className={joinClasses(styles.list, scrollable && styles.listScrollable)}
+      >
+        {scrollable ? (
+          <div className={styles.scrollClip}>
+            <ScrollArea
+              size="small"
+              orientation="vertical"
+              maxHeight={maxHeight}
+              className={styles.menuScrollArea}
+            >
+              <div className={styles.listBody}>{children}</div>
+            </ScrollArea>
+          </div>
+        ) : (
+          children
+        )}
       </div>
 
       {arrowParts?.position === "bottom" ? (

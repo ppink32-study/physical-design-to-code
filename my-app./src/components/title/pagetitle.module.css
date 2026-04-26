@@ -1,11 +1,13 @@
 /* =============================================================================
- * PageTitle — Page Title (Figma node 4790:161)
+ * PageTitle — Page Title (Figma MCP · node 4790:161)
  * -----------------------------------------------------------------------------
+ * Frame: width 1612px (max-width 100% — 뷰포트보다 좁을 때 축소)
+ *
  * Tokens (실측)
  *   - title      : Heading/H3 (24/32 semibold) on-surface-base (#141518)
  *   - hint text  : Body/Md-Medium (13/20, -0.4) on-surface-hint (#787a88)
  *   - 1d height  : 68px, pt=20 pb=12, items-end, gap=0
- *   - 2d         : gap=40 items-center
+ *   - 2d         : gap=40 items-center (뒤로가기 슬롯 · 4790:177)
  *   - bubble     : h=32 pl=16 pr=12 gap=8, radius (50 / full / full / 8)
  *   - leftArea   : flex:1, gap=md(12), py=2xs(4) in 1d
  *   - actions    : flex gap=sm(8) items-start
@@ -15,7 +17,9 @@
   position: relative;
   display: flex;
   box-sizing: border-box;
-  width: 100%;
+  /* Figma MCP — Page Title 프레임 (4790:161) 고정 폭 */
+  width: 1612px;
+  max-width: 100%;
 }
 
 /* 1d : 한 줄 헤더 (제목 + bubble) */
@@ -46,6 +50,14 @@
 
 .root[data-type="1d"] .leftArea {
   padding: var(--spacing-2xs, 4px) 0;
+}
+
+/* 2d — 뒤로가기 슬롯 (4790:177, 배지·제목과 동일 행 · spacing-md 간격은 leftArea gap) */
+.backSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 /* ---------------------------------------------------------------------------

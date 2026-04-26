@@ -5,6 +5,14 @@ import { useState } from "react";
 import { ChipButton } from "./chip-button";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
+import {
   StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
@@ -48,59 +56,15 @@ const meta: Meta<typeof ChipButton> = {
 export default meta;
 type Story = StoryObj<typeof ChipButton>;
 
-const matrixScrollWrap: CSSProperties = {
-  overflowX: "auto",
-  paddingBottom: 8,
-  marginLeft: -8,
-  marginRight: -8,
-  paddingLeft: 8,
-  paddingRight: 8,
-};
-
-const matrixTableBase: CSSProperties = {
-  borderCollapse: "collapse",
-  width: "max-content",
-  background: "var(--context-background-surface-bg-surface-base)",
-};
-
-const thStyle: CSSProperties = {
-  fontSize: 11,
-  fontWeight: 600,
-  letterSpacing: "0.04em",
-  textAlign: "left",
-  padding: "10px 12px",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-  whiteSpace: "nowrap",
-};
-
+const matrixScrollWrap = storyMatrixScrollWrap;
+const matrixTableBase = storyMatrixTableBase;
+const thStyle = storyMatrixColHeaderStyle;
 const rowThStyle: CSSProperties = {
-  fontSize: 12,
-  fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-  padding: "12px 16px 12px 0",
-  whiteSpace: "nowrap",
-  verticalAlign: "middle",
+  ...storyMatrixRowHeaderStyle,
   textAlign: "left",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
 };
-
-const tdStyle: CSSProperties = {
-  padding: "12px 16px",
-  verticalAlign: "middle",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-};
-
-const stickyCorner: CSSProperties = {
-  position: "sticky",
-  left: 0,
-  zIndex: 1,
-  background: "var(--context-background-surface-bg-surface-base)",
-  boxShadow: "6px 0 12px -8px rgba(20, 21, 24, 0.12)",
-};
+const tdStyle = storyMatrixCellStyle;
+const stickyCorner = storyMatrixStickyCornerStyle;
 
 type ChipRow = {
   label: string;

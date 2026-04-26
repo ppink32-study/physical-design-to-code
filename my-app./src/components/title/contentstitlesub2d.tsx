@@ -3,6 +3,8 @@
 /**
  * ContentsTitleSub2D — Contents Title / Sub (2d) (Figma node 7544:663)
  * ----------------------------------------------------------------
+ * 루트 폭: 1496px (max-width: 100%)
+ *
  * 구조 (height 32px, root gap=40)
  *   - 좌측 (flex:1, gap=4):
  *     · Title+Badge (gap=8):

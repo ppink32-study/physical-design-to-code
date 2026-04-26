@@ -1,10 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { SelectItem, type SelectItemProps } from "./selectitem";
-import { Badge } from "../badge/badge";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
+import {
+  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -16,8 +24,10 @@ import {
 const meta: Meta<typeof SelectItem> = {
   title: "Components/Select/SelectItem",
   component: SelectItem,
-  tags: ["autodocs"],
-  parameters: { layout: "centered" },
+  parameters: {
+    layout: "centered",
+    docs: { disable: true },
+  },
   argTypes: {
     size: { control: "radio", options: ["medium", "large"] },
     type: { control: "radio", options: ["1-level", "2-level"] },
@@ -33,72 +43,116 @@ const meta: Meta<typeof SelectItem> = {
     type: "1-level",
     children: "Text",
   },
-  decorators: [
-    (Story) => (
-      <div style={{ width: 226, padding: 4 }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 export default meta;
-
 type Story = StoryObj<typeof SelectItem>;
+
+const sectionTitleStyle: CSSProperties = {
+  fontSize: 14,
+  fontWeight: 600,
+  marginBottom: 12,
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
+const SectionFrame = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) => (
+  <section style={{ marginTop: 24 }}>
+    <h3 style={sectionTitleStyle}>{title}</h3>
+    {children}
+  </section>
+);
+
+const matrixScrollWrap = storyMatrixScrollWrap;
+const matrixTableBase = storyMatrixTableBase;
+const matrixColHeaderStyle = storyMatrixColHeaderStyle;
+const matrixRowHeaderStyle = storyMatrixRowHeaderStyle;
+const matrixStickyCornerStyle = storyMatrixStickyCornerStyle;
+const matrixCellStyle: CSSProperties = {
+  ...storyMatrixCellStyle,
+  minWidth: 200,
+};
+
+const LEVEL_COLS = [
+  { key: "1-level" as const, label: "1 level" },
+  { key: "2-level" as const, label: "2 levels" },
+];
+
+const STATE_ROWS: Array<{
+  key: string;
+  label: string;
+  args: Partial<SelectItemProps>;
+}> = [
+  { key: "default", label: "Default", args: {} },
+  { key: "hover", label: "Hover", args: { state: "hover" } },
+  { key: "select", label: "Select", args: { state: "select", selected: true } },
+  { key: "disable", label: "Disable", args: { disabled: true } },
+];
+
+function ItemMatrixTable({ size }: { size: "medium" | "large" }) {
+  return (
+    <div style={matrixScrollWrap}>
+      <table style={matrixTableBase}>
+        <thead>
+          <tr>
+            <th
+              style={{
+                ...matrixColHeaderStyle,
+                ...matrixStickyCornerStyle,
+                minWidth: 120,
+                zIndex: 2,
+              }}
+            />
+            {LEVEL_COLS.map((c) => (
+              <th key={c.key} scope="col" style={matrixColHeaderStyle}>
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {STATE_ROWS.map((r) => (
+            <tr key={r.key}>
+              <th
+                scope="row"
+                style={{
+                  ...matrixRowHeaderStyle,
+                  ...matrixStickyCornerStyle,
+                }}
+              >
+                {r.label}
+              </th>
+              {LEVEL_COLS.map((c) => (
+                <td key={`${r.key}-${c.key}`} style={matrixCellStyle}>
+                  <SelectItem {...r.args} size={size} type={c.key}>
+                    Text
+                  </SelectItem>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export const Playground: Story = {
   decorators: [
     (Story) => (
       <StoryPlaygroundFrame>
-        <Story />
+        <div style={{ width: 240, padding: 4 }}>
+          <Story />
+        </div>
       </StoryPlaygroundFrame>
     ),
   ],
   args: {},
 };
-
-const rows: Array<{ label: string; args: Partial<SelectItemProps> }> = [
-  { label: "Default", args: {} },
-  { label: "Hover", args: { state: "hover" } },
-  { label: "Selected", args: { selected: true } },
-  { label: "Disabled", args: { disabled: true } },
-];
-
-function MatrixRow({
-  label,
-  args,
-}: {
-  label: string;
-  args: Partial<SelectItemProps>;
-}) {
-  return (
-    <>
-      <div style={{ fontWeight: 500, fontSize: 13 }}>{label}</div>
-      <SelectItem {...args} type="1-level">
-        {label}
-      </SelectItem>
-      <SelectItem {...args} type="2-level">
-        {label}
-      </SelectItem>
-    </>
-  );
-}
-
-function InteractiveList() {
-  const [picked, setPicked] = useState<string | null>("B");
-  const options = ["Option A", "Option B", "Option C", "Option D"];
-  return (
-    <div style={{ width: 260, display: "flex", flexDirection: "column", gap: 2 }}>
-      {options.map((label) => {
-        const key = label.slice(-1);
-        return (
-          <SelectItem key={key} selected={picked === key} onClick={() => setPicked(key)}>
-            {label}
-          </SelectItem>
-        );
-      })}
-    </div>
-  );
-}
 
 export const Matrix: Story = {
   name: "Matrix",
@@ -106,47 +160,19 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="SelectItem"
-      description="상태·1-level/2-level·뱃지·Large·인터랙티브 리스트 조합을 비교합니다."
+      description="Figma 매트릭스: Medium(32px)·Large(40px) × 행 Default·Hover·Select·Disable × 열 1 level·2 levels."
       figmaNode="4811-36049"
     >
       <FigmaLinkCard
         nodeId="4811-36049"
-        caption="Components / Select · SelectItem — State 매트릭스 원본"
+        caption="Components / Select · SelectItem 매트릭스 원본"
       />
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>States × type</h4>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "120px repeat(2, 260px)",
-            gap: 12,
-            alignItems: "center",
-          }}
-        >
-          <div />
-          <div style={{ fontWeight: 600 }}>1-level</div>
-          <div style={{ fontWeight: 600 }}>2-level</div>
-          {rows.map((r) => (
-            <MatrixRow key={r.label} label={r.label} args={r.args} />
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Badge · Large</h4>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 280 }}>
-          <SelectItem badge={<Badge variant="line">Badge</Badge>}>With badge</SelectItem>
-          <SelectItem size="large">Large</SelectItem>
-          <SelectItem size="large" selected>
-            Large selected
-          </SelectItem>
-        </div>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Interactive list</h4>
-        <InteractiveList />
-      </section>
+      <SectionFrame title="Medium (height 32px)">
+        <ItemMatrixTable size="medium" />
+      </SectionFrame>
+      <SectionFrame title="Large (height 40px)">
+        <ItemMatrixTable size="large" />
+      </SectionFrame>
     </StoryDocsMatrixPage>
   ),
 };
@@ -162,10 +188,17 @@ export const Guideline: Story = {
     <StoryDocsPage title="SelectItem" description="선택 목록의 한 줄 옵션 컴포넌트 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          드롭다운·리스트 내 한 줄 옵션입니다.{" "}
-          <StoryDocsInlineCode>type=&quot;2-level&quot;</StoryDocsInlineCode> 은 하위 메뉴가 있는 항목에
-          사용합니다. 상태·사이즈·뱃지 조합은 Matrix 에서 확인하세요.
+          드롭다운·<StoryDocsInlineCode>SelectList</StoryDocsInlineCode> 안에서 사용합니다.{" "}
+          <StoryDocsInlineCode>type=&quot;2-level&quot;</StoryDocsInlineCode> 은 하위 메뉴가 있을 때
+          우측 쉐브론을 표시합니다. Matrix 에서 사이즈·상태·레벨 조합을 확인하세요.
         </StoryDocsParagraph>
+      </StoryDocsSection>
+      <StoryDocsSection title="코드 예시">
+        <StoryDocsCode>{`import { SelectItem } from "@/components/select/selectitem";
+
+<SelectItem>Item</SelectItem>
+<SelectItem type="2-level">Submenu</SelectItem>
+<SelectItem selected>Selected</SelectItem>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

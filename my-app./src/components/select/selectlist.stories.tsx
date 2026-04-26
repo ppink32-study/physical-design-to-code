@@ -1,11 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 
 import { SelectList } from "./selectlist";
 import { SelectItem } from "./selectitem";
-import { Select } from "./select";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
+import {
+  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -17,8 +26,10 @@ import {
 const meta: Meta<typeof SelectList> = {
   title: "Components/Select/SelectList",
   component: SelectList,
-  tags: ["autodocs"],
-  parameters: { layout: "centered" },
+  parameters: {
+    layout: "centered",
+    docs: { disable: true },
+  },
   argTypes: {
     type: {
       control: "radio",
@@ -35,7 +46,6 @@ const meta: Meta<typeof SelectList> = {
   },
 };
 export default meta;
-
 type Story = StoryObj<typeof SelectList>;
 
 const defaultItems = [
@@ -45,6 +55,42 @@ const defaultItems = [
   { key: "4", label: "Item 4" },
   { key: "5", label: "Item 5" },
 ];
+
+const matrixHeaderRowStyle: CSSProperties = {
+  ...storyMatrixColHeaderStyle,
+  textAlign: "center",
+};
+
+const matrixCellListStyle: CSSProperties = {
+  ...storyMatrixCellStyle,
+  verticalAlign: "top",
+  minWidth: 200,
+};
+
+function SearchDemo() {
+  const [q, setQ] = useState("");
+  const filtered = useMemo(
+    () => defaultItems.filter((it) => it.label.toLowerCase().includes(q.toLowerCase())),
+    [q],
+  );
+  return (
+    <SelectList
+      type="search"
+      searchValue={q}
+      onSearchChange={setQ}
+      searchPlaceholder="Text"
+      width={220}
+      maxHeight={200}
+      showScrollbar
+    >
+      {filtered.length > 0 ? (
+        filtered.map((it) => <SelectItem key={it.key}>{it.label}</SelectItem>)
+      ) : (
+        <SelectItem disabled>결과가 없습니다</SelectItem>
+      )}
+    </SelectList>
+  );
+}
 
 export const Playground: Story = {
   decorators: [
@@ -63,115 +109,78 @@ export const Playground: Story = {
   ),
 };
 
-function SearchDemo() {
-  const [q, setQ] = useState("");
-  const filtered = useMemo(
-    () => defaultItems.filter((it) => it.label.toLowerCase().includes(q.toLowerCase())),
-    [q],
-  );
-  return (
-    <SelectList
-      type="search"
-      searchValue={q}
-      onSearchChange={setQ}
-      searchPlaceholder="Search items"
-    >
-      {filtered.length > 0 ? (
-        filtered.map((it) => <SelectItem key={it.key}>{it.label}</SelectItem>)
-      ) : (
-        <SelectItem disabled>결과가 없습니다</SelectItem>
-      )}
-    </SelectList>
-  );
-}
-
-function WithTriggerDemo() {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
-
-  return (
-    <div style={{ width: 280, position: "relative" }}>
-      <Select
-        placeholder="옵션 선택"
-        value={selected ?? undefined}
-        open={open}
-        onClick={() => setOpen((v) => !v)}
-      />
-      {open && (
-        <div style={{ marginTop: 4 }}>
-          <SelectList maxHeight={220}>
-            {defaultItems.map((it) => (
-              <SelectItem
-                key={it.key}
-                selected={selected === it.label}
-                onClick={() => {
-                  setSelected(it.label);
-                  setOpen(false);
-                }}
-              >
-                {it.label}
-              </SelectItem>
-            ))}
-          </SelectList>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
   render: () => (
     <StoryDocsMatrixPage
       title="SelectList"
-      description="1-level·2-levels·검색·스크롤·Select와의 연동 등 SelectList 구성을 비교합니다."
+      description="Figma 매트릭스: 1 level · 2 levels · Search(Yes) 세 가지 패널 구성입니다."
       figmaNode="11959-26477"
     >
       <FigmaLinkCard
         nodeId="11959-26477"
-        caption="Components / Select · SelectList — 구성 매트릭스 원본"
+        caption="Components / Select · SelectList 매트릭스 원본"
       />
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Type / 1-level</h4>
-        <SelectList>
-          {defaultItems.map((it, i) => (
-            <SelectItem key={it.key} selected={i === 1}>
-              {it.label}
-            </SelectItem>
-          ))}
-        </SelectList>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Type / 2-levels</h4>
-        <SelectList type="2-levels">
-          {defaultItems.map((it) => (
-            <SelectItem key={it.key} type="2-level">
-              {it.label}
-            </SelectItem>
-          ))}
-        </SelectList>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Type / Search</h4>
-        <SearchDemo />
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Scrollable</h4>
-        <SelectList maxHeight={160}>
-          {Array.from({ length: 20 }).map((_, i) => (
-            <SelectItem key={i}>Item {i + 1}</SelectItem>
-          ))}
-        </SelectList>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Integration · Select + List</h4>
-        <WithTriggerDemo />
-      </section>
+      <div style={storyMatrixScrollWrap}>
+        <table style={storyMatrixTableBase}>
+          <thead>
+            <tr>
+              <th
+                style={{
+                  ...storyMatrixColHeaderStyle,
+                  ...storyMatrixStickyCornerStyle,
+                  minWidth: 100,
+                  zIndex: 2,
+                }}
+              />
+              <th scope="col" style={matrixHeaderRowStyle}>
+                Select List — 1 level
+              </th>
+              <th scope="col" style={matrixHeaderRowStyle}>
+                Select List — 2 levels
+              </th>
+              <th scope="col" style={matrixHeaderRowStyle}>
+                Search: Yes
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                scope="row"
+                style={{
+                  ...storyMatrixRowHeaderStyle,
+                  ...storyMatrixStickyCornerStyle,
+                }}
+              >
+                Preview
+              </th>
+              <td style={matrixCellListStyle}>
+                <SelectList width={220} maxHeight={200} showScrollbar>
+                  {defaultItems.map((it, i) => (
+                    <SelectItem key={it.key} selected={i === 1}>
+                      {it.label}
+                    </SelectItem>
+                  ))}
+                </SelectList>
+              </td>
+              <td style={matrixCellListStyle}>
+                <SelectList type="2-levels" width={220} maxHeight={200} showScrollbar>
+                  {defaultItems.map((it) => (
+                    <SelectItem key={it.key} type="2-level">
+                      {it.label}
+                    </SelectItem>
+                  ))}
+                </SelectList>
+              </td>
+              <td style={matrixCellListStyle}>
+                <SearchDemo />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </StoryDocsMatrixPage>
   ),
 };
@@ -184,14 +193,26 @@ export const Guideline: Story = {
     actions: { disable: true },
   },
   render: () => (
-    <StoryDocsPage title="SelectList" description="선택 목록 컨테이너 사용 가이드입니다.">
+    <StoryDocsPage title="SelectList" description="선택 목록 패널 컴포넌트 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          <StoryDocsInlineCode>SelectList</StoryDocsInlineCode> 는{" "}
-          <StoryDocsInlineCode>SelectItem</StoryDocsInlineCode> children 과{" "}
-          <StoryDocsInlineCode>type</StoryDocsInlineCode> 으로 1단·2단·검색 레이아웃을 전환합니다.
-          트리거와의 연동 예시는 Matrix 하단 Integration 섹션을 참고하세요.
+          <StoryDocsInlineCode>SelectItem</StoryDocsInlineCode> 을 children 으로 넣고{" "}
+          <StoryDocsInlineCode>type</StoryDocsInlineCode> 으로 1단·2단·검색(
+          <StoryDocsInlineCode>search</StoryDocsInlineCode> /{" "}
+          <StoryDocsInlineCode>type=&quot;search&quot;</StoryDocsInlineCode>)을 전환합니다.{" "}
+          <StoryDocsInlineCode>maxHeight</StoryDocsInlineCode> 로 목록 영역 스크롤을 줄 수 있습니다.
         </StoryDocsParagraph>
+      </StoryDocsSection>
+      <StoryDocsSection title="코드 예시">
+        <StoryDocsCode>{`import { SelectList } from "@/components/select/selectlist";
+import { SelectItem } from "@/components/select/selectitem";
+
+<SelectList maxHeight={220}>
+  <SelectItem>Item 1</SelectItem>
+</SelectList>
+
+<SelectList type="2-levels">...</SelectList>
+<SelectList type="search" searchPlaceholder="Text" />`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

@@ -51,7 +51,7 @@ export function LoaderDemo() {
     <>
       <DemoSection
         title="Sizes"
-        description="small(24px) · medium(32px) · large(48px, default). size prop 에 숫자를 전달하면 임의 픽셀값도 사용할 수 있습니다."
+        description="small(24px) · medium(32px) · large(48px, default)."
       >
         <div className={s.row} style={{ gap: 24 }}>
           {SIZES.map(({ key, label, px }) => (
@@ -97,10 +97,10 @@ export function LoaderDemo() {
         description="버튼 내부 · 페이지 전체 · 리스트 빈 자리 등 다양한 맥락에서의 사용 예시"
       >
         <div className={s.row} style={{ gap: 16, alignItems: "center" }}>
-          <Button variant="primary-solid" disabled leftIcon={<Loader size={16} color="white" />}>
+          <Button variant="primary-solid" disabled leftIcon={<Loader size="small" color="white" />}>
             저장 중...
           </Button>
-          <Button variant="secondary-outline" disabled leftIcon={<Loader size={16} color="gray" />}>
+          <Button variant="secondary-outline" disabled leftIcon={<Loader size="small" color="gray" />}>
             불러오는 중
           </Button>
           <div

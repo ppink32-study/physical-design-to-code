@@ -295,7 +295,7 @@ export const COMPONENTS: ComponentEntry[] = [
     name: "Playback Control Bar",
     category: "Media",
     description:
-      "비디오·애니메이션 재생 컨트롤. play/pause·progress·time·expand·more 기능을 포함합니다.",
+      "타임 필·프로그레스·전체화면·더보기. onSeek / onFullscreen / onMore 콜백.",
     tags: ["video", "controls"],
     figma: { primary: { nodeId: "17423-438" } },
   },

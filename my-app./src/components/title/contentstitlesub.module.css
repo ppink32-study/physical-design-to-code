@@ -1,6 +1,8 @@
 /* =============================================================================
  * ContentsTitleSub — Contents Title / Sub (Figma node 5784:48007)
  * -----------------------------------------------------------------------------
+ * Frame: width 1496px (max-width 100%)
+ *
  * Tokens
  *   - title        : Heading/H6 (16/22 semibold) on-surface-base
  *   - required dot : 4×4 circle, --accent-red-accent-red (#ff312e)
@@ -24,7 +26,8 @@
   height: var(--size-base-4xl, 32px);
   gap: var(--spacing-lg, 16px);
   box-sizing: border-box;
-  width: 100%;
+  width: 1496px;
+  max-width: 100%;
 }
 
 /* ---------------------------------------------------------------------------

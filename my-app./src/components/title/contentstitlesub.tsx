@@ -3,6 +3,8 @@
 /**
  * ContentsTitleSub — Contents Title / Sub (Figma node 5784:48007)
  * ----------------------------------------------------------------
+ * 루트 폭: 1496px (max-width: 100%)
+ *
  * 구조
  *   - height 32px (accordion 버튼 클릭 영역 포함)
  *   - 좌측 (flex:1, gap=8):

@@ -1,19 +1,4 @@
-/* ---------------------------------------------------------------------------
- * PlaybookControlBar — Figma node 17423:438
- * ---------------------------------------------------------------------------
- * Playback Control Bar — 영상/재생 컨트롤 바
- *   - 높이 32px, 좌우 padding 24px, full width
- *   - pill(32×32) 버튼 + time pill + progress + 액션 버튼
- *
- * 공통 토큰
- *   - pill bg   : --opacity-black-opacity-50 (rgba(0,0,0,0.5))
- *   - pill text : --context-foreground-icon-neutral-icon-neutral-white (white)
- *   - pill icon : --context-foreground-icon-neutral-icon-neutral-white (white)
- *   - radius    : --radius-full (100px/1000px)
- *   - progress track  : rgba(143,143,143,0.24)
- *   - progress fill   : --context-background-primary-bg-primary-hover (#5cc7d0)
- *   - handle bg       : --context-background-primary-bg-primary-hover
- * ------------------------------------------------------------------------- */
+/* PlaybookControlBar — 타임 필 + 프로그레스 ([17423:438]) */
 
 .root {
   display: flex;
@@ -24,9 +9,6 @@
   box-sizing: border-box;
 }
 
-/* ---------------------------------------------------------------------------
- * Left group : Play button + Time pill
- * ------------------------------------------------------------------------- */
 .leftGroup {
   display: flex;
   align-items: center;
@@ -34,76 +16,6 @@
   flex-shrink: 0;
 }
 
-/* ---------------------------------------------------------------------------
- * Icon button (32×32 pill)
- * ------------------------------------------------------------------------- */
-.iconBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: var(--size-base-4xl, 32px);
-  height: var(--size-base-4xl, 32px);
-  padding: 0;
-  margin: 0;
-  border: 0;
-  border-radius: var(--radius-full, 100px);
-  background-color: var(--opacity-black-opacity-50, rgba(0, 0, 0, 0.5));
-  color: var(--context-foreground-icon-neutral-icon-neutral-white, #ffffff);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background-color 0.15s ease;
-}
-
-.iconBtn:hover {
-  background-color: var(--opacity-black-opacity-70, rgba(0, 0, 0, 0.7));
-}
-
-.iconBtn:focus-visible {
-  outline: 2px solid var(--context-background-primary-bg-primary, #4cb8c2);
-  outline-offset: 2px;
-}
-
-.iconBtn:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.iconBtn .icon {
-  display: inline-block;
-  flex-shrink: 0;
-  background-color: currentColor;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-}
-
-.playIcon {
-  width: 14px;
-  height: 16px;
-}
-
-.pauseIcon {
-  width: 14px;
-  height: 16px;
-}
-
-.expandIcon {
-  width: 16px;
-  height: 16px;
-}
-
-.moreIcon {
-  width: 16px;
-  height: 16px;
-}
-
-/* ---------------------------------------------------------------------------
- * Time pill (0:00 / 5:12)
- * ------------------------------------------------------------------------- */
 .timePill {
   display: inline-flex;
   align-items: center;
@@ -119,6 +31,7 @@
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
   flex-shrink: 0;
   user-select: none;
 }
@@ -127,23 +40,34 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
   text-align: center;
-  min-width: 32px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.timePart[data-extended="true"] {
-  min-width: 40px;
+.timePart[data-time-format="mss"] {
+  width: 32px;
+}
+
+.timePart[data-time-format="mmss"] {
+  width: 48px;
+}
+
+.timePart[data-time-format="hms"] {
+  width: 64px;
 }
 
 .timeSep {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
   white-space: nowrap;
 }
 
-/* ---------------------------------------------------------------------------
- * Progress bar
- * ------------------------------------------------------------------------- */
+/* Progress */
 .progressWrap {
   position: relative;
   flex: 1 1 0;
@@ -195,20 +119,76 @@
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-/* hover/focus 또는 force-hover state 일 때 handle 표시 */
 .root[data-state="hover"] .handle,
 .root:hover .handle,
 .progressWrap:hover .handle {
   opacity: 1;
 }
 
-/* ---------------------------------------------------------------------------
- * Right group : Expand + More
- * ------------------------------------------------------------------------- */
+.progressTrack:focus-visible {
+  outline: 2px solid var(--context-background-primary-bg-primary, #4cb8c2);
+  outline-offset: 2px;
+}
+
+/* 우측: 전체화면 · 더보기 (Figma gap 4px) */
 .rightGroup {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs, 4px);
   flex-shrink: 0;
   margin-left: var(--spacing-lg, 12px);
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--size-base-4xl, 32px);
+  height: var(--size-base-4xl, 32px);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: var(--radius-full, 100px);
+  background-color: var(--opacity-black-opacity-50, rgba(0, 0, 0, 0.5));
+  color: var(--context-foreground-icon-neutral-icon-neutral-white, #ffffff);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.iconBtn:hover {
+  background-color: var(--opacity-black-opacity-70, rgba(0, 0, 0, 0.7));
+}
+
+.iconBtn:focus-visible {
+  outline: 2px solid var(--context-background-primary-bg-primary, #4cb8c2);
+  outline-offset: 2px;
+}
+
+.iconBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.expandIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.moreIcon {
+  width: 16px;
+  height: 16px;
 }

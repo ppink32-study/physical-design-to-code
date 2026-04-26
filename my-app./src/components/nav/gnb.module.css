@@ -109,6 +109,11 @@
   background: var(--context-background-surface-bg-surface-base-hover);
 }
 
+/* Storybook·매트릭스: 실제 호버 없이 Hovered 열 시각 고정 */
+.iconButton[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+
 .iconButton:focus-visible {
   outline: 2px solid var(--context-foreground-primary-on-primary);
   outline-offset: 2px;

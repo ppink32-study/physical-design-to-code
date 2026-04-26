@@ -339,17 +339,17 @@ function SwatchValue({
         >
           {alias ?? "—"}
         </span>
-        <code
-          style={{
-            fontFamily: "ui-monospace, SFMono-Regular, monospace",
-            fontSize: 11,
+      <code
+        style={{
+          fontFamily: "ui-monospace, SFMono-Regular, monospace",
+          fontSize: 11,
             color: tokens.textSubtle,
             lineHeight: 1.3,
-            wordBreak: "break-all",
-          }}
-        >
+          wordBreak: "break-all",
+        }}
+      >
           {display}
-        </code>
+      </code>
       </div>
     </div>
   );
@@ -564,17 +564,17 @@ function BorderGradientExample() {
             minWidth: 220,
           }}
         >
-          <div
-            style={{
+              <div
+                style={{
               fontSize: 13,
               fontWeight: 600,
               color: tokens.textBase,
             }}
           >
             Human Interaction Data
-          </div>
-          <div
-            style={{
+              </div>
+              <div
+                style={{
               fontSize: 11,
               color: tokens.textSubtle,
               lineHeight: 1.4,
@@ -589,8 +589,8 @@ function BorderGradientExample() {
 }
 
 function LightGradient01Example() {
-  return (
-    <div
+                  return (
+                    <div
       style={{
         width: "100%",
         height: "100%",
@@ -618,8 +618,8 @@ function LightGradient01Example() {
         ].map((step) => (
           <div
             key={step.idx}
-            style={{
-              display: "flex",
+                      style={{
+                        display: "flex",
               alignItems: "center",
               gap: 8,
             }}
@@ -632,7 +632,7 @@ function LightGradient01Example() {
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 10,
+                        fontSize: 10,
                 fontWeight: 600,
                 color: step.active ? "#FFFFFF" : tokens.textSubtle,
                 background: step.active
@@ -655,8 +655,8 @@ function LightGradient01Example() {
           </div>
         ))}
       </div>
-    </div>
-  );
+                    </div>
+                  );
 }
 
 function LightGradient02Example() {
@@ -696,8 +696,8 @@ function LightGradient02Example() {
           </svg>
         </span>
         <span style={{ fontSize: 12, color: tokens.textSubtle }}>Search…</span>
-      </div>
-    </div>
+              </div>
+            </div>
   );
 }
 

@@ -8,6 +8,7 @@
  * - <GnbItem> : 텍스트 메뉴 한 칸 (Default / Selected) · Figma node 17945:3582 family
  * - <GnbIconButton> : 32×32 아이콘 액션 (Default / Hovered / Selected · alarm dot)
  *                    · Figma node 17945:3481 family
+ *                    · `forceState="hover"` 은 Storybook 매트릭스용 (호버 배경만 고정)
  *
  * Light / Dark 는 상위 `[data-theme]` 토큰으로 자동 전환됩니다.
  */
@@ -153,13 +154,19 @@ export type GnbIconButtonProps = Omit<
   alarm?: boolean;
   /** Selected 상태 강조 (배경 적용) */
   selected?: boolean;
+  /**
+   * Storybook·문서용 시각 상태 (실제 hover 외부에서 Hovered 열 표시)
+   * - `hover`: 배경만 호버와 동일
+   * - `default`: 강제 없음 (일반 Default)
+   */
+  forceState?: "default" | "hover";
 };
 
 export const GnbIconButton = forwardRef<
   HTMLButtonElement,
   GnbIconButtonProps
 >(function GnbIconButton(
-  { icon, iconUrl, alarm, selected, className, ...rest },
+  { icon, iconUrl, alarm, selected, forceState, className, ...rest },
   ref,
 ) {
   const cls = [styles.iconButton, className].filter(Boolean).join(" ");
@@ -170,6 +177,7 @@ export const GnbIconButton = forwardRef<
       type="button"
       className={cls}
       data-selected={selected || undefined}
+      data-force-state={forceState === "hover" ? "hover" : undefined}
       {...rest}
     >
       {iconUrl ? (

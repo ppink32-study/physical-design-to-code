@@ -132,6 +132,8 @@ export type StoryDocsPageProps = {
   title: string;
   description?: ReactNode;
   children: ReactNode;
+  /** 기본 1080. Figma 프레임 폭(예: PageTitle 1612px) 검수 시 확대 */
+  pageMaxWidth?: number;
 };
 
 /** 페이지 루트: 상단 타이틀 + 본문 스택(48px 간격) */
@@ -140,9 +142,14 @@ export function StoryDocsPage({
   title,
   description,
   children,
+  pageMaxWidth = 1080,
 }: StoryDocsPageProps) {
+  const rootStyle: CSSProperties = {
+    ...pageRoot,
+    maxWidth: pageMaxWidth,
+  };
   return (
-    <div style={pageRoot}>
+    <div style={rootStyle}>
       <header style={{ marginBottom: 40 }}>
         <p style={eyebrowStyle}>{eyebrow}</p>
         <h1 style={pageTitleStyle}>{title}</h1>
@@ -159,6 +166,8 @@ export type StoryDocsMatrixPageProps = {
   description?: ReactNode;
   /** Figma traces — 있으면 루트에 data-figma-node 부여 */
   figmaNode?: string;
+  /** `StoryDocsPage` 에 전달 — 넓은 Figma 프레임 매트릭스용 */
+  pageMaxWidth?: number;
   children: ReactNode;
 };
 
@@ -171,10 +180,16 @@ export function StoryDocsMatrixPage({
   title,
   description,
   figmaNode,
+  pageMaxWidth,
   children,
 }: StoryDocsMatrixPageProps) {
   return (
-    <StoryDocsPage eyebrow={eyebrow} title={title} description={description}>
+    <StoryDocsPage
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      pageMaxWidth={pageMaxWidth}
+    >
       <div
         {...(figmaNode ? { "data-figma-node": figmaNode } : {})}
         style={{ display: "flex", flexDirection: "column", gap: 40 }}

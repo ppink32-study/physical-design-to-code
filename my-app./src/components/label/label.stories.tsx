@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties } from "react";
-import { Fragment } from "react";
 
-import {
-  Label,
-  type LabelSize,
-  type LabelType,
-} from "./label";
+import { Label } from "./label";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
+import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -21,14 +22,8 @@ const meta: Meta<typeof Label> = {
   component: Label,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma MCP 기반 Label. 4가지 variant (Normal Medium/Small, + Outline Btn Small, + Ghost Btn Small) 를 단일 컴포넌트로 통합했습니다. (node 5691:20257)",
-      },
-    },
+    docs: { disable: true },
   },
-  tags: ["autodocs"],
   argTypes: {
     size: {
       control: "inline-radio",
@@ -51,7 +46,6 @@ const meta: Meta<typeof Label> = {
 export default meta;
 type Story = StoryObj<typeof Label>;
 
-
 export const Playground: Story = {
   decorators: [
     (Story) => (
@@ -70,62 +64,80 @@ export const Playground: Story = {
 };
 
 /* =================================================================
- * Matrix — variant grid + theme
+ * Matrix — Figma: 열 Medium / Small · 행 Normal / Ghost / Outline
  * =============================================================== */
-const headerStyle: CSSProperties = {
-  fontSize: 12,
+
+const matrixCornerTh: CSSProperties = {
+  ...storyMatrixColHeaderStyle,
+  width: 120,
+};
+
+const matrixEmptyTd: CSSProperties = {
+  ...storyMatrixCellStyle,
   color: "var(--context-foreground-surface-on-surface-hint)",
-  fontWeight: 600,
-  textTransform: "uppercase",
-  letterSpacing: 0.4,
-};
-const rowLabelStyle: CSSProperties = {
   fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface)",
+  textAlign: "center",
 };
 
-type RowDef = {
-  key: string;
-  label: string;
-  size: LabelSize;
-  type: LabelType;
-};
-
-const ROWS: RowDef[] = [
-  { key: "normal-md", label: "Normal / Medium", size: "medium", type: "normal" },
-  { key: "normal-sm", label: "Normal / Small", size: "small", type: "normal" },
-  {
-    key: "outline-sm",
-    label: "+ Outline Btn / Small",
-    size: "small",
-    type: "outline-button",
-  },
-  {
-    key: "ghost-sm",
-    label: "+ Ghost Btn / Small",
-    size: "small",
-    type: "ghost-button",
-  },
-];
-
-type ColDef = {
-  key: string;
-  label: string;
-  mandatory?: boolean;
-  infoIcon?: boolean;
-};
-
-const COLS: ColDef[] = [
-  { key: "plain", label: "Plain", mandatory: false, infoIcon: false },
-  { key: "mandatory", label: "Mandatory", mandatory: true, infoIcon: false },
-  { key: "info", label: "Info", mandatory: false, infoIcon: true },
-  {
-    key: "both",
-    label: "Mandatory + Info",
-    mandatory: true,
-    infoIcon: true,
-  },
-];
+/** Figma 스펙: Ghost·Outline 버튼 변형은 Small 열에만 정의 (Medium 셀은 비움) */
+function LabelVariantMatrixTable() {
+  return (
+    <table style={storyMatrixTableBase}>
+      <thead>
+        <tr>
+          <th style={matrixCornerTh} />
+          <th style={storyMatrixColHeaderStyle}>Medium</th>
+          <th style={storyMatrixColHeaderStyle}>Small</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" style={storyMatrixRowHeaderStyle}>
+            Normal
+          </th>
+          <td style={storyMatrixCellStyle}>
+            <Label size="medium" mandatory infoIcon>
+              Label
+            </Label>
+          </td>
+          <td style={storyMatrixCellStyle}>
+            <Label size="small" mandatory infoIcon>
+              Label
+            </Label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" style={storyMatrixRowHeaderStyle}>
+            Ghost Button
+          </th>
+          <td style={matrixEmptyTd}>—</td>
+          <td style={storyMatrixCellStyle}>
+            <Label
+              size="small"
+              type="ghost-button"
+              mandatory
+              infoIcon
+              buttonAriaLabel="add"
+            >
+              Label
+            </Label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" style={storyMatrixRowHeaderStyle}>
+            Outline Button
+          </th>
+          <td style={matrixEmptyTd}>—</td>
+          <td style={storyMatrixCellStyle}>
+            <Label size="small" type="outline-button" mandatory infoIcon>
+              Label
+            </Label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
 
 export const Matrix: Story = {
   name: "Matrix",
@@ -133,95 +145,23 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="Label"
-      description="variant·size·필수·정보 아이콘 조합을 그리드로 비교하고, 하단에서 라이트·다크 테마 대비를 확인합니다."
+      description={
+        <>
+          열은 <strong>Medium</strong> / <strong>Small</strong>, 행은 <strong>Normal</strong> /{" "}
+          <strong>Ghost Button</strong> / <strong>Outline Button</strong> 입니다. Figma 기준
+          Ghost·Outline 은 <strong>Small</strong> 만 정의되어 Medium 셀은 비웁니다.
+        </>
+      }
       figmaNode="5691-20257"
     >
       <FigmaLinkCard
         nodeId="5691-20257"
-        caption="Components / Label — Variant × Size 매트릭스 원본"
+        caption="Components / Label — Type × Size 매트릭스 원본"
       />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "[label] 200px repeat(4, [col] max-content)",
-          columnGap: 32,
-          rowGap: 20,
-          alignItems: "center",
-          justifyItems: "start",
-        }}
-      >
-        <div />
-        {COLS.map((c) => (
-          <div key={c.key} style={headerStyle}>
-            {c.label}
-          </div>
-        ))}
-        {ROWS.map((r) => (
-          <Fragment key={r.key}>
-            <div style={rowLabelStyle}>{r.label}</div>
-            {COLS.map((c) => (
-              <Label
-                key={`${r.key}-${c.key}`}
-                size={r.size}
-                type={r.type}
-                mandatory={c.mandatory}
-                infoIcon={c.infoIcon}
-              >
-                항목명
-              </Label>
-            ))}
-          </Fragment>
-        ))}
-      </div>
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Light vs Dark</h4>
-        <div
-          style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}
-        >
-          <ThemePanel theme="light" />
-          <ThemePanel theme="dark" />
-        </div>
-      </section>
+      <LabelVariantMatrixTable />
     </StoryDocsMatrixPage>
   ),
 };
-
-const panelStyle: CSSProperties = {
-  padding: 24,
-  borderRadius: 12,
-  minWidth: 420,
-  flex: 1,
-  background: "var(--context-background-surface-bg-surface-base)",
-  color: "var(--context-foreground-surface-on-surface-base)",
-  border: "1px solid var(--border-border-surface-border-surface)",
-};
-
-function ThemePanel({ theme }: { theme: "light" | "dark" }) {
-  return (
-    <div data-theme={theme} style={panelStyle}>
-      <div style={{ ...rowLabelStyle, marginBottom: 12, fontWeight: 600 }}>
-        {theme.toUpperCase()}
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <Label>Normal / Medium</Label>
-        <Label mandatory infoIcon>
-          Normal / Medium
-        </Label>
-        <Label size="small">Normal / Small</Label>
-        <Label size="small" mandatory infoIcon>
-          Normal / Small
-        </Label>
-        <Label size="small" type="outline-button" mandatory infoIcon>
-          항목명
-        </Label>
-        <Label size="small" type="ghost-button" mandatory infoIcon>
-          항목명
-        </Label>
-      </div>
-    </div>
-  );
-}
 
 export const Guideline: Story = {
   name: "Guideline",
@@ -235,7 +175,8 @@ export const Guideline: Story = {
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
           폼 필드 라벨·필수 표시·정보 아이콘·outline/ghost 버튼 슬롯을 한 컴포넌트로 다룹니다.
-          variant 조합은 Matrix 그리드에서, 테마 대비는 Matrix 하단 Light/Dark 섹션에서 확인하세요.
+          Type×Size 매트릭스(Normal / Ghost / Outline × Medium / Small)는 Matrix 스토리 표에서
+          확인할 수 있습니다.
         </StoryDocsParagraph>
       </StoryDocsSection>
     </StoryDocsPage>

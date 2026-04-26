@@ -2,13 +2,19 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties, ReactNode } from "react";
 import { Fragment, useState } from "react";
 
-import { Toggle } from "./toggle";
+import { Toggle, ToggleGroup } from "./toggle";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
+import {
+  storyDocsGuideTableStyle,
+  storyDocsGuideTdStyle,
+  storyDocsGuideThStyle,
+} from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
+  StoryDocsPanelInset,
   StoryDocsParagraph,
   StoryDocsSection,
   StoryPlaygroundFrame,
@@ -17,15 +23,9 @@ import {
 const meta: Meta<typeof Toggle> = {
   title: "Components/Toggle",
   component: Toggle,
-  tags: ["autodocs"],
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma MCP 기반 Toggle(Switch). 36x20 pill 트랙 + 14x14 knob. reverse 로 라벨 위치를 토글 좌/우에 선택할 수 있습니다. (Figma node 18001:55013 / 18001:55053)",
-      },
-    },
+    docs: { disable: true },
   },
   argTypes: {
     checked: { control: "boolean" },
@@ -101,22 +101,32 @@ const ROWS: Array<{
   { key: "disabled", label: "Disabled", disabled: true },
 ];
 
-function ControlledToggleDemo() {
-  const [on, setOn] = useState(false);
+function ControlledToggleVerticalDemo() {
+  const [wifi, setWifi] = useState(true);
+  const [bt, setBt] = useState(false);
+  const [dark, setDark] = useState(false);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <Toggle checked={on} onChange={(v) => setOn(v)}>
-        알림 받기 ({String(on)})
-      </Toggle>
-      <Toggle checked={on} onChange={(v) => setOn(v)} reverse>
-        라벨 왼쪽
-      </Toggle>
+      <ToggleGroup orientation="vertical" aria-label="설정">
+        <Toggle checked={wifi} onChange={(v) => setWifi(v)}>
+          Wi-Fi
+        </Toggle>
+        <Toggle checked={bt} onChange={(v) => setBt(v)}>
+          Bluetooth
+        </Toggle>
+        <Toggle checked={dark} onChange={(v) => setDark(v)}>
+          다크 모드
+        </Toggle>
+      </ToggleGroup>
+      <code style={{ fontSize: 12, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+        {JSON.stringify({ wifi, bt, dark })}
+      </code>
     </div>
   );
 }
 
 /* =================================================================
- * 0. Default — Docs Primary + Controls
+ * 0. Playground — Controls
  * =============================================================== */
 export const Playground: Story = {
   decorators: [
@@ -129,7 +139,7 @@ export const Playground: Story = {
 };
 
 /* =================================================================
- * 1. Matrix — 상태 표 + reverse + controlled (테마는 툴바)
+ * 1. Matrix — 상태 표 + reverse + Controlled (테마는 툴바)
  * =============================================================== */
 export const Matrix: Story = {
   name: "Matrix",
@@ -137,12 +147,12 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="Toggle"
-      description="행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. reverse·controlled 예시는 하단 섹션에서 확인합니다."
+      description="행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."
       figmaNode="18001-55013"
     >
       <FigmaLinkCard
         nodeId="18001-55013"
-        caption="Components / Toggle — Size × State 매트릭스 원본"
+        caption="Components / Toggle — State × Size 매트릭스 원본"
       />
       <div
         style={{
@@ -154,30 +164,30 @@ export const Matrix: Story = {
           justifyItems: "start",
         }}
       >
-          <div />
-          {COLS.map((c) => (
-            <div key={c.key} style={headerStyle}>
-              {c.label}
-            </div>
-          ))}
+        <div />
+        {COLS.map((c) => (
+          <div key={c.key} style={headerStyle}>
+            {c.label}
+          </div>
+        ))}
 
-          {ROWS.map((r) => (
-            <Fragment key={r.key}>
-              <div style={rowLabelStyle}>{r.label}</div>
-              {COLS.map((c) => (
-                <div key={`${r.key}-${c.key}`} style={cellStyle}>
-                  <Toggle
-                    checked={c.checked}
-                    disabled={r.disabled}
-                    forceState={r.forceState}
-                    readOnly
-                  >
-                    Label
-                  </Toggle>
-                </div>
-              ))}
-            </Fragment>
-          ))}
+        {ROWS.map((r) => (
+          <Fragment key={r.key}>
+            <div style={rowLabelStyle}>{r.label}</div>
+            {COLS.map((c) => (
+              <div key={`${r.key}-${c.key}`} style={cellStyle}>
+                <Toggle
+                  checked={c.checked}
+                  disabled={r.disabled}
+                  forceState={r.forceState}
+                  readOnly
+                >
+                  Label
+                </Toggle>
+              </div>
+            ))}
+          </Fragment>
+        ))}
       </div>
 
       <SectionFrame title="Reverse (label position)">
@@ -195,16 +205,132 @@ export const Matrix: Story = {
         </div>
       </SectionFrame>
 
-      <SectionFrame title="Controlled">
-        <ControlledToggleDemo />
+      <SectionFrame title="Controlled · ToggleGroup (vertical)">
+        <ControlledToggleVerticalDemo />
       </SectionFrame>
     </StoryDocsMatrixPage>
   ),
 };
 
-/* =================================================================
- * 2. Guidelines
- * =============================================================== */
+function ControlledToggleGroupSnippet() {
+  const [a, setA] = useState(false);
+  const [b, setB] = useState(true);
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <ToggleGroup orientation="horizontal" aria-label="옵션">
+        <Toggle checked={a} onChange={(v) => setA(v)}>
+          알림 A
+        </Toggle>
+        <Toggle checked={b} onChange={(v) => setB(v)}>
+          알림 B
+        </Toggle>
+      </ToggleGroup>
+      <code style={{ fontSize: 12, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+        {JSON.stringify({ a, b })}
+      </code>
+    </div>
+  );
+}
+
+/* -----------------------------------------------------------------
+ * ToggleGroup 간격 — toggle.module.css 의 .toggleGroup 과 동일 (RadioGroup 과 동일 토큰)
+ * ----------------------------------------------------------------- */
+const groupSpacingCardLabelStyle: CSSProperties = {
+  margin: 0,
+  fontSize: 15,
+  fontWeight: 700,
+  letterSpacing: "-0.02em",
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
+const groupSpacingCardDescStyle: CSSProperties = {
+  margin: 0,
+  fontSize: 14,
+  lineHeight: 1.65,
+  color: "var(--context-foreground-surface-on-surface-secondary)",
+};
+
+const groupSpacingPreviewBoxStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  boxSizing: "border-box",
+  width: "100%",
+  minHeight: 176,
+  height: 176,
+};
+
+const TOGGLE_GROUP_SPACING: Array<{
+  key: string;
+  label: string;
+  description: ReactNode;
+  orientation: "vertical" | "horizontal";
+}> = [
+  {
+    key: "vertical",
+    label: "Vertical (column)",
+    description: (
+      <>
+        세로로 쌓을 때 항목 사이 간격은 <strong>4px</strong>입니다. (
+        <StoryDocsInlineCode>--spacing-2xs</StoryDocsInlineCode> ·{" "}
+        <StoryDocsInlineCode>toggle.module.css</StoryDocsInlineCode> 의{" "}
+        <StoryDocsInlineCode>.toggleGroup</StoryDocsInlineCode> 기본{" "}
+        <StoryDocsInlineCode>gap</StoryDocsInlineCode> · RadioGroup 과 동일)
+      </>
+    ),
+    orientation: "vertical",
+  },
+  {
+    key: "horizontal",
+    label: "Horizontal (row)",
+    description: (
+      <>
+        가로로 나란히 둘 때 항목 사이 간격은 <strong>16px</strong>입니다. (
+        <StoryDocsInlineCode>--spacing-lg</StoryDocsInlineCode> ·{" "}
+        <StoryDocsInlineCode>data-orientation=&quot;horizontal&quot;</StoryDocsInlineCode> 일 때{" "}
+        <StoryDocsInlineCode>gap</StoryDocsInlineCode> · RadioGroup 과 동일)
+      </>
+    ),
+    orientation: "horizontal",
+  },
+];
+
+function ToggleGroupSpacingCard({
+  label,
+  description,
+  orientation,
+}: {
+  label: string;
+  description: ReactNode;
+  orientation: "vertical" | "horizontal";
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
+      <div style={groupSpacingCardLabelStyle}>{label}</div>
+      <p style={groupSpacingCardDescStyle}>{description}</p>
+      <StoryDocsPanelInset>
+        <div style={groupSpacingPreviewBoxStyle}>
+          <ToggleGroup
+            orientation={orientation}
+            aria-label="Toggle spacing demo"
+          >
+            <Toggle defaultChecked={orientation === "horizontal"}>Apple</Toggle>
+            <Toggle defaultChecked={orientation === "vertical"}>Banana</Toggle>
+            <Toggle>Cherry</Toggle>
+          </ToggleGroup>
+        </div>
+      </StoryDocsPanelInset>
+    </div>
+  );
+}
+
+const groupExampleLabelStyle: CSSProperties = {
+  marginBottom: 8,
+  fontSize: 13,
+  fontWeight: 600,
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
 const guideBlockStyle: CSSProperties = {
   padding: 16,
   borderRadius: 8,
@@ -212,30 +338,13 @@ const guideBlockStyle: CSSProperties = {
   background: "var(--context-background-surface-bg-surface-base)",
 };
 
-const guideTableStyle: CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse",
-  fontSize: 13,
-  lineHeight: 1.5,
-  color: "var(--context-foreground-surface-on-surface-base)",
-};
+const guideTableStyle = storyDocsGuideTableStyle;
+const thStyle = storyDocsGuideThStyle;
+const tdStyle = storyDocsGuideTdStyle;
 
-const thStyle: CSSProperties = {
-  textAlign: "left",
-  fontWeight: 600,
-  fontSize: 12,
-  padding: "8px 12px",
-  borderBottom: "1px solid var(--border-border-surface-border-surface)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-};
-
-const tdStyle: CSSProperties = {
-  padding: "10px 12px",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  verticalAlign: "top",
-};
-
+/* =================================================================
+ * 2. Guideline
+ * =============================================================== */
 export const Guideline: Story = {
   name: "Guideline",
   parameters: {
@@ -247,37 +356,86 @@ export const Guideline: Story = {
     <StoryDocsPage title="Toggle" description="스위치 형태 설정 컴포넌트 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          설정 on/off를 스위치 형태로 표현합니다. <StoryDocsInlineCode>checked</StoryDocsInlineCode>{" "}
-          / <StoryDocsInlineCode>onChange</StoryDocsInlineCode>로 제어하거나{" "}
-          <StoryDocsInlineCode>defaultChecked</StoryDocsInlineCode>로 비제어 사용이 가능합니다.
+          설정 on/off를 스위치로 표현합니다. <StoryDocsInlineCode>checked</StoryDocsInlineCode> /{" "}
+          <StoryDocsInlineCode>onChange</StoryDocsInlineCode>로 제어하거나{" "}
+          <StoryDocsInlineCode>defaultChecked</StoryDocsInlineCode>로 비제어 사용이 가능합니다. 여러
+          개를 나란히 둘 때는 <StoryDocsInlineCode>ToggleGroup</StoryDocsInlineCode>으로 묶어
+          RadioGroup 과 동일한 간격(세로 4px · 가로 16px)을 적용합니다.
         </StoryDocsParagraph>
       </StoryDocsSection>
 
-      <StoryDocsSection title="주요 옵션">
+      <StoryDocsSection
+        title="ToggleGroup 간격"
+        description="ToggleGroup 은 orientation 에 따라 항목 간 gap 이 다릅니다. 구현은 toggle.module.css 의 .toggleGroup 이며 RadioGroup·CheckboxGroup 과 동일 토큰입니다."
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 24,
+          }}
+        >
+          {TOGGLE_GROUP_SPACING.map((item) => (
+            <ToggleGroupSpacingCard key={item.key} {...item} />
+          ))}
+        </div>
+      </StoryDocsSection>
+
+      <StoryDocsSection
+        title="ToggleGroup 예시"
+        description="Horizontal · Vertical · Controlled · 그룹 비활성화 조합입니다."
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 560 }}>
+          <div>
+            <div style={groupExampleLabelStyle}>Horizontal</div>
+            <ToggleGroup orientation="horizontal" aria-label="과일">
+              <Toggle defaultChecked>Apple</Toggle>
+              <Toggle>Banana</Toggle>
+              <Toggle>Cherry</Toggle>
+            </ToggleGroup>
+          </div>
+          <div>
+            <div style={groupExampleLabelStyle}>Vertical</div>
+            <ToggleGroup orientation="vertical" aria-label="과일">
+              <Toggle>Apple</Toggle>
+              <Toggle defaultChecked>Banana</Toggle>
+              <Toggle>Cherry</Toggle>
+            </ToggleGroup>
+          </div>
+          <div>
+            <div style={groupExampleLabelStyle}>Controlled</div>
+            <ControlledToggleGroupSnippet />
+          </div>
+          <div>
+            <div style={groupExampleLabelStyle}>Group disabled</div>
+            <ToggleGroup orientation="horizontal" aria-label="비활성 그룹">
+              <Toggle defaultChecked disabled>
+                Apple
+              </Toggle>
+              <Toggle disabled>Banana</Toggle>
+              <Toggle disabled>Cherry</Toggle>
+            </ToggleGroup>
+          </div>
+        </div>
+      </StoryDocsSection>
+
+      <StoryDocsSection title="Toggle vs Checkbox">
         <div style={guideBlockStyle}>
           <table style={guideTableStyle}>
             <thead>
               <tr>
-                <th style={thStyle}>옵션</th>
-                <th style={thStyle}>설명</th>
+                <th style={thStyle}>컴포넌트</th>
+                <th style={thStyle}>용도</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style={tdStyle}>
-                  <StoryDocsInlineCode>reverse</StoryDocsInlineCode>
-                </td>
-                <td style={tdStyle}>
-                  <StoryDocsInlineCode>true</StoryDocsInlineCode>이면 라벨이 트랙 왼쪽에 옵니다.
-                </td>
+                <td style={tdStyle}>Toggle</td>
+                <td style={tdStyle}>즉시 반영되는 on/off(설정·기능 스위치).</td>
               </tr>
               <tr>
-                <td style={tdStyle}>
-                  <StoryDocsInlineCode>forceState</StoryDocsInlineCode>
-                </td>
-                <td style={tdStyle}>
-                  Storybook에서 포커스 링 고정용. 프로덕션에서는 비권장.
-                </td>
+                <td style={tdStyle}>Checkbox</td>
+                <td style={tdStyle}>다중 선택 또는 폼 제출 전까지 보류되는 선택.</td>
               </tr>
             </tbody>
           </table>
@@ -285,9 +443,12 @@ export const Guideline: Story = {
       </StoryDocsSection>
 
       <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Toggle } from "@/components/toggle/toggle";
+        <StoryDocsCode>{`import { Toggle, ToggleGroup } from "@/components/toggle/toggle";
 
-<Toggle defaultChecked>알림</Toggle>
+<ToggleGroup orientation="vertical" aria-label="알림">
+  <Toggle defaultChecked>푸시</Toggle>
+  <Toggle>이메일</Toggle>
+</ToggleGroup>
 
 <Toggle checked={on} onChange={setOn} reverse>
   라벨 왼쪽

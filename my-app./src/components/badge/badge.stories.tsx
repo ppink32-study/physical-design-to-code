@@ -12,6 +12,17 @@ import {
 } from "./badge";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
+  storyDocsGuideTableStyle,
+  storyDocsGuideTdStyle,
+  storyDocsGuideThStyle,
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
+import {
   StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
@@ -115,58 +126,12 @@ const SectionFrame = ({
 );
 
 /** Figma Badge 시트 — 행=Size·Shape, 열=Color (가로 스크롤) */
-const matrixScrollWrap: CSSProperties = {
-  overflowX: "auto",
-  paddingBottom: 8,
-  marginLeft: -8,
-  marginRight: -8,
-  paddingLeft: 8,
-  paddingRight: 8,
-};
-
-const matrixTableBase: CSSProperties = {
-  borderCollapse: "collapse",
-  width: "max-content",
-  background: "var(--context-background-surface-bg-surface-base)",
-};
-
-const matrixColHeaderStyle: CSSProperties = {
-  fontSize: 11,
-  fontWeight: 600,
-  letterSpacing: "0.04em",
-  textAlign: "left",
-  padding: "10px 12px",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-  whiteSpace: "nowrap",
-};
-
-const matrixRowHeaderStyle: CSSProperties = {
-  fontSize: 12,
-  fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-  padding: "12px 16px 12px 0",
-  whiteSpace: "nowrap",
-  verticalAlign: "middle",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-};
-
-const matrixCellStyle: CSSProperties = {
-  padding: "12px 16px",
-  verticalAlign: "middle",
-  borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-};
-
-const matrixStickyCornerStyle: CSSProperties = {
-  position: "sticky",
-  left: 0,
-  zIndex: 1,
-  background: "var(--context-background-surface-bg-surface-base)",
-  boxShadow: "6px 0 12px -8px rgba(20, 21, 24, 0.12)",
-};
+const matrixScrollWrap = storyMatrixScrollWrap;
+const matrixTableBase = storyMatrixTableBase;
+const matrixColHeaderStyle = storyMatrixColHeaderStyle;
+const matrixRowHeaderStyle = storyMatrixRowHeaderStyle;
+const matrixCellStyle = storyMatrixCellStyle;
+const matrixStickyCornerStyle = storyMatrixStickyCornerStyle;
 
 /* =================================================================
  * Color lists
@@ -549,28 +514,9 @@ const guideBlockStyle: CSSProperties = {
   background: "var(--context-background-surface-bg-surface-base)",
 };
 
-const guideTableStyle: CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse",
-  fontSize: 13,
-  lineHeight: 1.5,
-  color: "var(--context-foreground-surface-on-surface-base)",
-};
-
-const thStyle: CSSProperties = {
-  textAlign: "left",
-  fontWeight: 600,
-  fontSize: 12,
-  padding: "8px 12px",
-  borderBottom: "1px solid var(--border-border-surface-border-surface)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-};
-
-const tdStyle: CSSProperties = {
-  padding: "10px 12px",
-  borderBottom: "1px solid var(--border-border-surface-border-surface-secondary)",
-  verticalAlign: "top",
-};
+const guideTableStyle = storyDocsGuideTableStyle;
+const thStyle = storyDocsGuideThStyle;
+const tdStyle = storyDocsGuideTdStyle;
 
 export const Guideline: Story = {
   name: "Guideline",

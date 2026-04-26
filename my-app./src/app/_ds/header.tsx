@@ -38,6 +38,9 @@ export function Header() {
           >
             Components
           </GnbItem>
+          <GnbItem href="/example" matchPath={(p) => p.startsWith("/example")}>
+            Example
+          </GnbItem>
         </>
       }
       actions={

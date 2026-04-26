@@ -1,162 +1,144 @@
 /**
- * ContentsTitleSub stories — Figma node 5784:48007
- *
- *   - Variants (accordion on/off × expand × required × info × count × button)
- *   - Full Matrix
- *   - LightDarkCompare
+ * ContentsTitleSub — Figma node 5784:48007 · Matrix only (세로 스택, 가로 스크롤 없음)
  */
 
-import { useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { StoryPlaygroundFrame } from "@/stories/story-docs-shell";
 import { ContentsTitleSub } from "./contentstitlesub";
+import { FigmaLinkCard } from "@/stories/figma-link-card";
+import { StoryDocsMatrixPage } from "@/stories/story-docs-shell";
 
 const meta: Meta<typeof ContentsTitleSub> = {
   title: "Components/Title/ContentsTitleSub",
   component: ContentsTitleSub,
-  parameters: { layout: "padded" },
-  argTypes: {
-    title: { control: "text" },
-    required: { control: "boolean" },
-    infoIcon: { control: "boolean" },
-    count: { control: "text" },
-    accordion: { control: "boolean" },
-    expanded: { control: "boolean" },
-    button: { control: false },
-  },
-  args: {
-    title: "Header Title",
-    accordion: true,
-    expanded: true,
-    infoIcon: true,
+  parameters: {
+    layout: "padded",
+    docs: { disable: true },
   },
 };
 export default meta;
-
 type Story = StoryObj<typeof ContentsTitleSub>;
 
+const CONTENTS_TITLE_FRAME_PX = 1496;
+const DOCS_PAGE_MAX_WIDTH = 1568;
 
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
-      <StoryPlaygroundFrame>
-        <Story />
-      </StoryPlaygroundFrame>
-    ),
-  ],
-  args: {
-    title: "Header Title",
+const verticalStackStyle: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 28,
+  width: "100%",
+};
+
+const variantCaptionStyle: CSSProperties = {
+  fontSize: 12,
+  fontWeight: 600,
+  letterSpacing: "0.02em",
+  marginBottom: 8,
+  color: "var(--context-foreground-surface-on-surface-hint)",
+};
+
+const frameWrapStyle: CSSProperties = {
+  width: CONTENTS_TITLE_FRAME_PX,
+  maxWidth: "100%",
+  boxSizing: "border-box",
+};
+
+const COLS = [
+  {
+    key: "c1",
+    label: "Count + Accordion",
     accordion: true,
-    expanded: true,
-    infoIcon: true,
+    count: "32" as const,
+    button: undefined as boolean | undefined,
   },
-};
-
-/* =============================================================
- * Variants
- * =========================================================== */
-export const Accordion_Expand: Story = {
-  args: { accordion: true, expanded: true, infoIcon: true },
-};
-
-export const Accordion_Collapsed: Story = {
-  args: { accordion: true, expanded: false, infoIcon: true },
-};
-
-export const WithCountBadge: Story = {
-  args: {
+  {
+    key: "c2",
+    label: "Accordion only",
     accordion: true,
-    expanded: true,
-    infoIcon: true,
-    count: "32",
+    count: undefined,
+    button: undefined,
   },
-};
-
-export const Required: Story = {
-  args: {
-    accordion: true,
-    expanded: true,
-    required: true,
-    infoIcon: true,
-  },
-};
-
-export const NoAccordion_NoButton: Story = {
-  args: {
+  {
+    key: "c3",
+    label: "Plain",
     accordion: false,
-    expanded: false,
-    infoIcon: true,
+    count: undefined,
+    button: undefined,
   },
-};
-
-export const NoAccordion_TextButton: Story = {
-  args: {
+  {
+    key: "c4",
+    label: "Plain + Button",
     accordion: false,
-    expanded: false,
-    infoIcon: true,
-    button: true,
+    count: undefined,
+    button: true as const,
   },
-};
+] as const;
 
-export const Interactive: Story = {
-  render: () => {
-    function Demo() {
-      const [expanded, setExpanded] = useState(true);
-      return (
-        <ContentsTitleSub
-          title="Header Title"
-          accordion
-          expanded={expanded}
-          infoIcon
-          count="32"
-          onToggle={() => setExpanded((v) => !v)}
-        />
-      );
+function VariantBlock({
+  caption,
+  children: blockChildren,
+}: {
+  caption: string;
+  children: ReactNode;
+}) {
+  return (
+    <div>
+      <div style={variantCaptionStyle}>{caption}</div>
+      <div style={frameWrapStyle}>{blockChildren}</div>
+    </div>
+  );
+}
+
+const SUB_VARIANTS: Array<{ key: string; caption: string; node: ReactNode }> = [];
+for (const infoIcon of [false, true]) {
+  for (const required of [false, true]) {
+    for (const expanded of [false, true]) {
+      for (const col of COLS) {
+        const rowPart = [
+          `info ${infoIcon ? "on" : "off"}`,
+          `req ${required ? "on" : "off"}`,
+          `expand ${expanded ? "up" : "down"}`,
+        ].join(" · ");
+        SUB_VARIANTS.push({
+          key: `i${infoIcon ? 1 : 0}r${required ? 1 : 0}e${expanded ? 1 : 0}-${col.key}`,
+          caption: `${rowPart} · ${col.label}`,
+          node: (
+            <ContentsTitleSub
+              title="Header Title"
+              infoIcon={infoIcon}
+              required={required}
+              accordion={col.accordion}
+              expanded={col.accordion ? expanded : true}
+              count={col.count}
+              button={col.button}
+            />
+          ),
+        });
+      }
     }
-    return <Demo />;
-  },
-};
+  }
+}
 
-/* =============================================================
- * Full matrix
- * =========================================================== */
-export const FullMatrix: Story = {
-  parameters: { layout: "fullscreen" },
+export const Matrix: Story = {
+  name: "Matrix",
+  parameters: { layout: "padded" },
   render: () => (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-        gap: 16,
-        padding: 24,
-      }}
+    <StoryDocsMatrixPage
+      title="ContentsTitleSub"
+      description="프레임 폭 1496px. Info · Required · Expanded × 우측 패턴을 세로로 나열합니다 (가로 스크롤 없음)."
+      figmaNode="5784-48007"
+      pageMaxWidth={DOCS_PAGE_MAX_WIDTH}
     >
-      <ContentsTitleSub title="Accordion · Expand" accordion expanded infoIcon />
-      <ContentsTitleSub title="Accordion · Collapsed" accordion expanded={false} infoIcon />
-      <ContentsTitleSub title="Accordion + Count" accordion expanded infoIcon count="32" />
-      <ContentsTitleSub title="Required" accordion expanded required infoIcon />
-      <ContentsTitleSub title="No accordion" />
-      <ContentsTitleSub title="No accordion · Button" button />
-    </div>
-  ),
-};
+      <FigmaLinkCard nodeId="5784-48007" caption="Components / Title — Contents Title Sub" />
 
-/* =============================================================
- * Light/Dark compare
- * =========================================================== */
-export const LightDarkCompare: Story = {
-  parameters: { layout: "fullscreen" },
-  render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div data-theme="light" style={{ padding: 24, background: "var(--context-background-surface-bg-surface-base)" }}>
-        <div style={{ fontSize: 12, marginBottom: 8, color: "#787a88" }}>Light</div>
-        <ContentsTitleSub title="Header Title" accordion expanded infoIcon count="32" />
+      <div style={verticalStackStyle}>
+        {SUB_VARIANTS.map((v) => (
+          <VariantBlock key={v.key} caption={v.caption}>
+            {v.node}
+          </VariantBlock>
+        ))}
       </div>
-      <div data-theme="dark" style={{ padding: 24, background: "var(--context-background-surface-bg-surface-base)" }}>
-        <div style={{ fontSize: 12, marginBottom: 8, color: "#b3b4bc" }}>Dark</div>
-        <ContentsTitleSub title="Header Title" accordion expanded infoIcon count="32" />
-      </div>
-    </div>
+    </StoryDocsMatrixPage>
   ),
 };

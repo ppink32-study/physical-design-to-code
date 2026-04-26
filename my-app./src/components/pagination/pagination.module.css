@@ -1,5 +1,6 @@
 /* =============================================================================
  * Pagination — Figma MCP 기반 작성
+ *   Com / 구성   : 13286:33784 (Medium | Large · Go to 레이아웃)
  *   Pagination  : 5030:28833  (Size = Medium | Large)
  *   Items       : Pagination-Prev(5024:11276) / Next(5024:92466) /
  *                 Number(5024:92499) / Ellipsis(5024:92569)
@@ -193,8 +194,7 @@
   line-height: var(--font-line-height-sm);
 }
 
-.selectBox,
-.goInput {
+.selectBox {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -208,15 +208,75 @@
   color: var(--context-foreground-surface-on-surface-base);
 }
 
-.goInput {
+/* Go to — Figma 13286:33784: 레이블은 박스 밖, 입력만 테두리 박스 + placeholder "Page" */
+.goToSection {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+.goToLabel {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+.goToBox {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 58px;
+  height: var(--size-base-4xl, 32px);
+  padding: 1px var(--spacingMd, var(--spacing-md, 12px));
+  gap: var(--spacing2Xs, var(--spacing-2xs, 4px));
+  border-radius: var(--radiusMd, var(--radius-md, 6px));
+  border: 1px solid
+    var(--Border-Border-Surface-border-surface, var(--border-border-surface-border-surface, #d7d8dc));
+  background: var(
+    --Context-Background-Surface-bg-surface-base,
+    var(--context-background-surface-bg-surface-base, #fff)
+  );
+  overflow: hidden;
+}
+
+.root[data-size="large"] .goToBox {
+  width: 62px;
+  height: var(--sizeBase6Xl, var(--size-base-6xl, 40px));
+  font-size: var(--font-size-body-lg);
+  line-height: var(--font-line-height-lg);
+}
+
+.goToInput {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  color: var(--context-foreground-surface-on-surface-base);
+  text-align: start;
   outline: none;
 }
-.goInput::placeholder {
+
+.root[data-size="large"] .goToInput {
+  font-size: var(--font-size-body-lg);
+  line-height: var(--font-line-height-lg);
+}
+
+.goToInput::placeholder {
   color: var(--context-foreground-surface-on-surface-hint);
 }
 
-.root[data-size="large"] .selectBox,
-.root[data-size="large"] .goInput {
+.root[data-size="large"] .selectBox {
   --pg-size: 40px;
   font-size: var(--font-size-body-lg);
   line-height: var(--font-line-height-lg);

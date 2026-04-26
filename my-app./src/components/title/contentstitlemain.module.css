@@ -1,6 +1,8 @@
 /* =============================================================================
  * ContentsTitleMain — Contents Title / Main (Figma node 4790:206)
  * -----------------------------------------------------------------------------
+ * Frame: width 1496px (max-width 100%)
+ *
  * Tokens
  *   - title     : Heading/H4 (20/24 semibold) on-surface-base
  *   - hint text : Body/Sm-Medium (12/16 -0.5) on-surface-hint
@@ -17,7 +19,8 @@
   height: var(--size-base-6xl, 40px);
   gap: var(--spacing-5xl, 40px);
   box-sizing: border-box;
-  width: 100%;
+  width: 1496px;
+  max-width: 100%;
 }
 
 /* ---------------------------------------------------------------------------

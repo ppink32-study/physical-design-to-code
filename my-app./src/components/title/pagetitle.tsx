@@ -1,12 +1,14 @@
 "use client";
 
 /**
- * PageTitle — Page Title (Figma node 4790:161)
+ * PageTitle — Page Title (Figma MCP · node 4790:161)
  * ----------------------------------------------------------------
+ * 루트 폭: 1612px (Figma 실측, 좁은 뷰포트에서는 max-width:100%로 축소)
+ *
  * 두 가지 레이아웃
  *   - 1d : 좌측 제목(+ hint bubble) 한 줄. height 68px, pt=20 pb=12.
- *   - 2d : 좌측 (badges + 제목 + hint bubble) + 우측 buttons 슬롯 한 줄.
- *          gap=40, items-center.
+ *   - 2d : 좌측 (뒤로가기 + badges + 제목 + hint bubble) + 우측 buttons 슬롯 한 줄.
+ *          gap=40, items-center. 뒤로가기는 Figma node 4790:177 — `backButton` 슬롯.
  *
  * 토큰
  *   - Title   : Heading/H3 (24px / 32px semibold)
@@ -35,6 +37,8 @@ export type PageTitleProps = Omit<HTMLAttributes<HTMLDivElement>, "title"> & {
   hint?: ReactNode;
   /** bubble leading icon 커스텀. 미지정 시 기본 꼬리 SVG 삽입 */
   hintIcon?: ReactNode;
+  /** 2d 전용. 좌측 맨 앞(배지 앞) — 뒤로가기 등 */
+  backButton?: ReactNode;
   /** 2d 에서 제목 좌측에 배치되는 배지 슬롯 */
   badges?: ReactNode;
   /** 2d 에서 우측에 배치되는 버튼 그룹 슬롯 */
@@ -71,6 +75,7 @@ function PageTitleInner(
     children,
     hint,
     hintIcon,
+    backButton,
     badges,
     actions,
     className,
@@ -119,6 +124,11 @@ function PageTitleInner(
       style={rootStyle}
     >
       <div className={styles.leftArea}>
+        {backButton ? (
+          <div className={styles.backSlot} data-name="page-title-back">
+            {backButton}
+          </div>
+        ) : null}
         {badges ? <div className={styles.badges}>{badges}</div> : null}
         <div className={styles.titleWrap}>{titleNode}</div>
         {bubbleNode}

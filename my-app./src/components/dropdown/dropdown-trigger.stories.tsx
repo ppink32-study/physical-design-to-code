@@ -9,13 +9,7 @@ import {
   type DropdownTriggerType,
 } from "./dropdown-trigger";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
-import {
-  StoryDocsInlineCode,
-  StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsSection,
-  StoryPlaygroundFrame,
-} from "@/stories/story-docs-shell";
+import { StoryDocsMatrixPage, StoryPlaygroundFrame } from "@/stories/story-docs-shell";
 
 const FIGMA_SECTION = figmaNodeUrl("5262-317642");
 
@@ -25,14 +19,8 @@ const meta: Meta<typeof DropdownTrigger> = {
   parameters: {
     layout: "centered",
     figma: FIGMA_SECTION,
-    docs: {
-      description: {
-        component:
-          "Figma `Dropdown / Trigger`. type·size·split·dropDirection 조합을 지원하며, Composite 에서 open/close 가 연결됩니다.",
-      },
-    },
+    docs: { disable: true },
   },
-  tags: ["autodocs"],
   argTypes: {
     type: { control: "inline-radio", options: ["primary", "secondary"] },
     size: { control: "inline-radio", options: ["small", "medium", "large"] },
@@ -75,7 +63,7 @@ export const Playground: Story = {
   },
 };
 
-const SIZES: DropdownTriggerSize[] = ["medium", "large", "small"];
+const SIZES: DropdownTriggerSize[] = ["small", "medium", "large"];
 const DIRECTIONS: DropdownTriggerDropDirection[] = ["down", "up", "left", "right"];
 const COLS: Array<{ type: DropdownTriggerType; split: boolean; label: string }> = [
   { type: "primary", split: false, label: "Primary / split=false" },
@@ -88,11 +76,6 @@ export const Matrix: Story = {
   name: "Matrix",
   parameters: {
     layout: "padded",
-    docs: {
-      description: {
-        story: "Size × Direction 행, Type × Split 열 매트릭스.",
-      },
-    },
   },
   render: () => (
     <StoryDocsMatrixPage
@@ -170,37 +153,5 @@ export const Matrix: Story = {
         )}
       </div>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Trigger" description="드롭다운 트리거 컴포넌트 사용 가이드입니다.">
-      <StoryDocsSection title="사용 가이드">
-        <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.65 }}>
-          <li>
-            메뉴가 펼쳐지는 방향과 맞추려면{" "}
-            <StoryDocsInlineCode>dropDirection</StoryDocsInlineCode>으로 caret 방향을 맞춥니다.
-            비-split 일 때는 Figma 기준으로 Down·Up·Left 에서 caret 이 라벨 왼쪽, Right 에서
-            오른쪽에 둡니다.
-          </li>
-          <li>
-            <StoryDocsInlineCode>splitButton</StoryDocsInlineCode> 은 주 액션(라벨 클릭)과 메뉴
-            토글(chevron)을 분리할 때 사용합니다. Left 방향일 때는 Figma 대로 chevron 세그먼트가
-            왼쪽에 옵니다.
-          </li>
-          <li>
-            열림 상태는 Composite 에서 <StoryDocsInlineCode>opened</StoryDocsInlineCode>·
-            <StoryDocsInlineCode>aria-expanded</StoryDocsInlineCode>와 함께 넘기면 됩니다.
-          </li>
-        </ul>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

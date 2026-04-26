@@ -14,7 +14,7 @@
  *   - disabled bg  : --context-background-surface-bg-surface-base-disabled
  *   - disabled bd/dot : --context-foreground-primary-on-primary-disabled
  *   - disabled label : --context-foreground-surface-on-surface-disabled
- *   - focus ring   : --opacity-primary-opacity-15  (4px spread)
+ *   - focus ring   : --shadow-focus-ring-primary (shadow.css / Focus Ring · Primary)
  * ========================================================================== */
 
 .root {
@@ -74,17 +74,23 @@
   border-color: var(--context-foreground-primary-on-primary-selected);
 }
 
-/* -- Focused unchecked -- */
+/* -- Focused unchecked --
+ * :focus-within — 라벨 클릭 시 input 포커스가 잡히면 링 표시 (Checkbox 와 동일 패턴)
+ * .input:focus + .box — 키보드 등 직접 포커스
+ * data-force-state — Matrix / Storybook 시각 고정
+ */
+.root[data-state="unchecked"]:focus-within:not([data-disabled="true"]) .box,
 .root[data-state="unchecked"] .input:focus + .box,
 .root[data-state="unchecked"][data-force-state="focused"] .box {
   border-color: var(--border-border-primary);
-  box-shadow: 0 0 0 4px var(--opacity-primary-opacity-15);
+  box-shadow: var(--shadow-focus-ring-primary);
 }
 
 /* -- Focused checked -- */
+.root[data-state="checked"]:focus-within:not([data-disabled="true"]) .box,
 .root[data-state="checked"] .input:focus + .box,
 .root[data-state="checked"][data-force-state="focused"] .box {
-  box-shadow: 0 0 0 4px var(--opacity-primary-opacity-15);
+  box-shadow: var(--shadow-focus-ring-primary);
 }
 
 /* -- Disabled unchecked -- */

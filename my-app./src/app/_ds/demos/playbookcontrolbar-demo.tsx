@@ -13,56 +13,77 @@ const videoStage = {
 
 export function PlaybookControlBarDemo() {
   const [time, setTime] = useState(65);
-  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    if (!playing) return;
     const id = setInterval(() => {
       setTime((t) => (t >= 180 ? 0 : t + 1));
-    }, 300);
+    }, 1000);
     return () => clearInterval(id);
-  }, [playing]);
+  }, []);
 
   return (
     <>
       <DemoSection
-        title="Default · Playing"
-        description="기본 상태와 재생 중 상태를 비교"
+        title="예시"
+        description="시간 필 + 프로그레스 (정적)"
       >
         <div style={videoStage}>
-          <PlaybookControlBar currentTime={23} duration={180} />
+          <PlaybookControlBar
+            currentTime={23}
+            duration={180}
+            showHandle="auto"
+            onFullscreen={() => {}}
+            onMore={() => {}}
+          />
         </div>
         <div style={videoStage}>
-          <PlaybookControlBar currentTime={96} duration={180} defaultPlaying />
+          <PlaybookControlBar
+            currentTime={96}
+            duration={180}
+            showHandle="auto"
+            onFullscreen={() => {}}
+            onMore={() => {}}
+          />
         </div>
       </DemoSection>
 
       <DemoSection
-        title="Interactive"
-        description="Play/Pause · Seek · Fullscreen 콜백 연결 데모"
+        title="시간 진행 + 시크"
+        description="트랙 클릭 시 onSeek으로 currentTime을 갱신합니다."
       >
         <div style={videoStage}>
           <PlaybookControlBar
             currentTime={time}
             duration={180}
-            playing={playing}
-            onPlayPause={setPlaying}
             onSeek={setTime}
-            onFullscreen={() => alert("fullscreen!")}
-            onMore={() => alert("more!")}
+            showHandle="auto"
+            onFullscreen={() => alert("fullscreen")}
+            onMore={() => alert("more")}
           />
         </div>
       </DemoSection>
 
       <DemoSection
         title="Durations"
-        description="짧은/긴 duration에 따라 시간 표시가 M:SS · H:MM:SS로 자동 전환"
+        description="길이에 따라 M:SS · MM:SS · H:MM:SS와 칸 너비가 바뀝니다."
       >
         <div style={videoStage}>
-          <PlaybookControlBar currentTime={7} duration={45} />
+          <PlaybookControlBar
+            currentTime={7}
+            duration={45}
+            showHandle="auto"
+            onFullscreen={() => {}}
+            onMore={() => {}}
+          />
         </div>
         <div style={videoStage}>
-          <PlaybookControlBar currentTime={3720} duration={9000} />
+          <PlaybookControlBar
+            currentTime={3720}
+            duration={9000}
+            showHandle="auto"
+            onFullscreen={() => {}}
+            onMore={() => {}}
+          />
         </div>
       </DemoSection>
     </>

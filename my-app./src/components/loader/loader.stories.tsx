@@ -2,58 +2,21 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties } from "react";
 
 import { Loader, type LoaderColor, type LoaderSize } from "./loader";
+import { PageLoaderOverlay } from "./page-loader-overlay";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
-import {
-  StoryDocsInlineCode,
-  StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
-  StoryPlaygroundFrame,
-} from "@/stories/story-docs-shell";
+import { figmaNodeUrl } from "@/stories/story-figma-urls";
+import { StoryDocsMatrixPage } from "@/stories/story-docs-shell";
 
 const meta: Meta<typeof Loader> = {
   title: "Components/Loader",
   component: Loader,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma MCP 기반 Loader. 원호(arc) 와 끝점(dot) 이 회전하는 Circle loading 컴포넌트입니다. (node 13289:46891)",
-      },
-    },
-  },
-  tags: ["autodocs"],
-  argTypes: {
-    size: {
-      control: "inline-radio",
-      options: ["small", "medium", "large"],
-    },
-    color: {
-      control: "inline-radio",
-      options: ["mint", "gray", "white"],
-    },
-    label: { control: "text" },
+    docs: { disable: true },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Loader>;
-
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
-      <StoryPlaygroundFrame>
-        <Story />
-      </StoryPlaygroundFrame>
-    ),
-  ],
-  args: {
-    size: "large",
-    color: "mint",
-    label: "로딩 중",
-  },
-};
 
 const rowStyle: CSSProperties = {
   display: "flex",
@@ -83,13 +46,40 @@ const COLORS: Array<{ key: LoaderColor; label: string; bg?: string }> = [
   { key: "white", label: "White (on dark)", bg: "#1f2025" },
 ];
 
+const FIGMA_FULL_PAGE_LOADER = figmaNodeUrl("18219:10393");
+
+/** Figma 18219:10393 — 전체 화면 오버레이 미리보기 (Design 탭 Figma 연동용) */
+export const FullPageOverlay: Story = {
+  name: "Full page overlay",
+  parameters: { layout: "padded", figma: FIGMA_FULL_PAGE_LOADER },
+  render: () => (
+    <StoryDocsMatrixPage
+      title="PageLoaderOverlay"
+      description="뷰포트 전체를 덮는 Dim(BlackOpacity_50) + blur 4px, 정중앙 large Loader. 프로덕션에서는 container를 생략하면 fixed 전체 화면입니다."
+      figmaNode="18219-10393"
+    >
+      <div
+        style={{
+          position: "relative",
+          height: 520,
+          borderRadius: 12,
+          overflow: "hidden",
+          border: "1px solid var(--border-border-surface-border-surface-secondary)",
+        }}
+      >
+        <PageLoaderOverlay container="parent" />
+      </div>
+    </StoryDocsMatrixPage>
+  ),
+};
+
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
   render: () => (
     <StoryDocsMatrixPage
       title="Loader"
-      description="preset size·색상·숫자 size로 로더 스피너를 비교합니다."
+      description="preset size(small / medium / large)와 색상(mint / gray / white) 조합을 비교합니다."
       figmaNode="13289-46891"
     >
       <FigmaLinkCard
@@ -140,41 +130,6 @@ export const Matrix: Story = {
           ))}
         </div>
       </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>
-          Custom numeric size
-        </h4>
-        <div style={rowStyle}>
-          {[16, 20, 48, 80, 120].map((px) => (
-            <div key={px} style={cellStyle}>
-              <Loader size={px} />
-              <span style={captionStyle}>{px}px</span>
-            </div>
-          ))}
-        </div>
-      </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Loader" description="로딩 스피너 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          <StoryDocsInlineCode>size</StoryDocsInlineCode> 는 preset(small/medium/large) 또는 픽셀
-          숫자를 받습니다. <StoryDocsInlineCode>color</StoryDocsInlineCode> 는 배경 대비에 맞게
-          mint / gray / white 중 선택하고, 필요 시 <StoryDocsInlineCode>label</StoryDocsInlineCode>{" "}
-          로 접근 가능한 문구를 붙입니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

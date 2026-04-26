@@ -7,15 +7,16 @@
  *                  | "bottom-left" | "bottom-center" | "bottom-right"
  *   items : 1..N (children 으로 자유 구성)
  *
- * Spec
- *   width      : 180 min (Figma 기준)
- *   list pad   : 9
- *   gap(items) : 2 (--spacing-3xs)
- *   border     : 1px --color-border-surface
+ * Spec (Figma 13292:56698 — Dropdown Menu / Multiple levels)
+ *   https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=13292-56698
+ *   width      : 180 min, list width 100%
+ *   list pad   : --spacing-sm (Figma export 폴백 9px)
+ *   gap(rows)  : --spacing-sm (8px) — 구분선 대신 토큰 간격
+ *   border     : Border / border-surface
  *   radius     : --radius-md (6)
- *   bg         : --color-surface-base
- *   shadow     : Figma Shadows/Sm — drop-shadow 0 4 14 rgba(0,0,0,0.06)
- *                arrow 형태도 그림자에 포함되도록 filter:drop-shadow 사용
+ *   bg         : Context / bg-surface-base
+ *   shadow     : Shadows/Sm — box-shadow 0 4px 14px 0 rgba(0,0,0,0.06)
+ *   scrollbar  : Small(track 8, thumb 4), 트랙 margin 상4·좌2·우2·하80(Figma Scrollbar)
  *   arrow      : 12 × 7 SVG, 슬롯 6px, 메뉴 변과 1px overlap
  *                left/right alignment 시 가장자리에서 22px 안쪽
  * ============================================================ */
@@ -28,9 +29,6 @@
   display: flex;
   flex-direction: column;
   min-width: var(--dm-min-width);
-
-  /* arrow 모양도 포함된 그림자가 필요하므로 box-shadow 대신 filter 사용 */
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.06));
 }
 
 /* -------- List (실제 시각적 메뉴) -------- */
@@ -38,41 +36,49 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3xs);
+  align-items: flex-start;
+  gap: var(--spacing-sm, 8px);
   min-width: 0;
+  width: 100%;
 
-  background: var(--color-surface-base);
-  border: 1px solid var(--color-border-surface);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 6px);
+  border: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+  background: var(--context-background-surface-bg-surface-base, #fff);
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.06);
 
-  /* Figma 정확값 (토큰 매핑 없음) */
-  padding: 9px;
+  padding: var(--spacing-sm, 9px);
 
   -webkit-font-smoothing: antialiased;
 }
 
-/* maxHeight 가 있을 때만 list 가 스크롤 */
-.menu[data-scrollable="true"] .list {
+/* maxHeight 시: ScrollArea(size=small). listBody 에 pr 8px(콘텐츠).
+ * ScrollArea 는 calc(100%+8px) + margin-right:-8px 로 우측으로 당겨 스크롤바는 기존처럼 리스트 우측에 유지 */
+.menu[data-scrollable="true"] .listScrollable {
   max-height: var(--dm-max-height);
-  overflow-y: auto;
-
-  /* 스크롤바가 padding 영역을 침범하지 않도록 보정 */
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border-surface) transparent;
+  min-height: 0;
+  overscroll-behavior: contain;
 }
 
-.menu[data-scrollable="true"] .list::-webkit-scrollbar {
-  width: 6px;
+.menu[data-scrollable="true"] .scrollClip {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
 }
-.menu[data-scrollable="true"] .list::-webkit-scrollbar-track {
-  background: transparent;
+
+.menu[data-scrollable="true"] .menuScrollArea {
+  position: relative;
+  width: calc(100% + 8px);
+  max-width: none;
+  margin-right: -8px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
-.menu[data-scrollable="true"] .list::-webkit-scrollbar-thumb {
-  background: var(--color-border-surface);
-  border-radius: 999px;
-}
-.menu[data-scrollable="true"] .list::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-surface-hover);
+
+.menu[data-scrollable="true"] .listBody {
+  box-sizing: border-box;
+  min-width: 0;
+  padding-right: 8px;
 }
 
 /* -------- Arrow slots -------- */

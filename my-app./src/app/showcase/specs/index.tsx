@@ -1587,7 +1587,7 @@ export function PlaybookBarSection() {
       name="Playback Control Bar"
       category="Media"
       detailSlug="playbookcontrolbar"
-      description="play · seek · time display · fullscreen · more."
+      description="time pill, progress (seek on click), fullscreen and more actions."
     >
       <SubSection title="State">
         <Stack
@@ -1595,7 +1595,7 @@ export function PlaybookBarSection() {
           direction="column"
           items={[
             {
-              label: "default · paused",
+              label: "default · MM:SS range",
               node: (
                 <div style={{ width: 480 }}>
                   <PlaybookControlBar duration={300} defaultCurrentTime={45} />
@@ -1603,26 +1603,21 @@ export function PlaybookBarSection() {
               ),
             },
             {
-              label: "playing · long",
+              label: "long · H:MM:SS",
               node: (
                 <div style={{ width: 480 }}>
                   <PlaybookControlBar
                     duration={3725}
                     defaultCurrentTime={1532}
-                    defaultPlaying
                   />
                 </div>
               ),
             },
             {
-              label: "forceState=hover",
+              label: "short · M:SS",
               node: (
                 <div style={{ width: 480 }}>
-                  <PlaybookControlBar
-                    duration={120}
-                    defaultCurrentTime={30}
-                    forceState="hover"
-                  />
+                  <PlaybookControlBar duration={120} defaultCurrentTime={30} />
                 </div>
               ),
             },

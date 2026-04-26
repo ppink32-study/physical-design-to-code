@@ -18,7 +18,7 @@
  *   - DropdownTrigger
  *   - DropdownMenu
  *
- * children: DropdownMenuItem · Divider · Header · Custom 노드
+ * children: DropdownMenuItem · Header · Custom 노드
  */
 
 import type { ReactNode } from "react";
@@ -75,6 +75,8 @@ export type DropdownProps = {
 
   /* ---- menu ---- */
   menuMinWidth?: Dim;
+  /** 지정 시 메뉴 패널 고정 width (예: 180px 디자인 스펙) */
+  menuWidth?: Dim;
   menuMaxHeight?: Dim;
   menuAriaLabel?: string;
 
@@ -134,6 +136,7 @@ export function Dropdown(props: DropdownProps) {
     offset = 4,
 
     menuMinWidth,
+    menuWidth,
     menuMaxHeight,
     menuAriaLabel,
 
@@ -287,6 +290,7 @@ export function Dropdown(props: DropdownProps) {
             id={menuId}
             arrow={menuArrow}
             minWidth={menuMinWidth}
+            width={menuWidth}
             maxHeight={menuMaxHeight}
             aria-label={menuAriaLabel}
           >

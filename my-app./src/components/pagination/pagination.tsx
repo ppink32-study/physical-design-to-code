@@ -4,7 +4,8 @@
  * Pagination — Figma MCP 기반 구현
  * ----------------------------------------------------------------
  * Figma nodes
- *   Pagination           : 5030:28833
+ *   Pagination (구성 참고) : 13286:33784 — Com / Medium·Large
+ *   Pagination (아이템)   : 5030:28833
  *   Item / Pagination-Prev   : 5024:11276  (First Page / Prev · Default/Hover/Selected/Disable · M/L)
  *   Item / Pagination-Next   : 5024:92466  (Last Page / Next · ...)
  *   Item / Pagination-Number : 5024:92499
@@ -23,7 +24,8 @@
  *   showPerPage    : "N per page" 영역 표시 여부
  *   pageSizeOptions: [10,20,50,100] 등
  *   onPageSizeChange : (n) => void
- *   showGoTo       : "Go to" 영역 표시 여부
+ *   showGoTo       : "Go to" 레이블(박스 밖) + 테두리 입력 박스 안에 페이지 번호만(placeholder
+ *                    "Page", hint 색). type=text, Enter 로 이동 — Figma 13286:33784
  *   onGoToPage     : (n) => void   (미지정 시 onPageChange 호출)
  *   forceItemState : 스토리북 강제 상태 확인용. 모든 item 에 data-force-state 전파.
  */
@@ -324,19 +326,24 @@ function PaginationInner(
       ) : null}
 
       {showGoTo ? (
-        <div className={styles.helper}>
-          <span>Go to</span>
-          <input
-            className={styles.goInput}
-            type="number"
-            min={1}
-            max={totalPages}
-            value={goToValue}
-            placeholder="Page"
-            onChange={(e) => setGoToValue(e.target.value)}
-            onKeyDown={handleGoToKey}
-            aria-label="Go to page"
-          />
+        <div className={styles.goToSection}>
+          <span className={styles.goToLabel}>Go to</span>
+          <div className={styles.goToBox}>
+            <input
+              className={styles.goToInput}
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              value={goToValue}
+              placeholder="Page"
+              onChange={(e) => {
+                const digits = e.target.value.replace(/\D/g, "");
+                setGoToValue(digits);
+              }}
+              onKeyDown={handleGoToKey}
+              aria-label="Go to page"
+            />
+          </div>
         </div>
       ) : null}
     </div>

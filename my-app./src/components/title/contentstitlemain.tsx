@@ -3,6 +3,8 @@
 /**
  * ContentsTitleMain — Contents Title / Main (Figma node 4790:206)
  * ----------------------------------------------------------------
+ * 루트 폭: 1496px (max-width: 100%)
+ *
  * 구조
  *   - height 40px
  *   - 좌측 (flex:1): Title(H4) + Badge(slot) + Toggle(slot) + Hint(info icon + text)

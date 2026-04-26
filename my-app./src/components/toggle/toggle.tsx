@@ -7,6 +7,8 @@
  *   - Toggle input (36x20, 6 states) : 18001:55013
  *   - Toggle (input + label)         : 18001:55053
  *
+ * ToggleGroup — 여러 Toggle 레이아웃(gap 은 RadioGroup 과 동일: 세로 4px · 가로 16px)
+ *
  * Props
  *   - checked / defaultChecked
  *   - disabled
@@ -18,12 +20,41 @@
 import type {
   ChangeEvent,
   ForwardedRef,
+  HTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
 } from "react";
 import { forwardRef, useId, useState } from "react";
 
 import styles from "./toggle.module.css";
+
+/* =================================================================
+ * ToggleGroup — 여러 Toggle 을 세로/가로로 묶을 때 RadioGroup 과 동일 gap
+ * =============================================================== */
+export type ToggleGroupProps = {
+  orientation?: "vertical" | "horizontal";
+  children?: ReactNode;
+  className?: string;
+} & Pick<HTMLAttributes<HTMLDivElement>, "aria-label" | "aria-labelledby">;
+
+export function ToggleGroup({
+  orientation = "vertical",
+  children,
+  className,
+  ...aria
+}: ToggleGroupProps) {
+  const rootClass = [styles.toggleGroup, className].filter(Boolean).join(" ");
+  return (
+    <div
+      role="group"
+      data-orientation={orientation}
+      className={rootClass}
+      {...aria}
+    >
+      {children}
+    </div>
+  );
+}
 
 type NativeInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,

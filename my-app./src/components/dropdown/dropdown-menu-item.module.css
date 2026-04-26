@@ -1,6 +1,6 @@
 /* ==============================================================
  * DropdownMenuItem — Figma MCP (node 5286:103724 / dropdown-menu-item master)
- * Default / Hover / Select / Disable × level1 / 2 / 3 / Header / Divider / Custom
+ * Default / Hover / Select / Disable × level1 / 2 / 3 / Header / Custom
  *
  * Tokens (Figma 마스터 검증 — variable_defs 기준)
  *   ─ Default
@@ -10,8 +10,9 @@
  *   ─ Hover  (bg / icon 만 변화, fg 는 그대로)
  *     bg   : --color-surface-secondary              (#F4F4F5)
  *     icon : --color-icon-surface-hover             (#434551)
- *   ─ Selected (bg 만 변화 — fg / icon 그대로)
+ *   ─ Selected (bg primary tint; 후행 체크는 on-primary)
  *     bg   : --opacity-primary-opacity-8            (rgba(67,198,193,0.08))
+ *     trailing(check) : --context-foreground-primary-on-primary (서브메뉴 chevron 제외)
  *   ─ Disabled (fg / icon 만 변화)
  *     fg   : --color-on-surface-disabled            (#b3b4bc)
  *     icon : --color-icon-surface-disabled          (#b3b4bc)
@@ -76,6 +77,14 @@
  * text(fg) / icon 은 base 그대로. */
 .itemSelected {
   --dmi-bg: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
+}
+
+/* 선택 행 후행 아이콘(체크 등) — 서브메뉴 chevron 은 제외, Context/Foreground/Primary/on-primary */
+.item.itemSelected:not([data-has-submenu="true"]):not(:disabled):not(
+    [data-disabled="true"]
+  )
+  .trailing {
+  color: var(--context-foreground-primary-on-primary, #3f9bae);
 }
 
 /* selected + hover : bg 는 selected 유지, icon 만 hover 색.
@@ -145,27 +154,22 @@
   line-height: var(--font-line-height-xs);
 }
 
-/* -------- Header (non-interactive section label) -------- */
+/* -------- Header — 레이아웃 스펙 (Figma 13292:56698 계열) -------- */
 .header {
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  width: 100%;
-  min-height: 28px;
-  padding: var(--spacing-2xs) var(--spacing-sm);
-  color: var(--color-on-surface-secondary);
+  height: var(--size-base-2xl, 24px);
+  padding-top: var(--spacing-2xs, 4px);
+  align-items: flex-start;
+  gap: var(--spacing-sm, 8px);
+  align-self: stretch;
+  margin: 0;
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-sm);
   line-height: var(--font-line-height-xs);
   font-weight: var(--font-weight-medium, 500);
+  letter-spacing: -0.06px;
   user-select: none;
 }
 
-/* -------- Divider -------- */
-.divider {
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin: var(--spacing-3xs) 0;
-  background: var(--color-border-surface);
-}

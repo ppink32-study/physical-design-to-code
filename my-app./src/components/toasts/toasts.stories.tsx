@@ -4,11 +4,7 @@ import { Fragment, useCallback, useState } from "react";
 import { Toast, ToastViewport, type ToastType } from "./toasts";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -17,15 +13,8 @@ const meta: Meta<typeof Toast> = {
   component: Toast,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma `Toast Alert` (node 5307:14956) 1:1 구현. " +
-          "4가지 타입 (Confirm · Success · Warning · Error) + subText / linkText / close 버튼 옵션.",
-      },
-    },
+    docs: { disable: true },
   },
-  tags: ["autodocs"],
   argTypes: {
     type: {
       control: "inline-radio",
@@ -198,15 +187,7 @@ function ViewportStackDemo() {
 
 export const Matrix: Story = {
   name: "Matrix",
-  parameters: {
-    layout: "padded",
-    docs: {
-      description: {
-        story:
-          "4 type · subText · link+close · 긴 메시지 · ToastViewport 단일/스택 · duration 자동 닫힘을 한 페이지에서 확인합니다.",
-      },
-    },
-  },
+  parameters: { layout: "padded" },
   render: () => (
     <StoryDocsMatrixPage
       title="Toast"
@@ -300,25 +281,5 @@ export const Matrix: Story = {
         <AutoDismissDemo />
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Toast" description="토스트 알림 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          <StoryDocsInlineCode>ToastViewport</StoryDocsInlineCode> 는 화면 하단 고정 오버레이 역할을
-          합니다. Matrix 에서는 padded 캔버스 안에 상대 배치로 동작을 확인할 수 있으며, 앱 통합
-          시에는 페이지 최상단에 뷰포트를 한 번만 두는 패턴을 권장합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

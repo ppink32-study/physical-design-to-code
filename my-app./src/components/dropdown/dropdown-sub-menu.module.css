@@ -10,7 +10,7 @@
  *   → 두 menu 의 outer gap = 4px
  *
  * 우리 root 는 부모 list 안의 한 row(트리거 자체) 이고, list 의 padding
- * 9px + border 1px 만큼 안쪽에 위치한다.
+ * (--spacing-sm 8px) + border 1px 만큼 안쪽에 위치한다.
  *
  *   sub.outer.left  = root.right + 9(list padding) + 1(border) + 4(gap)
  *                   = root.right + 14px
@@ -26,7 +26,7 @@
   width: 100%;
 
   /* tweakable */
-  --dsm-list-pad: 9px; /* DropdownMenu list padding */
+  --dsm-list-pad: var(--spacing-sm, 9px); /* DropdownMenu .list padding 과 동일 (Figma 13292:56698) */
   --dsm-border: 1px; /* DropdownMenu list border */
   --dsm-gap: 4px; /* Figma 184-180 */
 }

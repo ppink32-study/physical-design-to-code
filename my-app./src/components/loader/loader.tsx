@@ -27,7 +27,6 @@
  * Usage
  *   <Loader />                    // 기본 48 × 48 (Mint)
  *   <Loader size="small" />       // 24 × 24
- *   <Loader size={64} />          // 커스텀 px
  *   <Loader color="white" />      // 어두운 배경용
  */
 
@@ -48,17 +47,13 @@ const SIZE_PX: Record<LoaderSize, number> = {
 export type LoaderColor = "mint" | "gray" | "white";
 
 export type LoaderProps = Omit<HTMLAttributes<HTMLSpanElement>, "children"> & {
-  /** 지름. 프리셋 키 또는 px 값. 기본 `"large"` (48px) */
-  size?: LoaderSize | number;
+  /** 지름 프리셋. 기본 `"large"` (48px) */
+  size?: LoaderSize;
   /** 색상 프리셋. 기본 `"mint"` (Figma 스펙) */
   color?: LoaderColor;
   /** 접근성 레이블. 기본 `"로딩 중"` */
   label?: string;
 };
-
-function resolveDim(size: LoaderSize | number): number {
-  return typeof size === "number" ? size : SIZE_PX[size];
-}
 
 function LoaderInner(
   props: LoaderProps,
@@ -73,7 +68,7 @@ function LoaderInner(
     ...rest
   } = props;
 
-  const dim = resolveDim(size);
+  const dim = SIZE_PX[size];
 
   const rootClass = [styles.root, className].filter(Boolean).join(" ");
   /** `--loader-dim` 을 통해 dot 의 크기·위치 비율을 자식이 사용 */

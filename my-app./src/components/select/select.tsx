@@ -15,7 +15,7 @@
  *   - 단일 : `value` prop 으로 한 줄 텍스트 렌더
  *   - 다중 : `chips` prop 에 ReactNode 배열 전달 → 내부 chip 영역에 렌더
  *            `moreCount` 로 "(+N)" 표시, `multiline` 으로 2line wrap 지원
- *   - `clearable` + `onClear` 로 전체 지우기(x-button) 제공
+ *   - `clearable` + `onClear` 로 전체 지우기(x-button) 제공 — tone 아이콘보다 앞
  * ========================================================================== */
 import {
   forwardRef,
@@ -151,6 +151,22 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
         )}
       </span>
 
+      {/* 다중 선택 시 x-button — tone 아이콘보다 앞 (Figma 순서) */}
+      {hasChips && clearable && (
+        <span
+          className={styles.clear}
+          role="button"
+          tabIndex={-1}
+          aria-label="전체 지우기"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClear?.(e as unknown as MouseEvent<HTMLButtonElement>);
+          }}
+        >
+          <span className={styles.clearIcon} aria-hidden="true" />
+        </span>
+      )}
+
       {/* tone 아이콘 (success: Check, error: Alert) */}
       {tone === "success" && (
         <span
@@ -182,22 +198,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
               maskImage: "url(/icon/Alert.svg)",
             }}
           />
-        </span>
-      )}
-
-      {/* 다중 선택 시 x-button */}
-      {hasChips && clearable && (
-        <span
-          className={styles.clear}
-          role="button"
-          tabIndex={-1}
-          aria-label="전체 지우기"
-          onClick={(e) => {
-            e.stopPropagation();
-            onClear?.(e as unknown as MouseEvent<HTMLButtonElement>);
-          }}
-        >
-          <span className={styles.clearIcon} aria-hidden="true" />
         </span>
       )}
 

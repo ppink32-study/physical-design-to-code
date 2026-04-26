@@ -18,7 +18,10 @@ export function PaginationDemo() {
         />
       </DemoSection>
 
-      <DemoSection title="Controlled · Full options" description="showTotal · showPerPage · showGoTo">
+      <DemoSection
+        title="Controlled · Full options"
+        description="showTotal · showPerPage · showGoTo (Go to 레이블 + 입력, placeholder Page, Enter)"
+      >
         <div className={s.col}>
           <Pagination
             page={page}

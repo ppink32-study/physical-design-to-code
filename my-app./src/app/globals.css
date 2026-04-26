@@ -430,6 +430,8 @@
   --color-opacity-white-8: var(--opacity-white-opacity-8);
   --color-opacity-black-8: var(--opacity-black-opacity-8);
   --color-opacity-black-50: var(--opacity-black-opacity-50);
+  /* Figma Opacity/BlackOpacity_50 — PageLoaderOverlay 등 */
+  --Opacity-BlackOpacity_50: var(--opacity-black-opacity-50);
   --color-opacity-black-90: var(--opacity-black-opacity-90);
   --color-opacity-primary-8: var(--opacity-primary-opacity-8);
   --color-opacity-primary-15: var(--opacity-primary-opacity-15);

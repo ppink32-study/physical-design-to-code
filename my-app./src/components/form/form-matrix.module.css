@@ -1,0 +1,13 @@
+/* Form Matrix 스토리: 가로 그룹·칩·뱃지 한 줄 유지 */
+.groupNowrap[data-orientation="horizontal"] {
+  flex-wrap: nowrap !important;
+}
+
+.rowNowrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}

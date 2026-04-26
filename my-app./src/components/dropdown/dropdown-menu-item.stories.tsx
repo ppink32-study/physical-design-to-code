@@ -1,20 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties, ReactNode } from "react";
-import { Fragment } from "react";
-
 import { figmaNodeUrl } from "../../stories/story-figma-urls";
 import {
-  DropdownMenuDivider,
   DropdownMenuHeader,
   DropdownMenuItem,
   type DropdownMenuItemProps,
 } from "./dropdown-menu-item";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsSection,
+  StoryDocsPanel,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -38,7 +33,7 @@ function Icon({ src, size = 16 }: { src: string; size?: number }) {
   return <span aria-hidden="true" style={style} />;
 }
 
-const DocumentIcon = () => <Icon src="/icon/Document.svg" />;
+const CopyIcon = () => <Icon src="/icon/Copy.svg" />;
 const CheckIcon = () => <Icon src="/icon/Check.svg" />;
 
 const HOVER_STYLE: CSSProperties = {
@@ -54,20 +49,54 @@ function ForceHover({ children }: { children: ReactNode }) {
   );
 }
 
+/* -----------------------------------------------------------------
+ * Matrix — Button Matrix 와 동일 GUI 토큰·여백(StoryDocsPanel + 그리드)
+ * --------------------------------------------------------------- */
+const ROW_LABEL_WIDTH = 200;
+const COL_WIDTH = 220;
+
+const matrixScrollStyle: CSSProperties = {
+  overflowX: "auto",
+  paddingBottom: 4,
+};
+
+const columnHeaderStyle: CSSProperties = {
+  fontSize: 11,
+  fontWeight: 600,
+  letterSpacing: 0.4,
+  color: "var(--context-foreground-surface-on-surface-secondary)",
+  padding: "10px 12px",
+  whiteSpace: "nowrap",
+  textAlign: "left",
+};
+
+const matrixRowLabelColumnPadding = "10px 24px 10px 16px";
+
+const rowLabelStyle: CSSProperties = {
+  fontSize: 11,
+  color: "var(--context-foreground-surface-on-surface-hint)",
+  padding: matrixRowLabelColumnPadding,
+  whiteSpace: "nowrap",
+  fontFamily: "ui-monospace, SFMono-Regular, monospace",
+};
+
+const cellWrapStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 8,
+  padding: "10px 12px",
+  width: COL_WIDTH,
+  boxSizing: "border-box",
+};
+
 const meta: Meta<typeof DropdownMenuItem> = {
   title: "Components/Dropdown/Menu Item",
   component: DropdownMenuItem,
   parameters: {
     layout: "centered",
     figma: FIGMA_SECTION,
-    docs: {
-      description: {
-        component:
-          "Figma `Dropdown / Menu item` 기반 atom. 일반 항목·Header·Divider·커스텀 슬롯을 지원합니다.",
-      },
-    },
+    docs: { disable: true },
   },
-  tags: ["autodocs"],
   argTypes: {
     level: { control: "inline-radio", options: [1, 2, 3] },
     selected: { control: "boolean" },
@@ -86,13 +115,6 @@ const meta: Meta<typeof DropdownMenuItem> = {
     hasSubmenu: true,
     children: "menu item",
   },
-  decorators: [
-    (Story) => (
-      <div style={{ width: 220 }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 export default meta;
 
@@ -102,12 +124,14 @@ export const Playground: Story = {
   decorators: [
     (Story) => (
       <StoryPlaygroundFrame>
-        <Story />
+        <div style={{ width: 220 }}>
+          <Story />
+        </div>
       </StoryPlaygroundFrame>
     ),
   ],
   args: {
-    leadingIcon: <DocumentIcon />,
+    leadingIcon: <CopyIcon />,
     children: "menu item",
     hasSubmenu: true,
   },
@@ -116,24 +140,17 @@ export const Playground: Story = {
 const STATES = ["Default", "Hover", "Select", "Disable"] as const;
 type StateKey = (typeof STATES)[number];
 
-const TYPES = [
-  "level 1",
-  "level 2",
-  "level 3",
-  "Header",
-  "Divider",
-  "Custom",
-] as const;
+const TYPES = ["level 1", "level 2", "level 3", "Header", "Custom"] as const;
 type TypeKey = (typeof TYPES)[number];
 
 function renderCell(state: StateKey, type: TypeKey) {
-  const staticTypes: TypeKey[] = ["Header", "Divider", "Custom"];
+  const staticTypes: TypeKey[] = ["Header", "Custom"];
   if (state !== "Default" && staticTypes.includes(type)) {
     return null;
   }
 
   const baseProps: Partial<DropdownMenuItemProps> = {
-    leadingIcon: <DocumentIcon />,
+    leadingIcon: <CopyIcon />,
     children: "menu item",
     selected: state === "Select",
     disabled: state === "Disable",
@@ -141,9 +158,7 @@ function renderCell(state: StateKey, type: TypeKey) {
 
   let node: ReactNode = null;
 
-  if (type === "Divider") {
-    node = <DropdownMenuDivider />;
-  } else if (type === "Header") {
+  if (type === "Header") {
     node = <DropdownMenuHeader>Dropdown header</DropdownMenuHeader>;
   } else if (type === "Custom") {
     node = (
@@ -187,7 +202,6 @@ function renderCell(state: StateKey, type: TypeKey) {
 
   if (
     state === "Hover" &&
-    type !== "Divider" &&
     type !== "Header" &&
     type !== "Custom"
   ) {
@@ -200,110 +214,67 @@ export const Matrix: Story = {
   name: "Matrix",
   parameters: {
     layout: "padded",
-    docs: {
-      description: {
-        story:
-          "상태 × 유형 매트릭스. Header·Divider·Custom 은 Default 행만 표기합니다.",
-      },
-    },
   },
   render: () => (
     <StoryDocsMatrixPage
       title="Menu Item"
-      description="상태(Default·Hover·Select·Disable)와 유형(level·Header·Divider 등) 매트릭스입니다."
+      description="상태(Default·Hover·Select·Disable)와 유형(level·Header·Custom) 매트릭스입니다."
       figmaNode="13292-55986"
     >
       <FigmaLinkCard
         nodeId="13292-55986"
         caption="Components / Dropdown · Menu Item — State × Variant 매트릭스 원본"
       />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `120px repeat(${TYPES.length}, minmax(180px, 1fr))`,
-          gap: 12,
-          alignItems: "stretch",
-        }}
-      >
-        <div />
-        {TYPES.map((t) => (
-          <div
-            key={t}
-            style={{
-              fontSize: 12,
-              color: "var(--color-on-surface-secondary)",
-              paddingBottom: 4,
-              borderBottom: "1px solid var(--color-border-surface)",
-            }}
-          >
-            {t}
-          </div>
-        ))}
-
-        {STATES.map((s) => (
-          <Fragment key={s}>
+      <section>
+        <StoryDocsPanel>
+          <div style={matrixScrollStyle}>
             <div
               style={{
-                fontSize: 12,
-                color: "var(--color-on-surface-secondary)",
-                alignSelf: "center",
+                display: "grid",
+                gridTemplateColumns: `${ROW_LABEL_WIDTH}px repeat(${TYPES.length}, ${COL_WIDTH}px)`,
+                background: "var(--context-background-surface-bg-surface-base)",
+                minWidth:
+                  ROW_LABEL_WIDTH + TYPES.length * COL_WIDTH,
               }}
             >
-              {s}
-            </div>
-            {TYPES.map((t) => (
               <div
-                key={`${s}-${t}`}
                 style={{
-                  padding: 8,
-                  background: "var(--color-surface-base)",
-                  border: "1px solid var(--color-border-surface)",
-                  borderRadius: 6,
-                  display: "flex",
-                  alignItems: "center",
-                  minHeight: 44,
+                  ...columnHeaderStyle,
+                  padding: matrixRowLabelColumnPadding,
                 }}
               >
-                {renderCell(s, t)}
+                State · Type
+              </div>
+              {TYPES.map((t) => (
+                <div key={t} style={columnHeaderStyle}>
+                  {t}
+                </div>
+              ))}
+            </div>
+
+            {STATES.map((s) => (
+              <div
+                key={s}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `${ROW_LABEL_WIDTH}px repeat(${TYPES.length}, ${COL_WIDTH}px)`,
+                  alignItems: "center",
+                  minWidth: ROW_LABEL_WIDTH + TYPES.length * COL_WIDTH,
+                  borderTop:
+                    "1px solid var(--border-border-surface-border-surface-secondary)",
+                }}
+              >
+                <div style={rowLabelStyle}>{s}</div>
+                {TYPES.map((t) => (
+                  <div key={`${s}-${t}`} style={cellWrapStyle}>
+                    {renderCell(s, t)}
+                  </div>
+                ))}
               </div>
             ))}
-          </Fragment>
-        ))}
-      </div>
+          </div>
+        </StoryDocsPanel>
+      </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Menu Item" description="드롭다운 메뉴 항목 atom 사용 가이드입니다.">
-      <StoryDocsSection title="사용 가이드">
-        <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.65 }}>
-          <li>
-            <strong>level 1</strong>은 하위 메뉴가 있을 때{" "}
-            <StoryDocsInlineCode>hasSubmenu</StoryDocsInlineCode>로 우측 chevron 을 씁니다.
-          </li>
-          <li>
-            <strong>level 2·3</strong>은 들여쓰기만 다르고, 선택 표시가 필요하면{" "}
-            <StoryDocsInlineCode>trailingIcon</StoryDocsInlineCode>에 체크 등을 넣습니다.
-          </li>
-          <li>
-            <StoryDocsInlineCode>DropdownMenuHeader</StoryDocsInlineCode>는 비인터랙티브 구역
-            제목, <StoryDocsInlineCode>DropdownMenuDivider</StoryDocsInlineCode>는 그룹 구분에
-            사용합니다.
-          </li>
-          <li>
-            Matrix 의 Hover 행은 CSS 변수로만 재현한 정적 미리보기이며, 실제 인터랙션은 포인터
-            hover 와 동일한 토큰을 따릅니다.
-          </li>
-        </ul>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

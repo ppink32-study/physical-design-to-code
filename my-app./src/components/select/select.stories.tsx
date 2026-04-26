@@ -1,10 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
-import { Select, type SelectProps } from "./select";
+import { Select, type SelectProps, type SelectTone } from "./select";
 import { InputChip } from "../chips/input-chip/input-chip";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
+import {
+  StoryDocsCode,
+  StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
   StoryDocsParagraph,
@@ -15,23 +25,14 @@ import {
 const meta: Meta<typeof Select> = {
   title: "Components/Select",
   component: Select,
-  tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: { disable: true },
   },
   argTypes: {
-    size: {
-      control: "radio",
-      options: ["medium", "large"],
-    },
-    tone: {
-      control: "radio",
-      options: ["normal", "success", "error"],
-    },
-    type: {
-      control: "radio",
-      options: ["normal", "label"],
-    },
+    size: { control: "radio", options: ["medium", "large"] },
+    tone: { control: "radio", options: ["normal", "success", "error"] },
+    type: { control: "radio", options: ["normal", "label"] },
     state: {
       control: "radio",
       options: [undefined, "default", "focus", "filled", "disable", "readonly"],
@@ -48,24 +49,173 @@ const meta: Meta<typeof Select> = {
     placeholder: "Text",
     label: "label",
   },
-  decorators: [
-    (Story) => (
-      <div style={{ width: 280 }}>
-        <Story />
-      </div>
-    ),
-  ],
 };
 export default meta;
-
 type Story = StoryObj<typeof Select>;
 
+const sectionTitleStyle: CSSProperties = {
+  fontSize: 14,
+  fontWeight: 600,
+  marginBottom: 12,
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
+const SectionFrame = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) => (
+  <section style={{ marginTop: 24 }}>
+    <h3 style={sectionTitleStyle}>{title}</h3>
+    {children}
+  </section>
+);
+
+const matrixScrollWrap = storyMatrixScrollWrap;
+const matrixTableBase = storyMatrixTableBase;
+const matrixColHeaderStyle = storyMatrixColHeaderStyle;
+const matrixRowHeaderStyle = storyMatrixRowHeaderStyle;
+const matrixStickyCornerStyle = storyMatrixStickyCornerStyle;
+const matrixCellStyle: CSSProperties = {
+  ...storyMatrixCellStyle,
+  minWidth: 200,
+  maxWidth: 280,
+};
+
+const CHIPS_MULTI = [
+  <InputChip key="a">Option A</InputChip>,
+  <InputChip key="b">Option B</InputChip>,
+  <InputChip key="c">Option C</InputChip>,
+];
+
+const TONE_COLS: Array<{ key: SelectTone | "label"; label: string }> = [
+  { key: "normal", label: "Normal" },
+  { key: "success", label: "Success" },
+  { key: "error", label: "Error" },
+  { key: "label", label: "Label" },
+];
+
+type RowKey =
+  | "default"
+  | "focus"
+  | "filledSingle"
+  | "filledMulti1"
+  | "filledMulti2"
+  | "disable"
+  | "readonly";
+
+const STATE_ROWS: Array<{ key: RowKey; label: string }> = [
+  { key: "default", label: "Default" },
+  { key: "focus", label: "Focus" },
+  { key: "filledSingle", label: "Filled Single" },
+  { key: "filledMulti1", label: "Filled Multiple 1line" },
+  { key: "filledMulti2", label: "Filled Multiple 2line" },
+  { key: "disable", label: "Disable" },
+  { key: "readonly", label: "Readonly" },
+];
+
+function rowProps(row: RowKey): Partial<SelectProps> {
+  switch (row) {
+    case "default":
+      return { placeholder: "Text", state: "default" };
+    case "focus":
+      return { placeholder: "Text", state: "focus" };
+    case "filledSingle":
+      return { value: "Option A", state: "filled" };
+    case "filledMulti1":
+      return {
+        state: "filled",
+        chips: CHIPS_MULTI,
+        moreCount: 2,
+        clearable: true,
+      };
+    case "filledMulti2":
+      return {
+        state: "filled",
+        multiline: true,
+        chips: CHIPS_MULTI,
+        clearable: true,
+      };
+    case "disable":
+      return { value: "Text", disabled: true };
+    case "readonly":
+      return { value: "Text", readOnly: true, state: "readonly" };
+    default:
+      return {};
+  }
+}
+
+function cellProps(
+  row: RowKey,
+  col: SelectTone | "label",
+): Partial<SelectProps> {
+  const base = rowProps(row);
+  if (col === "label") {
+    return {
+      ...base,
+      type: "label",
+      label: "label",
+      tone: "normal",
+    };
+  }
+  return { ...base, type: "normal", tone: col };
+}
+
+function SelectMatrixTable({ size }: { size: "medium" | "large" }) {
+  return (
+    <div style={matrixScrollWrap}>
+      <table style={matrixTableBase}>
+        <thead>
+          <tr>
+            <th
+              style={{
+                ...matrixColHeaderStyle,
+                ...matrixStickyCornerStyle,
+                minWidth: 160,
+                zIndex: 2,
+              }}
+            />
+            {TONE_COLS.map((c) => (
+              <th key={c.key} scope="col" style={matrixColHeaderStyle}>
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {STATE_ROWS.map((r) => (
+            <tr key={r.key}>
+              <th
+                scope="row"
+                style={{
+                  ...matrixRowHeaderStyle,
+                  ...matrixStickyCornerStyle,
+                }}
+              >
+                {r.label}
+              </th>
+              {TONE_COLS.map((c) => (
+                <td key={`${r.key}-${c.key}`} style={matrixCellStyle}>
+                  <Select size={size} {...cellProps(r.key, c.key)} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export const Playground: Story = {
   decorators: [
     (Story) => (
       <StoryPlaygroundFrame>
-        <Story />
+        <div style={{ width: 280 }}>
+          <Story />
+        </div>
       </StoryPlaygroundFrame>
     ),
   ],
@@ -74,180 +224,28 @@ export const Playground: Story = {
   },
 };
 
-/* -------------------------------------------------------------------------
- * Single — State 별
- * ----------------------------------------------------------------------- */
-export const SingleDefault: Story = {
-  name: "Single / Default",
-  args: { placeholder: "Select option" },
-};
-
-export const SingleFocus: Story = {
-  name: "Single / Focus",
-  args: { state: "focus", placeholder: "Select option" },
-};
-
-export const SingleFilled: Story = {
-  name: "Single / Filled",
-  args: { state: "filled", value: "Option A" },
-};
-
-export const SingleDisable: Story = {
-  name: "Single / Disable",
-  args: { disabled: true, value: "Option A" },
-};
-
-export const SingleReadonly: Story = {
-  name: "Single / Readonly",
-  args: { readOnly: true, value: "Option A" },
-};
-
-/* -------------------------------------------------------------------------
- * Tone 별 (Normal / Success / Error)
- * ----------------------------------------------------------------------- */
-export const ToneSuccess: Story = {
-  name: "Tone / Success",
-  args: { tone: "success", value: "Valid value" },
-};
-export const ToneError: Story = {
-  name: "Tone / Error",
-  args: { tone: "error", value: "Invalid value" },
-};
-
-/* -------------------------------------------------------------------------
- * Label 타입
- * ----------------------------------------------------------------------- */
-export const LabelType: Story = {
-  name: "Type / Label",
-  args: {
-    type: "label",
-    label: "label",
-    value: "Option A",
-  },
-};
-
-/* -------------------------------------------------------------------------
- * Large size
- * ----------------------------------------------------------------------- */
-export const LargeFilled: Story = {
-  name: "Size / Large · Filled",
-  args: { size: "large", value: "Option A" },
-};
-
-/* -------------------------------------------------------------------------
- * Multiple 1 line
- * ----------------------------------------------------------------------- */
-export const MultipleOneLine: Story = {
-  name: "Multiple / 1line",
-  args: {
-    chips: [
-      <InputChip key="a">Option A</InputChip>,
-      <InputChip key="b">Option B</InputChip>,
-      <InputChip key="c">Option C</InputChip>,
-    ],
-    moreCount: 2,
-    clearable: true,
-  },
-};
-
-/* -------------------------------------------------------------------------
- * Multiple 2 line
- * ----------------------------------------------------------------------- */
-export const MultipleTwoLine: Story = {
-  name: "Multiple / 2line",
-  args: {
-    multiline: true,
-    clearable: true,
-    chips: [
-      <InputChip key="a">Option A</InputChip>,
-      <InputChip key="b">Option B</InputChip>,
-      <InputChip key="c">Option C</InputChip>,
-      <InputChip key="d">Option D</InputChip>,
-      <InputChip key="e">Option E</InputChip>,
-    ],
-  },
-};
-
-/* -------------------------------------------------------------------------
- * Interactive — open 토글
- * ----------------------------------------------------------------------- */
-export const Interactive: Story = {
-  name: "Interactive / open toggle",
-  render: (args: SelectProps) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [open, setOpen] = useState(false);
-    return (
-      <Select {...args} open={open} onClick={() => setOpen((v) => !v)} />
-    );
-  },
-  args: { placeholder: "Click to toggle" },
-};
-
-/* -------------------------------------------------------------------------
- * Matrix — tone × state
- * ----------------------------------------------------------------------- */
-const stateRows: Array<{
-  key: string;
-  label: string;
-  args: Partial<SelectProps>;
-}> = [
-  { key: "default", label: "Default", args: { placeholder: "Text" } },
-  { key: "focus", label: "Focus", args: { state: "focus", value: "Text" } },
-  { key: "filled", label: "Filled", args: { value: "Text" } },
-  { key: "disable", label: "Disable", args: { disabled: true, value: "Text" } },
-  { key: "readonly", label: "Readonly", args: { readOnly: true, value: "Text" } },
-];
-
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
   render: () => (
     <StoryDocsMatrixPage
       title="Select"
-      description="Normal·Success·Error tone과 Default·Focus·Filled·Disable·Readonly 상태 조합을 그리드로 비교합니다."
+      description="Figma Select box 매트릭스: 행은 상태(Default·Focus·Filled…), 열은 Normal·Success·Error·Label, Medium(32px)·Large(40px) 두 블록입니다."
       figmaNode="4811-29737"
     >
       <FigmaLinkCard
         nodeId="4811-29737"
-        caption="Components / Select — Size × State 매트릭스 원본"
+        caption="Components / Select — Select box 매트릭스 원본"
       />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "120px repeat(3, minmax(0, 280px))",
-          gap: 12,
-          alignItems: "center",
-        }}
-      >
-        <div />
-        <div style={{ fontWeight: 600 }}>Normal</div>
-        <div style={{ fontWeight: 600 }}>Success</div>
-        <div style={{ fontWeight: 600 }}>Error</div>
-
-        {stateRows.map((r) => (
-          <RowGroup key={r.key} label={r.label} args={r.args} />
-        ))}
-      </div>
+      <SectionFrame title="Medium (height 32px)">
+        <SelectMatrixTable size="medium" />
+      </SectionFrame>
+      <SectionFrame title="Large (height 40px)">
+        <SelectMatrixTable size="large" />
+      </SectionFrame>
     </StoryDocsMatrixPage>
   ),
 };
-
-function RowGroup({
-  label,
-  args,
-}: {
-  label: string;
-  args: Partial<SelectProps>;
-}) {
-  return (
-    <>
-      <div style={{ fontWeight: 500, fontSize: 13 }}>{label}</div>
-      <Select {...args} tone="normal" />
-      <Select {...args} tone="success" />
-      <Select {...args} tone="error" />
-    </>
-  );
-}
 
 export const Guideline: Story = {
   name: "Guideline",
@@ -257,12 +255,23 @@ export const Guideline: Story = {
     actions: { disable: true },
   },
   render: () => (
-    <StoryDocsPage title="Select" description="Select 컴포넌트 사용 가이드입니다.">
+    <StoryDocsPage title="Select" description="Select box(트리거) 컴포넌트 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          단일·다중 선택, tone, label 타입 등은 Default·Matrix 및 개별 스토리 Controls 로 확인할 수
-          있습니다.
+          단일 값(<StoryDocsInlineCode>value</StoryDocsInlineCode>)·칩 다중(
+          <StoryDocsInlineCode>chips</StoryDocsInlineCode> +{" "}
+          <StoryDocsInlineCode>moreCount</StoryDocsInlineCode>)·
+          <StoryDocsInlineCode>tone</StoryDocsInlineCode>·
+          <StoryDocsInlineCode>type=&quot;label&quot;</StoryDocsInlineCode> 등은 Matrix 와
+          Playground Controls 로 확인합니다.
         </StoryDocsParagraph>
+      </StoryDocsSection>
+      <StoryDocsSection title="코드 예시">
+        <StoryDocsCode>{`import { Select } from "@/components/select/select";
+
+<Select placeholder="Text" />
+<Select tone="success" value="Valid" />
+<Select type="label" label="label" value="Option A" />`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

@@ -21,7 +21,7 @@
 
 조건-파일경로) 구현 TSX     파일경로: src/components/input/inlinemessage.tsx
 조건-파일경로) 구현 CSS     파일경로: src/components/input/inlinemessage.module.css
-조건-파일경로) 구현 CSS     파일경로: src/components/input/inlinemessage.stories.tsx
+조건-파일경로) 구현 Stories 파일경로: src/components/input/input.stories.tsx (InlineMessage 가이드·매트릭스 포함)
 
 ==============================================
 

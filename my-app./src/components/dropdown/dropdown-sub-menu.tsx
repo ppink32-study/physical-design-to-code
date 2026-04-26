@@ -74,11 +74,13 @@ export type DropdownSubMenuProps = {
   /** 트리거 indent depth (parent menu 안에서의 level). default 1 */
   level?: DropdownMenuItemLevel;
 
-  /** sub menu 자식 (DropdownMenuItem · Header · Divider 등) */
+  /** sub menu 자식 (DropdownMenuItem · Header 등) */
   children: ReactNode;
 
   /** sub menu min width. default 180 (DropdownMenu 기본) */
   menuMinWidth?: Dim;
+  /** sub menu 고정 width */
+  menuWidth?: Dim;
   /** sub menu max height. 지정 시 sub 내부 list 가 스크롤 */
   menuMaxHeight?: Dim;
   /** sub menu aria-label */
@@ -115,6 +117,7 @@ export function DropdownSubMenu(props: DropdownSubMenuProps) {
     level = 1,
     children,
     menuMinWidth,
+    menuWidth,
     menuMaxHeight,
     menuAriaLabel,
     flip = false,
@@ -304,6 +307,7 @@ export function DropdownSubMenu(props: DropdownSubMenuProps) {
             ref={subMenuRef}
             id={subId}
             minWidth={menuMinWidth}
+            width={menuWidth}
             maxHeight={menuMaxHeight}
             aria-label={menuAriaLabel}
           >

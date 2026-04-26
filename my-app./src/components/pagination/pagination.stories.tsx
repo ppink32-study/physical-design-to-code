@@ -1,15 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useState } from "react";
 
-import { Pagination } from "./pagination";
+import { Pagination, type PaginationSize } from "./pagination";
+import styles from "./pagination.module.css";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
+import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
   StoryDocsPage,
   StoryDocsParagraph,
   StoryDocsSection,
-  StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
 const meta: Meta<typeof Pagination> = {
@@ -17,51 +24,11 @@ const meta: Meta<typeof Pagination> = {
   component: Pagination,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Figma MCP 기반 Pagination. First / Prev / Number / Ellipsis / Next / Last 아이템으로 구성되며 Medium(32) / Large(40) 두 가지 사이즈를 지원합니다. (node 5030:28833)",
-      },
-    },
-  },
-  tags: ["autodocs"],
-  argTypes: {
-    size: { control: "inline-radio", options: ["medium", "large"] },
-    page: { control: { type: "number", min: 1 } },
-    pageSize: { control: { type: "number", min: 1 } },
-    total: { control: { type: "number", min: 0 } },
-    siblingCount: { control: { type: "number", min: 0, max: 3 } },
-    boundaryCount: { control: { type: "number", min: 0, max: 3 } },
-    showTotal: { control: "boolean" },
-    showPerPage: { control: "boolean" },
-    showGoTo: { control: "boolean" },
-    forceItemState: {
-      control: "inline-radio",
-      options: ["default", "hover", "disable"],
-    },
+    docs: { disable: true },
   },
 };
 export default meta;
 type Story = StoryObj<typeof Pagination>;
-
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
-      <StoryPlaygroundFrame>
-        <Story />
-      </StoryPlaygroundFrame>
-    ),
-  ],
-  args: {
-    total: 85,
-    pageSize: 20,
-    defaultPage: 6,
-    size: "medium",
-    showTotal: true,
-    showPerPage: true,
-    showGoTo: true,
-  },
-};
 
 const labelStyle: CSSProperties = {
   fontSize: 12,
@@ -69,31 +36,181 @@ const labelStyle: CSSProperties = {
   marginBottom: 8,
 };
 
-const panelStyle: CSSProperties = {
-  padding: 24,
-  borderRadius: 12,
-  minWidth: 720,
-  flex: 1,
-  background: "var(--context-background-surface-bg-surface-base)",
-  color: "var(--context-foreground-surface-on-surface-base)",
-  border: "1px solid var(--border-border-surface-border-surface)",
-};
+const ICONS = {
+  first: "/icon/DoubleChevronLeft.svg",
+  prev: "/icon/ChevronLeft.svg",
+  next: "/icon/ChevronRight.svg",
+  last: "/icon/DoubleChevronRight.svg",
+  ellipsis: "/icon/MoreHorizontal.svg",
+} as const;
 
-function ThemePanel({ theme }: { theme: "light" | "dark" }) {
+function PgIcon({ src }: { src: string }) {
+  const style: CSSProperties = {
+    WebkitMask: `url(${src}) center / contain no-repeat`,
+    mask: `url(${src}) center / contain no-repeat`,
+  };
+  return <span className={styles.icon} style={style} aria-hidden="true" />;
+}
+
+/** Matrix 셀: `.root[data-size]` + `.page` 안에 단일/복수 item (Figma Item 매트릭스) */
+function ItemHost({ size, children }: { size: PaginationSize; children: ReactNode }) {
   return (
-    <div data-theme={theme} style={panelStyle}>
-      <div style={{ ...labelStyle, fontWeight: 600 }}>{theme.toUpperCase()}</div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <Pagination
-          total={85}
-          pageSize={20}
-          defaultPage={3}
-          size="medium"
-          showTotal
-          showPerPage
-          showGoTo
-        />
-        <Pagination total={400} pageSize={20} defaultPage={6} size="large" showTotal />
+    <div className={styles.root} data-size={size} style={{ display: "inline-flex" }}>
+      <div className={styles.page} role="presentation">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+type ItemCol = "normal" | "hover" | "selected" | "disabled";
+
+function ItemMatrixCell({
+  row,
+  col,
+  size,
+}: {
+  row: "prev" | "next" | "number" | "ellipsis";
+  col: ItemCol;
+  size: PaginationSize;
+}) {
+  const hover = col === "hover" ? "hover" : undefined;
+  const dis = col === "disabled";
+
+  if (row === "ellipsis") {
+    return (
+      <ItemHost size={size}>
+        <span className={styles.item} data-icon="true" data-force-state={hover} aria-hidden="true">
+          <PgIcon src={ICONS.ellipsis} />
+        </span>
+      </ItemHost>
+    );
+  }
+
+  if (row === "number") {
+    const selected = col === "selected";
+    return (
+      <ItemHost size={size}>
+        <button
+          type="button"
+          className={styles.item}
+          data-selected={selected || undefined}
+          data-force-state={hover}
+          disabled={dis}
+          aria-current={selected ? "page" : undefined}
+        >
+          5
+        </button>
+      </ItemHost>
+    );
+  }
+
+  if (row === "prev") {
+    return (
+      <ItemHost size={size}>
+        <button
+          type="button"
+          className={styles.item}
+          data-icon="true"
+          data-force-state={hover}
+          disabled={dis}
+          aria-label="First page"
+        >
+          <PgIcon src={ICONS.first} />
+        </button>
+        <button
+          type="button"
+          className={styles.item}
+          data-icon="true"
+          data-force-state={hover}
+          disabled={dis}
+          aria-label="Previous page"
+        >
+          <PgIcon src={ICONS.prev} />
+        </button>
+      </ItemHost>
+    );
+  }
+
+  /* next */
+  return (
+    <ItemHost size={size}>
+      <button
+        type="button"
+        className={styles.item}
+        data-icon="true"
+        data-force-state={hover}
+        disabled={dis}
+        aria-label="Next page"
+      >
+        <PgIcon src={ICONS.next} />
+      </button>
+      <button
+        type="button"
+        className={styles.item}
+        data-icon="true"
+        data-force-state={hover}
+        disabled={dis}
+        aria-label="Last page"
+      >
+        <PgIcon src={ICONS.last} />
+      </button>
+    </ItemHost>
+  );
+}
+
+const ITEM_COLS: ItemCol[] = ["normal", "hover", "selected", "disabled"];
+const ITEM_ROWS: Array<"prev" | "next" | "number" | "ellipsis"> = [
+  "prev",
+  "next",
+  "number",
+  "ellipsis",
+];
+
+function ItemMatrixTable({ size }: { size: PaginationSize }) {
+  const sizeLabel = size === "medium" ? "Medium (32px)" : "Large (40px)";
+  return (
+    <div style={{ marginBottom: 32 }}>
+      <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>{sizeLabel}</h4>
+      <div style={storyMatrixScrollWrap}>
+        <table style={storyMatrixTableBase}>
+          <thead>
+            <tr>
+              <th style={storyMatrixColHeaderStyle}>Pagination / Item</th>
+              {ITEM_COLS.map((c) => (
+                <th key={c} style={storyMatrixColHeaderStyle}>
+                  {c === "normal"
+                    ? "Normal"
+                    : c === "hover"
+                      ? "Hover"
+                      : c === "selected"
+                        ? "Selected"
+                        : "Disable"}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {ITEM_ROWS.map((row) => (
+              <tr key={row}>
+                <th scope="row" style={storyMatrixRowHeaderStyle}>
+                  {row === "prev"
+                    ? "Prev"
+                    : row === "next"
+                      ? "Next"
+                      : row === "number"
+                        ? "Number"
+                        : "Ellipsis"}
+                </th>
+                {ITEM_COLS.map((col) => (
+                  <td key={col} style={storyMatrixCellStyle}>
+                    <ItemMatrixCell row={row} col={col} size={size} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -132,108 +249,67 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="Pagination"
-      description="Medium·Large, 아이템 상태, 옵션 영역, controlled, 라이트·다크 대비를 비교합니다."
-      figmaNode="5030-28833"
+      description={
+        <>
+          상단: 전체 바 구성(Total · 페이지 네비 · Per page · Go to 레이블 + 입력 박스, 빈 값일 때
+          안내 문구 Page). 하단:
+          Figma <strong>Pagination / Item</strong> 매트릭스(Prev / Next / Number / Ellipsis ×
+          Normal / Hover / Selected / Disable), Medium·Large 각각.
+        </>
+      }
+      figmaNode="13286-33784"
     >
       <FigmaLinkCard
-        nodeId="5030-28833"
-        caption="Components / Pagination — 구성 매트릭스 원본"
+        nodeId="13286-33784"
+        caption="Components / Pagination — Com (Medium·Large) 원본"
       />
+
       <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Sizes</h4>
-        <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Pagination</h4>
+        <p style={{ ...labelStyle, marginTop: 0 }}>
+          Total · First/Prev/Numbers/Ellipsis/Next/Last · Per page · Go to (박스 안 입력, Enter)
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <div>
             <h4 style={labelStyle}>Medium (32px)</h4>
-            <Pagination total={400} pageSize={20} defaultPage={6} size="medium" />
-          </div>
-          <div>
-            <h4 style={labelStyle}>Large (40px)</h4>
-            <Pagination total={400} pageSize={20} defaultPage={6} size="large" />
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Item states</h4>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "120px 1fr",
-            rowGap: 16,
-            columnGap: 16,
-            alignItems: "center",
-            justifyItems: "start",
-          }}
-        >
-          <div style={labelStyle}>Default</div>
-          <div>
-            <Pagination total={200} pageSize={20} defaultPage={6} size="medium" />
-          </div>
-          <div style={labelStyle}>Hover</div>
-          <div>
             <Pagination
-              total={200}
+              total={400}
               pageSize={20}
               defaultPage={6}
               size="medium"
-              forceItemState="hover"
-            />
-          </div>
-          <div style={labelStyle}>Disable</div>
-          <div>
-            <Pagination
-              total={200}
-              pageSize={20}
-              defaultPage={6}
-              size="medium"
-              forceItemState="disable"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Optional areas</h4>
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <div>
-            <div style={labelStyle}>기본 (페이지만)</div>
-            <Pagination total={85} pageSize={20} defaultPage={3} />
-          </div>
-          <div>
-            <div style={labelStyle}>+ Total</div>
-            <Pagination total={85} pageSize={20} defaultPage={3} showTotal />
-          </div>
-          <div>
-            <div style={labelStyle}>+ Total + Per page</div>
-            <Pagination total={85} pageSize={20} defaultPage={3} showTotal showPerPage />
-          </div>
-          <div>
-            <div style={labelStyle}>+ Total + Per page + Go to</div>
-            <Pagination
-              total={85}
-              pageSize={20}
-              defaultPage={3}
               showTotal
               showPerPage
               showGoTo
+              siblingCount={1}
+              boundaryCount={1}
+            />
+          </div>
+          <div>
+            <h4 style={labelStyle}>Large (40px)</h4>
+            <Pagination
+              total={400}
+              pageSize={20}
+              defaultPage={6}
+              size="large"
+              showTotal
+              showPerPage
+              showGoTo
+              siblingCount={1}
+              boundaryCount={1}
             />
           </div>
         </div>
       </section>
 
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Interactive · controlled</h4>
-        <ControlledBlock />
+      <section style={{ marginTop: 40 }}>
+        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Pagination / Item</h4>
+        <ItemMatrixTable size="medium" />
+        <ItemMatrixTable size="large" />
       </section>
 
-      <section>
-        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Light vs Dark</h4>
-        <div
-          style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}
-        >
-          <ThemePanel theme="light" />
-          <ThemePanel theme="dark" />
-        </div>
+      <section style={{ marginTop: 40 }}>
+        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Interactive · controlled</h4>
+        <ControlledBlock />
       </section>
     </StoryDocsMatrixPage>
   ),
@@ -250,8 +326,9 @@ export const Guideline: Story = {
     <StoryDocsPage title="Pagination" description="페이지네이션 컴포넌트 사용 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          총 건수·페이지 크기·바로가기 영역은 옵션으로 켜고 끌 수 있습니다. 스토리 정렬은 Default →
-          Matrix → Guideline 순이며, 상호작용 예시는 Matrix 하단에 있습니다.
+          총 건수·페이지 크기·Go to(레이블 밖 + 입력 박스·placeholder Page, Enter) 영역은 옵션으로 켜고
+          끌 수
+          있습니다. Matrix에서 전체 바·아이템 상태·controlled 예시를 확인하세요.
         </StoryDocsParagraph>
       </StoryDocsSection>
     </StoryDocsPage>

@@ -1,123 +1,132 @@
 /**
- * ContentsTitleSub2D stories — Figma node 7544:663
- *
- *   - Variants (bullet / count / addBtn / toggle 조합)
- *   - Full Matrix
- *   - LightDarkCompare
+ * ContentsTitleSub2D — Figma node 7544:663 · Matrix only (세로 스택, 가로 스크롤 없음)
  */
 
+import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { StoryPlaygroundFrame } from "@/stories/story-docs-shell";
 import { Toggle } from "../toggle/toggle";
 import { ContentsTitleSub2D } from "./contentstitlesub2d";
+import { FigmaLinkCard } from "@/stories/figma-link-card";
+import { StoryDocsMatrixPage } from "@/stories/story-docs-shell";
 
 const meta: Meta<typeof ContentsTitleSub2D> = {
   title: "Components/Title/ContentsTitleSub2D",
   component: ContentsTitleSub2D,
-  parameters: { layout: "padded" },
-  argTypes: {
-    title: { control: "text" },
-    bullet: { control: "boolean" },
-    count: { control: "text" },
-    addBtn: { control: "boolean" },
-    badge: { control: false },
-    toggle: { control: false },
-  },
-  args: {
-    title: "3depth Header Title",
-    bullet: true,
-    count: "32",
-    toggle: <Toggle reverse>Label</Toggle>,
+  parameters: {
+    layout: "padded",
+    docs: { disable: true },
   },
 };
 export default meta;
-
 type Story = StoryObj<typeof ContentsTitleSub2D>;
 
-/* =============================================================
- * Variants
- * =========================================================== */
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
-      <StoryPlaygroundFrame>
-        <Story />
-      </StoryPlaygroundFrame>
-    ),
-  ],
-  args: {
-    title: "3depth Header Title",
-    count: "32",
-    toggle: <Toggle reverse>Label</Toggle>,
-  },
+const CONTENTS_TITLE_FRAME_PX = 1496;
+const DOCS_PAGE_MAX_WIDTH = 1568;
+
+const verticalStackStyle: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 28,
+  width: "100%",
 };
 
-export const NoBullet: Story = {
-  args: {
-    title: "3depth Header Title",
-    bullet: false,
-    count: "32",
-    toggle: <Toggle reverse>Label</Toggle>,
-  },
+const variantCaptionStyle: CSSProperties = {
+  fontSize: 12,
+  fontWeight: 600,
+  letterSpacing: "0.02em",
+  marginBottom: 8,
+  color: "var(--context-foreground-surface-on-surface-hint)",
 };
 
-export const NoCount: Story = {
-  args: {
-    title: "3depth Header Title",
-    count: undefined,
-    toggle: <Toggle reverse>Label</Toggle>,
-  },
+const frameWrapStyle: CSSProperties = {
+  width: CONTENTS_TITLE_FRAME_PX,
+  maxWidth: "100%",
+  boxSizing: "border-box",
 };
 
-export const WithAddBtn: Story = {
-  args: {
-    title: "3depth Header Title",
-    count: "32",
-    addBtn: true,
-    toggle: <Toggle reverse>Label</Toggle>,
-  },
-};
+const toggleSlot = <Toggle reverse>Label</Toggle>;
 
-export const NoToggle: Story = {
-  args: {
-    title: "3depth Header Title",
-    count: "32",
-    toggle: undefined,
-  },
-};
-
-/* =============================================================
- * Full matrix
- * =========================================================== */
-export const FullMatrix: Story = {
-  parameters: { layout: "fullscreen" },
-  render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16, padding: 24 }}>
-      <ContentsTitleSub2D title="Default" count="32" toggle={<Toggle reverse>Label</Toggle>} />
-      <ContentsTitleSub2D title="No bullet" bullet={false} count="32" toggle={<Toggle reverse>Label</Toggle>} />
-      <ContentsTitleSub2D title="No count" toggle={<Toggle reverse>Label</Toggle>} />
-      <ContentsTitleSub2D title="+ AddBtn" count="32" addBtn toggle={<Toggle reverse>Label</Toggle>} />
-      <ContentsTitleSub2D title="No toggle" count="32" />
+function VariantBlock({
+  caption,
+  children: blockChildren,
+}: {
+  caption: string;
+  children: ReactNode;
+}) {
+  return (
+    <div>
+      <div style={variantCaptionStyle}>{caption}</div>
+      <div style={frameWrapStyle}>{blockChildren}</div>
     </div>
-  ),
+  );
+}
+
+type RowDef = {
+  key: string;
+  label: string;
+  bullet: boolean;
+  hasCount: boolean;
+  addBtn: boolean;
 };
 
-/* =============================================================
- * Light/Dark compare
- * =========================================================== */
-export const LightDarkCompare: Story = {
-  parameters: { layout: "fullscreen" },
+const ROW_DEFS: RowDef[] = [];
+for (const bullet of [true, false]) {
+  for (const hasCount of [true, false]) {
+    for (const addBtn of [true, false]) {
+      ROW_DEFS.push({
+        key: `b${bullet ? 1 : 0}c${hasCount ? 1 : 0}a${addBtn ? 1 : 0}`,
+        label: [
+          `bullet ${bullet ? "on" : "off"}`,
+          `count ${hasCount ? "on" : "off"}`,
+          `add ${addBtn ? "on" : "off"}`,
+        ].join(" · "),
+        bullet,
+        hasCount,
+        addBtn,
+      });
+    }
+  }
+}
+
+const SUB2D_VARIANTS: Array<{ key: string; caption: string; node: ReactNode }> = [];
+for (const row of ROW_DEFS) {
+  for (const withToggle of [true, false]) {
+    SUB2D_VARIANTS.push({
+      key: `${row.key}-t${withToggle ? 1 : 0}`,
+      caption: `${row.label} · ${withToggle ? "Toggle" : "No toggle"}`,
+      node: (
+        <ContentsTitleSub2D
+          title="3depth Header Title"
+          bullet={row.bullet}
+          count={row.hasCount ? "32" : undefined}
+          addBtn={row.addBtn}
+          toggle={withToggle ? toggleSlot : undefined}
+        />
+      ),
+    });
+  }
+}
+
+export const Matrix: Story = {
+  name: "Matrix",
+  parameters: { layout: "padded" },
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div data-theme="light" style={{ padding: 24, background: "var(--context-background-surface-bg-surface-base)" }}>
-        <div style={{ fontSize: 12, marginBottom: 8, color: "#787a88" }}>Light</div>
-        <ContentsTitleSub2D title="3depth Header Title" count="32" toggle={<Toggle reverse>Label</Toggle>} />
+    <StoryDocsMatrixPage
+      title="ContentsTitleSub2D"
+      description="프레임 폭 1496px. Bullet · Count · Add × Toggle 유무를 세로로 나열합니다 (가로 스크롤 없음)."
+      figmaNode="7544-663"
+      pageMaxWidth={DOCS_PAGE_MAX_WIDTH}
+    >
+      <FigmaLinkCard nodeId="7544-663" caption="Components / Title — Contents Title Sub 2D" />
+
+      <div style={verticalStackStyle}>
+        {SUB2D_VARIANTS.map((v) => (
+          <VariantBlock key={v.key} caption={v.caption}>
+            {v.node}
+          </VariantBlock>
+        ))}
       </div>
-      <div data-theme="dark" style={{ padding: 24, background: "var(--context-background-surface-bg-surface-base)" }}>
-        <div style={{ fontSize: 12, marginBottom: 8, color: "#b3b4bc" }}>Dark</div>
-        <ContentsTitleSub2D title="3depth Header Title" count="32" toggle={<Toggle reverse>Label</Toggle>} />
-      </div>
-    </div>
+    </StoryDocsMatrixPage>
   ),
 };

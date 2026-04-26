@@ -3,7 +3,12 @@ import type { CSSProperties } from "react";
 import { Fragment } from "react";
 
 import { figmaNodeUrl } from "../../stories/story-figma-urls";
-import { DropdownMenuItem } from "./dropdown-menu-item";
+import { Dropdown } from "./dropdown";
+import {
+  DropdownMenuHeader,
+  DropdownMenuItem,
+} from "./dropdown-menu-item";
+import { DropdownSubMenu } from "./dropdown-sub-menu";
 import { DropdownMenu, type DropdownMenuArrow } from "./dropdown-menu";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
@@ -15,6 +20,13 @@ import {
 } from "@/stories/story-docs-shell";
 
 const FIGMA_SECTION = figmaNodeUrl("5262-317642");
+
+/** Figma 메뉴 패널 기준 — Matrix·Multi-level·Playground 공통 */
+const MENU_W = 180;
+
+/** Multi-level: 메뉴가 absolute 라 열마다 최소 가로를 확보해야 패널이 겹치지 않음 */
+const MULTI_LEVEL_COL_MIN = MENU_W + 48;
+const MULTI_LEVEL_DRILL_MIN = MENU_W * 2 + 72;
 
 function Icon({ src, size = 16 }: { src: string; size?: number }) {
   const style: CSSProperties = {
@@ -34,14 +46,27 @@ function Icon({ src, size = 16 }: { src: string; size?: number }) {
   return <span aria-hidden="true" style={style} />;
 }
 
-const DotIcon = () => <Icon src="/icon/Dot.svg" />;
+const CopyIcon = () => <Icon src="/icon/Copy.svg" />;
+const ArrowForwardIcon = () => <Icon src="/icon/Arrow-Forward.svg" />;
 
 function makeItems(count: number) {
   return Array.from({ length: count }, (_, i) => (
-    <DropdownMenuItem key={i} leadingIcon={<DotIcon />} hasSubmenu>
+    <DropdownMenuItem key={i} leadingIcon={<CopyIcon />} hasSubmenu>
       menu item
     </DropdownMenuItem>
   ));
+}
+
+function MenuItemRow(props: { selected?: boolean }) {
+  return (
+    <DropdownMenuItem
+      leadingIcon={<CopyIcon />}
+      selected={props.selected}
+      trailingIcon={props.selected ? <Icon src="/icon/Check.svg" /> : undefined}
+    >
+      menu item
+    </DropdownMenuItem>
+  );
 }
 
 const ARROW_VARIANTS: DropdownMenuArrow[] = [
@@ -54,20 +79,17 @@ const ARROW_VARIANTS: DropdownMenuArrow[] = [
   "bottom-right",
 ];
 
+const matrixGridMinWidth =
+  88 + ARROW_VARIANTS.length * MENU_W + ARROW_VARIANTS.length * 12;
+
 const meta: Meta<typeof DropdownMenu> = {
   title: "Components/Dropdown/Dropdown Menu",
   component: DropdownMenu,
   parameters: {
     layout: "centered",
     figma: FIGMA_SECTION,
-    docs: {
-      description: {
-        component:
-          "Figma `Dropdown / Dropdown Menu` 컨테이너. 항목 수·화살표(비크) 위치·스크롤은 props 로 조절합니다.",
-      },
-    },
+    docs: { disable: true },
   },
-  tags: ["autodocs"],
   argTypes: {
     width: { control: "text" },
     minWidth: { control: "text" },
@@ -78,7 +100,8 @@ const meta: Meta<typeof DropdownMenu> = {
     },
   },
   args: {
-    minWidth: 180,
+    minWidth: MENU_W,
+    width: MENU_W,
     arrow: "none",
   },
 };
@@ -105,73 +128,195 @@ export const Matrix: Story = {
   name: "Matrix",
   parameters: {
     layout: "padded",
-    docs: {
-      description: {
-        story: "Items 1…12 × Arrow 7종 매트릭스.",
-      },
-    },
   },
   render: () => (
     <StoryDocsMatrixPage
       title="Menu"
-      description="항목 개수(1~12)와 arrow variant 7종 조합으로 메뉴 패널을 비교합니다."
+      description="항목 개수(1~5)·arrow 7종과 다단(Multi-level) 패턴을 한 페이지에서 비교합니다. 메뉴 패널 width는 180px로 통일합니다."
       figmaNode="5355-154239"
     >
       <FigmaLinkCard
         nodeId="5355-154239"
         caption="Components / Dropdown · Menu — Variant 매트릭스 원본"
       />
-      <div style={{ overflowX: "auto" }}>
+      <section>
+        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Items × Arrow</h4>
+        <div style={{ overflowX: "auto" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: `88px repeat(${ARROW_VARIANTS.length}, ${MENU_W}px)`,
+              gap: "10px 12px",
+              alignItems: "start",
+              minWidth: matrixGridMinWidth,
+            }}
+          >
+            <div />
+            {ARROW_VARIANTS.map((a) => (
+              <div
+                key={a}
+                style={{
+                  fontSize: 10,
+                  color: "var(--color-on-surface-secondary)",
+                  lineHeight: 1.25,
+                  borderBottom: "1px solid var(--color-border-surface)",
+                  paddingBottom: 4,
+                }}
+              >
+                Arrow={a.replace("-", " ")}
+              </div>
+            ))}
+
+            {Array.from({ length: 5 }, (_, idx) => {
+              const n = idx + 1;
+              return (
+                <Fragment key={n}>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      color: "var(--color-on-surface-secondary)",
+                      paddingTop: 4,
+                    }}
+                  >
+                    Items={n}
+                  </div>
+                  {ARROW_VARIANTS.map((a) => (
+                    <div key={`${n}-${a}`}>
+                      <DropdownMenu
+                        arrow={a}
+                        aria-label={`Items ${n} arrow ${a}`}
+                        minWidth={MENU_W}
+                        width={MENU_W}
+                      >
+                        {makeItems(n)}
+                      </DropdownMenu>
+                    </div>
+                  ))}
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <FigmaLinkCard
+        nodeId="13292-56877"
+        caption="Components / Dropdown · Multi-level Menu (Figma)"
+      />
+      <section
+        style={{
+          paddingBottom: 160,
+          marginBottom: 24,
+        }}
+      >
+        <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Multi-level</h4>
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: `88px repeat(${ARROW_VARIANTS.length}, minmax(132px, 150px))`,
-            gap: "10px 12px",
-            alignItems: "start",
-            minWidth: 1100,
+            display: "flex",
+            flexWrap: "wrap",
+            columnGap: 64,
+            rowGap: 56,
+            alignItems: "flex-start",
           }}
         >
-          <div />
-          {ARROW_VARIANTS.map((a) => (
+          <div style={{ flex: "0 0 auto", minWidth: MULTI_LEVEL_COL_MIN }}>
             <div
-              key={a}
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 color: "var(--color-on-surface-secondary)",
-                lineHeight: 1.25,
-                borderBottom: "1px solid var(--color-border-surface)",
-                paddingBottom: 4,
+                marginBottom: 12,
               }}
             >
-              Arrow={a.replace("-", " ")}
+              1 Group
             </div>
-          ))}
+            <Dropdown
+              triggerLabel="Open"
+              defaultOpen
+              menuAriaLabel="One group"
+              menuMinWidth={MENU_W}
+              menuWidth={MENU_W}
+            >
+              <DropdownMenuHeader>Dropdown header</DropdownMenuHeader>
+              <MenuItemRow selected />
+              <MenuItemRow />
+              <MenuItemRow />
+              <MenuItemRow />
+              <MenuItemRow />
+            </Dropdown>
+          </div>
 
-          {Array.from({ length: 12 }, (_, idx) => {
-            const n = idx + 1;
-            return (
-              <Fragment key={n}>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: "var(--color-on-surface-secondary)",
-                    paddingTop: 4,
-                  }}
+          <div style={{ flex: "0 0 auto", minWidth: MULTI_LEVEL_COL_MIN }}>
+            <div
+              style={{
+                fontSize: 12,
+                color: "var(--color-on-surface-secondary)",
+                marginBottom: 12,
+              }}
+            >
+              Multiple Groups (scroll)
+            </div>
+            <Dropdown
+              triggerLabel="Open"
+              defaultOpen
+              menuAriaLabel="Multiple groups"
+              menuMinWidth={MENU_W}
+              menuWidth={MENU_W}
+              menuMaxHeight={280}
+            >
+              <DropdownMenuHeader>Dropdown header</DropdownMenuHeader>
+              <MenuItemRow selected />
+              <MenuItemRow />
+              <MenuItemRow />
+              <MenuItemRow />
+              <MenuItemRow />
+              <DropdownMenuHeader>Dropdown header</DropdownMenuHeader>
+              <MenuItemRow selected />
+              <MenuItemRow />
+              <MenuItemRow />
+              <MenuItemRow />
+              <MenuItemRow />
+            </Dropdown>
+          </div>
+
+          <div style={{ flex: "0 0 auto", minWidth: MULTI_LEVEL_DRILL_MIN }}>
+            <div
+              style={{
+                fontSize: 12,
+                color: "var(--color-on-surface-secondary)",
+                marginBottom: 12,
+              }}
+            >
+              Drill down
+            </div>
+            <Dropdown
+              triggerLabel="Open"
+              defaultOpen
+              menuAriaLabel="Drill down"
+              menuMinWidth={MENU_W}
+              menuWidth={MENU_W}
+            >
+              <DropdownMenuHeader>Dropdown header</DropdownMenuHeader>
+              <DropdownMenuItem leadingIcon={<ArrowForwardIcon />}>menu item</DropdownMenuItem>
+              <DropdownSubMenu
+                label="menu item"
+                leadingIcon={<ArrowForwardIcon />}
+                menuMinWidth={MENU_W}
+                menuWidth={MENU_W}
+              >
+                <DropdownMenuItem leadingIcon={<ArrowForwardIcon />}>menu item</DropdownMenuItem>
+                <DropdownMenuItem
+                  leadingIcon={<ArrowForwardIcon />}
+                  selected
+                  trailingIcon={<Icon src="/icon/Check.svg" />}
                 >
-                  Items={n}
-                </div>
-                {ARROW_VARIANTS.map((a) => (
-                  <div key={`${n}-${a}`} style={{ transform: "scale(0.92)", transformOrigin: "top left" }}>
-                    <DropdownMenu arrow={a} aria-label={`Items ${n} arrow ${a}`} minWidth={140}>
-                      {makeItems(n)}
-                    </DropdownMenu>
-                  </div>
-                ))}
-              </Fragment>
-            );
-          })}
+                  menu item
+                </DropdownMenuItem>
+              </DropdownSubMenu>
+              <DropdownMenuItem leadingIcon={<ArrowForwardIcon />}>menu item</DropdownMenuItem>
+            </Dropdown>
+          </div>
         </div>
-      </div>
+      </section>
     </StoryDocsMatrixPage>
   ),
 };
@@ -198,7 +343,7 @@ export const Guideline: Story = {
           </li>
           <li>
             긴 목록은 <StoryDocsInlineCode>maxHeight</StoryDocsInlineCode> 로 스크롤 영역을
-            제한하세요. 다단 구조는 <strong>Dropdown Menu/Multiple levels</strong> 스토리를
+            제한하세요. 다단 구조는 같은 <strong>Matrix</strong> 페이지의 Multi-level 블록을
             참고합니다.
           </li>
         </ul>

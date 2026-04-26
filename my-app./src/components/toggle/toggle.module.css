@@ -119,3 +119,19 @@
   color: inherit;
   letter-spacing: 0;
 }
+
+/* =============================================================================
+ * ToggleGroup (레이아웃) — RadioGroup 과 동일 간격
+ *   - vertical   : gap 4  (--spacing-2xs)
+ *   - horizontal : gap 16 (--spacing-lg)
+ * ========================================================================== */
+.toggleGroup {
+  display: flex;
+  gap: var(--spacing-2xs); /* 4 */
+  flex-direction: column;
+}
+.toggleGroup[data-orientation="horizontal"] {
+  flex-direction: row;
+  gap: var(--spacing-lg); /* 16 */
+  flex-wrap: wrap;
+}

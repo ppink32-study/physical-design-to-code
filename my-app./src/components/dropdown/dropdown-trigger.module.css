@@ -3,7 +3,7 @@
  * 기존 Button 컴포넌트를 컴포즈해서 사용합니다.
  *
  * 본 module 은 다음만 담당합니다.
- *   - splitButton 시 두 버튼을 시각적으로 연결 (radius / border / divider)
+ *   - splitButton 시 두 버튼을 시각적으로 연결 (radius / -1px overlap — Figma 5286:121691 에서 구분선 없음)
  *   - opened 상태 표시 (선택된 active 시각)
  * ============================================================ */
 
@@ -31,11 +31,11 @@
   border-bottom-right-radius: 0 !important;
 }
 
-/* chevron(우) 버튼 — 좌측 모서리 평평 + 좌측 1px 분리선 */
+/* chevron(우) 버튼 — 좌측 모서리 평평 + Figma 와 동일 -1px 겹침(라인 없음) */
 .splitChevron {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
-  margin-left: -1px; /* primary-solid: border 없으므로 1px overlap 으로 분리선 효과 */
+  margin-left: -1px;
 }
 
 /* dropDirection=left + split: 케럿이 왼쪽 세그먼트 */
@@ -50,31 +50,24 @@
   border-bottom-left-radius: 0 !important;
 }
 
-/* primary 계열은 fill 색이 동일해서 분리선이 안 보임 → 강제 1px divider */
-.trigger[data-split="true"][data-type="primary"] .splitChevron::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 0;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.24); /* 흰색 분리선 (primary 위) */
-  pointer-events: none;
+/* Large + secondary: Figma min-width 80px (medium/small 은 비율 축소) */
+.trigger[data-type="secondary"][data-size="large"] .single,
+.trigger[data-type="secondary"][data-size="large"] .splitMain,
+.trigger[data-type="secondary"][data-size="large"] .splitMainTrailing {
+  min-width: 80px;
 }
 
-.trigger[data-split="true"][data-type="primary"][data-chevron-first="true"]
-  .splitChevronLeading::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  right: 0;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.24);
-  pointer-events: none;
+.trigger[data-type="secondary"][data-size="medium"] .single,
+.trigger[data-type="secondary"][data-size="medium"] .splitMain,
+.trigger[data-type="secondary"][data-size="medium"] .splitMainTrailing {
+  min-width: 64px;
 }
 
-/* secondary 계열은 outline 이 분리선을 만들어줌 — overlap 시 1px border 가 시각적으로 1px divider */
+.trigger[data-type="secondary"][data-size="small"] .single,
+.trigger[data-type="secondary"][data-size="small"] .splitMain,
+.trigger[data-type="secondary"][data-size="small"] .splitMainTrailing {
+  min-width: 48px;
+}
 
 /* -------- Opened (active/expanded) -------- */
 .trigger[data-opened="true"] .splitMain,

@@ -1,11 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useState } from "react";
 
 import { Button } from "../button/button";
-
 import { Tab, TabList } from "./tab";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
+import {
+  storyMatrixCellStyle,
+  storyMatrixColHeaderStyle,
+  storyMatrixRowHeaderStyle,
+  storyMatrixScrollWrap,
+  storyMatrixStickyCornerStyle,
+  storyMatrixTableBase,
+} from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsCode,
   StoryDocsInlineCode,
@@ -19,15 +26,9 @@ import {
 const meta: Meta<typeof Tab> = {
   title: "Components/Tab",
   component: Tab,
-  tags: ["autodocs"],
   parameters: {
     layout: "padded",
-    docs: {
-      description: {
-        component:
-          "Figma Tabs - level 1 (node 5185:210328) 기반. Tab(단일 item) + TabList(컨테이너). horizontal/vertical 그룹 레이아웃을 지원합니다.",
-      },
-    },
+    docs: { disable: true },
   },
   argTypes: {
     tabType: { control: { type: "inline-radio" }, options: ["text", "more"] },
@@ -56,8 +57,65 @@ const meta: Meta<typeof Tab> = {
 export default meta;
 type Story = StoryObj<typeof Tab>;
 
+const matrixScrollWrap = storyMatrixScrollWrap;
+const matrixTableBase = storyMatrixTableBase;
+const matrixColHeaderStyle = storyMatrixColHeaderStyle;
+const matrixRowHeaderStyle = storyMatrixRowHeaderStyle;
+const matrixStickyCornerStyle = storyMatrixStickyCornerStyle;
+
+const matrixCellDemo: CSSProperties = {
+  ...storyMatrixCellStyle,
+  verticalAlign: "middle",
+};
+
+const matrixCellWide: CSSProperties = {
+  ...matrixCellDemo,
+  minWidth: 200,
+};
+
+const matrixCellGroup: CSSProperties = {
+  ...matrixCellDemo,
+  minWidth: 180,
+  maxWidth: 320,
+};
+
+const sectionTitleStyle: CSSProperties = {
+  fontSize: 14,
+  fontWeight: 600,
+  marginTop: 32,
+  marginBottom: 12,
+  color: "var(--context-foreground-surface-on-surface-base)",
+};
+
+const Section = ({ title, children }: { title: string; children: ReactNode }) => (
+  <section>
+    <h3 style={sectionTitleStyle}>{title}</h3>
+    {children}
+  </section>
+);
+
+const extraButton = (
+  <Button variant="secondary-outline" size="medium">
+    Button
+  </Button>
+);
+
+const hFlexEnd: CSSProperties = {
+  display: "flex",
+  alignItems: "flex-end",
+  gap: 12,
+  flexWrap: "nowrap",
+};
+
+const vFlexStart: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: 16,
+};
+
 /* -------------------------------------------------------------------------
- * Default — Docs Primary + Controls
+ * Playground
  * ---------------------------------------------------------------------- */
 export const Playground: Story = {
   decorators: [
@@ -71,182 +129,435 @@ export const Playground: Story = {
 };
 
 /* -------------------------------------------------------------------------
- * Matrix — 상태 표 + 그룹 레이아웃 + 인터랙션
+ * Tab Level 1 — 행: 상태 / 열: Text · More (Figma)
  * ---------------------------------------------------------------------- */
-const matrixStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "140px repeat(4, minmax(120px, auto))",
-  gap: 16,
-  alignItems: "center",
-  padding: 16,
-};
+const LEVEL1_STATES = [
+  { key: "default", label: "Default" },
+  { key: "hover", label: "Hover" },
+  { key: "selected", label: "Selected" },
+  { key: "disabled", label: "Disabled" },
+] as const;
 
-const headerStyle: CSSProperties = {
-  fontWeight: 600,
-  fontSize: 12,
-  color: "#565967",
-  textTransform: "uppercase",
-  letterSpacing: 0.5,
-};
-
-const rowLabelStyle: CSSProperties = {
-  fontWeight: 600,
-  fontSize: 13,
-  color: "#141518",
-};
-
-function TabStateMatrixGrid() {
+function TabLevel1MatrixTable() {
   return (
-    <div style={matrixStyle}>
-      <span />
-      <span style={headerStyle}>Default</span>
-      <span style={headerStyle}>Hover</span>
-      <span style={headerStyle}>Selected</span>
-      <span style={headerStyle}>Disabled</span>
-
-      <span style={rowLabelStyle}>Text</span>
-      <Tab tabType="text" state="default" count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="hover" count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="selected" count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="disabled" disabled count="5">
-        Tab
-      </Tab>
-
-      <span style={rowLabelStyle}>Text (no icon)</span>
-      <Tab tabType="text" state="default" leadingIcon={false} count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="hover" leadingIcon={false} count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="selected" leadingIcon={false} count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="disabled" disabled leadingIcon={false} count="5">
-        Tab
-      </Tab>
-
-      <span style={rowLabelStyle}>Text + Close</span>
-      <Tab tabType="text" state="default" closable count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="hover" closable count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="selected" closable count="5">
-        Tab
-      </Tab>
-      <Tab tabType="text" state="disabled" disabled closable count="5">
-        Tab
-      </Tab>
-
-      <span style={rowLabelStyle}>More</span>
-      <Tab tabType="more" state="default" aria-label="more" />
-      <Tab tabType="more" state="hover" aria-label="more" />
-      <span style={{ color: "#b3b4bc", fontSize: 12 }}>N/A</span>
-      <Tab tabType="more" state="disabled" disabled aria-label="more" />
+    <div style={matrixScrollWrap}>
+      <table style={matrixTableBase}>
+        <thead>
+          <tr>
+            <th
+              scope="col"
+              style={{
+                ...matrixColHeaderStyle,
+                ...matrixStickyCornerStyle,
+                minWidth: 120,
+                zIndex: 2,
+              }}
+              aria-hidden
+            />
+            <th scope="col" style={matrixColHeaderStyle}>
+              Text
+            </th>
+            <th scope="col" style={matrixColHeaderStyle}>
+              More
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {LEVEL1_STATES.map((row) => (
+            <tr key={row.key}>
+              <th
+                scope="row"
+                style={{
+                  ...matrixRowHeaderStyle,
+                  ...matrixStickyCornerStyle,
+                }}
+              >
+                {row.label}
+              </th>
+              <td style={matrixCellDemo}>
+                <TabList orientation="horizontal" showBorder={row.key !== "disabled"}>
+                  <Tab
+                    tabType="text"
+                    state={row.key}
+                    disabled={row.key === "disabled"}
+                    count="5"
+                    leadingIcon
+                  >
+                    Tab
+                  </Tab>
+                </TabList>
+              </td>
+              <td style={matrixCellDemo}>
+                {row.key === "selected" ? (
+                  <span
+                    style={{
+                      fontSize: 12,
+                      color: "var(--context-foreground-surface-on-surface-secondary)",
+                    }}
+                  >
+                    —
+                  </span>
+                ) : (
+                  <TabList orientation="horizontal" showBorder={false}>
+                    <Tab
+                      tabType="more"
+                      state={row.key}
+                      disabled={row.key === "disabled"}
+                      aria-label="more tabs"
+                    />
+                  </TabList>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
 
 /* -------------------------------------------------------------------------
- * Horizontal Grouping (Figma node 13282:12683)
+ * Horizontal grouping — 열: 시나리오 (Figma Horizontal Grouping)
  * ---------------------------------------------------------------------- */
-type HTabItem = { id: string; label: string };
+const IDS3 = ["t1", "t2", "t3"] as const;
+const IDS2 = ["t1", "t2"] as const;
 
-const H_ITEMS: HTabItem[] = [
-  { id: "overview", label: "Overview" },
-  { id: "usage", label: "Usage" },
-  { id: "review", label: "Review" },
-];
-
-function HorizontalBasic({ showMore = false }: { showMore?: boolean }) {
-  const [selected, setSelected] = useState<string>("overview");
+function TabStripHorizontal({
+  ids,
+  selected,
+  onSelect,
+  showMore,
+}: {
+  ids: readonly string[];
+  selected: string;
+  onSelect: (id: string) => void;
+  showMore?: boolean;
+}) {
   return (
     <TabList orientation="horizontal">
-      {H_ITEMS.map((item) => (
+      {ids.map((id) => (
         <Tab
-          key={item.id}
-          selected={selected === item.id}
-          onClick={() => setSelected(item.id)}
+          key={id}
+          selected={selected === id}
+          count="5"
+          leadingIcon
+          onClick={() => onSelect(id)}
         >
-          {item.label}
+          Tab
         </Tab>
       ))}
-      {showMore && <Tab tabType="more" aria-label="more" />}
+      {showMore ? <Tab tabType="more" aria-label="more tabs" /> : null}
     </TabList>
+  );
+}
+
+function HMatrixBasic() {
+  const [selected, setSelected] = useState<string>("t1");
+  return <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} />;
+}
+
+function HMatrixOverflow() {
+  const [selected, setSelected] = useState<string>("t1");
+  return (
+    <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} showMore />
+  );
+}
+
+function HMatrixLeftExtra() {
+  const [selected, setSelected] = useState<string>("t1");
+  return (
+    <div style={hFlexEnd}>
+      {extraButton}
+      <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} />
+    </div>
+  );
+}
+
+function HMatrixRightExtra() {
+  const [selected, setSelected] = useState<string>("t1");
+  return (
+    <div style={hFlexEnd}>
+      <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} />
+      {extraButton}
+    </div>
+  );
+}
+
+function HMatrixTwoSide() {
+  const [selected, setSelected] = useState<string>("t2");
+  return (
+    <div style={hFlexEnd}>
+      {extraButton}
+      <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} />
+      {extraButton}
+    </div>
+  );
+}
+
+function HMatrixLeftOverflow() {
+  const [selected, setSelected] = useState<string>("t1");
+  return (
+    <div style={hFlexEnd}>
+      {extraButton}
+      <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} showMore />
+    </div>
+  );
+}
+
+function HMatrixRightOverflow() {
+  const [selected, setSelected] = useState<string>("t1");
+  return (
+    <div style={hFlexEnd}>
+      <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} showMore />
+      {extraButton}
+    </div>
+  );
+}
+
+function HMatrixTwoSideOverflow() {
+  const [selected, setSelected] = useState<string>("t1");
+  return (
+    <div style={hFlexEnd}>
+      {extraButton}
+      <TabStripHorizontal ids={IDS3} selected={selected} onSelect={setSelected} showMore />
+      {extraButton}
+    </div>
+  );
+}
+
+function HorizontalGroupingMatrixTable() {
+  const cols = [
+    { key: "basic", label: "Basic", Demo: HMatrixBasic },
+    { key: "overflow", label: "Overflow", Demo: HMatrixOverflow },
+    { key: "left", label: "Left extra", Demo: HMatrixLeftExtra },
+    { key: "right", label: "Right extra", Demo: HMatrixRightExtra },
+    { key: "2side", label: "2-side extra", Demo: HMatrixTwoSide },
+    { key: "leftOv", label: "Left + overflow", Demo: HMatrixLeftOverflow },
+    { key: "rightOv", label: "Right + overflow", Demo: HMatrixRightOverflow },
+    { key: "2sideOv", label: "2-side + overflow", Demo: HMatrixTwoSideOverflow },
+  ] as const;
+
+  return (
+    <div style={matrixScrollWrap}>
+      <table style={matrixTableBase}>
+        <thead>
+          <tr>
+            <th
+              style={{
+                ...matrixColHeaderStyle,
+                ...matrixStickyCornerStyle,
+                minWidth: 100,
+                zIndex: 2,
+              }}
+              aria-hidden
+            />
+            {cols.map((c) => (
+              <th key={c.key} scope="col" style={matrixColHeaderStyle}>
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th
+              scope="row"
+              style={{
+                ...matrixRowHeaderStyle,
+                ...matrixStickyCornerStyle,
+                whiteSpace: "nowrap",
+              }}
+            >
+              Sample
+            </th>
+            {cols.map((c) => {
+              const Cell = c.Demo;
+              return (
+                <td key={c.key} style={matrixCellGroup}>
+                  <div style={hFlexEnd}>
+                    <Cell />
+                  </div>
+                </td>
+              );
+            })}
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 }
 
 /* -------------------------------------------------------------------------
- * Vertical Grouping (Figma node 13281:28922)
+ * Vertical grouping (Figma Vertical Grouping)
  * ---------------------------------------------------------------------- */
-function VerticalBasic({ showMore = false }: { showMore?: boolean }) {
-  const [selected, setSelected] = useState<string>("overview");
+function TabStripVertical({
+  ids,
+  selected,
+  onSelect,
+  showMore,
+}: {
+  ids: readonly string[];
+  selected: string;
+  onSelect: (id: string) => void;
+  showMore?: boolean;
+}) {
   return (
     <TabList orientation="vertical" showBorder={false}>
-      {H_ITEMS.map((item) => (
+      {ids.map((id) => (
         <Tab
-          key={item.id}
-          selected={selected === item.id}
-          onClick={() => setSelected(item.id)}
+          key={id}
+          selected={selected === id}
+          count="5"
+          leadingIcon
+          onClick={() => onSelect(id)}
         >
-          {item.label}
+          Tab
         </Tab>
       ))}
-      {showMore && <Tab tabType="more" aria-label="more" />}
+      {showMore ? <Tab tabType="more" aria-label="more tabs" /> : null}
     </TabList>
   );
 }
 
-function TabInteractiveDemo() {
-  const [selected, setSelected] = useState<string>("overview");
-  const [items, setItems] = useState<HTabItem[]>([
-    { id: "overview", label: "Overview" },
-    { id: "usage", label: "Usage" },
-    { id: "review", label: "Review" },
-    { id: "specs", label: "Specs" },
-  ]);
+function VMatrixBasic() {
+  const [selected, setSelected] = useState("t1");
+  return <TabStripVertical ids={IDS3} selected={selected} onSelect={setSelected} />;
+}
 
-  const handleClose = (id: string) => {
-    setItems((prev) => {
-      const next = prev.filter((it) => it.id !== id);
-      if (selected === id && next[0]) {
-        setSelected(next[0].id);
-      }
-      return next;
-    });
-  };
+function VMatrixOverflow() {
+  const [selected, setSelected] = useState("t1");
+  return <TabStripVertical ids={IDS2} selected={selected} onSelect={setSelected} showMore />;
+}
 
+function VMatrixTopExtra() {
+  const [selected, setSelected] = useState("t2");
   return (
-    <TabList orientation="horizontal">
-      {items.map((item) => (
-        <Tab
-          key={item.id}
-          selected={selected === item.id}
-          onClick={() => setSelected(item.id)}
-          closable
-          onClose={() => handleClose(item.id)}
-        >
-          {item.label}
-        </Tab>
-      ))}
-    </TabList>
+    <div style={vFlexStart}>
+      {extraButton}
+      <TabStripVertical ids={IDS3} selected={selected} onSelect={setSelected} />
+    </div>
   );
 }
 
-const sectionTitleStyle: CSSProperties = {
-  fontSize: 13,
-  fontWeight: 600,
-  marginBottom: 12,
-  color: "#141518",
-};
+function VMatrixBottomExtra() {
+  const [selected, setSelected] = useState("t1");
+  return (
+    <div style={vFlexStart}>
+      <TabStripVertical ids={IDS3} selected={selected} onSelect={setSelected} />
+      {extraButton}
+    </div>
+  );
+}
+
+function VMatrixTwoSide() {
+  const [selected, setSelected] = useState("t2");
+  return (
+    <div style={vFlexStart}>
+      {extraButton}
+      <TabStripVertical ids={IDS3} selected={selected} onSelect={setSelected} />
+      {extraButton}
+    </div>
+  );
+}
+
+function VMatrixTopOverflow() {
+  const [selected, setSelected] = useState("t1");
+  return (
+    <div style={vFlexStart}>
+      {extraButton}
+      <TabStripVertical ids={IDS3} selected={selected} onSelect={setSelected} showMore />
+    </div>
+  );
+}
+
+function VMatrixBottomOverflow() {
+  const [selected, setSelected] = useState("t1");
+  return (
+    <div style={vFlexStart}>
+      <TabStripVertical ids={IDS2} selected={selected} onSelect={setSelected} showMore />
+      {extraButton}
+    </div>
+  );
+}
+
+function VMatrixTwoSideOverflow() {
+  const [selected, setSelected] = useState("t2");
+  return (
+    <div style={vFlexStart}>
+      {extraButton}
+      <TabStripVertical ids={IDS2} selected={selected} onSelect={setSelected} showMore />
+      {extraButton}
+    </div>
+  );
+}
+
+function VerticalGroupingMatrixBlock({
+  title,
+  cols,
+}: {
+  title: string;
+  cols: readonly { key: string; label: string; Demo: React.ComponentType }[];
+}) {
+  return (
+    <>
+      <h4
+        style={{
+          fontSize: 12,
+          fontWeight: 600,
+          marginBottom: 8,
+          color: "var(--context-foreground-surface-on-surface-secondary)",
+        }}
+      >
+        {title}
+      </h4>
+      <div style={matrixScrollWrap}>
+        <table style={matrixTableBase}>
+          <thead>
+            <tr>
+              <th
+                style={{
+                  ...matrixColHeaderStyle,
+                  ...matrixStickyCornerStyle,
+                  minWidth: 88,
+                  zIndex: 2,
+                }}
+                aria-hidden
+              />
+              {cols.map((c) => (
+                <th key={c.key} scope="col" style={matrixColHeaderStyle}>
+                  {c.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                scope="row"
+                style={{
+                  ...matrixRowHeaderStyle,
+                  ...matrixStickyCornerStyle,
+                }}
+              >
+                Sample
+              </th>
+              {cols.map((c) => {
+                const Cell = c.Demo;
+                return (
+                  <td key={c.key} style={matrixCellWide}>
+                    <div style={vFlexStart}>
+                      <Cell />
+                    </div>
+                  </td>
+                );
+              })}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
 
 export const Matrix: Story = {
   name: "Matrix",
@@ -254,121 +565,43 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="Tab"
-      description="상태 매트릭스와 가로·세로 TabList, overflow·extra 슬롯·closable 인터랙션을 한 페이지에서 비교합니다."
+      description="Tab Level 1(상태×Text/More), Horizontal Grouping, Vertical Grouping 을 표 형태로 정리했습니다. 셀 안 샘플은 Figma와 동일하게 Tab·숫자·Gear·More·Extra Button 조합입니다."
       figmaNode="5185-210328"
     >
       <FigmaLinkCard
         nodeId="5185-210328"
-        caption="Components / Tab — Direction × Size × State 매트릭스 원본"
+        caption="Components / Tab — Tab Level 1 · Grouping 매트릭스"
       />
-      <section>
-        <div style={sectionTitleStyle}>State matrix</div>
-        <TabStateMatrixGrid />
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Horizontal · Basic</div>
-        <HorizontalBasic />
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Horizontal · Overflow</div>
-        <HorizontalBasic showMore />
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Horizontal · Left extra</div>
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-          <HorizontalBasic />
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Horizontal · Right extra</div>
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <HorizontalBasic />
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Horizontal · Both extra</div>
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-          <HorizontalBasic />
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Horizontal · Both extra + overflow</div>
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-          <HorizontalBasic showMore />
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Vertical · Basic</div>
-        <VerticalBasic />
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Vertical · Overflow</div>
-        <VerticalBasic showMore />
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Vertical · Top extra</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start" }}>
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-          <VerticalBasic />
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Vertical · Bottom extra</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start" }}>
-          <VerticalBasic />
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Vertical · Both extra</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start" }}>
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-          <VerticalBasic />
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Vertical · Both extra + overflow</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start" }}>
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-          <VerticalBasic showMore />
-          <Button variant="secondary-outline" size="medium">
-            Button
-          </Button>
-        </div>
-      </section>
-      <section>
-        <div style={sectionTitleStyle}>Interactive · closable</div>
-        <TabInteractiveDemo />
-      </section>
+
+      <Section title="Tab Level 1">
+        <TabLevel1MatrixTable />
+      </Section>
+
+      <Section title="Horizontal grouping">
+        <HorizontalGroupingMatrixTable />
+      </Section>
+
+      <Section title="Vertical grouping">
+        <VerticalGroupingMatrixBlock
+          title="기본 · overflow · extra"
+          cols={[
+            { key: "basic", label: "Basic", Demo: VMatrixBasic },
+            { key: "overflow", label: "Overflow", Demo: VMatrixOverflow },
+            { key: "top", label: "Top extra", Demo: VMatrixTopExtra },
+            { key: "bottom", label: "Bottom extra", Demo: VMatrixBottomExtra },
+            { key: "2side", label: "2-side extra", Demo: VMatrixTwoSide },
+          ]}
+        />
+        <div style={{ marginTop: 24 }} />
+        <VerticalGroupingMatrixBlock
+          title="Extra + overflow"
+          cols={[
+            { key: "topOv", label: "Top + overflow", Demo: VMatrixTopOverflow },
+            { key: "botOv", label: "Bottom + overflow", Demo: VMatrixBottomOverflow },
+            { key: "2sideOv", label: "2-side + overflow", Demo: VMatrixTwoSideOverflow },
+          ]}
+        />
+      </Section>
     </StoryDocsMatrixPage>
   ),
 };
@@ -385,8 +618,8 @@ export const Guideline: Story = {
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
           <StoryDocsInlineCode>Tab</StoryDocsInlineCode> 단일 항목과{" "}
-          <StoryDocsInlineCode>TabList</StoryDocsInlineCode> 컨테이너를 조합합니다. horizontal /
-          vertical 그룹, overflow 시 More 탭, closable 과 controlled 선택은 Matrix 스토리를
+          <StoryDocsInlineCode>TabList</StoryDocsInlineCode> 컨테이너를 조합합니다. Level 1
+          상태·Text/More 타입, 가로·세로 그룹·overflow·extra 슬롯 조합은 Matrix 스토리 표를
           참고하세요.
         </StoryDocsParagraph>
       </StoryDocsSection>

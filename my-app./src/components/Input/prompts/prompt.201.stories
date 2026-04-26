@@ -19,7 +19,7 @@
 조건-파일경로) TextArea          Stories: src/components/Input/textarea.stories.tsx
 조건-파일경로) InlineMessage     TSX: src/components/Input/inlinemessage.tsx
 조건-파일경로) InlineMessage     CSS: src/components/Input/inlinemessage.module.css
-조건-파일경로) InlineMessage     Stories: src/components/Input/inlinemessage.stories.tsx
+조건-파일경로) InlineMessage     Stories: src/components/Input/input.stories.tsx (Guideline·Matrix 내 InlineMessage)
 
 조건-스토리북구조) Badge 스토리와 동일한 5단 구성·사이드바 순서를 따를 것.
   - Default → Variants → States → Guidelines

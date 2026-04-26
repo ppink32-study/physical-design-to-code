@@ -23,10 +23,12 @@ const TITLE_TO_NODE: Record<string, string | null> = {
   "Components/Toggle": "18001:55013",
   "Components/Label": "5691:20257",
   "Components/Loader": "13289:46891",
+  /** Full-page dim + centered loader — PageLoaderOverlay */
+  "Components/Loader/Full page overlay": "18219:10393",
   "Components/Scroll": "5250:17591",
   "Components/Tooltip": "5543:321819",
   "Components/Tab": "5185:210328",
-  "Components/Pagination": "5030:28833",
+  "Components/Pagination": "13286:33784",
   "Components/DatePicker": "5132:60197",
   "Components/Toasts/Toast": "5307:14956",
   "Components/Empty": "12368:26042",
@@ -36,7 +38,8 @@ const TITLE_TO_NODE: Record<string, string | null> = {
   "Components/Title/ContentsTitleSub": "5784:48007",
   "Components/Title/ContentsTitleSub2D": "7544:663",
   "Components/PlaybookControlBar": "17423:438",
-  "Components/Form": "5714:108005",
+  /** Form 레이아웃·필드 배치 가이드 (Guideline 스토리 기준) */
+  "Components/Form": "7119:411152",
   "Components/Select": "4811:29737",
   "Components/Select/SelectItem": "4811:36049",
   "Components/Select/SelectList": "11959:26477",
@@ -44,12 +47,10 @@ const TITLE_TO_NODE: Record<string, string | null> = {
   "Components/Dropdown/Trigger": "5286:121691",
   "Components/Dropdown/Dropdown Menu": "5355:154239",
   "Components/Dropdown/Menu Item": "13292:55986",
-  "Components/Dropdown/Dropdown Menu/Multiple levels": "13292:56877",
   /** 섹션 루트 — 개별 스토리에 `parameters.figma` 가 없을 때 */
   "Components/Dropdown": "5262-317642",
   "Components/Table/GridHeader": "4456:290401",
   "Components/Table/BodyCell": "4456:290858",
-  "Components/Table/Table (통합)": "4456:290401",
   "Components/Alert/Line icon": "5012:68852",
   "Components/Alert/Filled icon": "6390:256693",
   "Components/Divider": "1:15492",
@@ -63,7 +64,6 @@ const TITLE_TO_NODE: Record<string, string | null> = {
   "Design System/Foundation/Color & Shadow": null,
   "Design System/Foundation/Icon": "4823-23177",
   "Design System/Foundation/Radius": null,
-  "Overview/Badge & Input — Matrix": null,
 };
 
 /** 알 수 없는 title 은 가이드라인 파일 루트로 연결 */
