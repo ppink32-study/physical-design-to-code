@@ -1,0 +1,130 @@
+/* =============================================================================
+ * Scrollbar — Figma MCP 기반 작성 (node 5250:17591)
+ * -----------------------------------------------------------------------------
+ * Variants
+ *   Type=Vertical,   Size=Medium (5250:17592) : track 12, thumb 6,  padding 4
+ *   Type=Vertical,   Size=Small  (5250:20408) : track  8, thumb 4,  padding 2
+ *   Type=Horizontal, Size=Medium (5250:17595) : track 12, thumb 6,  padding 4
+ *   Type=Horizontal, Size=Small  (5250:20424) : track  8, thumb 4,  padding 2
+ *
+ * 토큰
+ *   thumb bg     : --context-background-surface-bg-surface-quarernary (#d7d8dc)
+ *   thumb radius : 8 (pill)
+ *   track sizes  : --size-base-md (12) / --size-base-sm (8)
+ *   thumb sizes  : --size-base-xs (6) / --size-base-2xs (4)
+ *   padding      : --spacing-2xs (4) / --spacing-3xs (2)
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * 1) Static <Scrollbar /> : Figma 시각 재현
+ * ------------------------------------------------------------------------- */
+.scrollbar {
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+}
+
+.scrollbar[data-orientation="vertical"] {
+  flex-direction: column;
+}
+.scrollbar[data-orientation="horizontal"] {
+  flex-direction: row;
+}
+
+/* ---------- Medium ---------- */
+.scrollbar[data-size="medium"] {
+  --sb-track: var(--size-base-md); /* 12 */
+  --sb-thumb: var(--size-base-xs); /* 6  */
+  --sb-pad: var(--spacing-2xs); /* 4  */
+}
+/* ---------- Small ---------- */
+.scrollbar[data-size="small"] {
+  --sb-track: var(--size-base-sm); /* 8 */
+  --sb-thumb: var(--size-base-2xs); /* 4 */
+  --sb-pad: var(--spacing-3xs); /* 2 */
+}
+
+/* Orientation 별 track 크기 + 내부 padding */
+.scrollbar[data-orientation="vertical"] {
+  width: var(--sb-track);
+  padding: var(--sb-pad) 0;
+}
+.scrollbar[data-orientation="horizontal"] {
+  height: var(--sb-track);
+  padding: 0 var(--sb-pad);
+}
+
+/* ---------- Thumb ---------- */
+.thumb {
+  background: var(--context-background-surface-bg-surface-quarernary);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.scrollbar[data-orientation="vertical"] .thumb {
+  width: var(--sb-thumb);
+  height: var(--sb-thumb-length, 100px);
+}
+.scrollbar[data-orientation="horizontal"] .thumb {
+  height: var(--sb-thumb);
+  width: var(--sb-thumb-length, 100px);
+}
+
+/* ---------------------------------------------------------------------------
+ * 2) <ScrollArea /> : 실제 스크롤 컨테이너
+ *   - WebKit(Blink/Safari) + Firefox 모두 Figma 스펙과 동일한 scrollbar 표시
+ * ------------------------------------------------------------------------- */
+.area {
+  --sa-track: var(--size-base-md); /* 12 */
+  --sa-thumb: var(--size-base-xs); /* 6 */
+  --sa-pad: var(--spacing-2xs); /* 4 */
+
+  overflow: auto;
+  position: relative;
+  box-sizing: border-box;
+
+  /* Firefox : scrollbar-color 로 thumb 컬러 지정 (폭은 scrollbar-width 로) */
+  scrollbar-color: var(--context-background-surface-bg-surface-quarernary)
+    transparent;
+  scrollbar-width: auto; /* medium 기본 */
+}
+
+.area[data-size="small"] {
+  --sa-track: var(--size-base-sm); /* 8 */
+  --sa-thumb: var(--size-base-2xs); /* 4 */
+  --sa-pad: var(--spacing-3xs); /* 2 */
+  scrollbar-width: thin;
+}
+
+/* WebKit / Blink 전용 (Chrome, Safari, Edge) */
+.area::-webkit-scrollbar {
+  width: var(--sa-track);
+  height: var(--sa-track);
+}
+.area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.area::-webkit-scrollbar-thumb {
+  /* padding 만큼 얇게 보이게 하기 위해 border 로 trick (색=background-clip)
+   * background-clip: padding-box 로 설정 후 투명 border 로 thumb 폭을 줄임. */
+  background-color: var(--context-background-surface-bg-surface-quarernary);
+  background-clip: padding-box;
+  border: calc((var(--sa-track) - var(--sa-thumb)) / 2) solid transparent;
+  border-radius: 999px; /* pill */
+  min-height: 24px;
+  min-width: 24px;
+}
+.area::-webkit-scrollbar-thumb:hover {
+  background-color: var(--context-background-surface-bg-surface-quarernary);
+}
+.area::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* 스크롤 가능할 때만 track padding 효과를 내기 위해 main-axis 양쪽 여백은
+ * scrollbar-button 을 쓰지 않고 컨테이너 자체 padding 으로 대체할 수 있지만,
+ * 네이티브 scrollbar 는 track 전체를 덮기 때문에 정확한 재현이 어렵다.
+ * 실전에서는 위 border trick(교차축) 만으로 Figma 의 thumb 굵기가 정확히 맞는다. */

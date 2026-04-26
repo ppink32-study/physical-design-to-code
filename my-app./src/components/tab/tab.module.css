@@ -1,0 +1,251 @@
+/* ------------------------------------------------------------------
+ * Tab - Figma MCP 기반 (node 5185:210328 / 5185:211678)
+ *   - type : text | more
+ *   - state : default | hover | selected | disabled
+ *   - Text container  : h=36, pt=4 / pb=0 / px=2, gap(content=8, con=4)
+ *   - More container  : w=32 h=36, py=0, items-center, justify-center
+ *   - count(숫자) : 모든 활성 상태에서 on-primary
+ *   - Selected underline : 2px, color = icon-surface-base (검정)
+ *   - Default 회색 라인  : TabList 컨테이너의 border-bottom (border-neutral-secondary)
+ * ---------------------------------------------------------------- */
+
+/* ===== Tab (item) =================================================== */
+.tab {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  cursor: pointer;
+  font-family: var(--font-family-korean, Pretendard, sans-serif);
+  font-weight: var(--font-weight-semibold, 600);
+  font-size: var(--font-size-body-xl, 18px);
+  line-height: var(--font-line-height-lg, 24px);
+  letter-spacing: 0;
+  background: transparent;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.tab[disabled],
+.tab[data-state="disabled"] {
+  cursor: not-allowed;
+}
+
+/* ---- type=text ----------------------------------------------------
+ * - 미선택 탭은 자체 underline 없음 (컨테이너의 border-bottom 회색이 그 역할)
+ * - selected 탭만 자체 검정색 underline (icon-surface-base)
+ * - selected 일 때만 content 와 underline 사이 6px gap
+ */
+.type-text {
+  height: var(--size-base-5xl, 36px);
+  gap: var(--spacing-none, 0);
+}
+.type-text.state-selected {
+  gap: var(--spacing-xs, 6px);
+}
+
+/* Content row (padding box) */
+.content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-sm, 8px);
+  padding-top: var(--spacing-2xs, 4px);
+  padding-bottom: var(--spacing-none, 0);
+  padding-left: var(--spacing-3xs, 2px);
+  padding-right: var(--spacing-3xs, 2px);
+}
+
+/* 텍스트 + 아이콘 + count 묶음 (gap=4) */
+.con {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+}
+
+.leading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-base-xl, 20px);
+  height: var(--size-base-xl, 20px);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.count {
+  white-space: nowrap;
+}
+
+/* Selected underline (검정 — icon-surface-base) */
+.underline {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--context-foreground-icon-surface-icon-surface-base);
+  border-radius: 1px;
+}
+
+/* Close button (x-button) */
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: var(--spacing-3xs, 2px);
+  border-radius: var(--radius-full, 1000px);
+  background: var(--context-background-surface-bg-surface-secondary);
+  color: var(--context-foreground-icon-surface-icon-surface);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* ---- type=more ---------------------------------------------------- */
+.type-more {
+  width: var(--size-base-4xl, 32px);
+  height: var(--size-base-5xl, 36px);
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-none, 0);
+}
+
+.moreIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-base-xl, 20px);
+  height: var(--size-base-xl, 20px);
+}
+
+/* ---------- STATE COLORS ----------
+ * 색상 정책 (Figma 기준)
+ *  - count(숫자) : 모든 활성 상태에서 on-primary, disabled 만 disabled 색
+ *  - label(텍스트)
+ *      default  = on-surface-hint
+ *      hover    = icon-surface-hover
+ *      selected = icon-surface-base
+ *      disabled = icon-surface-disabled
+ *  - leading icon
+ *      default  = icon-surface
+ *      hover    = icon-surface-hover
+ *      selected = icon-surface-base
+ *      disabled = icon-surface-disabled
+ *  - more icon
+ *      default  = icon-surface
+ *      hover    = icon-surface-hover, bg = bg-surface-secondary
+ *      disabled = icon-surface-disabled
+ *  - underline
+ *      default / hover / disabled = border-neutral-secondary (회색)
+ *      selected                   = icon-surface-base       (검정)
+ */
+
+/* count 는 disabled 외 모든 상태에서 on-primary */
+.count {
+  color: var(--context-foreground-primary-on-primary);
+}
+
+/* default */
+.state-default .label {
+  color: var(--context-foreground-surface-on-surface-hint);
+}
+.state-default .leading {
+  color: var(--context-foreground-icon-surface-icon-surface);
+}
+.state-default.type-more .moreIcon {
+  color: var(--context-foreground-icon-surface-icon-surface);
+}
+
+/* hover state (명시적 prop) */
+.state-hover .label {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+.state-hover .leading {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+.state-hover.type-more {
+  background: var(--context-background-surface-bg-surface-secondary);
+  border-radius: var(--radius-sm, 4px);
+}
+.state-hover.type-more .moreIcon {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* :hover 실제 mouse hover (state=default 일 때만 hover 스타일 적용) */
+.state-default:not([disabled]):hover .label,
+.state-default:not([disabled]):hover .leading {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+.state-default.type-more:not([disabled]):hover {
+  background: var(--context-background-surface-bg-surface-secondary);
+  border-radius: var(--radius-sm, 4px);
+}
+.state-default.type-more:not([disabled]):hover .moreIcon {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* selected */
+.state-selected .label {
+  color: var(--context-foreground-icon-surface-icon-surface-base);
+}
+.state-selected .leading {
+  color: var(--context-foreground-icon-surface-icon-surface-base);
+}
+
+/* disabled */
+.state-disabled {
+  cursor: not-allowed;
+}
+.state-disabled .label,
+.state-disabled .leading,
+.state-disabled .count,
+.state-disabled .moreIcon {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+}
+
+/* =======================================================================
+ * TabList
+ * ===================================================================== */
+.list {
+  display: flex;
+  align-items: center;
+}
+
+.orientation-horizontal {
+  flex-direction: row;
+  gap: var(--spacing-md, 12px);
+  /* selected 탭의 underline 이 컨테이너 border-bottom 과 정렬되도록 flex-end 사용 */
+  align-items: flex-end;
+}
+
+/* selected 탭의 underline(2px 검정)이 컨테이너 border-bottom(1px 회색) 위에
+ * 자연스럽게 겹쳐 그려지도록 -1px margin 보정 */
+.orientation-horizontal.withBorder .type-text.state-selected {
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+.orientation-vertical {
+  flex-direction: column;
+  gap: var(--spacing-md, 12px);
+  align-items: flex-start;
+}
+
+.withBorder {
+  border-bottom: 1px solid var(--border-border-neutral-border-neutral-secondary);
+}

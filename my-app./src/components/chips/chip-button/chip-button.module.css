@@ -1,0 +1,102 @@
+/* =============================================================================
+ * ChipButton (Chips btn) — Figma MCP 재작성 (node 17395:109177)
+ * -----------------------------------------------------------------------------
+ * Property1 : Default / Hovered / Selected
+ * Size       : 32px height, pill (radius 999)
+ * Icon       : 16px optional (left side)
+ *
+ * 토큰
+ *   bg default/hover : --context-background-surface-bg-surface-teriary (#ececee)
+ *   bg selected      : --context-background-gray-bg-darkgray (#33343d)
+ *   text default/hover: --context-foreground-surface-on-surface (#565967)
+ *   text selected    : --context-foreground-surface-on-suface-white (white)
+ *   radius           : --radius-full (999/1000)
+ * ========================================================================== */
+
+.btn {
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 12px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--context-background-surface-bg-surface-teriary);
+  color: var(--context-foreground-surface-on-surface);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--font-line-height-sm);
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.12s ease;
+}
+
+/* ---------- Icon ---------- */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--size-base-lg);  /* 16 */
+  height: var(--size-base-lg);
+  color: inherit;
+}
+.iconMask {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: url(/icon/Search.svg) center / contain no-repeat;
+  mask: url(/icon/Search.svg) center / contain no-repeat;
+}
+
+/* ---------- Inner row ---------- */
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+ * States
+ * -----------------------------------------------------------------------------
+ * Figma 기준
+ *   Default  : bg-surface-teriary / on-surface
+ *   Hovered  : bg-surface-teriary / on-surface  (시각적으로 Default 와 동일)
+ *   Selected : bg-darkgray / on-suface-white
+ * ========================================================================== */
+/* Hover — Figma 에서 Default 와 동일 색상 유지 (명시적으로 고정) */
+.btn[data-state="default"]:hover,
+.btn[data-state="hovered"],
+.btn[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-teriary);
+  color: var(--context-foreground-surface-on-surface);
+}
+
+/* Selected */
+.btn[data-state="selected"],
+.btn[data-selected="true"] {
+  background: var(--context-background-gray-bg-darkgray);
+  color: var(--context-foreground-surface-on-suface-white);
+}
+
+/* Focus ring */
+.btn:focus {
+  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline-offset: 1px;
+}
+.btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Disable */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: var(--opacity-disabled, 0.4);
+  cursor: not-allowed;
+}

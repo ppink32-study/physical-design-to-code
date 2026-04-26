@@ -1,0 +1,122 @@
+/* =============================================================================
+ * Label — Figma MCP 재작성  (node 5691:20257)
+ * -----------------------------------------------------------------------------
+ * Variants (4)
+ *   - Type=Normal, Size=Medium        (5691:20258)  · 기본형
+ *   - Type=Normal, Size=Small         (5691:20263)
+ *   - Type=+ Outline Btn, Size=Small  (7378:67900)
+ *   - Type=+ Ghost Btn,   Size=Small  (7378:70243)
+ *
+ * Props
+ *   - children / label  : 라벨 텍스트
+ *   - size : medium | small
+ *   - type : normal | outline-button | ghost-button
+ *   - mandatory : red dot (•) 표시
+ *   - infoIcon  : info icon 표시 (true 기본)
+ *   - onButtonClick : 버튼 variant 클릭 핸들러
+ *
+ * 토큰
+ *   - 텍스트 색상    : --context-foreground-surface-on-surface
+ *   - mandatory dot  : --context-foreground-error-on-error
+ *   - info (Medium)  : --context-foreground-icon-neutral-icon-neutral-teriary
+ *   - info (Small)   : --context-foreground-icon-surface-icon-surface-teriary
+ *   - add  (button)  : --context-foreground-icon-surface-icon-surface
+ *   - outline bg     : --context-background-surface-bg-surface-white
+ *   - outline border : --border-border-surface-border-surface
+ * ========================================================================== */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-base-2xl); /* 24 */
+  font-family: var(--font-family-korean);
+  color: var(--context-foreground-surface-on-surface);
+  gap: var(--spacing-2xs); /* 4 (normal / ghost) */
+}
+
+.root[data-type="outline-button"] {
+  gap: var(--spacing-sm); /* 8 */
+}
+
+/* ---------------------------------------------------------------------------
+ * Text group : label + mandatory dot
+ * ------------------------------------------------------------------------- */
+.textGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap;
+  color: inherit;
+  letter-spacing: var(--label-letter-spacing, -0.4px);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--label-font-size, var(--font-size-body-md)); /* 13 */
+  line-height: var(--label-line-height, var(--font-line-height-sm)); /* 20 */
+}
+
+/* Size variants for text */
+.root[data-size="small"] .text {
+  --label-font-size: var(--font-size-body-sm); /* 12 */
+  --label-line-height: var(--font-line-height-xs); /* 16 */
+  --label-letter-spacing: -0.5px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Mandatory dot (4x4)
+ *   - 상단 정렬된 '닷' 처럼 보이려고 pb=8, pt=0 로 배치 (Figma 스펙)
+ * ------------------------------------------------------------------------- */
+.mandatoryWrap {
+  display: inline-flex;
+  align-items: center;
+  padding-top: var(--spacing-none, 0);
+  padding-bottom: var(--spacing-sm); /* 8 */
+  height: 100%;
+}
+.mandatory {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--context-foreground-error-on-error);
+}
+
+/* ---------------------------------------------------------------------------
+ * Info icon (16x16)
+ *   - Medium : icon-neutral-teriary
+ *   - Small  : icon-surface-teriary
+ * ------------------------------------------------------------------------- */
+.iconSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--size-base-lg); /* 16 */
+  height: var(--size-base-lg); /* 16 */
+}
+
+.infoIcon {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: var(--context-foreground-icon-neutral-icon-neutral-teriary);
+  -webkit-mask-image: url("/icon/Info.svg");
+  mask-image: url("/icon/Info.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.root[data-size="small"] .infoIcon {
+  background: var(--context-foreground-icon-surface-icon-surface-teriary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Action button slot — 실제 버튼은 Button 컴포넌트를 재사용한다.
+ *   · outline-button : Button variant="secondary-outline" size="small"
+ *   · ghost-button   : Button variant="secondary-ghost"   size="small"
+ * ------------------------------------------------------------------------- */

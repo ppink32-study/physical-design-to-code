@@ -1,0 +1,118 @@
+/* ==============================================================
+ * DropdownMenu — Figma MCP (node 5355:154239 / 5355:154595)
+ * Container only — open/close/positioning 은 Composite 단계에서.
+ *
+ * Variants
+ *   arrow : "none" | "top-left" | "top-center" | "top-right"
+ *                  | "bottom-left" | "bottom-center" | "bottom-right"
+ *   items : 1..N (children 으로 자유 구성)
+ *
+ * Spec
+ *   width      : 180 min (Figma 기준)
+ *   list pad   : 9
+ *   gap(items) : 2 (--spacing-3xs)
+ *   border     : 1px --color-border-surface
+ *   radius     : --radius-md (6)
+ *   bg         : --color-surface-base
+ *   shadow     : Figma Shadows/Sm — drop-shadow 0 4 14 rgba(0,0,0,0.06)
+ *                arrow 형태도 그림자에 포함되도록 filter:drop-shadow 사용
+ *   arrow      : 12 × 7 SVG, 슬롯 6px, 메뉴 변과 1px overlap
+ *                left/right alignment 시 가장자리에서 22px 안쪽
+ * ============================================================ */
+
+/* -------- Outer wrapper -------- */
+.menu {
+  --dm-min-width: 180px;
+  --dm-max-height: none;
+
+  display: flex;
+  flex-direction: column;
+  min-width: var(--dm-min-width);
+
+  /* arrow 모양도 포함된 그림자가 필요하므로 box-shadow 대신 filter 사용 */
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.06));
+}
+
+/* -------- List (실제 시각적 메뉴) -------- */
+.list {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  min-width: 0;
+
+  background: var(--color-surface-base);
+  border: 1px solid var(--color-border-surface);
+  border-radius: var(--radius-md);
+
+  /* Figma 정확값 (토큰 매핑 없음) */
+  padding: 9px;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+/* maxHeight 가 있을 때만 list 가 스크롤 */
+.menu[data-scrollable="true"] .list {
+  max-height: var(--dm-max-height);
+  overflow-y: auto;
+
+  /* 스크롤바가 padding 영역을 침범하지 않도록 보정 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-surface) transparent;
+}
+
+.menu[data-scrollable="true"] .list::-webkit-scrollbar {
+  width: 6px;
+}
+.menu[data-scrollable="true"] .list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.menu[data-scrollable="true"] .list::-webkit-scrollbar-thumb {
+  background: var(--color-border-surface);
+  border-radius: 999px;
+}
+.menu[data-scrollable="true"] .list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-surface-hover);
+}
+
+/* -------- Arrow slots -------- */
+.arrowTop,
+.arrowBottom {
+  position: relative;
+  flex-shrink: 0;
+  height: 6px;
+}
+
+/* Arrow svg 절대 배치 — 메뉴 변과 1px overlap 으로 border 와 자연스럽게 합쳐짐 */
+.arrowTop > svg,
+.arrowBottom > svg {
+  position: absolute;
+  width: 12px;
+  height: 7px;
+  display: block;
+  pointer-events: none;
+}
+
+.arrowTop > svg {
+  bottom: -1px;
+}
+.arrowBottom > svg {
+  top: -1px;
+}
+
+/* Alignment — left/right 는 가장자리에서 22px 안쪽 */
+.arrowTop[data-align="left"] > svg,
+.arrowBottom[data-align="left"] > svg {
+  left: 22px;
+}
+
+.arrowTop[data-align="center"] > svg,
+.arrowBottom[data-align="center"] > svg {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.arrowTop[data-align="right"] > svg,
+.arrowBottom[data-align="right"] > svg {
+  right: 22px;
+}

@@ -1,0 +1,140 @@
+/* =============================================================================
+ * InputChip — Figma MCP 재검토 반영 (node 4817:72138 · Selected chip (Input))
+ * -----------------------------------------------------------------------------
+ * 공통 규칙
+ *   - Type "Error" 는 TEXT 색을 바꾸지 않고 BORDER 만 on-error(red) 로 변경한다.
+ *   - Close icon 은 Readonly / Disable 상태에서도 항상 표시되며, 색상만
+ *     icon-surface-disabled 로 교체된다. Readonly 에서는 pointer-events 를
+ *     막아 클릭만 방지한다.
+ *   - Readonly 와 Disable 은 모두 border-surface-disabled 1px 이 기본으로
+ *     붙는다. Type=Error 가 겹치면 border 가 on-error 로 덮어쓴다.
+ *   - Hover 상태에서는 bg 만 bg-surface-base-hover 로 교체된다.
+ *
+ * 패딩: 좌우 8px 고정. large 는 상하 3px · 높이 40px (Input large 행과 정렬).
+ *
+ * 토큰 매핑 (재확인 완료)
+ *   bg base            : --context-background-surface-bg-surface-teriary
+ *   bg hover           : --context-background-surface-bg-surface-base-hover
+ *   text base          : --context-foreground-surface-on-surface-base
+ *   text disabled      : --context-foreground-surface-on-surface-disabled
+ *   border disabled    : --border-border-surface-border-surface-disabled
+ *   border error       : --context-foreground-error-on-error
+ *   close icon         : --context-foreground-icon-surface-icon-surface
+ *   close icon disabled: --context-foreground-icon-surface-icon-surface-disabled
+ *   radius             : --radius-sm (4)
+ * ========================================================================== */
+
+.chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  /* 좌우 8px 고정 — 세로는 size 분기 */
+  padding-inline: 8px;
+  max-width: 252px;
+  border-radius: var(--radius-sm);
+  background: var(--context-background-surface-bg-surface-teriary);
+  color: var(--context-foreground-surface-on-surface-base);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  border: 1px solid transparent;
+  cursor: default;
+}
+
+/* Size */
+.chip[data-size="medium"] {
+  height: var(--size-base-2xl); /* 24 */
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.chip[data-size="large"] {
+  height: 40px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/* Text */
+.label {
+  flex: 1 0 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Close button */
+.close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
+  width: var(--size-base-lg); /* 16 */
+  height: var(--size-base-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--context-foreground-icon-surface-icon-surface);
+  border-radius: 2px;
+}
+.close:focus-visible {
+  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline-offset: 1px;
+}
+.closeIcon {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: url(/icon/Close.svg) center / contain no-repeat;
+  mask: url(/icon/Close.svg) center / contain no-repeat;
+}
+
+/* ---------------------------------------------------------------------------
+ * Hover (실제 :hover 와 강제 force-state="hover" 모두 적용)
+ * ------------------------------------------------------------------------- */
+.chip[data-state="default"]:hover,
+.chip[data-state="readonly"]:hover,
+.chip[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+
+/* ---------------------------------------------------------------------------
+ * Readonly — border-surface-disabled border 추가, close 는 표시만 클릭 차단
+ * ------------------------------------------------------------------------- */
+.chip[data-state="readonly"] {
+  border-color: var(--border-border-surface-border-surface-disabled);
+}
+.chip[data-state="readonly"] .close {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ---------------------------------------------------------------------------
+ * Disable
+ * ------------------------------------------------------------------------- */
+.chip[data-state="disable"],
+.chip[data-force-state="disable"] {
+  color: var(--context-foreground-surface-on-surface-disabled);
+  border-color: var(--border-border-surface-border-surface-disabled);
+  cursor: not-allowed;
+}
+.chip[data-state="disable"] .close,
+.chip[data-force-state="disable"] .close {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+ * Type = Error — text 는 그대로, border 만 red 로 교체
+ * (Readonly/Disable 의 border 보다 우선 적용)
+ * ------------------------------------------------------------------------- */
+.chip[data-type="error"] {
+  border-color: var(--context-foreground-error-on-error);
+}

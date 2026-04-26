@@ -1,0 +1,318 @@
+/* =============================================================================
+ * Select (Trigger) — Figma MCP 매핑 (node 4811:29737)
+ * -----------------------------------------------------------------------------
+ * 공통 구조
+ *   [label?][input(placeholder|value|chips|more)][tone-icon?][x-button?][chevron]
+ *
+ * Medium (32px)
+ *   height: 32, padding: 0 13px (py 0), gap: 4
+ *   text : Body/Base_Regular 14/20, icon 16px, radius: 6
+ * Large  (40px)
+ *   height: 40, padding: 0 13px, gap: 4
+ *   text : Body/Lg_Regular 16/24, icon 20px, radius: 6
+ *
+ * Tone → border 색
+ *   normal  : --border-border-surface-border-surface
+ *   success : --border-border-valid
+ *   error   : --border-border-invalid
+ *
+ * State
+ *   default  : placeholder = on-surface-hint
+ *   focus    : border = border-primary, 4px focus-ring (tone 별 색)
+ *   filled   : value/chip 영역 노출, text = on-surface-base
+ *   label(meta): Body/Md-Medium, on-surface-hint (Figma Label 타입 좌측)
+ *   disable  : bg = bg-surface-base-disabled, text/icon = disabled
+ *   readonly : bg = bg-surface-base-disabled, text = on-surface-base 유지
+ *
+ * Multiple
+ *   1line    : chips 가로 나열 + (+N) + x-button + chevron
+ *   2line    : 컨테이너 flex-wrap + py 5px, chip wrap
+ * ========================================================================== */
+
+.trigger {
+  --btn-icon-size: 16px;
+  --btn-text-size: var(--font-size-body-base);
+  --btn-text-line: var(--font-line-height-sm);
+
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  width: 100%;
+  min-width: 0;
+  height: var(--size-base-4xl); /* 32 */
+  padding: 0 var(--spacing-md); /* 0 12 (Figma 13 ≈ spacing-md 12 + border 1) */
+  border: 1px solid var(--border-border-surface-border-surface);
+  border-radius: var(--radius-md);
+  background: var(--context-background-surface-bg-surface-base);
+  color: var(--context-foreground-surface-on-surface-base);
+  font-family: var(--font-family-korean);
+  font-size: var(--btn-text-size);
+  line-height: var(--btn-text-line);
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease,
+    background-color 0.12s ease;
+}
+
+/* ---------------------------------------------------------------------------
+ * Size
+ * ------------------------------------------------------------------------- */
+.trigger[data-size="large"] {
+  --btn-icon-size: 20px;
+  --btn-text-size: var(--font-size-body-lg);
+  --btn-text-line: var(--font-line-height-lg);
+  height: var(--size-base-6xl); /* 40 */
+}
+
+/* 다중 wrap(2line) 모드에서는 높이를 auto 로 풀어 줌 */
+.trigger[data-multiline="true"] {
+  height: auto;
+  min-height: var(--size-base-4xl);
+  align-items: flex-start;
+  padding-top: var(--spacing-2xs);
+  padding-bottom: var(--spacing-2xs);
+}
+.trigger[data-size="large"][data-multiline="true"] {
+  min-height: var(--size-base-6xl);
+}
+
+/* ---------------------------------------------------------------------------
+ * Inner input row
+ * ------------------------------------------------------------------------- */
+.input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  flex: 1 1 0;
+  min-width: 0;
+  padding-right: var(--spacing-lg); /* 16 — 우측 아이콘과 겹치지 않도록 */
+}
+.input[data-multiline="true"] {
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+}
+
+/* Label 타입 좌측 텍스트 — Body/Md-Medium, on-surface-hint */
+.labelText {
+  flex-shrink: 0;
+  margin-right: var(--spacing-sm);
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-md, 13px);
+  font-style: normal;
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.052px;
+}
+
+.placeholder {
+  flex: 0 1 auto;
+  min-width: 0;
+  color: var(--context-foreground-surface-on-surface-hint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.value {
+  flex: 0 1 auto;
+  min-width: 0;
+  color: var(--context-foreground-surface-on-surface-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chips 영역 */
+.chips {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.chips[data-multiline="true"] {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+.chipSlot {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.more {
+  flex-shrink: 0;
+  font-size: var(--font-size-body-sm);    /* 12 */
+  font-weight: var(--font-weight-medium);
+  line-height: var(--font-line-height-xs); /* 16 */
+  letter-spacing: -0.06px;
+  color: var(--context-foreground-surface-on-surface-hint);
+}
+
+/* ---------------------------------------------------------------------------
+ * Tone icon (success / error) — placed before chevron
+ * ------------------------------------------------------------------------- */
+.toneIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.toneIcon[data-tone="success"] {
+  color: var(--context-foreground-success-on-success);
+}
+.toneIcon[data-tone="error"] {
+  color: var(--context-foreground-error-on-error);
+}
+.toneIconMask {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+/* ---------------------------------------------------------------------------
+ * Clear (x-button) — multi 모드 전용
+ * ------------------------------------------------------------------------- */
+.clear {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-base-lg); /* 16 */
+  height: var(--size-base-lg);
+  padding: var(--spacing-3xs);
+  border-radius: var(--radius-full);
+  background: var(--context-background-surface-bg-surface-secondary);
+  color: var(--context-foreground-icon-surface-icon-surface);
+  cursor: pointer;
+}
+.clearIcon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url(/icon/Close.svg) center / contain no-repeat;
+  mask: url(/icon/Close.svg) center / contain no-repeat;
+}
+
+/* ---------------------------------------------------------------------------
+ * Chevron
+ * ------------------------------------------------------------------------- */
+.chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--context-foreground-icon-surface-icon-surface);
+  transition: transform 0.15s ease;
+}
+.chevronMask {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: url(/icon/ChevronDown.svg) center / contain no-repeat;
+  mask: url(/icon/ChevronDown.svg) center / contain no-repeat;
+}
+.chevron[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+/* ---------------------------------------------------------------------------
+ * Tone → border 매핑
+ * ------------------------------------------------------------------------- */
+.trigger[data-tone="success"] {
+  border-color: var(--border-border-valid);
+}
+.trigger[data-tone="error"] {
+  border-color: var(--border-border-invalid);
+}
+
+/* ---------------------------------------------------------------------------
+ * State — focus / filled / disable / readonly
+ * ------------------------------------------------------------------------- */
+/* Focus (실제 focus 와 data-state="focus", open="true" 모두 적용) */
+.trigger:focus-visible,
+.trigger[data-state="focus"],
+.trigger[data-open="true"] {
+  outline: none;
+  border-color: var(--border-border-primary);
+  box-shadow: 0 0 0 4px var(--color-opacity-primary-15, rgba(67, 198, 193, 0.15));
+}
+/* tone=success 에서의 focus ring 은 green 계열 */
+.trigger[data-tone="success"]:focus-visible,
+.trigger[data-tone="success"][data-state="focus"],
+.trigger[data-tone="success"][data-open="true"] {
+  border-color: var(--border-border-valid);
+  box-shadow: 0 0 0 4px var(--seed-color-green-100, #cef0cc);
+}
+/* tone=error focus ring = red */
+.trigger[data-tone="error"]:focus-visible,
+.trigger[data-tone="error"][data-state="focus"],
+.trigger[data-tone="error"][data-open="true"] {
+  border-color: var(--border-border-invalid);
+  box-shadow: 0 0 0 4px var(--seed-color-red-100, #ffd6d5);
+}
+
+/* Filled 상태는 placeholder 대신 value/chips 노출만 달라지며,
+ * 색상/border 는 default 와 동일하므로 별도 규칙 없음 */
+
+/* Disable */
+.trigger[data-state="disable"],
+.trigger[aria-disabled="true"],
+.trigger:disabled {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  color: var(--context-foreground-surface-on-surface-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.trigger[data-state="disable"] .placeholder,
+.trigger[aria-disabled="true"] .placeholder,
+.trigger:disabled .placeholder,
+.trigger[data-state="disable"] .value,
+.trigger[aria-disabled="true"] .value,
+.trigger:disabled .value,
+.trigger[data-state="disable"] .labelText,
+.trigger[aria-disabled="true"] .labelText,
+.trigger:disabled .labelText {
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+.trigger[data-state="disable"] .chevron,
+.trigger[aria-disabled="true"] .chevron,
+.trigger:disabled .chevron,
+.trigger[data-state="disable"] .toneIcon,
+.trigger[aria-disabled="true"] .toneIcon,
+.trigger:disabled .toneIcon,
+.trigger[data-state="disable"] .clear,
+.trigger[aria-disabled="true"] .clear,
+.trigger:disabled .clear {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+}
+
+/* Readonly — bg 는 disabled 와 동일, 하지만 text 는 그대로 */
+.trigger[data-state="readonly"],
+.trigger[aria-readonly="true"] {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  cursor: default;
+  box-shadow: none;
+}
+.trigger[data-state="readonly"] .value,
+.trigger[aria-readonly="true"] .value {
+  color: var(--context-foreground-surface-on-surface-base);
+}
+.trigger[data-state="readonly"] .chevron,
+.trigger[aria-readonly="true"] .chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+}

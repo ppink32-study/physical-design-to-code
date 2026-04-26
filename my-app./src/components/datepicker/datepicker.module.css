@@ -1,0 +1,291 @@
+/* ---------------------------------------------------------------------------
+ * DatePicker (input) — Figma node 5132:60197
+ * ---------------------------------------------------------------------------
+ * data-attribute 기반 모든 variant 스타일링:
+ *   data-size   : medium(32) / large(40)
+ *   data-tone   : normal / success / error
+ *   data-state  : default / focus / filled / disable / readonly
+ *                 (focus 시 톤별 링: normal → primary opacity, success → green-tint, error → red-tint)
+ *   data-range  : true / false
+ *   data-has-label : true / false
+ *   data-has-value : true / false
+ * ------------------------------------------------------------------------- */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap: var(--spacing-2xs, 4px);
+  padding: 1px var(--spacing-md, 13px);
+  border-radius: var(--radius-md, 6px);
+  border: 1px solid
+    var(--border-border-surface-border-surface, #d7d8dc);
+  background-color: var(--context-background-surface-bg-surface-base, #ffffff);
+  cursor: pointer;
+  overflow: clip;
+  width: 226px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}
+
+.root:focus {
+  outline: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Size
+ * ------------------------------------------------------------------------- */
+.root[data-size="medium"] {
+  height: var(--size-base-4xl, 32px);
+}
+
+.root[data-size="large"] {
+  height: var(--size-base-6xl, 40px);
+}
+
+/* range 모드 기본 가로폭 */
+.root[data-size="medium"][data-range="true"] {
+  width: 274px;
+}
+.root[data-size="large"][data-range="true"] {
+  width: 308px;
+}
+.root[data-size="medium"][data-range="true"][data-has-label="true"] {
+  width: 290px;
+}
+.root[data-size="large"][data-range="true"][data-has-label="true"] {
+  width: 320px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tone (border color)
+ * ------------------------------------------------------------------------- */
+.root[data-tone="success"] {
+  border-color: var(--border-border-valid, #3ac133);
+}
+
+.root[data-tone="error"] {
+  border-color: var(--border-border-invalid, #ff5a58);
+}
+
+/* ---------------------------------------------------------------------------
+ * State
+ * ------------------------------------------------------------------------- */
+/* Focus — Normal (Figma: Focus Ring / Primary → --shadow-focus-ring-primary) */
+.root[data-state="focus"][data-tone="normal"] {
+  border-color: var(--border-border-primary, #5cc7d0);
+  box-shadow: var(--shadow-focus-ring-primary);
+}
+
+/* Focus — Success (Figma: Focus Ring / Form Valid → --shadow-focus-ring-form-valid) */
+.root[data-state="focus"][data-tone="success"] {
+  border-color: var(--border-border-valid, #3ac133);
+  box-shadow: var(--shadow-focus-ring-form-valid);
+}
+
+/* Focus — Error (Figma: Focus Ring / Form Invalid → --shadow-focus-ring-form-invalid) */
+.root[data-state="focus"][data-tone="error"] {
+  border-color: var(--border-border-invalid, #ff5a58);
+  box-shadow: var(--shadow-focus-ring-form-invalid);
+}
+
+/* Hover — 포인터 기기, 포커스/비활성/읽기전용 제외 (Normal 톤만 토큰 반영) */
+@media (hover: hover) {
+  .root[data-tone="normal"]:hover:not([data-state="disable"]):not([data-state="readonly"]):not(
+      [data-state="focus"]
+    ) {
+    border-color: var(--border-border-primary-hover, #28738c);
+  }
+}
+
+/* Disable */
+.root[data-state="disable"] {
+  background-color: var(
+    --context-background-surface-bg-surface-base-disabled,
+    #f4f4f5
+  );
+  cursor: not-allowed;
+}
+
+/* Readonly */
+.root[data-state="readonly"] {
+  background-color: var(
+    --context-background-surface-bg-surface-base-disabled,
+    #f4f4f5
+  );
+  cursor: default;
+}
+
+/* ---------------------------------------------------------------------------
+ * Inner (label + value)
+ * ------------------------------------------------------------------------- */
+.inner {
+  display: inline-flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+  overflow: hidden;
+}
+
+/* Label prefix */
+.label {
+  flex-shrink: 0;
+  font-family: inherit;
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--font-size-body-md, 13px);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.052px;
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  white-space: nowrap;
+}
+
+/* Value wrap (range/single 공통) */
+.valueWrap {
+  display: inline-flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  overflow: hidden;
+}
+
+/* Single value text */
+.singleText {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: inherit;
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Range date text */
+.dateText {
+  flex-shrink: 0;
+  font-family: inherit;
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  white-space: nowrap;
+}
+
+/* 빈 값 (placeholder) 컬러 */
+.singleText[data-empty="true"],
+.dateText[data-empty="true"] {
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+}
+
+/* Disable / Readonly 시 텍스트 컬러 override */
+.root[data-state="disable"] .singleText,
+.root[data-state="disable"] .dateText,
+.root[data-state="disable"] .label {
+  color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+}
+
+.root[data-state="readonly"] .singleText[data-empty="false"],
+.root[data-state="readonly"] .dateText[data-empty="false"] {
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}
+
+/* ---------------------------------------------------------------------------
+ * Font size by size axis
+ * ------------------------------------------------------------------------- */
+.root[data-size="medium"] .singleText,
+.root[data-size="medium"] .dateText {
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+}
+
+.root[data-size="large"] .singleText,
+.root[data-size="large"] .dateText {
+  font-size: var(--font-size-body-lg, 16px);
+  line-height: var(--font-line-height-lg, 24px);
+}
+
+/* range arrow */
+.rangeArrow {
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  flex-shrink: 0;
+}
+
+.root[data-state="disable"] .rangeArrow {
+  color: var(
+    --context-foreground-icon-surface-icon-surface-disabled,
+    #b3b4bc
+  );
+}
+
+/* ---------------------------------------------------------------------------
+ * Trailing area (Figma 순서: clear → status → calendar)
+ * ------------------------------------------------------------------------- */
+.trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  flex-shrink: 0;
+}
+
+.statusIcon {
+  flex-shrink: 0;
+}
+
+.root[data-tone="success"] .statusIcon {
+  color: var(--border-border-valid, #3ac133);
+}
+
+.root[data-tone="error"] .statusIcon {
+  color: var(--border-border-invalid, #ff5a58);
+}
+
+/* Calendar icon (기본) */
+.calendarIcon {
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  flex-shrink: 0;
+}
+
+.root[data-state="disable"] .calendarIcon,
+.root[data-state="readonly"] .calendarIcon {
+  color: var(
+    --context-foreground-icon-surface-icon-surface-disabled,
+    #b3b4bc
+  );
+}
+
+/* Clear button (Focus 상태 전용) */
+.clearBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-full, 1000px);
+  background-color: var(
+    --context-background-surface-bg-surface-secondary,
+    #f4f4f5
+  );
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.clearBtn:hover {
+  background-color: var(
+    --context-background-surface-bg-surface-secondary-hover,
+    #e4e5e9
+  );
+}
+
+.clearIcon {
+  /* size controlled via MaskIcon size prop */
+}

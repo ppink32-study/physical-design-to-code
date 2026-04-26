@@ -1,0 +1,79 @@
+/* =============================================================================
+ * Divider — Figma MCP 재작성 (node 1:15492)
+ * -----------------------------------------------------------------------------
+ * Variants (3)
+ *   - Type=horizontal, Title=false  (1:15519)  · 기본 가로 선
+ *   - Type=horizontal, Title=true   (1:15521)  · 가운데 텍스트가 들어간 가로 선
+ *   - Type=vertical,   Title=false  (1:15507)  · 1×16 세로 선
+ *
+ * 토큰
+ *   - line color : --border-border-surface-border-surface (#d7d8dc)
+ *   - radius     : --radius-full (1000)
+ *   - title text : --context-foreground-neutral-on-neutral-hint-muted
+ *   - title font : Body/Md Medium (13 / 20, weight 500, letter -0.4px)
+ *   - gap        : --spacing-sm (8)
+ * ========================================================================== */
+
+.root {
+  --divider-color: var(--border-border-surface-border-surface);
+  --divider-thickness: 1px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+ * Horizontal (no title)
+ * ------------------------------------------------------------------------- */
+.root[data-orientation="horizontal"] {
+  width: 100%;
+  flex-direction: row;
+}
+
+.root[data-orientation="horizontal"]:not([data-has-title="true"]) {
+  height: var(--divider-thickness);
+  background: var(--divider-color);
+  border-radius: var(--radius-full);
+}
+
+/* ---------------------------------------------------------------------------
+ * Horizontal (with title)
+ *   flex: [line flex:1] [text] [line flex:1]  gap 8
+ * ------------------------------------------------------------------------- */
+.root[data-orientation="horizontal"][data-has-title="true"] {
+  height: auto;
+  gap: var(--spacing-sm); /* 8 */
+  background: transparent;
+}
+
+.line {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: var(--divider-thickness);
+  background: var(--divider-color);
+  border-radius: var(--radius-full);
+}
+
+.title {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-md); /* 13 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.4px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Vertical
+ * ------------------------------------------------------------------------- */
+.root[data-orientation="vertical"] {
+  display: inline-flex;
+  width: var(--divider-thickness);
+  /* 피그마 기본 높이 16. 부모에서 height 을 지정하면 상속된다. */
+  height: var(--divider-length, 16px);
+  background: var(--divider-color);
+  border-radius: var(--radius-full);
+  flex-direction: column;
+}

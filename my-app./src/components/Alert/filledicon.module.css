@@ -1,0 +1,203 @@
+/* ==============================================================
+ * Alert / Filled icon — Figma MCP (node 6390:256693)
+ * 5 Type × size (small / medium / large)
+ *
+ * Spec (variable_defs 검증)
+ *   w         : 400 (고정)
+ *   padding   : px=16 (--spacing-lg)
+ *               py=12 (small)  /  py=16 (medium · large)
+ *   radius    : 6  (_Border Radius/(radiusUnit)*1․5)
+ *   gap inner : 8   (icon ↔ text · --spacing-sm)
+ *   border    : 1px solid (type 별 border-*-tint / border-surface)
+ *
+ *   small     : items-center · message 한 줄
+ *   medium    : items-start  · title (16/24 SemiB) + body (14/20 R), gap 2
+ *   large     : items-start  · H1 heading (36/48) + body + divider + body-2
+ *
+ *   Icon      : 20 × 20 (mask-image + currentColor)
+ *               filled icon 패밀리 (/icon/*Fill.svg)
+ *
+ * 타입별 토큰 매핑 (globals.css)
+ *   type      | bg                   | border (filled)           | icon
+ *   ----------|----------------------|---------------------------|----------------------------
+ *   info      | --color-tint-cyan    | --color-border-cyan-tint  | --color-on-progress
+ *   success   | --color-tint-green   | --color-border-green-tint | --color-on-success
+ *   warning   | --color-tint-yellow  | --color-border-yellow-tint| --color-on-warning
+ *   error     | --color-tint-red     | --color-border-red-tint   | --color-on-error
+ *   grayscale | --color-surface-secondary | --color-border-surface| --color-icon-surface-tertiary
+ * ============================================================ */
+
+/* -------- Root -------- */
+.root {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--al-border, var(--color-border-surface));
+  border-radius: 6px;
+  background: var(--al-bg, var(--color-surface-secondary));
+  color: var(--color-on-surface-base);
+  font-family: var(--font-family-korean);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* size 별 padding-y · align-items */
+.root[data-size="medium"],
+.root[data-size="large"] {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  align-items: flex-start;
+}
+
+/* ------------------------------------------------------------------
+ * 타입별 배경 · 테두리 · 아이콘 색은 tsx(filledicon.tsx)의 inline style로
+ * `--al-bg` / `--al-border` / `--al-icon` 에 직접 주입한다.
+ *   → CSS Modules hash / cascade / HMR 캐시에 영향 없이 확실히 반영됨.
+ *
+ * 아래 `.root` 의 `var(--al-*, fallback)` 의 fallback 값은
+ * 혹시 inline style 이 없을 때를 대비한 최소 Grayscale 디폴트.
+ * ---------------------------------------------------------------- */
+
+/* -------- Wrapper (icon + content) -------- */
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  gap: var(--spacing-sm);
+  align-items: center;
+  min-width: 0;
+}
+
+.root[data-size="medium"] .wrapper,
+.root[data-size="large"] .wrapper {
+  align-items: flex-start;
+}
+
+/* -------- Icon -------- */
+.iconSlot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.root[data-size="large"] .iconSlot {
+  align-self: stretch;
+  align-items: flex-start;
+  padding-top: var(--spacing-md);
+}
+
+.icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask-image: var(--al-mask);
+  mask-image: var(--al-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  color: var(--al-icon, var(--color-icon-surface-tertiary));
+}
+
+/* -------- Content (text column) -------- */
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+/* small : 단일 줄 message block */
+.textSmall {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  overflow: clip;
+}
+
+/* medium : title + message (gap 2) */
+.contentMedium {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.titleMedium {
+  margin: 0;
+  width: 100%;
+  color: var(--color-on-surface-base);
+  font-size: var(--font-size-body-lg, 16px);
+  line-height: var(--font-line-height-lg, 24px);
+  font-weight: var(--font-weight-semibold);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* large : H1 heading + body + divider + body-2 */
+.heading {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 340px;
+  height: 52px;
+  padding-bottom: var(--spacing-sm);
+  overflow: clip;
+}
+
+.headingText {
+  margin: 0;
+  width: 100%;
+  color: var(--color-on-surface-base);
+  font-size: var(--font-size-heading-h1, 36px);
+  line-height: var(--font-line-height-4xl, 48px);
+  font-weight: var(--font-weight-semibold);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: clip;
+}
+
+.text--pbLg {
+  padding-bottom: 16px;
+}
+
+.bodyText {
+  margin: 0;
+  width: 100%;
+  color: var(--color-on-surface-base);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Divider — Border / Border Surface / border-surface (1px, pb=16) */
+.divider {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding-bottom: 16px;
+}
+
+.dividerLine {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--border-border-surface-border-surface, #d7d8dc);
+}

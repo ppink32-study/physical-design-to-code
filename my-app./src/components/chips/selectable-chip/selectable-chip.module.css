@@ -1,0 +1,147 @@
+/* =============================================================================
+ * SelectableChip — Figma MCP 재검토 반영 (node 10800:7341 · Selectable chip)
+ * -----------------------------------------------------------------------------
+ * 공통 규칙 (재확인 완료)
+ *   - Type "Error" 는 TEXT 색을 바꾸지 않고 BORDER 만 on-error(red) 로 변경.
+ *   - Hover : bg 를 bg-surface-base-hover 로 교체 + 우측 Trash(16) 아이콘 노출.
+ *   - Selected : bg 를 bg-surface-base-selected 로 교체. 텍스트는 그대로.
+ *   - Readonly : border-surface-disabled 1px 추가, 텍스트 유지.
+ *   - Disable : border-surface-disabled + text disabled.
+ *   - Type=Error 의 빨강 border 는 Readonly/Disable 의 회색 border 를 덮어쓴다.
+ *
+ * 토큰 매핑
+ *   bg base            : --context-background-surface-bg-surface-teriary
+ *   bg hover           : --context-background-surface-bg-surface-base-hover
+ *   bg selected        : --context-background-surface-bg-surface-base-selected
+ *   text base          : --context-foreground-surface-on-surface-base
+ *   text disabled      : --context-foreground-surface-on-surface-disabled
+ *   border disabled    : --border-border-surface-border-surface-disabled
+ *   border error       : --context-foreground-error-on-error
+ *   trash icon         : --context-foreground-icon-surface-icon-surface
+ * ========================================================================== */
+
+.chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 2px var(--spacing-sm);
+  max-width: 252px;
+  border-radius: var(--radius-sm);
+  background: var(--context-background-surface-bg-surface-teriary);
+  color: var(--context-foreground-surface-on-surface-base);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.12s ease;
+}
+
+/* Size */
+.chip[data-size="medium"] { height: var(--size-base-2xl); }
+.chip[data-size="large"]  { height: var(--size-base-4xl); }
+
+/* Text */
+.label {
+  flex: 1 0 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Trash icon (hover 시 등장) */
+.trash {
+  flex-shrink: 0;
+  width: var(--size-base-lg);
+  height: var(--size-base-lg);
+  margin-left: var(--spacing-2xs); /* gap 4 */
+  color: var(--context-foreground-icon-surface-icon-surface);
+  display: none;
+}
+.trashIcon {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: url(/icon/Trash.svg) center / contain no-repeat;
+  mask: url(/icon/Trash.svg) center / contain no-repeat;
+}
+
+/* ---------------------------------------------------------------------------
+ * Hover : bg 교체 + Trash 노출
+ * ------------------------------------------------------------------------- */
+.chip[data-state="default"]:hover,
+.chip[data-state="selected"]:hover,
+.chip[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+.chip[data-state="default"]:hover .trash,
+.chip[data-state="selected"]:hover .trash,
+.chip[data-force-state="hover"] .trash {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * Selected : bg 교체 (text 는 그대로)
+ * ------------------------------------------------------------------------- */
+.chip[data-state="selected"] {
+  background: var(--context-background-surface-bg-surface-base-selected);
+}
+
+/* ---------------------------------------------------------------------------
+ * Readonly : border 회색 1px, 텍스트 그대로, hover 비활성
+ * ------------------------------------------------------------------------- */
+.chip[data-state="readonly"] {
+  cursor: default;
+  border-color: var(--border-border-surface-border-surface-disabled);
+}
+.chip[data-state="readonly"]:hover {
+  background: var(--context-background-surface-bg-surface-teriary);
+}
+.chip[data-state="readonly"]:hover .trash {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Disable : border 회색 + text disabled
+ * ------------------------------------------------------------------------- */
+.chip[data-state="disable"],
+.chip[data-force-state="disable"] {
+  color: var(--context-foreground-surface-on-surface-disabled);
+  border-color: var(--border-border-surface-border-surface-disabled);
+  cursor: not-allowed;
+}
+.chip[data-state="disable"]:hover,
+.chip[data-force-state="disable"]:hover {
+  background: var(--context-background-surface-bg-surface-teriary);
+}
+.chip[data-state="disable"]:hover .trash,
+.chip[data-force-state="disable"]:hover .trash {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Type = Error : 텍스트는 그대로, border 만 red (모든 state 공통으로 덮어씀)
+ * ------------------------------------------------------------------------- */
+.chip[data-type="error"] {
+  border-color: var(--context-foreground-error-on-error);
+}
+
+/* Focus ring */
+.chip:focus {
+  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline-offset: 1px;
+}
+.chip:focus:not(:focus-visible) {
+  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+}
+.chip[data-state="disable"]:focus,
+.chip[data-state="readonly"]:focus {
+  outline: none;
+}

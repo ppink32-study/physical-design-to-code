@@ -1,0 +1,191 @@
+/* =============================================================================
+ * ContentsTitleSub — Contents Title / Sub (Figma node 5784:48007)
+ * -----------------------------------------------------------------------------
+ * Tokens
+ *   - title        : Heading/H6 (16/22 semibold) on-surface-base
+ *   - required dot : 4×4 circle, --accent-red-accent-red (#ff312e)
+ *   - info icon    : 16×16 icon-surface-teriary
+ *   - count badge  : bg --context-background-tint-bg-purple-tint (#f6ebff)
+ *                    text --accent-purple-accent-purple
+ *                    body/sm-medium (12/16 -0.5), h=20 pl=4 pr=6 radius full
+ *   - accordion    : 24×24 버튼, chevron 16×16 icon-surface
+ *   - text button  : border-surface 1px, h=24 minw=44 px=7 py=1, radius 4
+ *                    text Body/Sm_SemiB (12/16 -0.5) on-surface
+ *   - height (root): 32px, gap=16
+ *   - leftArea gap : sm(8)
+ *   - titleIcon gap: 2xs(4)
+ *   - label    gap : 3xs(2)
+ * ========================================================================== */
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--size-base-4xl, 32px);
+  gap: var(--spacing-lg, 16px);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+ * Left area
+ * ------------------------------------------------------------------------- */
+.leftArea {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+}
+
+/* Title + (info) icon */
+.titleIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+/* Title + (required) dot */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3xs, 2px);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-heading-h6, 16px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-md, 22px);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+.requiredDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-red-accent-red, #ff312e);
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Count badge
+ *   Figma : bg purple-tint, text accent-purple, radius full, h=20,
+ *           pl=2xs(4) pr=xs(6), inner wrapper pl=3xs(2)
+ * ------------------------------------------------------------------------- */
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  min-width: 32px;
+  padding: 0 var(--spacing-xs, 6px) 0 var(--spacing-2xs, 4px);
+  border-radius: var(--radius-full, 1000px);
+  background: var(--context-background-tint-bg-purple-tint, #f6ebff);
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.countText {
+  display: inline-flex;
+  align-items: center;
+  padding-left: var(--spacing-3xs, 2px);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-sm, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-xs, 16px);
+  letter-spacing: -0.06px;
+  color: var(--accent-purple-accent-purple, #971eff);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Accordion button (24x24)
+ * ------------------------------------------------------------------------- */
+.accordionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-base-2xl, 24px);
+  height: var(--size-base-2xl, 24px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+.accordionBtn:hover {
+  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+}
+
+/* ---------------------------------------------------------------------------
+ * Text button (border, h=24, minw=44)
+ * ------------------------------------------------------------------------- */
+.textBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3xs, 2px);
+  height: var(--size-base-2xl, 24px);
+  min-width: 44px;
+  padding: 1px var(--spacing-xs, 7px);
+  border: var(--border-width-xs, 1px) solid
+    var(--border-border-surface-border-surface, #d7d8dc);
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.textBtn:hover {
+  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+}
+
+.textBtnInner {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--spacing-3xs, 2px);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-sm, 12px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-xs, 16px);
+  letter-spacing: -0.06px;
+  color: var(--context-foreground-surface-on-surface, #565967);
+  white-space: nowrap;
+}
+
+.buttonSlot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Generic mask icon (InfoFill / Chevron)
+ * ------------------------------------------------------------------------- */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* InfoFill 아이콘은 teriary 톤으로 */
+.titleIcon .icon {
+  color: var(--context-foreground-icon-neutral-icon-neutral-teriary, #b3b4bc);
+}

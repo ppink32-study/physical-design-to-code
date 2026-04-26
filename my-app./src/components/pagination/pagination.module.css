@@ -1,0 +1,246 @@
+/* =============================================================================
+ * Pagination — Figma MCP 기반 작성
+ *   Pagination  : 5030:28833  (Size = Medium | Large)
+ *   Items       : Pagination-Prev(5024:11276) / Next(5024:92466) /
+ *                 Number(5024:92499) / Ellipsis(5024:92569)
+ *   States      : Default / Hover / Selected / Disabled
+ * -----------------------------------------------------------------------------
+ * Medium : 32×32, Body/Base (14/20), icon 16
+ * Large  : 40×40, Body/Lg   (16/24), icon 20
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * Root wrapper: [Total? | Page | PerPage? | GoTo?]
+ * ------------------------------------------------------------------------- */
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-lg); /* 16 */
+  color: var(--context-foreground-surface-on-surface-base);
+  font-family: var(--font-family-korean);
+}
+
+.total {
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--context-foreground-surface-on-surface-base);
+}
+.total strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+.root[data-size="large"] .total {
+  font-size: var(--font-size-body-lg);
+  line-height: var(--font-line-height-lg);
+}
+
+/* ---------------------------------------------------------------------------
+ * Page : 그룹 컨테이너.
+ *   - 실제 border 대신 ::after 로 "inset 1px" 외곽선을 그려 높이를 정확히
+ *     item 높이(32 / 40)에 맞춘다. 실제 border 로는 ±2px 만큼 커지기 때문.
+ *   - ::after 는 자식 items 뒤에 페인트 되므로 selected 박스의
+ *     mint 상/하 1px 가 자연스럽게 grey 외곽선에 가려진다.
+ * ------------------------------------------------------------------------- */
+.page {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-md); /* 6 */
+  overflow: hidden;
+  background: var(--context-background-surface-bg-surface-base);
+}
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--border-border-surface-border-surface);
+  z-index: 2; /* items 위에 오버레이 */
+}
+
+/* ---------------------------------------------------------------------------
+ * Item (공용) — Prev / Next / First / Last / Number / Ellipsis
+ *   Default   : bg = surface-base, text/icon = icon-surface-base (number)
+ *   Hover     : bg = surface-secondary
+ *   Selected  : bg = primary-tint + border primary-secondary + on-primary semibold
+ *   Disabled  : text/icon = icon-surface-disabled
+ *   Separator : 오른쪽 1px border (Figma 와 동일). 단,
+ *     · 마지막 아이템
+ *     · selected 아이템
+ *     · selected 직전 아이템
+ *     에선 separator 를 제거해 mint 외곽선과 겹치지 않게 한다.
+ * ------------------------------------------------------------------------- */
+.item {
+  box-sizing: border-box;
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: var(--context-background-surface-bg-surface-base);
+  color: var(--context-foreground-icon-surface-icon-surface-base);
+  font-family: inherit;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pg-size, 32px);
+  height: var(--pg-size, 32px);
+  min-width: var(--pg-size, 32px);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+  outline: none;
+  position: relative;
+
+  /* separator : 오른쪽 1px (Figma border-r) */
+  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+}
+
+.item:last-child {
+  border-right: 0;
+}
+
+/* selected 직전 아이템의 separator 제거 */
+.item:has(+ [data-selected="true"]) {
+  border-right: 0;
+}
+
+.item[data-icon="true"] {
+  color: var(--context-foreground-icon-surface-icon-surface);
+}
+
+.item:hover,
+.item[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-secondary);
+}
+
+.item:focus-visible {
+  box-shadow:
+    inset 0 0 0 2px var(--opacity-primary-opacity-15, rgba(63, 155, 174, 0.18));
+}
+
+/* --- Selected (Number 전용) ------------------------------------------------ */
+.item[data-selected="true"],
+.item[data-selected="true"][data-force-state="hover"] {
+  background: var(--context-background-tint-bg-primary-tint);
+  color: var(--context-foreground-primary-on-primary);
+  font-weight: var(--font-weight-semibold);
+  /* 4방향 mint 외곽선 (inset 1px).
+   * 상/하 1px 는 .page::after 의 grey 외곽선이 items 위에 덮여 자연스럽게
+   * 가려지고, 좌/우 1px 는 인접 separator 가 제거되어 깨끗하게 보인다. */
+  box-shadow:
+    inset 0 0 0 1px var(--context-background-primary-bg-primary-secondary);
+  /* selected 자체의 separator 제거 (오른쪽) */
+  border-right: 0;
+}
+
+/* --- Disabled ------------------------------------------------------------- */
+.item:disabled,
+.item[aria-disabled="true"],
+.item[data-force-state="disable"] {
+  cursor: not-allowed;
+  background: var(--context-background-surface-bg-surface-base);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+ * Icon (mask-image + currentColor 패턴)
+ * ------------------------------------------------------------------------- */
+.icon {
+  width: var(--pg-icon-size, 16px);
+  height: var(--pg-icon-size, 16px);
+  display: inline-block;
+  background: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ---------------------------------------------------------------------------
+ * Size variants
+ * ------------------------------------------------------------------------- */
+.root[data-size="medium"] .item {
+  --pg-size: 32px;
+  --pg-icon-size: 16px;
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+}
+.root[data-size="large"] .item {
+  --pg-size: 40px;
+  --pg-icon-size: 20px;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--font-line-height-lg);
+}
+
+/* ---------------------------------------------------------------------------
+ * Per page / Go to 블록
+ * ------------------------------------------------------------------------- */
+.helper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm); /* 8 */
+  color: var(--context-foreground-surface-on-surface-base);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+}
+
+.selectBox,
+.goInput {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  padding: 1px var(--spacing-md); /* 0 12 */
+  height: var(--pg-size, 32px);
+  background: var(--context-background-surface-bg-surface-base);
+  border: 1px solid var(--border-border-surface-border-surface);
+  border-radius: var(--radius-md);
+  font: inherit;
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+.goInput {
+  outline: none;
+}
+.goInput::placeholder {
+  color: var(--context-foreground-surface-on-surface-hint);
+}
+
+.root[data-size="large"] .selectBox,
+.root[data-size="large"] .goInput {
+  --pg-size: 40px;
+  font-size: var(--font-size-body-lg);
+  line-height: var(--font-line-height-lg);
+}
+
+.selectBox select {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.selectChevron {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background: currentColor;
+  color: var(--context-foreground-icon-surface-icon-surface);
+  -webkit-mask: url(/icon/ChevronDown.svg) center / contain no-repeat;
+  mask: url(/icon/ChevronDown.svg) center / contain no-repeat;
+  pointer-events: none;
+}

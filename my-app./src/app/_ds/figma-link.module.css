@@ -1,0 +1,69 @@
+.anchor {
+  display: inline-flex;
+  text-decoration: none;
+  color: inherit;
+}
+
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.chev {
+  font-size: 10px;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 50;
+  min-width: 280px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--context-background-surface-bg-surface-base);
+  border: 1px solid var(--context-border-neutral-border-base);
+  border-radius: 12px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--context-foreground-surface-on-surface-base);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-sm);
+  transition: background 120ms ease;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background: var(--context-background-neutral-bg-neutral-subtle);
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid var(--context-border-accent-border-base);
+  outline-offset: 2px;
+}
+
+.menuItemLabel {
+  font-weight: var(--font-weight-medium);
+}
+
+.menuItemNode {
+  font-size: var(--font-size-body-xs);
+  font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
+  color: var(--context-foreground-surface-on-surface-muted);
+  opacity: 0.8;
+}

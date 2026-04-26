@@ -1,0 +1,224 @@
+/* =================================================================
+ *  Badge Demo — matrix · table styles
+ *  (Button Demo 와 톤 일치: 공유는 하지 않고 로컬 scope 로 분리)
+ * =============================================================== */
+
+/* 가변 열 매트릭스 --------------------------------------------- */
+.matrix {
+  display: grid;
+  gap: 0;
+  border-radius: 12px;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 8%,
+      transparent
+    );
+  overflow: hidden;
+  background: var(--context-background-surface-bg-surface-base);
+}
+
+/* 열 개수는 CSS 변수로 주입 (--cols) */
+.matrix {
+  grid-template-columns: minmax(140px, 0.7fr) repeat(var(--cols, 3), minmax(0, 1fr));
+}
+
+.headerCell {
+  padding: 10px 14px;
+  color: var(--context-foreground-surface-on-surface-sub);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-bottom: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 8%,
+      transparent
+    );
+  background: color-mix(
+    in srgb,
+    var(--context-foreground-surface-on-surface-base) 3%,
+    transparent
+  );
+}
+
+.rowLabel {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--context-foreground-surface-on-surface-base);
+  letter-spacing: -0.005em;
+  border-top: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 5%,
+      transparent
+    );
+}
+
+.cell {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  border-top: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 5%,
+      transparent
+    );
+  border-left: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 5%,
+      transparent
+    );
+  min-height: 54px;
+}
+
+.cellMuted {
+  color: var(--context-foreground-surface-on-surface-sub);
+  font-size: 12px;
+}
+
+/* Variants overview 4-up ---------------------------------------- */
+.variantOverview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 960px) {
+  .variantOverview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.variantCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 8%,
+      transparent
+    );
+  background: var(--context-background-surface-bg-surface-base);
+}
+
+.variantStage {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.variantTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+.variantDesc {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--context-foreground-surface-on-surface-sub);
+}
+
+/* 공용 표 스타일 ------------------------------------------------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 8%,
+      transparent
+    );
+  background: var(--context-background-surface-bg-surface-base);
+  font-size: 13px;
+  color: var(--context-foreground-surface-on-surface-base);
+  letter-spacing: -0.005em;
+}
+
+.table thead th {
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--context-foreground-surface-on-surface-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  background: color-mix(
+    in srgb,
+    var(--context-foreground-surface-on-surface-base) 4%,
+    transparent
+  );
+  border-bottom: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 8%,
+      transparent
+    );
+}
+
+.table tbody td {
+  padding: 12px 14px;
+  vertical-align: top;
+  border-top: 1px solid
+    color-mix(
+      in srgb,
+      var(--context-foreground-surface-on-surface-base) 5%,
+      transparent
+    );
+  line-height: 1.55;
+}
+
+.table tbody tr:first-child td {
+  border-top: 0;
+}
+
+.table code {
+  font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: color-mix(
+    in srgb,
+    var(--context-foreground-surface-on-surface-base) 6%,
+    transparent
+  );
+  color: var(--context-foreground-surface-on-surface-base);
+  white-space: nowrap;
+}
+
+.mono {
+  font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
+  font-size: 12.5px;
+  color: var(--context-foreground-surface-on-surface-base);
+  letter-spacing: -0.005em;
+}
+
+.muted {
+  color: var(--context-foreground-surface-on-surface-sub);
+}
+
+.check {
+  color: var(--seed-color-green-600, #059669);
+  font-weight: 700;
+}
+
+.cross {
+  color: var(--seed-color-gray-500, #9ca3af);
+}

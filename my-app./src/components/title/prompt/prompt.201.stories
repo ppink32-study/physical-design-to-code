@@ -1,0 +1,43 @@
+아래의 조건을 모두 적용하여, 아래의 요구사항을 모두 구현할 것.
+구현 결과를 체크리스트로 반환할 것.
+
+==============================================
+
+조건-커서룰) 아래의 커서룰을 적용하여 작업하고, 이 작업이 끝나면 해당 rules 적용 결과를 체크리스트로 반환할 것.
+            - @01-common.mdc
+            - @02-wireframe
+            - @03-ui.mdc
+
+
+==============================================
+
+조건-파일경로) 구현 TSX     파일경로: src/components/title/pagetitle.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/title/pagetitle.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/title/pagetitle.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/title/contentstitlemain.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/title/contentstitlemain.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/title/contentstitlemain.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/title/contentstitlesub.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/title/contentstitlesub.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/title/contentstitlesub.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/title/contentstitlesub2d.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/title/contentstitlesub2d.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/title/contentstitlesub2d.stories.tsx
+
+
+
+============================================== 
+
+핵심요구사항) 피그마 파일과 동일한 스펙의 배지·스토리를 구현할 것. 
+  - 피그마 링크 (Page Title): https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=4790-161&m=dev
+  - 피그마 링크 (Contents Title / Main): https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=4790-206&m=dev
+  - 피그마 링크 (Contents Title / Sub): https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=5784-48007&m=dev
+  - Title / Contents Title / Sub (2d) : https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=7544-663&m=dev
+- 순차 구현: 1) pagetitle → 2) contentstitlemain → 3) contentstitlesub → 4) contentstitlesub2d
+
+
+  - 수치가 불명확하면 임의로 설정하지 말고 질문할 것.
+  - mcp를 활용하여 피그마의 디자인을 그대로 소스코드로 구현할 것. 피그마에 적용된 것과 동일한 토큰을 global.css와 매칭하여 반영할 것  

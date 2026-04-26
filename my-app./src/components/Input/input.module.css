@@ -1,0 +1,261 @@
+/* ---------------------------------------------------------------------------
+ * Input - Figma MCP 기반 (node 4771:26367)
+ *   container : bg-surface-base, border-surface, radius=md, gap=2xs
+ *   medium    : h=32, px=md(12), text=body/base(14/20)
+ *   large     : h=40, px=md(12), text=body/lg(16/24)
+ *   tone      : normal | success | error
+ *   focus     : tone 별 border + 4px focus ring (drop-shadow)
+ *   기본 너비  240px — input.tsx 의 INPUT_WRAPPER_DEFAULT_WIDTH_PX 와 동기
+ * ------------------------------------------------------------------------- */
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  width: 240px; /* 기본값; 인라인 style 로도 동일 값이 설정됨 */
+  padding-left: var(--spacing-md, 12px);
+  padding-right: var(--spacing-md, 12px);
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: var(--context-background-surface-bg-surface-base, #ffffff);
+  border: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+  border-radius: var(--radius-md, 6px);
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: text;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+/* sizes ------------------------------------------------------------------ */
+.size-medium {
+  height: var(--size-base-4xl, 32px);
+}
+.size-large {
+  height: var(--size-base-6xl, 40px);
+}
+
+/* native input element --------------------------------------------------- */
+.input {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+}
+.size-large .input {
+  font-size: var(--font-size-body-lg, 16px);
+  line-height: var(--font-line-height-lg, 24px);
+}
+.input::placeholder {
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  opacity: 1;
+}
+
+/* leading / trailing icon ------------------------------------------------- */
+/* Default/Focus/Filled
+ *   - leading(Search) : icon-surface          (#565967)
+ *   - trailing(Info)  : icon-surface-teriary  (#787a88)
+ * Readonly/Disabled   : 기본은 icon-surface-disabled; tone success/error 의
+ *   trailing(체크/알림) 만 on-success / on-error 유지(아래 tone+state 오버라이드)
+ */
+.leading,
+.trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.leading {
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+.trailing {
+  color: var(--context-foreground-icon-surface-icon-surface-teriary, #787a88);
+}
+
+.size-medium .leading,
+.size-medium .trailing {
+  width: 16px;
+  height: 16px;
+}
+.size-large .leading,
+.size-large .trailing {
+  width: 20px;
+  height: 20px;
+}
+
+/* counter --------------------------------------------------------------- */
+.counter {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--font-size-body-sm, 12px);
+  line-height: var(--font-line-height-xs, 16px);
+  letter-spacing: -0.06px;
+  color: var(--context-foreground-surface-on-surface-secondary, #b3b4bc);
+  white-space: nowrap;
+  gap: 1px;
+}
+
+/* clear button ---------------------------------------------------------- */
+.clearBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: var(--spacing-3xs, 2px);
+  border: 0;
+  border-radius: var(--radius-full, 1000px);
+  background-color: var(--context-background-surface-bg-surface-secondary, #f4f4f5);
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 120ms ease;
+}
+.clearBtn:hover {
+  background-color: var(--context-background-surface-bg-surface-teriary, #ececee);
+}
+
+/* eye toggle ------------------------------------------------------------ */
+.eyeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--context-foreground-icon-surface-icon-surface-teriary, #787a88);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.size-large .eyeBtn {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tone variations
+ * ------------------------------------------------------------------------- */
+/* normal --------- (기본, 위에 정의됨) */
+
+/* success */
+.tone-success {
+  border-color: var(--border-border-valid, #3ac133);
+}
+.tone-success .trailing {
+  color: var(--context-foreground-success-on-success, #09b200);
+}
+
+/* error */
+.tone-error {
+  border-color: var(--border-border-invalid, #ff5a58);
+}
+.tone-error .trailing {
+  color: var(--context-foreground-error-on-error, #ff312e);
+}
+
+/* ---------------------------------------------------------------------------
+ * Forced visual states (Storybook)
+ * ------------------------------------------------------------------------- */
+
+/* focus (tone 별 ring) ---------------------------------------------------- */
+.wrapper:focus-within,
+.state-focus {
+  border-color: var(--border-border-primary, #5cc7d0);
+  box-shadow: 0 0 0 4px var(--color-opacity-primary-15, rgba(67, 198, 193, 0.15));
+}
+
+.tone-success.wrapper:focus-within,
+.tone-success.state-focus {
+  border-color: var(--border-border-valid, #3ac133);
+  box-shadow: 0 0 0 4px var(--seed-color-green-100, #cef0cc);
+}
+
+.tone-error.wrapper:focus-within,
+.tone-error.state-focus {
+  border-color: var(--border-border-invalid, #ff5a58);
+  box-shadow: 0 0 0 4px var(--seed-color-red-100, #ffd6d5);
+}
+
+/* disable --------------------------------------------------------------- */
+.state-disable,
+.wrapper:has(input:disabled) {
+  background-color: var(
+    --context-background-surface-bg-surface-base-disabled,
+    #f4f4f5
+  );
+  border-color: var(
+    --border-border-surface-border-surface-disabled,
+    #d7d8dc
+  );
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.state-disable .input,
+.wrapper:has(input:disabled) .input {
+  color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+  cursor: not-allowed;
+}
+.state-disable .input::placeholder,
+.wrapper:has(input:disabled) .input::placeholder {
+  color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+}
+.state-disable .leading,
+.state-disable .trailing,
+.wrapper:has(input:disabled) .leading,
+.wrapper:has(input:disabled) .trailing {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled, #b3b4bc);
+}
+
+/* readonly -------------------------------------------------------------- */
+.state-readonly,
+.wrapper:has(input[readonly]) {
+  background-color: var(--context-background-surface-bg-surface-secondary, #f4f4f5);
+  border-color: var(--border-border-surface-border-surface, #d7d8dc);
+  cursor: default;
+  box-shadow: none;
+}
+.state-readonly .input,
+.wrapper:has(input[readonly]) .input {
+  cursor: default;
+}
+.state-readonly .leading,
+.state-readonly .trailing,
+.wrapper:has(input[readonly]) .leading,
+.wrapper:has(input[readonly]) .trailing {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled, #b3b4bc);
+}
+
+/* success / error: readonly·disabled 에서도 trailing(검증 아이콘)은 톤 색 유지 */
+.tone-success.state-disable .trailing,
+.tone-success.wrapper:has(input:disabled) .trailing,
+.tone-success.state-readonly .trailing,
+.tone-success.wrapper:has(input[readonly]) .trailing {
+  color: var(--context-foreground-success-on-success, #09b200);
+}
+.tone-error.state-disable .trailing,
+.tone-error.wrapper:has(input:disabled) .trailing,
+.tone-error.state-readonly .trailing,
+.tone-error.wrapper:has(input[readonly]) .trailing {
+  color: var(--context-foreground-error-on-error, #ff312e);
+}
+
+/* filled (forced) ------------------------------------------------------- */
+.state-filled .input {
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}

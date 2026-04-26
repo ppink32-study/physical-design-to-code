@@ -1,0 +1,161 @@
+/* =============================================================================
+ * SearchChip — Figma MCP 재검토 반영 (node 10579:3844 · Search Chip)
+ * -----------------------------------------------------------------------------
+ * 항상 height 24px, pill(radius-full) 형태
+ * State : Default / Hover / Selected / Error / Disable
+ *
+ * 구조
+ *   [pl:8] labelName? + chipName [pr:4] [x-btn 16px]
+ *
+ * 토큰 (Figma 최신: neutral → surface 계열로 일괄 교체)
+ *   bg default     : --context-background-surface-bg-surface-base (white)
+ *   bg hover       : --context-background-surface-bg-surface-base-hover (#ececee)
+ *   bg selected    : --context-background-gray-bg-darkgray (#33343d)
+ *   bg error       : --context-background-tint-bg-red-tint (#ffecec)
+ *   bg disable     : --context-background-surface-bg-surface-base (유지)
+ *   border default : --border-border-surface-border-surface (#d7d8dc)
+ *   border hover   : --border-border-surface-border-surface-hover (#b3b4bc)
+ *   border error   : --context-foreground-error-on-error (#ff312e)
+ *   border disabled: --border-border-surface-border-surface-disabled (#d7d8dc)
+ *   label text     : --context-foreground-surface-on-surface-hint (#787a88)
+ *   label selected : --context-background-surface-bg-surface-base-disabled (#f4f4f5)
+ *   chip text      : --context-foreground-surface-on-surface-base
+ *   chip selected  : --context-foreground-surface-on-suface-white (white)
+ *   chip disabled  : --context-foreground-surface-on-surface-disabled
+ *   x-btn bg default : --context-background-surface-bg-surface-secondary
+ *   x-btn bg hover   : --context-background-surface-bg-surface-teriary
+ *   x-btn bg selected: --context-background-surface-bg-surface-teriary
+ *   x-btn bg error   : --context-background-tint-bg-gray-tint-hover
+ *   x-btn bg disabled: --context-background-tint-bg-gray-tint-hover
+ *   radius           : --radius-full (1000)
+ * ========================================================================== */
+
+.chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm); /* 8 */
+  padding: 2px var(--spacing-2xs) 2px var(--spacing-sm); /* 2 4 2 8 */
+  height: 24px;
+  min-height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--context-background-surface-bg-surface-base);
+  border: 1px solid var(--border-border-surface-border-surface);
+  cursor: default;
+  white-space: nowrap;
+}
+
+/* ---------- Inner content ---------- */
+.content {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* numUnit*1 */
+  flex-shrink: 0;
+}
+
+/* Label (Semibold 12px) */
+.labelText {
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-sm);   /* 12 */
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-xs); /* 16 */
+  letter-spacing: -0.06px;
+  color: var(--context-foreground-surface-on-surface-hint);
+}
+
+/* Chip text (Regular 13px) */
+.chipText {
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-md);   /* 13 */
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-sm);
+  letter-spacing: -0.052px;
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+/* ---------- Close button ---------- */
+.closeBtn {
+  appearance: none;
+  border: 0;
+  padding: var(--spacing-3xs); /* 2 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--size-base-lg);  /* 16 */
+  height: var(--size-base-lg);
+  border-radius: var(--radius-full);
+  background: var(--context-background-surface-bg-surface-secondary);
+  color: var(--context-foreground-icon-surface-icon-surface);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.closeIcon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url(/icon/Close.svg) center / contain no-repeat;
+  mask: url(/icon/Close.svg) center / contain no-repeat;
+}
+
+/* =============================================================================
+ * Hover
+ * ========================================================================== */
+.chip[data-state="default"]:hover,
+.chip[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  border-color: var(--border-border-surface-border-surface-hover);
+}
+.chip[data-state="default"]:hover .closeBtn,
+.chip[data-force-state="hover"] .closeBtn {
+  background: var(--context-background-surface-bg-surface-teriary);
+}
+
+/* =============================================================================
+ * Selected
+ * ========================================================================== */
+.chip[data-state="selected"] {
+  background: var(--context-background-gray-bg-darkgray);
+  border-color: transparent;
+}
+.chip[data-state="selected"] .labelText {
+  color: var(--context-background-surface-bg-surface-base-disabled);
+}
+.chip[data-state="selected"] .chipText {
+  color: var(--context-foreground-surface-on-suface-white);
+}
+.chip[data-state="selected"] .closeBtn {
+  background: var(--context-background-surface-bg-surface-teriary);
+}
+
+/* =============================================================================
+ * Error
+ * ========================================================================== */
+.chip[data-state="error"] {
+  background: var(--context-background-tint-bg-red-tint);
+  border-color: var(--context-foreground-error-on-error);
+}
+.chip[data-state="error"] .closeBtn {
+  background: var(--context-background-tint-bg-gray-tint-hover);
+}
+
+/* =============================================================================
+ * Disable
+ * ========================================================================== */
+.chip[data-state="disable"],
+.chip[data-force-state="disable"] {
+  border-color: var(--border-border-surface-border-surface-disabled);
+  cursor: not-allowed;
+}
+.chip[data-state="disable"] .chipText,
+.chip[data-force-state="disable"] .chipText {
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+.chip[data-state="disable"] .closeBtn,
+.chip[data-force-state="disable"] .closeBtn {
+  background: var(--context-background-tint-bg-gray-tint-hover);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+}

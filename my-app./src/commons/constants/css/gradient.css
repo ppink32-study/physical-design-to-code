@@ -1,0 +1,33 @@
+/* Gradient color tokens */
+/* Source of truth: Figma — Color Style / Gradient Color (node 13385-10689). */
+
+:root {
+  /* Logo·브랜드 강조용 */
+  --gradient-brand: linear-gradient(
+    105deg,
+    #9EF7EE 50%,
+    #971EFF 89.69%
+  );
+
+  /* Card List Hover 시 Border */
+  --gradient-border: linear-gradient(
+    90deg,
+    #5CC7D0 0.01%,
+    #D5A5FF 100.01%
+  );
+
+  /* Vertical Stepper Area */
+  --gradient-light-01: linear-gradient(
+    354deg,
+    #F6F6F6 2.29%,
+    #F3F7EE 30.69%,
+    #DDFCFA 104.75%
+  );
+
+  /* Horizontal Stepper Area, Floating Search Bar */
+  --gradient-light-02: linear-gradient(
+    90deg,
+    #EBEBF7 0%,
+    #DDFCFA 100%
+  );
+}

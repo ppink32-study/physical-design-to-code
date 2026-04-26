@@ -1,0 +1,227 @@
+/* =================================================================
+ *  Tooltip — Figma node 5543:321819
+ *
+ *  ─ panel
+ *    background : --context-background-surface-bg-backdrop-dark (#1F2025)
+ *    padding    : --spacing-sm (8px)
+ *    radius     : --radius-lg (8px)
+ *    max-width  : 240px (Figma)
+ *
+ *  ─ title (Body/Sm_SemiB)
+ *    12px / 16px / weight 600 / letter-spacing -0.5 (≈ -0.06px in figma)
+ *    color: --context-foreground-neutral-on-neutral-hint-muted (#9698A3)
+ *
+ *  ─ text (Body/Md_Regular)
+ *    13px / 20px / weight 400 / letter-spacing -0.4 (≈ -0.052px)
+ *    color: --context-foreground-neutral-on-neutral-white (#FFFFFF)
+ *
+ *  ─ arrow : 12 × 5 (top/bottom), 5 × 12 (left/right) CSS border triangle
+ * =============================================================== */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  /* z-index context 는 panel 이 별도로 관리 */
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  line-height: inherit;
+}
+
+/* =================================================================
+ *  Panel
+ * =============================================================== */
+
+.panel {
+  position: absolute;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: var(--spacing-sm, 8px);
+  background: var(--context-background-surface-bg-backdrop-dark, #1f2025);
+  border-radius: var(--radius-lg, 8px);
+  color: var(--context-foreground-neutral-on-neutral-white, #ffffff);
+  font-family: var(--font-family-korean, "Pretendard", system-ui, sans-serif);
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.4px;
+  font-weight: 400;
+  word-break: keep-all;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  width: max-content;
+  opacity: 0;
+  animation: tooltip-fade-in 0.12s ease-out forwards;
+}
+
+/* =================================================================
+ *  Direction positioning
+ *  (각 방향마다 panel 을 trigger 경계 + 8px gap 만큼 떨어뜨림)
+ * =============================================================== */
+
+.panel[data-direction="top"] {
+  bottom: calc(100% + var(--tt-gap, 8px));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.panel[data-direction="bottom"] {
+  top: calc(100% + var(--tt-gap, 8px));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.panel[data-direction="left"] {
+  right: calc(100% + var(--tt-gap, 8px));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.panel[data-direction="right"] {
+  left: calc(100% + var(--tt-gap, 8px));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* =================================================================
+ *  Title / Text
+ * =============================================================== */
+
+.title {
+  display: block;
+  color: var(--context-foreground-neutral-on-neutral-hint-muted, #9698a3);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.text {
+  display: block;
+  white-space: pre-line;
+}
+
+/* =================================================================
+ *  Arrow — CSS border triangle
+ *  모두 panel 과 동일한 배경색을 상속받아 자연스러운 연결
+ * =============================================================== */
+
+.arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* panel 이 위에 있으므로 arrow 는 하단, 꼭짓점은 아래 */
+.panel[data-direction="top"] .arrow {
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+}
+
+/* panel 이 아래에 있으므로 arrow 는 상단, 꼭짓점은 위 */
+.panel[data-direction="bottom"] .arrow {
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+}
+
+/* panel 이 좌측에 있으므로 arrow 는 우측, 꼭짓점은 오른쪽 */
+.panel[data-direction="left"] .arrow {
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+}
+
+/* panel 이 우측에 있으므로 arrow 는 좌측, 꼭짓점은 왼쪽 */
+.panel[data-direction="right"] .arrow {
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+}
+
+.panel[data-arrow="false"] .arrow {
+  display: none;
+}
+
+/* =================================================================
+ *  Animation
+ * =============================================================== */
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* =================================================================
+ *  HelpIconWithTooltip — Figma node 13300:13569
+ * =============================================================== */
+
+.helpWrap {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.helpButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--context-foreground-icon-neutral-icon-neutral-base, #434551);
+  cursor: help;
+  border-radius: 50%;
+}
+
+.helpButton:hover {
+  color: var(--context-foreground-surface-on-surface-base, #1f2025);
+}
+
+.helpButton:focus-visible {
+  outline: 2px solid var(--accent-cyan-accent-cyan, #0aa2c0);
+  outline-offset: 2px;
+}
+
+.helpIcon {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}

@@ -1,0 +1,140 @@
+/* =============================================================================
+ * Empty (Empty state) — Figma node 12368:26042
+ * -----------------------------------------------------------------------------
+ * Layout : column / center align
+ *   - icon ↔ description : 0  (root gap)
+ *   - description ↔ subtext : 4 (textGroup gap, --spacing-2xs)
+ *   - icon container : 48 (small) / 60 (medium) / 80 (large)
+ *   - description    : on-surface-hint        / size 별 typography 다름
+ *   - subtext        : on-neutral-hint-muted  / size 별 typography 다름
+ * ========================================================================== */
+
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * Icon
+ *   - mask-image 로 currentColor 적용
+ *   - color = icon-surface-secondary (light #b3b4bc / dark #434551)
+ * ------------------------------------------------------------------------- */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--context-foreground-icon-surface-icon-surface-secondary, #b3b4bc);
+}
+
+.icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* 사용자가 ReactNode 형태(예: <svg>)를 직접 전달한 경우 */
+.iconCustom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--context-foreground-icon-surface-icon-surface-secondary, #b3b4bc);
+}
+.iconCustom > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------------------------------------------------------------------------
+ * Size variants
+ * ------------------------------------------------------------------------- */
+.root[data-size="small"] .iconWrap {
+  width: 48px;
+  height: 48px;
+}
+.root[data-size="medium"] .iconWrap {
+  width: 60px;
+  height: 60px;
+}
+.root[data-size="large"] .iconWrap {
+  width: 80px;
+  height: 80px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Text group
+ * ------------------------------------------------------------------------- */
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  white-space: nowrap;
+}
+
+.description,
+.subtext {
+  margin: 0;
+  font-family: var(--font-family-korean);
+}
+
+.description {
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+}
+
+.subtext {
+  color: var(--context-foreground-neutral-on-neutral-hint-muted, #9698a3);
+}
+
+/* size=small : description Body/Sm 12/16 medium, subtext Body/Xs 11/14 medium */
+.root[data-size="small"] .description {
+  font-size: var(--font-size-body-sm, 12px);
+  line-height: var(--font-line-height-xs, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  letter-spacing: -0.06px;
+}
+.root[data-size="small"] .subtext {
+  font-size: var(--font-size-body-xs, 11px);
+  line-height: var(--font-line-height-2xs, 14px);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+/* size=medium : description Body/Base 14/20 regular, subtext Body/Sm 12/16 medium */
+.root[data-size="medium"] .description {
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+  font-weight: var(--font-weight-regular, 400);
+}
+.root[data-size="medium"] .subtext {
+  font-size: var(--font-size-body-sm, 12px);
+  line-height: var(--font-line-height-xs, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  letter-spacing: -0.06px;
+}
+
+/* size=large : description Body/Lg 16/24 regular, subtext Body/Md 13/20 medium */
+.root[data-size="large"] .description {
+  font-size: var(--font-size-body-lg, 16px);
+  line-height: var(--font-line-height-lg, 24px);
+  font-weight: var(--font-weight-regular, 400);
+}
+.root[data-size="large"] .subtext {
+  font-size: var(--font-size-body-md, 13px);
+  line-height: var(--font-line-height-sm, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  letter-spacing: -0.052px;
+}

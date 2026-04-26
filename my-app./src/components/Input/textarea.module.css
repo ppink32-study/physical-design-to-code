@@ -1,0 +1,261 @@
+/* ---------------------------------------------------------------------------
+ * TextArea - Figma (node 4783:27558)
+ *   container : flex, w=340, h=--size-base-13xl(80), py=sm px=md, gap=2xs, radius=md
+ *   tone      : normal | success | error
+ *   focus     : tone 별 border + 4px ring (drop-shadow)
+ *   resize    : 우측 하단 /icon/Resize.svg — icon-surface-disabled
+ *   scrollbar : wrapper 우측 패딩 띠 — absolute, right: 4px (본문·아이콘은 .bodyRow)
+ * ------------------------------------------------------------------------- */
+
+/* 입력 + trailing 한 줄 — 스크롤바는 wrapper 패딩 쪽 absolute (bodyRow에 우측 마진 없음) */
+.bodyRow {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  align-items: stretch;
+  gap: var(--spacing-2xs, 4px);
+}
+
+.field {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 340px;
+  min-height: var(--size-base-13xl, 80px);
+  height: var(--size-base-13xl, 80px);
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 12px);
+  gap: var(--spacing-2xs, 4px);
+  background-color: var(--context-background-surface-bg-surface-base, #ffffff);
+  border: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+  border-radius: var(--radius-md, 6px);
+  align-items: stretch;
+  overflow: hidden;
+  cursor: text;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.overlayScrollbar {
+  position: absolute;
+  right: 4px;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* native textarea — 스크롤은 유지, 네이티브 스크롤바만 숨김 (시각은 Scrollbar 컴포넌트) */
+.textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  resize: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.textarea::placeholder {
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  opacity: 1;
+}
+/* 네이티브 스크롤바만 숨김 — 시각은 Scrollbar 컴포넌트 */
+.textarea::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* 스크롤 슬롯 — Figma: flex, py=2xs px=3xs, justify center, align start; right:4 (wrapper 기준) */
+.textareaScrollbarSlot {
+  box-sizing: border-box;
+  position: absolute;
+  right: 4px;
+  top: var(--spacing-sm, 8px);
+  bottom: var(--spacing-sm, 8px);
+  display: flex;
+  padding: var(--spacing-2xs, 4px) var(--spacing-3xs, 2px);
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.textareaScrollbarInner {
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+/* trailing icon --------------------------------------------------------- */
+/* Default/Focus/Filled : icon-surface-teriary (#787a88)
+ * Readonly/Disabled    : icon-surface-disabled (#b3b4bc) -- 아래 state 규칙
+ * tone success/error   : on-success / on-error 로 오버라이드
+ */
+.trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--context-foreground-icon-surface-icon-surface-teriary, #787a88);
+}
+
+/* resize handle (우측 하단 16x16) — Figma: /icon/Resize.svg */
+.resize-on {
+  resize: both;
+}
+.resize-on::after {
+  content: "";
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  -webkit-mask-image: url("/icon/Resize.svg");
+  mask-image: url("/icon/Resize.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tone variations
+ * ------------------------------------------------------------------------- */
+.tone-success {
+  border-color: var(--border-border-valid, #3ac133);
+}
+.tone-success .trailing {
+  color: var(--context-foreground-success-on-success, #09b200);
+}
+
+.tone-error {
+  border-color: var(--border-border-invalid, #ff5a58);
+}
+.tone-error .trailing {
+  color: var(--context-foreground-error-on-error, #ff312e);
+}
+
+/* ---------------------------------------------------------------------------
+ * Focus / Disable / Readonly
+ * ------------------------------------------------------------------------- */
+.wrapper:focus-within,
+.state-focus {
+  border-color: var(--border-border-primary, #5cc7d0);
+  box-shadow: 0 0 0 4px var(--color-opacity-primary-15, rgba(67, 198, 193, 0.15));
+}
+
+.tone-success.wrapper:focus-within,
+.tone-success.state-focus {
+  border-color: var(--border-border-valid, #3ac133);
+  box-shadow: 0 0 0 4px var(--seed-color-green-100, #cef0cc);
+}
+
+.tone-error.wrapper:focus-within,
+.tone-error.state-focus {
+  border-color: var(--border-border-invalid, #ff5a58);
+  box-shadow: 0 0 0 4px var(--seed-color-red-100, #ffd6d5);
+}
+
+.state-disable,
+.wrapper:has(textarea:disabled) {
+  background-color: var(
+    --context-background-surface-bg-surface-base-disabled,
+    #f4f4f5
+  );
+  border-color: var(
+    --border-border-surface-border-surface-disabled,
+    #d7d8dc
+  );
+  cursor: not-allowed;
+  box-shadow: none;
+  resize: none;
+}
+.state-disable .textarea,
+.wrapper:has(textarea:disabled) .textarea {
+  color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+  cursor: not-allowed;
+  resize: none;
+}
+.state-disable .textarea::placeholder,
+.wrapper:has(textarea:disabled) .textarea::placeholder {
+  color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+}
+.state-disable .trailing,
+.wrapper:has(textarea:disabled) .trailing {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled, #b3b4bc);
+}
+
+.state-readonly,
+.wrapper:has(textarea[readonly]) {
+  background-color: var(--context-background-surface-bg-surface-secondary, #f4f4f5);
+  border-color: var(--border-border-surface-border-surface, #d7d8dc);
+  cursor: default;
+  box-shadow: none;
+}
+.state-readonly .textarea,
+.wrapper:has(textarea[readonly]) .textarea {
+  cursor: default;
+}
+.state-readonly .trailing,
+.wrapper:has(textarea[readonly]) .trailing {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled, #b3b4bc);
+}
+
+/* success / error: readonly·disabled 에서도 border·trailing 은 톤 색(Input 과 동일) */
+.tone-success.state-disable,
+.tone-success.wrapper:has(textarea:disabled) {
+  border-color: var(--border-border-valid, #3ac133);
+}
+.tone-success.state-readonly,
+.tone-success.wrapper:has(textarea[readonly]) {
+  border-color: var(--border-border-valid, #3ac133);
+}
+.tone-success.state-disable .trailing,
+.tone-success.wrapper:has(textarea:disabled) .trailing,
+.tone-success.state-readonly .trailing,
+.tone-success.wrapper:has(textarea[readonly]) .trailing {
+  color: var(--context-foreground-success-on-success, #09b200);
+}
+
+.tone-error.state-disable,
+.tone-error.wrapper:has(textarea:disabled) {
+  border-color: var(--border-border-invalid, #ff5a58);
+}
+.tone-error.state-readonly,
+.tone-error.wrapper:has(textarea[readonly]) {
+  border-color: var(--border-border-invalid, #ff5a58);
+}
+.tone-error.state-disable .trailing,
+.tone-error.wrapper:has(textarea:disabled) .trailing,
+.tone-error.state-readonly .trailing,
+.tone-error.wrapper:has(textarea[readonly]) .trailing {
+  color: var(--context-foreground-error-on-error, #ff312e);
+}
+
+.state-filled .textarea {
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}

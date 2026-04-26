@@ -1,0 +1,206 @@
+/* =================================================================
+ *  /showcase — Storybook Canvas 스타일 검수 페이지
+ * =============================================================== */
+
+#review-root {
+  /* 검수 컨트롤 바가 토글하는 토큰들 ----------------------------------- */
+  --review-fg: var(--context-foreground-surface-on-surface-base);
+  --review-fg-sub: var(--context-foreground-surface-on-surface-sub);
+  --review-bg: var(--context-background-surface-bg-surface-base);
+  --review-card-bg: var(--context-background-surface-bg-surface-base);
+  --review-cell-bg: var(--context-background-surface-bg-surface-white,
+    var(--context-background-surface-bg-surface-base));
+  --review-canvas-bg: transparent;
+  --review-border: color-mix(in srgb, var(--review-fg) 10%, transparent);
+  --review-grid-line: color-mix(in srgb, var(--review-fg) 6%, transparent);
+  --review-label-bg: color-mix(in srgb, var(--review-fg) 4%, transparent);
+  --review-label-fg: color-mix(in srgb, var(--review-fg) 60%, transparent);
+  --review-label-fg-strong: var(--review-fg);
+  --review-toolbar-bg: color-mix(
+    in srgb,
+    var(--review-card-bg) 88%,
+    transparent
+  );
+}
+
+/* canvas background variants */
+#review-root[data-review-bg="white"] {
+  --review-canvas-bg: #ffffff;
+  --review-cell-bg: #ffffff;
+}
+#review-root[data-review-bg="dark"] {
+  --review-canvas-bg: #141518;
+  --review-cell-bg: #141518;
+}
+#review-root[data-review-bg="checker"] {
+  --review-canvas-bg:
+    repeating-conic-gradient(
+      color-mix(in srgb, var(--review-fg) 4%, transparent) 0% 25%,
+      transparent 0% 50%
+    )
+    50% / 16px 16px;
+  --review-cell-bg: transparent;
+}
+
+/* layout shell ------------------------------------------------------ */
+.shell {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  min-height: calc(100vh - 64px);
+  background: var(--review-bg);
+  color: var(--review-fg);
+  font-family: var(--font-family-primary, "Pretendard", "Inter", system-ui);
+}
+
+/* ----------------------------------------------------------------- */
+/* Left rail (sticky)                                                 */
+/* ----------------------------------------------------------------- */
+.rail {
+  position: sticky;
+  top: 64px;
+  align-self: start;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  padding: 28px 12px 32px 24px;
+  border-right: 1px solid var(--review-border);
+}
+
+.railTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--review-fg-sub);
+  margin: 0 0 16px;
+  padding: 0 8px;
+}
+
+.railGroup {
+  margin-bottom: 16px;
+}
+
+.railGroupName {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--review-fg-sub);
+  padding: 6px 8px 4px;
+  opacity: 0.85;
+}
+
+.railList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.railLink {
+  display: block;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  color: var(--review-fg);
+  text-decoration: none;
+  transition: background-color 100ms ease;
+}
+
+.railLink:hover {
+  background: color-mix(in srgb, var(--review-fg) 5%, transparent);
+}
+
+/* ----------------------------------------------------------------- */
+/* Main column                                                        */
+/* ----------------------------------------------------------------- */
+.main {
+  padding: 40px clamp(24px, 5vw, 56px) 96px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--review-fg-sub);
+}
+
+.title {
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0;
+  color: var(--review-fg-sub);
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--review-fg-sub);
+  margin-top: 4px;
+}
+
+.meta strong {
+  font-weight: 700;
+  color: var(--review-fg);
+}
+
+/* ----------------------------------------------------------------- */
+/* Responsive                                                         */
+/* ----------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .shell {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+  .main {
+    padding: 32px 24px 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .rail {
+    display: none;
+  }
+  .main {
+    padding: 24px 16px 64px;
+  }
+  .title {
+    font-size: 26px;
+  }
+}
+
+/* ----------------------------------------------------------------- */
+/* Print                                                              */
+/* ----------------------------------------------------------------- */
+@media print {
+  .shell {
+    display: block;
+  }
+  .rail {
+    display: none;
+  }
+  .main {
+    padding: 0;
+  }
+}

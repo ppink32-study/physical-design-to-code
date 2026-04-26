@@ -1,0 +1,173 @@
+/* =============================================================================
+ * Checkbox — Figma MCP 재작성
+ * -----------------------------------------------------------------------------
+ * Figma nodes
+ *   - Checkbox input (16x16, 9 states) : 17995:61456
+ *   - Checkbox (input + label)         : 17995:61510
+ *
+ * 색상 토큰 (variable_defs 기준)
+ *   - unchecked bg : --context-background-surface-bg-surface-base
+ *   - unchecked bd : --border-border-surface-border-surface
+ *   - focused  bd  : --border-border-primary
+ *   - checked  bg  : --context-background-primary-bg-primary-hover
+ *   - check    fg  : --context-foreground-surface-on-suface-white  (← 오타 유지)
+ *   - disabled bg  : --context-background-surface-bg-surface-base-disabled
+ *   - disabled label : --context-foreground-surface-on-surface-disabled
+ *   - focus ring   : --shadow-focus-ring-primary (shadow.css / Focus Ring · Primary)
+ *
+ * 구조 : <label><input hidden/> <box/> <text/></label>
+ * ========================================================================== */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm); /* 8 */
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  font-weight: var(--font-weight-regular);
+  color: var(--context-foreground-surface-on-surface-base);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root[data-disabled="true"] {
+  cursor: not-allowed;
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+/* 네이티브 input 은 숨기고 키보드/스크린리더 접근성 유지 */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Box (16x16)
+ * ------------------------------------------------------------------------- */
+.box {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--size-base-lg); /* 16 */
+  height: var(--size-base-lg); /* 16 */
+  border-radius: var(--radius-sm); /* 4 */
+  background: var(--context-background-surface-bg-surface-base);
+  border: var(--border-width-xs, 1px) solid
+    var(--border-border-surface-border-surface);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+  color: var(--context-foreground-surface-on-suface-white);
+}
+
+/* -- Unchecked Focused --
+ * :focus-within — 라벨 클릭 시에도 input 포커스가 잡히면 링 표시 (Storybook 포함)
+ * .input:focus + .box — 키보드 등 직접 포커스
+ * data-force-state — Matrix 등 시각 고정
+ */
+.root[data-state="unchecked"]:focus-within:not([data-disabled="true"]) .box,
+.root[data-state="unchecked"] .input:focus + .box,
+.root[data-state="unchecked"][data-force-state="focused"] .box {
+  border-color: var(--border-border-primary);
+  box-shadow: var(--shadow-focus-ring-primary);
+}
+
+/* -- Checked / Indeterminate 공통 -- */
+.root[data-state="checked"] .box,
+.root[data-state="indeterminate"] .box {
+  background: var(--context-background-primary-bg-primary-hover);
+  border-color: transparent;
+}
+
+/* -- Checked / Indeterminate Focused -- */
+.root[data-state="checked"]:focus-within:not([data-disabled="true"]) .box,
+.root[data-state="checked"] .input:focus + .box,
+.root[data-state="checked"][data-force-state="focused"] .box,
+.root[data-state="indeterminate"]:focus-within:not([data-disabled="true"]) .box,
+.root[data-state="indeterminate"] .input:focus + .box,
+.root[data-state="indeterminate"][data-force-state="focused"] .box {
+  box-shadow: var(--shadow-focus-ring-primary);
+}
+
+/* -- Disabled -- */
+.root[data-disabled="true"][data-state="unchecked"] .box {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  border-color: var(--border-border-surface-border-surface);
+}
+.root[data-disabled="true"] .box {
+  box-shadow: none !important;
+  opacity: 1;
+}
+/* checked/indeterminate 은 disabled 에서도 primary bg 유지 (Figma 스펙 확인됨) */
+
+/* ---------------------------------------------------------------------------
+ * Check icon (SVG) — v 모양
+ * ------------------------------------------------------------------------- */
+.check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--context-foreground-surface-on-suface-white);
+  pointer-events: none;
+  opacity: 0;
+}
+.root[data-state="checked"] .check {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+ * Indeterminate dash (pill) — radius-full(1000)
+ * ------------------------------------------------------------------------- */
+.dash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 2px;
+  background: var(--context-foreground-surface-on-suface-white);
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+}
+.root[data-state="indeterminate"] .dash {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+ * Label text
+ * ------------------------------------------------------------------------- */
+.label {
+  color: inherit;
+  letter-spacing: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * CheckboxGroup (RadioGroup 과 동일 컨벤션)
+ *   vertical   : column gap=4 (spacing-2xs)
+ *   horizontal : row    gap=16 (spacing-lg)
+ * ------------------------------------------------------------------------- */
+.group {
+  display: flex;
+  gap: var(--spacing-2xs); /* 4 */
+  flex-direction: column;
+}
+.group[data-orientation="horizontal"] {
+  flex-direction: row;
+  gap: var(--spacing-lg); /* 16 */
+  flex-wrap: wrap;
+}

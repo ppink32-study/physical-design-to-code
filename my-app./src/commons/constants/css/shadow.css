@@ -1,0 +1,25 @@
+/* Shadow tokens */
+/* Source of truth: Figma — Token Spec / Shadows (node 13382-23979). */
+
+:root {
+  /* Elevation */
+  --shadow-xs: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 4px 14px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 12px 32px 0 rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 16px 48px 0 rgba(0, 0, 0, 0.18);
+  --shadow-primary: 0 6px 20px 0
+    var(--color-opacity-accent-primary-50020, rgba(67, 198, 193, 0.2));
+
+  /* Focus Ring
+   * Note: Figma 측은 Effect Style(토큰 X). Style 의 alias 표기 대신
+   * 프로젝트 토큰으로 정규화해 다크모드/리브랜딩에 자동 추종되도록 했습니다. */
+  --shadow-focus-ring-primary: 0 0 0 var(--border-width-lg, 4px)
+    var(--color-opacity-accent-primary-50015, rgba(67, 198, 193, 0.15));
+  --shadow-focus-ring-gray: 0 0 0 var(--border-width-lg, 4px)
+    var(--context-background-surface-bg-surface-teriary, #ECECEE);
+  --shadow-focus-ring-form-valid: 0 0 0 var(--border-width-lg, 4px)
+    var(--seed-color-green-100, #CEF0CC);
+  --shadow-focus-ring-form-invalid: 0 0 0 var(--border-width-lg, 4px)
+    var(--seed-color-red-100, #FFD6D5);
+}

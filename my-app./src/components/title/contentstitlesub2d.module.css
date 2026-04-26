@@ -1,0 +1,144 @@
+/* =============================================================================
+ * ContentsTitleSub2D — Contents Title / Sub (2d) (Figma node 7544:663)
+ * -----------------------------------------------------------------------------
+ * Tokens
+ *   - title    : Body/Base_SemiB (14/20 semibold) on-surface-base
+ *   - bullet   : 4×4 circle, --accent-red-accent-red (#ff312e)
+ *   - badge    : bg --context-background-tint-bg-purple-tint / text accent-purple
+ *                (20h, min-w 32, pl=4 pr=6, radius-full, inner wrapper pl=2)
+ *   - addBtn   : 24×24 버튼, AddFill 16, icon-surface
+ *   - height   : 32px
+ *   - gap      : root 5xl(40) / left 1(4) / titleBadge sm(8) / bulletTitle 3xs(2)
+ * ========================================================================== */
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--size-base-4xl, 32px);
+  gap: var(--spacing-5xl, 40px);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+ * Left area
+ * ------------------------------------------------------------------------- */
+.leftArea {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 4px; /* Figma : _Size & Spacing (numUnit)*1 = 4 */
+}
+
+.titleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+/* title + trailing dot */
+.bulletTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3xs, 2px);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+.bulletDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-red-accent-red, #ff312e);
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Count badge (purple tint pill) — ContentsTitleSub 과 동일 스펙
+ * ------------------------------------------------------------------------- */
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  min-width: 32px;
+  padding: 0 var(--spacing-xs, 6px) 0 var(--spacing-2xs, 4px);
+  border-radius: var(--radius-full, 1000px);
+  background: var(--context-background-tint-bg-purple-tint, #f6ebff);
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.countText {
+  display: inline-flex;
+  align-items: center;
+  padding-left: var(--spacing-3xs, 2px);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-sm, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-xs, 16px);
+  letter-spacing: -0.06px;
+  color: var(--accent-purple-accent-purple, #971eff);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Add button (24x24 + AddFill)
+ * ------------------------------------------------------------------------- */
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-base-2xl, 24px);
+  height: var(--size-base-2xl, 24px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+.addBtn:hover {
+  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+}
+
+/* ---------------------------------------------------------------------------
+ * Right toggle slot
+ * ------------------------------------------------------------------------- */
+.toggleSlot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Mask icon
+ * ------------------------------------------------------------------------- */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}

@@ -1,0 +1,175 @@
+/* =============================================================================
+ * SelectChip (Select chip / Contents) — Figma MCP 재검토 반영 (node 8416:600935)
+ * -----------------------------------------------------------------------------
+ * 상태별 정확한 컬러 매핑 (재확인 완료)
+ *
+ *                       | bg                          | text                | border              | close-btn bg            | warning icon
+ *  ---------------------|-----------------------------|---------------------|---------------------|-------------------------|--------------
+ *  Default  / normal    | bg-surface-base (white)     | on-surface-base     | border-surface      | bg-surface-secondary    | —
+ *  Default  / error     | bg-surface-base (white)     | on-surface-base     | on-error            | bg-surface-secondary    | red, 16px
+ *  Hover    / normal    | bg-surface-base             | on-surface-base     | border-surface-hover| bg-surface-teriary      | —
+ *  Hover    / error     | bg-red-tint                 | on-surface-base     | on-error-hover      | bg-surface-teriary      | red, 16px
+ *  Readonly / normal    | bg-surface-base-disabled    | on-surface-base     | border-surface-dis. | bg-gray-tint-hover      | —
+ *  Readonly / error     | bg-surface-base-disabled    | on-surface-base     | border-red-tint     | bg-gray-tint-hover      | red, opacity 0.5
+ *  Disable  / normal    | bg-surface-base-disabled    | on-surface-disabled | border-surface-dis. | bg-gray-tint-hover      | —
+ *  Disable  / error     | bg-surface-base-disabled    | on-surface-disabled | border-red-tint     | bg-gray-tint-hover      | red, opacity 0.5
+ *
+ * 규칙 요약
+ *   - Error 는 항상 "border 색"을 바꾼다. text 색은 state 의 것을 따른다.
+ *   - Readonly / Disable 의 Error 는 border 가 red-tint(연한 빨강) 로 순화된다.
+ *   - Hover 의 Error 는 bg 가 red-tint(연한 분홍) 로 바뀐다.
+ *   - Warning icon 은 error=true 에서만 좌측에 노출.
+ * ========================================================================== */
+
+.chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 2px var(--spacing-sm);
+  min-height: var(--size-base-2xl);
+  border-radius: var(--radius-sm);
+  background: var(--context-background-surface-bg-surface-base);
+  color: var(--context-foreground-surface-on-surface-base);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  border: 1px solid var(--border-border-surface-border-surface);
+  cursor: default;
+}
+
+/* Size */
+.chip[data-size="large"] { min-height: var(--size-base-4xl); }
+
+/* Content row */
+.content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* WarningFill icon — default = red (on-error) */
+.warningIcon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--size-base-lg);
+  height: var(--size-base-lg);
+  color: var(--context-foreground-error-on-error);
+}
+.warningIconMask {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  -webkit-mask: url(/icon/WarningFill.svg) center / contain no-repeat;
+  mask: url(/icon/WarningFill.svg) center / contain no-repeat;
+}
+
+.label { white-space: nowrap; }
+
+/* Close button */
+.closeBtn {
+  appearance: none;
+  border: 0;
+  padding: var(--spacing-3xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--size-base-lg);
+  height: var(--size-base-lg);
+  border-radius: var(--radius-full);
+  background: var(--context-background-surface-bg-surface-secondary);
+  color: var(--context-foreground-icon-surface-icon-surface);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.closeBtn:focus-visible {
+  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline-offset: 1px;
+}
+.closeIcon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url(/icon/Close.svg) center / contain no-repeat;
+  mask: url(/icon/Close.svg) center / contain no-repeat;
+}
+
+/* =============================================================================
+ * Default / Error
+ * ========================================================================== */
+.chip[data-state="default"][data-error="true"] {
+  border-color: var(--context-foreground-error-on-error);
+}
+
+/* =============================================================================
+ * Hover (normal + error 분기)
+ * ========================================================================== */
+.chip[data-state="default"]:hover,
+.chip[data-force-state="hover"] {
+  border-color: var(--border-border-surface-border-surface-hover);
+}
+.chip[data-state="default"]:hover .closeBtn,
+.chip[data-force-state="hover"] .closeBtn {
+  background: var(--context-background-surface-bg-surface-teriary);
+}
+/* Hover + Error */
+.chip[data-state="default"][data-error="true"]:hover,
+.chip[data-force-state="hover"][data-error="true"] {
+  background: var(--context-background-tint-bg-red-tint);
+  border-color: var(--context-foreground-error-on-error-hover);
+}
+
+/* =============================================================================
+ * Readonly
+ * ========================================================================== */
+.chip[data-state="readonly"] {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  border-color: var(--border-border-surface-border-surface-disabled);
+  /* text color 는 기본 on-surface-base 유지 */
+}
+.chip[data-state="readonly"] .closeBtn {
+  background: var(--context-background-tint-bg-gray-tint-hover);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  pointer-events: none;
+  cursor: default;
+}
+/* Readonly + Error */
+.chip[data-state="readonly"][data-error="true"] {
+  border-color: var(--border-border-red-tint);
+}
+.chip[data-state="readonly"][data-error="true"] .warningIcon {
+  opacity: var(--opacity-50, 0.5);
+}
+
+/* =============================================================================
+ * Disable
+ * ========================================================================== */
+.chip[data-state="disable"],
+.chip[data-force-state="disable"] {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  border-color: var(--border-border-surface-border-surface-disabled);
+  color: var(--context-foreground-surface-on-surface-disabled);
+  cursor: not-allowed;
+}
+.chip[data-state="disable"] .warningIcon,
+.chip[data-force-state="disable"] .warningIcon {
+  opacity: var(--opacity-50, 0.5);
+}
+.chip[data-state="disable"] .closeBtn,
+.chip[data-force-state="disable"] .closeBtn {
+  background: var(--context-background-tint-bg-gray-tint-hover);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+/* Disable + Error */
+.chip[data-state="disable"][data-error="true"],
+.chip[data-force-state="disable"][data-error="true"] {
+  border-color: var(--border-border-red-tint);
+}

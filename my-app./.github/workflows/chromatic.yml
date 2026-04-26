@@ -1,0 +1,43 @@
+# Chromatic에 Storybook을 게시합니다.
+# 사용 전: GitHub 저장소 Settings → Secrets and variables → Actions 에서
+# CHROMATIC_PROJECT_TOKEN 을 추가하세요. (https://www.chromatic.com/ 프로젝트 설정에서 발급)
+
+name: Chromatic
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: chromatic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic:
+    name: Publish to Chromatic
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v16
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          exitZeroOnChanges: true

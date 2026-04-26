@@ -1,0 +1,567 @@
+/* =============================================================================
+ * BodyCell — Data Grid/Body (Figma node 4456:290858)
+ * -----------------------------------------------------------------------------
+ * Tokens (variable_defs 실측)
+ *   - bg base        : --context-background-surface-bg-surface-base (#ffffff)
+ *   - bg hover       : --context-background-surface-bg-surface-base-hover (#ececee)
+ *   - bg selected    : --_color-opacity-accent-primary500-8 (rgba(67,198,193,0.08))
+ *   - border         : --border-border-surface-border-surface-secondary (#ececee)
+ *   - border (focus) : --context-background-primary-bg-primary-secondary (light #B2FBED / dark #5CC7D0)
+ *   - text           : --context-foreground-surface-on-surface-base (#141518)
+ *   - icon           : --context-foreground-icon-surface-icon-surface (#565967)
+ *   - font           : Body/Base_Regular (14/20, pretendard regular)
+ *   - padding        : text cells → pl=12 pr=13 py=4
+ *                      blank / 40w → px=8 py=4
+ *   - cell height    : 40px
+ * ========================================================================== */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  box-sizing: border-box;
+  padding: var(--spacing-2xs, 4px) 0;
+  background: var(--context-background-surface-bg-surface-base, #ffffff);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+  font-weight: var(--font-weight-regular, 400);
+  letter-spacing: 0;
+
+  /* default : right + bottom 1px (secondary) */
+  border-right: var(--border-width-xs, 1px) solid
+    var(--border-border-surface-border-surface-secondary, #ececee);
+  border-bottom: var(--border-width-xs, 1px) solid
+    var(--border-border-surface-border-surface-secondary, #ececee);
+}
+
+/* ---------------------------------------------------------------------------
+ * Type 별 default width / padding
+ * ------------------------------------------------------------------------- */
+.root[data-type="blank"] {
+  width: 40px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+  justify-content: center;
+}
+
+.root[data-type="text-left"],
+.root[data-type="text-left-icon"],
+.root[data-type="text-center"],
+.root[data-type="text-right"] {
+  width: 80px;
+  padding: var(--spacing-2xs, 4px) 13px var(--spacing-2xs, 4px) 12px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Phase 4 — 인터랙션 셀 (default widths / centered content)
+ * ------------------------------------------------------------------------- */
+.root[data-type="checkbox"],
+.root[data-type="radio"],
+.root[data-type="icon"] {
+  width: 40px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+  justify-content: center;
+}
+
+.root[data-type="like"] {
+  width: 41px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+  justify-content: center;
+}
+
+.root[data-type="switch"] {
+  width: 61px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-md, 12px);
+  justify-content: center;
+}
+
+.root[data-type="link"] {
+  width: 86px;
+  padding: var(--spacing-2xs, 4px) 13px var(--spacing-2xs, 4px) 12px;
+}
+
+.root[data-type="button"] {
+  width: 139px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+  justify-content: center;
+}
+
+.root[data-type="button-icon-only"] {
+  width: 77px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * Phase 5 — 폼/데이터 셀 widths / padding
+ * ------------------------------------------------------------------------- */
+.root[data-type="text-field"] {
+  width: 160px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+}
+.root[data-type="search"],
+.root[data-type="select"] {
+  width: 185px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+}
+.root[data-type="date-picker"] {
+  width: 155px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+}
+.root[data-type="state"] {
+  width: 74px;
+  padding: var(--spacing-2xs, 4px) 12px;
+}
+.root[data-type="badge"] {
+  width: 123px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+  justify-content: center;
+}
+.root[data-type="file"] {
+  width: 138px;
+  padding: var(--spacing-2xs, 4px) 12px;
+}
+.root[data-type="tree"] {
+  width: 253px;
+  padding: var(--spacing-2xs, 4px) 12px;
+}
+.root[data-type="multi-normal"] {
+  width: 100px;
+  height: 56px;
+  padding: var(--spacing-sm, 8px) 12px;
+  align-items: center;
+}
+.root[data-type="multi-sub-text"] {
+  width: 223px;
+  height: 50px;
+  padding: var(--spacing-xs, 6px) 12px;
+  align-items: center;
+}
+.root[data-type="video"] {
+  width: 120px;
+  padding: var(--spacing-2xs, 4px) var(--spacing-sm, 8px);
+}
+
+/* ---------------------------------------------------------------------------
+ * State
+ * ------------------------------------------------------------------------- */
+.root[data-state="hovered"] {
+  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+}
+
+.root[data-state="selected"] {
+  /* Figma 원본 : rgba(67,198,193, 0.08) — token "Color/Opacity/Accent/Primary500_8%"
+     실제 CSS 변수 명 : --opacity-primary-opacity-8 (light/dark 양쪽 동일 #rgba) */
+  background: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
+}
+
+/* ---------------------------------------------------------------------------
+ * Focus 링 — 4변 border (primary-disabled 톤)
+ *   Figma 상 focus on 은 default 의 right+bottom border 를 모두 덮어쓰고
+ *   4변 전체 1px solid #d5f2f1 로 대체.
+ * ------------------------------------------------------------------------- */
+.root[data-focus="true"] {
+  border: var(--border-width-xs, 1px) solid
+    var(--context-background-primary-bg-primary-secondary, #b2fbed);
+}
+
+/* ---------------------------------------------------------------------------
+ * Last column/row 에서 외곽 border 제거
+ * ------------------------------------------------------------------------- */
+.root[data-last-col="true"]:not([data-focus="true"]) {
+  border-right: none;
+}
+.root[data-last-row="true"]:not([data-focus="true"]) {
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Blank inner placeholder (24h min-width:1px)
+ * ------------------------------------------------------------------------- */
+.blankInner {
+  flex: 1 0 0;
+  min-width: 1px;
+  height: 24px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Wrapper (text-left-icon 에서 text + icon 가로 정렬)
+ * ------------------------------------------------------------------------- */
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs, 6px);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Text
+ * ------------------------------------------------------------------------- */
+.text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  color: inherit;
+}
+.text[data-align="left"] {
+  text-align: left;
+}
+.text[data-align="center"] {
+  text-align: center;
+}
+.text[data-align="right"] {
+  text-align: right;
+}
+
+/* ---------------------------------------------------------------------------
+ * Trailing icon slot (text-left-icon)
+ * ------------------------------------------------------------------------- */
+.trailing {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+
+/* ---------------------------------------------------------------------------
+ * Icon (mask-image + currentColor)
+ * ------------------------------------------------------------------------- */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ---------------------------------------------------------------------------
+ * Phase 4 — slots
+ * ------------------------------------------------------------------------- */
+/* Checkbox / Radio / Toggle 중앙 배치용 래퍼 */
+.formSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+/* Icon 전용 셀 중앙 아이콘 래퍼 */
+.iconSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+.iconSlot .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Link
+ *   Figma: 좌측 정렬, text 컬러 = on-primary (teal blue)
+ * ------------------------------------------------------------------------- */
+.link {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+  color: var(--context-foreground-primary-on-primary, #3f9bae);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.link:hover {
+  color: var(--context-foreground-primary-on-primary-hover, #28738c);
+}
+.linkDisabled {
+  color: var(--context-foreground-primary-on-primary-disabled, #8bc5c3);
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ---------------------------------------------------------------------------
+ * Button group slot (button / button-icon-only)
+ *   children 에 여러 Button 이 들어올 수 있음. 중앙 배치, gap=4px.
+ * ------------------------------------------------------------------------- */
+.buttonGroup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xs, 4px);
+}
+
+/* ---------------------------------------------------------------------------
+ * Like — star icon button
+ *   기본 색 : icon-surface-teriary (#b3b4bc)
+ *   활성화 : accent-primary (teal)
+ * ------------------------------------------------------------------------- */
+.likeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--context-foreground-icon-surface-icon-surface-teriary, #b3b4bc);
+  border-radius: var(--radius-xs, 4px);
+  transition: color 0.15s ease;
+}
+.likeBtn:hover {
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+.likeBtn:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary, #3f9bae);
+  outline-offset: 1px;
+}
+.likeBtn:disabled {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled, #d7d8dc);
+  cursor: not-allowed;
+}
+.likeIconOn {
+  color: var(--context-foreground-primary-on-primary, #3f9bae);
+}
+.likeBtn:has(.likeIconOn) {
+  color: var(--context-foreground-primary-on-primary, #3f9bae);
+}
+
+/* ===========================================================================
+ * Phase 5 — 폼 셀 (text-field / search / select / date-picker)
+ *   내부 "formBox" 가 입력 박스처럼 보이도록 border 추가
+ * ========================================================================= */
+.formBox {
+  display: inline-flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 32px;
+  padding: 0 var(--spacing-sm, 8px);
+  gap: var(--spacing-2xs, 4px);
+  background: var(--context-background-surface-bg-surface-base, #fff);
+  border: var(--border-width-xs, 1px) solid
+    var(--border-border-neutral-border-neutral-secondary, #d7d8dc);
+  border-radius: var(--radius-xs, 4px);
+  box-sizing: border-box;
+}
+.formBoxText {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-body-base, 14px);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}
+.formBoxText[data-placeholder="true"] {
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+}
+.formBoxTrailing {
+  color: var(--context-foreground-icon-surface-icon-surface-teriary, #787a88);
+}
+
+/* ===========================================================================
+ * Phase 5 — state dot
+ * ========================================================================= */
+.stateWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs, 6px);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.stateDot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+}
+.stateDot[data-tone="primary"] {
+  background: var(--context-background-primary-bg-primary, #43c6c1);
+}
+.stateDot[data-tone="blue"] {
+  background: var(--semantic-blue-base, #0093ff);
+}
+.stateDot[data-tone="green"] {
+  background: var(--semantic-green-base, #3fbc75);
+}
+.stateDot[data-tone="red"] {
+  background: var(--semantic-red-base, #f25c5c);
+}
+.stateDot[data-tone="yellow"] {
+  background: var(--semantic-yellow-base, #f4c33f);
+}
+.stateDot[data-tone="gray"] {
+  background: var(--context-foreground-surface-on-surface-hint, #787a88);
+}
+.stateText {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-body-base, 14px);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}
+
+/* ===========================================================================
+ * Phase 5 — badge group
+ * ========================================================================= */
+.badgeGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  justify-content: center;
+}
+
+/* ===========================================================================
+ * Phase 5 — file
+ * ========================================================================= */
+.fileWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs, 6px);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.fileIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--semantic-red-base, #f25c5c);
+}
+
+/* ===========================================================================
+ * Phase 5 — tree
+ * ========================================================================= */
+.treeWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs, 6px);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.treeChevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+}
+
+/* ===========================================================================
+ * Phase 5 — multi-line
+ * ========================================================================= */
+.multiWrap {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 0;
+}
+.multiLine {
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.multiSubWrap {
+  display: inline-flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 2px;
+}
+.multiSubTop {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs, 6px);
+  min-width: 0;
+}
+.multiSubTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-surface-on-surface-base, #141518);
+}
+.multiSubBadge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.multiSubBottom {
+  font-size: var(--font-size-body-sm, 12px);
+  line-height: var(--font-line-height-xs, 16px);
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===========================================================================
+ * Phase 5 — video thumbnail
+ * ========================================================================= */
+.videoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 32px;
+  border-radius: var(--radius-xs, 4px);
+  overflow: hidden;
+  background: var(--context-background-surface-bg-surface-quarernary, #e6e7ea);
+}
+.videoThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.videoThumbFallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #c9cdd3 0%, #a5acb4 100%);
+}
+.videoPlay {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}

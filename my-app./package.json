@@ -1,0 +1,35 @@
+{
+  "name": "my-app.",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "gen:tokens": "node scripts/generate-foundation-tokens.js",
+    "gen:icons": "node scripts/generate-icon-catalog.js"
+  },
+  "dependencies": {
+    "next": "15.5.15",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/addon-themes": "^10.3.5",
+    "@storybook/nextjs-vite": "^10.3.5",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "chromatic": "^16.6.0",
+    "storybook": "^10.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite": "^8.0.8"
+  }
+}

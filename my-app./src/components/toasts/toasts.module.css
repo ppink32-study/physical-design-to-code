@@ -1,0 +1,238 @@
+/* ==============================================================
+ * Toast — Figma MCP (node 5307:14956 — Toast Alert)
+ * 4 타입 : Confirm / Success / Warning / Error
+ *
+ * Spec (variable_defs 검증)
+ *   size      : w=400, max-width=400 — 이상은 자동 줄바꿈
+ *   padding   : py=12 px=16                (--spacing-md / --spacing-lg)
+ *   gap       : 12 (body inner) / 8 (icon↔text) / 4 (text vertical)
+ *   radius    : --radius-lg                (8)
+ *   bg        : --color-opacity-black-90   (rgba(0,0,0,0.9))
+ *   shadow    : Shadows/Lg  0 12 32 rgba(0,0,0,0.16)
+ *
+ *   icon      : 20 × 20  (mask-image + currentColor)
+ *   icon color :
+ *     confirm → --color-on-neutral-disabled (#B3B4BC)
+ *     success → --color-on-success          (#09B200)
+ *     warning → --color-on-warning          (#FF8F0E)
+ *     error   → --color-on-error            (#FF312E)
+ *
+ *   message   : 14/20 Pretendard Regular, --color-on-neutral-invert
+ *   subText   : 13 Pretendard Regular, letter-spacing -0.052px,
+ *               --color-on-surface-secondary  (#b3b4bc — light 값)
+ *   linkText  : 14/24 underline, on-blue (dark 컨텍스트 #5289F5)
+ *   closeBtn  : 24 × 24, radius 4, Icon/Close 16 × 16
+ *
+ *   Viewport  : position: fixed, bottom 48, center-x, z-index 높게
+ *               → 다른 콘텐츠 위 오버레이
+ *
+ * Token Context (중요)
+ *   Toast 는 배경이 항상 어둡기 때문에 `on-blue` 는 dark 컨텍스트 값을
+ *   써야 가독성이 확보됩니다. Toast 스코프 내에서만 `on-blue` 계열
+ *   토큰을 dark.css 값으로 오버라이드합니다. success/error/warning 은
+ *   Figma 스펙과 light 토큰 값이 동일하므로 그대로 사용.
+ * ============================================================ */
+
+/* -------- Root (single toast) -------- */
+.root {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+
+  width: 400px;
+  max-width: 400px;
+  padding: var(--spacing-md) var(--spacing-lg);
+
+  background: var(--color-opacity-black-90, rgba(0, 0, 0, 0.9));
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.16);
+
+  color: var(--color-on-neutral-invert, #f4f4f5);
+  font-family: var(--font-family-korean);
+  -webkit-font-smoothing: antialiased;
+
+  /* Toast 내부는 어두운 배경 → on-blue 만 dark 컨텍스트로 강제 */
+  --color-on-blue: #5289f5;
+  --color-on-blue-hover: #7ba6f7;
+}
+
+/* -------- Body (inner row — icon+msg  ↔  link+close) -------- */
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  min-width: 0;
+}
+
+/* -------- Icon + Message block (좌측) -------- */
+.iconMessage {
+  display: flex;
+  flex: 1 1 auto;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 24px;
+  padding: var(--spacing-3xs) 0;
+}
+
+/* -------- Icon (20 × 20, type 별 색)
+ *   색상은 tsx(ToastIcon) 의 inline style 로 직접 지정.
+ *   → CSS cascade / CSS Modules hash 간섭 없이 정확히 적용됨.
+ *   아래 color 는 style prop 누락 시 fallback. */
+.icon {
+  flex-shrink: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+
+  background-color: currentColor;
+  -webkit-mask-image: var(--ti-mask);
+  mask-image: var(--ti-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  color: var(--color-on-neutral-disabled);
+}
+
+/* -------- Text (message + subText) -------- */
+.text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
+}
+
+.message {
+  margin: 0;
+  color: var(--color-on-neutral-invert);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+
+  /* max-width 400 이상 자동 줄바꿈 */
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.subText {
+  margin: 0;
+  color: var(--color-on-surface-secondary);
+  font-size: var(--font-size-body-md, 13px);
+  line-height: var(--font-line-height-sm);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: -0.052px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* -------- Trailing (Link + Close) — 우측 -------- */
+.trailing {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* Link text button */
+.linkBtn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-3xs);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  color: var(--color-on-blue);
+  font-family: inherit;
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-lg, 24px);
+  font-weight: var(--font-weight-regular);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  white-space: nowrap;
+}
+
+.linkBtn:hover {
+  color: var(--color-on-blue-hover, var(--color-on-blue));
+}
+
+.linkBtn:focus-visible {
+  outline: 2px solid var(--color-on-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Close button */
+.closeBtn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-on-neutral-invert);
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.closeBtn:focus-visible {
+  outline: 2px solid var(--color-on-neutral-invert);
+  outline-offset: -2px;
+}
+
+.closeIcon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask-image: url("/icon/Close.svg");
+  mask-image: url("/icon/Close.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* ==============================================================
+ * Viewport — 화면 하단 고정 (다른 콘텐츠 위 오버레이)
+ *   requirement : bottom 48px 기본, 중앙 정렬
+ * ============================================================ */
+.viewport {
+  position: fixed;
+  bottom: var(--toast-viewport-bottom, 48px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  align-items: center;
+
+  /* 컨테이너는 클릭 무시 — 개별 토스트만 클릭 허용 */
+  pointer-events: none;
+}
+
+.viewport > * {
+  pointer-events: auto;
+}

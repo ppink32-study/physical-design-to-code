@@ -1,0 +1,288 @@
+/* ==============================================================
+ * Badge — Solid / Line / Status / Notice 4 variants
+ * 토큰은 Figma MCP(node 17976:110564, 17976:110839, 17976:111050,
+ * 17976:111245)에서 추출한 variable_defs 기준
+ * ============================================================ */
+
+/* -------- Base -------- */
+.badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-medium);
+  color: var(--badge-fg);
+}
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3xs); /* 2px */
+  padding-left: var(--spacing-3xs); /* 2px */
+}
+
+.icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--badge-icon-size, 16px);
+  height: var(--badge-icon-size, 16px);
+  color: inherit;
+}
+
+.icon > * {
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  display: inline-block;
+  color: inherit;
+  letter-spacing: var(--badge-letter-spacing, -0.052px);
+}
+
+/* -------- Size -------- */
+.sizeLg {
+  height: var(--size-base-2xl); /* 24 */
+  padding: 0 var(--spacing-sm) 0 var(--spacing-xs); /* 0 8 0 6 */
+  font-size: var(--font-size-body-md); /* 13 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  --badge-letter-spacing: -0.052px;
+  --badge-icon-size: 16px;
+}
+
+.sizeSm {
+  height: var(--size-base-xl); /* 20 */
+  padding: 0 var(--spacing-sm) 0 var(--spacing-xs); /* 0 8 0 6 */
+  font-size: var(--font-size-body-sm); /* 12 */
+  line-height: var(--font-line-height-xs); /* 16 */
+  --badge-letter-spacing: -0.06px;
+  --badge-icon-size: 12px;
+}
+
+.sizeXs {
+  height: var(--size-base-lg); /* 16 */
+  padding: 0 var(--spacing-xs) 0 var(--spacing-2xs); /* 0 6 0 4 */
+  font-size: var(--font-size-body-xs); /* 11 */
+  line-height: var(--font-line-height-2xs); /* 14 */
+  --badge-letter-spacing: 0;
+  --badge-icon-size: 12px;
+}
+
+/* -------- Shape -------- */
+.shapeSquare {
+  border-radius: var(--radius-md); /* 6 */
+}
+
+.shapeRound {
+  border-radius: var(--radius-full); /* 1000 */
+}
+
+/* ==============================================================
+ * Variant: Solid
+ * bg = tint, fg = accent (또는 on-surface/on-primary)
+ * ============================================================ */
+.variantSolid {
+  justify-content: center;
+  min-width: 36px;
+  overflow: hidden;
+  background: var(--badge-bg, transparent);
+}
+
+.variantSolid.colorPrimary {
+  --badge-bg: transparent;
+  --badge-fg: var(--context-foreground-primary-on-primary);
+}
+.variantSolid.colorPurple {
+  --badge-bg: var(--context-background-tint-bg-purple-tint);
+  --badge-fg: var(--accent-purple-accent-purple);
+}
+.variantSolid.colorRed {
+  --badge-bg: var(--context-background-tint-bg-red-tint);
+  --badge-fg: var(--accent-red-accent-red);
+}
+.variantSolid.colorGreen {
+  --badge-bg: var(--context-background-tint-bg-green-tint);
+  --badge-fg: var(--accent-green-accent-green);
+}
+.variantSolid.colorOrange {
+  --badge-bg: var(--context-background-tint-bg-orange-tint);
+  --badge-fg: var(--accent-orange-accent-orange);
+}
+.variantSolid.colorPink {
+  --badge-bg: var(--context-background-tint-bg-pink-tint);
+  --badge-fg: var(--accent-pink-accent-pink);
+}
+.variantSolid.colorBlue {
+  --badge-bg: var(--context-background-tint-bg-blue-tint);
+  --badge-fg: var(--accent-blue-accent-blue);
+}
+.variantSolid.colorCyan {
+  --badge-bg: var(--context-background-tint-bg-cyan-tint);
+  --badge-fg: var(--accent-cyan-accent-cyan);
+}
+.variantSolid.colorGray {
+  --badge-bg: var(--context-background-tint-bg-gray-tint);
+  --badge-fg: var(--context-foreground-surface-on-surface);
+}
+.variantSolid.colorOpacity {
+  --badge-bg: var(--opacity-black-opacity-8);
+  --badge-fg: var(--context-foreground-surface-on-surface);
+}
+
+/* ==============================================================
+ * Variant: Line
+ * border = border-{color}-tint, fg = accent-{color}
+ * ============================================================ */
+.variantLine {
+  min-width: 36px;
+  overflow: hidden;
+  background: transparent;
+  border: var(--border-width-xs, 1px) solid var(--badge-border);
+}
+
+.variantLine.colorGray {
+  --badge-border: var(--border-border-surface-border-surface);
+  --badge-fg: var(--context-foreground-surface-on-surface);
+}
+.variantLine.colorPurple {
+  --badge-border: var(--border-border-purple-tint);
+  --badge-fg: var(--accent-purple-accent-purple);
+}
+.variantLine.colorCyan {
+  --badge-border: var(--border-border-cyan-tint);
+  --badge-fg: var(--accent-cyan-accent-cyan);
+}
+.variantLine.colorGreen {
+  --badge-border: var(--border-border-green-tint);
+  --badge-fg: var(--accent-green-accent-green);
+}
+.variantLine.colorRed {
+  --badge-border: var(--border-border-red-tint);
+  --badge-fg: var(--accent-red-accent-red);
+}
+.variantLine.colorOrange {
+  --badge-border: var(--border-border-orange-tint);
+  --badge-fg: var(--accent-orange-accent-orange);
+}
+.variantLine.colorPink {
+  --badge-border: var(--border-border-pink-tint);
+  --badge-fg: var(--accent-pink-accent-pink);
+}
+.variantLine.colorBlue {
+  --badge-border: var(--border-border-blue-tint);
+  --badge-fg: var(--accent-blue-accent-blue);
+}
+.variantLine.colorTeal {
+  --badge-border: var(--border-border-teal-tint);
+  --badge-fg: var(--accent-teal-accent-teal);
+}
+.variantLine.colorMagenta {
+  --badge-border: var(--border-border-magenta-tint);
+  --badge-fg: var(--accent-magenta-accent-magenta);
+}
+.variantLine.colorGold {
+  --badge-border: var(--border-border-gold-tint);
+  --badge-fg: var(--accent-gold-accent-gold);
+}
+
+/* ==============================================================
+ * Variant: Status
+ * bg-surface-base + border-surface + 8px dot(accent-{color})
+ * text = on-surface
+ * S/Square 는 radius-sm(4), 그 외 Square 는 radius-md(6)
+ * ============================================================ */
+.variantStatus {
+  gap: var(--spacing-2xs); /* 4 */
+  background: var(--context-background-surface-bg-surface-base);
+  border: var(--border-width-xs, 1px) solid
+    var(--border-border-surface-border-surface);
+  color: var(--context-foreground-surface-on-surface);
+  --badge-fg: var(--context-foreground-surface-on-surface);
+}
+
+.variantStatus.sizeSm.shapeSquare {
+  border-radius: var(--radius-sm);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--badge-dot, currentColor);
+  flex-shrink: 0;
+}
+
+.variantStatus.colorCyan {
+  --badge-dot: var(--accent-cyan-accent-cyan);
+}
+.variantStatus.colorBlue {
+  --badge-dot: var(--accent-blue-accent-blue);
+}
+.variantStatus.colorYellow {
+  --badge-dot: var(--accent-yellow-accent-yellow);
+}
+.variantStatus.colorPink {
+  --badge-dot: var(--accent-pink-accent-pink);
+}
+.variantStatus.colorPurple {
+  --badge-dot: var(--accent-purple-accent-purple);
+}
+.variantStatus.colorGreen {
+  --badge-dot: var(--accent-green-accent-green);
+}
+.variantStatus.colorRed {
+  --badge-dot: var(--accent-red-accent-red);
+}
+.variantStatus.colorGray {
+  --badge-dot: var(--context-foreground-neutral-on-neutral-disabled);
+}
+.variantStatus.colorOrange {
+  --badge-dot: var(--accent-orange-accent-orange);
+}
+
+.statusNumber {
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  font-weight: var(--font-weight-semibold);
+  margin-left: var(--spacing-3xs); /* 2 */
+}
+
+/* ==============================================================
+ * Variant: Notice
+ * 높이 12px · 좌우 4px padding (--spacing-2xs) · 99+ 는 "+99" (TS)
+ * ============================================================ */
+.variantNotice {
+  box-sizing: border-box;
+  height: 12px;
+  min-width: 12px;
+  padding: 0 var(--spacing-2xs) 1px; /* 0 4px 1px — Figma 좌우 4px */
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-body-xs); /* 11 */
+  line-height: var(--font-line-height-2xs); /* 14 */
+  letter-spacing: 0;
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+}
+
+.variantNotice.colorRed {
+  --badge-bg: var(--accent-red-accent-red);
+  --badge-fg: var(--context-foreground-neutral-on-neutral-white);
+}
+.variantNotice.colorPurple {
+  --badge-bg: var(--accent-purple-accent-purple);
+  --badge-fg: var(--context-foreground-neutral-on-neutral-invert);
+}
+
+.noticeCount {
+  display: inline-block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  color: inherit;
+}

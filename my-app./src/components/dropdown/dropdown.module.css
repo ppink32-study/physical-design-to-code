@@ -1,0 +1,104 @@
+/* ==============================================================
+ * Dropdown (Composite) — Trigger + Menu 통합
+ *
+ * 책임
+ *   - Trigger 와 Menu 의 시각적 위치 관계 (direction × align)
+ *   - state / 인터랙션은 component 내부 hook 으로 처리
+ *
+ * Layout
+ *   .root         : position: relative — anchor 역할
+ *   .menuWrapper  : position: absolute — direction × align 로 좌표 결정
+ *
+ * Spacing (Figma node 12149:94684 — "Dropdown trigger with menu")
+ *   ─ trigger → menu     : 4px  (Spacer 13351:9682)
+ *   ─ level-1 → level-2  : 4px  (Spacer 13351:9711, sub-menu.css 에서 처리)
+ *   default `--dd-offset` 은 이 값을 반영하며, 필요시 `offset` prop 으로 override.
+ * ============================================================ */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.menuWrapper {
+  /* Figma 12149:94684 → trigger ↔ menu gap 4px */
+  --dd-offset: 4px;
+  position: absolute;
+  z-index: 100;
+  display: block;
+}
+
+/* ============================================================
+ * direction = down  (메뉴 ↓ 트리거 아래)
+ * ============================================================ */
+.menuWrapper[data-direction="down"] {
+  top: calc(100% + var(--dd-offset));
+}
+.menuWrapper[data-direction="down"][data-align="start"] {
+  left: 0;
+}
+.menuWrapper[data-direction="down"][data-align="center"] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.menuWrapper[data-direction="down"][data-align="end"] {
+  right: 0;
+}
+
+/* ============================================================
+ * direction = up  (메뉴 ↑ 트리거 위)
+ * ============================================================ */
+.menuWrapper[data-direction="up"] {
+  bottom: calc(100% + var(--dd-offset));
+}
+.menuWrapper[data-direction="up"][data-align="start"] {
+  left: 0;
+}
+.menuWrapper[data-direction="up"][data-align="center"] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.menuWrapper[data-direction="up"][data-align="end"] {
+  right: 0;
+}
+
+/* ============================================================
+ * direction = left  (메뉴 ← 트리거 왼쪽)
+ * ============================================================ */
+.menuWrapper[data-direction="left"] {
+  right: calc(100% + var(--dd-offset));
+}
+.menuWrapper[data-direction="left"][data-align="start"] {
+  top: 0;
+}
+.menuWrapper[data-direction="left"][data-align="center"] {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.menuWrapper[data-direction="left"][data-align="end"] {
+  bottom: 0;
+}
+
+/* ============================================================
+ * direction = right  (메뉴 → 트리거 오른쪽)
+ * ============================================================ */
+.menuWrapper[data-direction="right"] {
+  left: calc(100% + var(--dd-offset));
+}
+.menuWrapper[data-direction="right"][data-align="start"] {
+  top: 0;
+}
+.menuWrapper[data-direction="right"][data-align="center"] {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.menuWrapper[data-direction="right"][data-align="end"] {
+  bottom: 0;
+}
+
+/* arrow 가 있으면 offset 0 (arrow 가 시각적 gap 역할) */
+.menuWrapper[data-arrow="true"] {
+  --dd-offset: 0px;
+}

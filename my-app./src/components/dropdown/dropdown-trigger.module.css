@@ -1,0 +1,93 @@
+/* ==============================================================
+ * DropdownTrigger — Figma MCP (node 5286:121691)
+ * 기존 Button 컴포넌트를 컴포즈해서 사용합니다.
+ *
+ * 본 module 은 다음만 담당합니다.
+ *   - splitButton 시 두 버튼을 시각적으로 연결 (radius / border / divider)
+ *   - opened 상태 표시 (선택된 active 시각)
+ * ============================================================ */
+
+/* -------- Wrapper -------- */
+.trigger {
+  display: inline-flex;
+  align-items: stretch;
+  position: relative;
+}
+
+/* -------- Single mode -------- */
+.trigger[data-split="false"] {
+  /* Button 그대로 사용 — 추가 스타일 없음 */
+}
+
+/* -------- Split mode -------- */
+.trigger[data-split="true"] {
+  /* 두 버튼 인접 */
+  gap: 0;
+}
+
+/* 메인(좌) 버튼 — 우측 모서리 평평 */
+.splitMain {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* chevron(우) 버튼 — 좌측 모서리 평평 + 좌측 1px 분리선 */
+.splitChevron {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  margin-left: -1px; /* primary-solid: border 없으므로 1px overlap 으로 분리선 효과 */
+}
+
+/* dropDirection=left + split: 케럿이 왼쪽 세그먼트 */
+.splitChevronLeading {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  margin-right: -1px;
+}
+
+.splitMainTrailing {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* primary 계열은 fill 색이 동일해서 분리선이 안 보임 → 강제 1px divider */
+.trigger[data-split="true"][data-type="primary"] .splitChevron::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.24); /* 흰색 분리선 (primary 위) */
+  pointer-events: none;
+}
+
+.trigger[data-split="true"][data-type="primary"][data-chevron-first="true"]
+  .splitChevronLeading::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  right: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.24);
+  pointer-events: none;
+}
+
+/* secondary 계열은 outline 이 분리선을 만들어줌 — overlap 시 1px border 가 시각적으로 1px divider */
+
+/* -------- Opened (active/expanded) -------- */
+.trigger[data-opened="true"] .splitMain,
+.trigger[data-opened="true"] .splitChevron,
+.trigger[data-opened="true"] .splitMainTrailing,
+.trigger[data-opened="true"] .splitChevronLeading,
+.trigger[data-opened="true"] .single {
+  /* opened 상태일 때 hover 와 동일한 시각 적용 */
+  filter: brightness(0.96);
+}
+
+/* 위치 anchor 용 */
+.splitChevron,
+.splitChevronLeading {
+  position: relative;
+}

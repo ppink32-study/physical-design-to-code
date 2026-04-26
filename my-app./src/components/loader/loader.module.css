@@ -1,0 +1,144 @@
+/* =================================================================
+ *  Loader — Circle loading
+ *  Figma node: 13289:46891
+ *
+ *  Figma CSS spec
+ *  ─ 라인(arc): border-radius: 48px;
+ *               background: conic-gradient(
+ *                 from 180deg at 50% 50%,
+ *                 Mint-500 0deg,
+ *                 Mint-300 63.243deg,
+ *                 rgba(255,255,255,0) 360deg
+ *               );
+ *  ─ 원(dot):  border-radius: 7.2px; background: Mint-500;
+ * =============================================================== */
+
+.root {
+  /* --loader-dim 은 Loader 컴포넌트가 주입 (px) */
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+  vertical-align: middle;
+}
+
+/* =================================================================
+ *  Spinner wrapper — 회전 대상
+ * =============================================================== */
+.spinner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: loader-spin 1s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* =================================================================
+ *  Arc — conic-gradient + radial-gradient mask 로 ring 형태
+ *
+ *  ⚠ `circle closest-side` 가 핵심:
+ *    size 기본값(farthest-corner)은 정사각형 parent 기준
+ *    대각선의 절반(≈ parent 너비의 70.7%)을 100% 로 잡기 때문에
+ *    mask 의 경계가 parent 외곽보다 바깥으로 빠져 ring 이 제대로
+ *    그려지지 않습니다. `closest-side` 로 100% = parent 반지름(24px)
+ *    으로 고정.
+ *
+ *  링 두께 = 24 × (1 - 70%) = 7.2px — Figma 의 dot 지름과 동일해
+ *  dot 이 stroke 끝을 정확히 덮는 Figma 원본 비례를 재현합니다.
+ * =============================================================== */
+.arc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--loader-arc-start, var(--seed-color-mint-500, #7ef2f1)) 0deg,
+    var(--loader-arc-end, var(--seed-color-mint-300, #b2fbed))
+      63.243deg,
+    rgba(255, 255, 255, 0) 360deg
+  );
+  -webkit-mask: radial-gradient(
+    circle closest-side,
+    transparent 0 69%,
+    #000 71% 100%
+  );
+  mask: radial-gradient(
+    circle closest-side,
+    transparent 0 69%,
+    #000 71% 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* =================================================================
+ *  Dot — stroke 중심선(반경 = parent의 42.5% ≈ 20.4/48) 위에 배치
+ *         지름 = parent 의 15% ≈ 7.2/48
+ *         conic-gradient 의 시작점(6시 방향) 과 일치
+ * =============================================================== */
+.dot {
+  position: absolute;
+  width: calc(var(--loader-dim, 48px) * 0.15);
+  height: calc(var(--loader-dim, 48px) * 0.15);
+  border-radius: 50%;
+  background: var(--loader-dot, var(--seed-color-mint-500, #7ef2f1));
+  left: 50%;
+  top: calc(50% + var(--loader-dim, 48px) * 0.425);
+  transform: translate(-50%, -50%);
+}
+
+/* =================================================================
+ *  Color presets — data-color
+ * =============================================================== */
+.root[data-color="mint"] {
+  --loader-arc-start: var(--seed-color-mint-500, #7ef2f1);
+  --loader-arc-end: var(--seed-color-mint-300, #b2fbed);
+  --loader-dot: var(--seed-color-mint-500, #7ef2f1);
+}
+
+.root[data-color="gray"] {
+  --loader-arc-start: var(--accent-gray-accent-gray, #787a88);
+  --loader-arc-end: var(--accent-gray-accent-gray-lightest, #b3b4bc);
+  --loader-dot: var(--accent-gray-accent-gray, #787a88);
+}
+
+.root[data-color="white"] {
+  --loader-arc-start: #ffffff;
+  --loader-arc-end: rgba(255, 255, 255, 0.4);
+  --loader-dot: #ffffff;
+}
+
+/* =================================================================
+ *  Animation
+ * =============================================================== */
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 접근성: 모션 최소화 선호 사용자는 회전을 느리게 */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 3s;
+  }
+}
+
+/* =================================================================
+ *  Screen-reader only
+ * =============================================================== */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

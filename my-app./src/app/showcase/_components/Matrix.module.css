@@ -1,0 +1,140 @@
+/* =================================================================
+ *  Matrix — Storybook canvas 스타일 매트릭스 그리드
+ * =============================================================== */
+
+.matrix {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--review-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--review-cell-bg);
+  font-family: var(--font-family-primary, "Pretendard", "Inter", system-ui);
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  padding: 16px 18px;
+  border-right: 1px solid var(--review-grid-line);
+  border-bottom: 1px solid var(--review-grid-line);
+}
+
+.cell:last-child {
+  border-right: 0;
+}
+
+/* row labels (왼쪽) */
+.rowLabel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  color: var(--review-label-fg);
+  background: var(--review-label-bg);
+  border-right: 1px solid var(--review-grid-line);
+  border-bottom: 1px solid var(--review-grid-line);
+  white-space: nowrap;
+}
+
+/* column labels (위) */
+.colLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  color: var(--review-label-fg);
+  background: var(--review-label-bg);
+  border-right: 1px solid var(--review-grid-line);
+  border-bottom: 1px solid var(--review-grid-line);
+  white-space: nowrap;
+}
+
+.colLabel:last-child {
+  border-right: 0;
+}
+
+/* corner */
+.corner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 10px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--review-label-fg-strong);
+  background: var(--review-label-bg);
+  border-right: 1px solid var(--review-grid-line);
+  border-bottom: 1px solid var(--review-grid-line);
+}
+
+/* axis 이름 (corner 안에서 표시) */
+.cornerAxes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  line-height: 1.2;
+}
+
+.cornerCol {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.cornerSep {
+  font-size: 9px;
+  opacity: 0.5;
+}
+
+.cornerRow {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* hide labels mode (toolbar toggle 시) */
+[data-review-show-labels="false"] .rowLabel,
+[data-review-show-labels="false"] .colLabel,
+[data-review-show-labels="false"] .corner {
+  display: none;
+}
+
+[data-review-show-labels="false"] .cell {
+  border-right: 0;
+  border-bottom: 0;
+}
+
+[data-review-show-labels="false"] .matrix {
+  border: 0;
+  background: transparent;
+}
+
+/* hide grid lines mode */
+[data-review-show-grid="false"] .matrix {
+  border-color: transparent;
+}
+
+[data-review-show-grid="false"] .cell,
+[data-review-show-grid="false"] .rowLabel,
+[data-review-show-grid="false"] .colLabel,
+[data-review-show-grid="false"] .corner {
+  border-color: transparent !important;
+}
+
+/* 배경 토글이 surface-base 일 때는 cell 자체 배경 제거 */
+[data-review-bg="surface-base"] .matrix {
+  background: transparent;
+}

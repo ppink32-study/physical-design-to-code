@@ -1,0 +1,26 @@
+아래의 조건을 모두 적용하여, 아래의 요구사항을 모두 구현할 것.
+구현 결과를 체크리스트로 반환할 것.
+
+==============================================
+
+조건-커서룰) 아래의 커서룰을 적용하여 작업하고, 이 작업이 끝나면 해당 rules 적용 결과를 체크리스트로 반환할 것.
+            - @01-common.mdc
+            - @02-wireframe
+            - @03-ui.mdc
+
+
+==============================================
+
+조건-파일경로) 구현 TSX     파일경로: src/components/alert/lineicon.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/alert/lineicon.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/alert/lineicon.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/alert/filledicon.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/alert/filledicon.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/alert/filledicon.stories.tsx
+
+==============================================
+
+핵심요구사항) 피그마 파일과 동일한 스펙의 배지·스토리를 구현할 것. 
+  - 피그마 링크 (alert / lineicon): https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=5012-68852&m=dev
+  - 피그마 링크 (alert / filledicon): https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=6390-256693&m=dev

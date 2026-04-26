@@ -1,0 +1,51 @@
+/* ==============================================================
+ * DropdownSubMenu — Figma MCP (node 13292:56877 — type=drill down)
+ *
+ * 부모 DropdownMenu 의 menuitem 하나로 동작하면서, 우측에 또 하나의
+ * DropdownMenu 를 absolute 배치한다.
+ *
+ * Figma 측정값 (drill down 노드)
+ *   parent menu  : left 0,   width 180
+ *   sub menu     : left 184, width 180
+ *   → 두 menu 의 outer gap = 4px
+ *
+ * 우리 root 는 부모 list 안의 한 row(트리거 자체) 이고, list 의 padding
+ * 9px + border 1px 만큼 안쪽에 위치한다.
+ *
+ *   sub.outer.left  = root.right + 9(list padding) + 1(border) + 4(gap)
+ *                   = root.right + 14px
+ *   sub.outer.top   = root.top   - 9(sub list padding 보정)
+ *
+ * 시각적으로 "트리거 row 의 첫 글자 line ↔ sub 의 첫 item 첫 글자 line" 가
+ * 일치하도록 보정.
+ * ============================================================ */
+
+.root {
+  position: relative;
+  display: block;
+  width: 100%;
+
+  /* tweakable */
+  --dsm-list-pad: 9px; /* DropdownMenu list padding */
+  --dsm-border: 1px; /* DropdownMenu list border */
+  --dsm-gap: 4px; /* Figma 184-180 */
+}
+
+/* -------- Sub menu wrapper (absolute) -------- */
+.submenu {
+  position: absolute;
+  top: calc(var(--dsm-list-pad) * -1);
+  left: 100%;
+  margin-left: calc(var(--dsm-list-pad) + var(--dsm-border) + var(--dsm-gap));
+
+  z-index: 100;
+  display: block;
+}
+
+/* -------- Flipped (좌측 펼침) — props 로 강제 가능 -------- */
+.submenu[data-flip="true"] {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: calc(var(--dsm-list-pad) + var(--dsm-border) + var(--dsm-gap));
+}

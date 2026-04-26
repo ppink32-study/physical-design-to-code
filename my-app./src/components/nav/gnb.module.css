@@ -1,0 +1,171 @@
+/* =================================================================
+ *  GNB — Figma node 17945:4068 / 17945:4070
+ *  - 56px sticky bar, light/dark, 텍스트 메뉴 + 32px 아이콘 액션
+ * =============================================================== */
+
+.gnb {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 88px;
+  height: 56px;
+  padding: 0 24px 0 16px;
+  background: var(--context-background-surface-bg-surface-white);
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+.brandSlot {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 36px;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------------
+ *  GNB / Select — 텍스트 메뉴 한 칸 (node 17945:3582 family)
+ * ----------------------------------------------------------------- */
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  padding: 16px 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--context-foreground-surface-on-surface);
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+.item[data-selected="true"] {
+  color: var(--context-foreground-primary-on-primary);
+  font-weight: 600;
+}
+
+.item[aria-disabled="true"],
+.item:disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* -----------------------------------------------------------------
+ *  GNB / Icon — 32x32 아이콘 버튼 (node 17945:3481 family)
+ * ----------------------------------------------------------------- */
+.iconButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--context-foreground-icon-surface-icon-surface);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+  flex-shrink: 0;
+}
+
+.iconButton:hover,
+.iconButton[data-selected="true"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: 2px;
+}
+
+.iconButton[aria-disabled="true"],
+.iconButton:disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.iconButtonGlyph {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex-shrink: 0;
+}
+
+.iconButtonAlarm {
+  position: absolute;
+  top: 7px;
+  left: 18px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--seed-color-red-500, #ef4444);
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------------
+ *  Compact — 모바일에서 메뉴 줄이기 (옵션)
+ * ----------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .gnb {
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  .nav {
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .item {
+    width: 84px;
+    font-size: 14px;
+  }
+}

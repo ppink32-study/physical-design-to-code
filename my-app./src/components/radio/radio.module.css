@@ -1,0 +1,150 @@
+/* =============================================================================
+ * Radio — Figma MCP 재작성
+ * -----------------------------------------------------------------------------
+ * Figma nodes
+ *   - Radio input   (16x16, 6 states) : 17995:61609
+ *   - Radio button  (input + label)   : 17995:61649
+ *   - Radio Group   (layout/items)    : 17995:61676
+ *
+ * 색상 토큰
+ *   - unchecked bg : --context-background-surface-bg-surface-base
+ *   - unchecked bd : --border-border-surface-border-surface
+ *   - focused  bd  : --border-border-primary
+ *   - checked  bd/dot : --context-foreground-primary-on-primary-selected
+ *   - disabled bg  : --context-background-surface-bg-surface-base-disabled
+ *   - disabled bd/dot : --context-foreground-primary-on-primary-disabled
+ *   - disabled label : --context-foreground-surface-on-surface-disabled
+ *   - focus ring   : --opacity-primary-opacity-15  (4px spread)
+ * ========================================================================== */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm); /* 8 */
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  font-weight: var(--font-weight-regular);
+  color: var(--context-foreground-surface-on-surface-base);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root[data-disabled="true"] {
+  cursor: not-allowed;
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Outer circle (16x16)
+ * ------------------------------------------------------------------------- */
+.box {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--size-base-lg); /* 16 */
+  height: var(--size-base-lg); /* 16 */
+  border-radius: var(--radius-full); /* circle */
+  background: var(--context-background-surface-bg-surface-base);
+  border: var(--border-width-xs, 1px) solid
+    var(--border-border-surface-border-surface);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+/* -- Checked -- */
+.root[data-state="checked"] .box {
+  border-color: var(--context-foreground-primary-on-primary-selected);
+}
+
+/* -- Focused unchecked -- */
+.root[data-state="unchecked"] .input:focus + .box,
+.root[data-state="unchecked"][data-force-state="focused"] .box {
+  border-color: var(--border-border-primary);
+  box-shadow: 0 0 0 4px var(--opacity-primary-opacity-15);
+}
+
+/* -- Focused checked -- */
+.root[data-state="checked"] .input:focus + .box,
+.root[data-state="checked"][data-force-state="focused"] .box {
+  box-shadow: 0 0 0 4px var(--opacity-primary-opacity-15);
+}
+
+/* -- Disabled unchecked -- */
+.root[data-disabled="true"][data-state="unchecked"] .box {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  border-color: var(--border-border-surface-border-surface);
+}
+
+/* -- Disabled checked -- */
+.root[data-disabled="true"][data-state="checked"] .box {
+  background: var(--context-background-surface-bg-surface-base-disabled);
+  border-color: var(--context-foreground-primary-on-primary-disabled);
+}
+
+.root[data-disabled="true"] .box {
+  box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Inner dot (8x8)
+ * ------------------------------------------------------------------------- */
+.dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--context-foreground-primary-on-primary-selected);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 120ms ease;
+  pointer-events: none;
+}
+.root[data-state="checked"] .dot {
+  transform: translate(-50%, -50%) scale(1);
+}
+.root[data-disabled="true"][data-state="checked"] .dot {
+  background: var(--context-foreground-primary-on-primary-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+ * Label
+ * ------------------------------------------------------------------------- */
+.label {
+  color: inherit;
+  letter-spacing: 0;
+}
+
+/* =============================================================================
+ * RadioGroup
+ *   - vertical   : gap 4  (--spacing-2xs)
+ *   - horizontal : gap 16 (--spacing-lg)
+ * ========================================================================== */
+.group {
+  display: flex;
+  gap: var(--spacing-2xs); /* 4 */
+  flex-direction: column;
+}
+.group[data-orientation="horizontal"] {
+  flex-direction: row;
+  gap: var(--spacing-lg); /* 16 */
+  flex-wrap: wrap;
+}

@@ -1,0 +1,109 @@
+/* =============================================================================
+ * Form / FormField — 배치 가이드
+ * -----------------------------------------------------------------------------
+ * Figma node 5714:108005 기반 (실측치)
+ *   - layout="top"  : 라벨이 컨트롤 위 (Label height 24 + 4 + Input)
+ *   - layout="left" : 라벨이 컨트롤 좌측 (Label width 160, gap 4)
+ *
+ * Form layout
+ *   - direction="vertical"   : fields 세로 배치, gap = 16
+ *   - direction="horizontal" : fields 가로 배치, gap = 24
+ *
+ * spacing tokens (Figma 실측)
+ *   - label / control gap     : 4   (--spacing-2xs)  ✅ top / left 동일
+ *   - fields 세로 사이 간격   : 16  (--spacing-lg)
+ *   - fields 가로 사이 간격   : 24  (--spacing-2xl)
+ *   - control / message       : 4   (--spacing-2xs)
+ * ========================================================================== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg); /* 16 */
+  width: 100%;
+}
+
+.form[data-direction="vertical"] {
+  flex-direction: column;
+  gap: var(--spacing-lg); /* 16 */
+}
+
+.form[data-direction="horizontal"] {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-2xl); /* 24 */
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Field
+ * ------------------------------------------------------------------------- */
+.field {
+  display: flex;
+  min-width: 0;
+}
+
+/* horizontal direction 에서는 각 field 가 자기 width 만 차지하고 가로로 줄세움 */
+.form[data-direction="vertical"] .field {
+  width: 100%;
+}
+
+/* layout=top : label 위, control 아래 (gap 4) */
+.field[data-layout="top"] {
+  flex-direction: column;
+  gap: var(--spacing-2xs); /* 4 */
+}
+
+/* layout=left : label 좌측, control 우측 (gap 4) */
+.field[data-layout="left"] {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-2xs); /* 4 */
+}
+
+/* ---------------------------------------------------------------------------
+ * Columns
+ * ------------------------------------------------------------------------- */
+.labelCol {
+  display: flex;
+  flex-direction: column;
+}
+/* left 레이아웃에서 라벨(높이 24)과 컨트롤(높이 32) 의 baseline 을 맞추기 위해
+ * 라벨 영역에 4px 상단 padding (Figma 의 label y=4 와 일치) */
+.field[data-layout="left"] .labelCol {
+  padding-top: var(--spacing-2xs); /* 4 */
+}
+
+.controlCol {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--spacing-2xs); /* 4 */
+}
+
+.controlSlot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+.messageSlot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+/* ---------------------------------------------------------------------------
+ * Helper text (InlineMessage 가 아닌 일반 안내 문구)
+ *   - color : --context-foreground-surface-on-surface-secondary
+ *   - font  : Body/Small (12 / 16, regular)
+ * ------------------------------------------------------------------------- */
+.helper {
+  color: var(--context-foreground-surface-on-surface-secondary, #787a88);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-small, 12px);
+  line-height: var(--font-line-height-2xs, 16px);
+  font-weight: var(--font-weight-regular, 400);
+}

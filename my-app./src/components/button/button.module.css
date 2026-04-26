@@ -1,0 +1,371 @@
+/* =============================================================================
+ * Button — Figma MCP 기반 재작성 (node 17987:47864)
+ * -----------------------------------------------------------------------------
+ * variants (9)
+ *   - primary-solid     · primary-outline     · primary-ghost
+ *   - secondary-solid   · secondary-outline   · secondary-ghost
+ *   - secondary-outline-white-invert           · secondary-outline-dark-invert
+ *   - gray
+ * sizes (4): small / medium / large / xlarge
+ *   (xlarge 는 primary-solid, gray 2종에서만 피그마 정의됨)
+ * shapes (2): square / round
+ *   (ghost, gray 는 square 만 피그마 정의)
+ * states: default / hover / active(=pressed) / disabled
+ * icon-only: Yes / No
+ *
+ * 강제 상태 확인용 data-force-state="default|hover|disable" prop 제공.
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------------- */
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border: var(--border-width-xs, 1px) solid transparent;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease,
+    opacity 120ms ease;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:disabled,
+.button[aria-disabled="true"],
+.button[data-force-state="disable"] {
+  cursor: not-allowed;
+}
+
+/* text + icon wrapper */
+.inner {
+  display: inline-flex;
+  align-items: center;
+  /* 아이콘-텍스트 간격: size 별 --btn-gap 으로 제어
+   *   xlarge / large : 6px  (--spacing-xs)
+   *   medium / small : 2px  (--spacing-3xs)
+   *
+   * NOTE: Figma 에서 텍스트 컨테이너(Label) 가 Hug 사이즈로
+   *       "텍스트 + 좌우 2px" 을 감싸는 구조이므로
+   *       inner 자체에는 padding 을 주지 않고 .label 요소에만 2px 씩 준다.
+   */
+  gap: var(--btn-gap, var(--spacing-3xs));
+  padding: 0;
+}
+
+.button[data-icon-only="true"] .inner {
+  gap: 0;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn-icon-size, 20px);
+  height: var(--btn-icon-size, 20px);
+  color: inherit;
+}
+
+.icon > * {
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  display: inline-block;
+  color: inherit;
+  letter-spacing: var(--btn-letter-spacing, 0);
+  /* Figma: Label 컨테이너가 Hug 로 "텍스트 + 좌우 2px" 을 감싼다.
+   * 따라서 padding 은 아이콘 wrapper 가 아니라 텍스트 요소에만 적용한다. */
+  padding-left: var(--spacing-3xs); /* 2 */
+  padding-right: var(--spacing-3xs); /* 2 */
+}
+
+/* ---------------------------------------------------------------------------
+ * Size (height, padding-horizontal, font)
+ * ------------------------------------------------------------------------- */
+.sizeXlarge {
+  height: var(--size-base-8xl); /* 48 */
+  padding: 0 var(--spacing-lg);  /* 16 */
+  font-size: var(--font-size-heading-h6); /* 16 */
+  line-height: var(--font-line-height-md); /* 22 */
+  --btn-icon-size: 20px;
+  --btn-gap: var(--spacing-xs); /* 6 */
+}
+
+.sizeLarge {
+  height: var(--size-base-6xl); /* 40 */
+  padding: 0 var(--spacing-lg); /* 16 */
+  font-size: var(--font-size-heading-h6); /* 16 */
+  line-height: var(--font-line-height-md); /* 22 */
+  --btn-icon-size: 20px;
+  --btn-gap: var(--spacing-xs); /* 6 */
+}
+
+.sizeMedium {
+  height: var(--size-base-4xl); /* 32 */
+  padding: 0 var(--spacing-md); /* 12 */
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  --btn-icon-size: 16px;
+  --btn-gap: var(--spacing-3xs); /* 2 */
+}
+
+.sizeSmall {
+  height: var(--size-base-2xl); /* 24 */
+  padding: 0 var(--spacing-xs); /* 6 */
+  font-size: var(--font-size-body-sm); /* 12 */
+  line-height: var(--font-line-height-xs); /* 16 */
+  --btn-letter-spacing: -0.5px;
+  --btn-icon-size: 16px;
+  --btn-gap: var(--spacing-3xs); /* 2 */
+}
+
+/* --- Icon only (정사각형) --- */
+.button[data-icon-only="true"].sizeXlarge {
+  width: var(--size-base-8xl); /* 48 */
+  padding: 0;
+  --btn-icon-size: 24px;
+}
+.button[data-icon-only="true"].sizeLarge {
+  width: var(--size-base-6xl); /* 40 */
+  padding: 0;
+  --btn-icon-size: 24px;
+}
+.button[data-icon-only="true"].sizeMedium {
+  width: var(--size-base-4xl); /* 32 */
+  padding: 0;
+  --btn-icon-size: 20px;
+}
+.button[data-icon-only="true"].sizeSmall {
+  width: var(--size-base-2xl); /* 24 */
+  padding: 0;
+  --btn-icon-size: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Shape
+ * ------------------------------------------------------------------------- */
+.shapeSquare.sizeXlarge,
+.shapeSquare.sizeLarge {
+  border-radius: var(--radius-lg); /* 8 */
+}
+.shapeSquare.sizeMedium {
+  border-radius: var(--radius-md); /* 6 */
+}
+.shapeSquare.sizeSmall {
+  border-radius: var(--radius-sm); /* 4 */
+}
+.shapeRound {
+  border-radius: var(--radius-full); /* 1000 */
+}
+
+/* ===========================================================================
+ * Variant 1 · Primary Solid
+ *   bg  = bg-primary          / -hover     / -disabled
+ *   fg  = on-neutral-base (default & hover)
+ *   fg  = on-surface (disabled)
+ * ========================================================================= */
+.variantPrimarySolid {
+  background: var(--context-background-primary-bg-primary);
+  color: var(--context-foreground-neutral-on-neutral-base);
+}
+.variantPrimarySolid:hover,
+.variantPrimarySolid[data-force-state="hover"] {
+  background: var(--context-background-primary-bg-primary-hover);
+}
+.variantPrimarySolid:disabled,
+.variantPrimarySolid[aria-disabled="true"],
+.variantPrimarySolid[data-force-state="disable"] {
+  background: var(--context-background-primary-bg-primary-disabled);
+  color: var(--context-foreground-surface-on-surface);
+}
+
+/* ===========================================================================
+ * Variant 2 · Primary Outline
+ *   bg=surface-white, fg=on-primary, border=border-primary
+ * ========================================================================= */
+.variantPrimaryOutline {
+  background: var(--context-background-surface-bg-surface-white);
+  color: var(--context-foreground-primary-on-primary);
+  border-color: var(--border-border-primary);
+}
+.variantPrimaryOutline:hover,
+.variantPrimaryOutline[data-force-state="hover"] {
+  color: var(--context-foreground-primary-on-primary-hover);
+  border-color: var(--border-border-primary-hover);
+}
+.variantPrimaryOutline:disabled,
+.variantPrimaryOutline[aria-disabled="true"],
+.variantPrimaryOutline[data-force-state="disable"] {
+  color: var(--context-foreground-primary-on-primary-disabled);
+  border-color: var(--context-foreground-primary-on-primary-disabled);
+}
+
+/* ===========================================================================
+ * Variant 3 · Primary Ghost
+ * ========================================================================= */
+.variantPrimaryGhost {
+  background: transparent;
+  color: var(--context-foreground-primary-on-primary);
+  border-color: transparent;
+}
+.variantPrimaryGhost:hover,
+.variantPrimaryGhost[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  color: var(--context-foreground-primary-on-primary-hover);
+}
+.variantPrimaryGhost:disabled,
+.variantPrimaryGhost[aria-disabled="true"],
+.variantPrimaryGhost[data-force-state="disable"] {
+  background: transparent;
+  color: var(--context-foreground-primary-on-primary-disabled);
+}
+
+/* ===========================================================================
+ * Variant 4 · Secondary Solid
+ *   bg  = bg-gray-hover (dark gray)
+ *   fg  = on-neutral-invert
+ *   disabled: opacity 감소 (on-neutral-invert 유지)
+ * ========================================================================= */
+.variantSecondarySolid {
+  background: var(--context-background-gray-bg-gray-hover);
+  color: var(--context-foreground-neutral-on-neutral-invert);
+}
+.variantSecondarySolid:hover,
+.variantSecondarySolid[data-force-state="hover"] {
+  background: var(--context-background-gray-bg-darkgray-hover);
+}
+.variantSecondarySolid:disabled,
+.variantSecondarySolid[aria-disabled="true"],
+.variantSecondarySolid[data-force-state="disable"] {
+  background: var(--context-background-gray-bg-gray-disabled);
+  opacity: 0.65;
+}
+
+/* ===========================================================================
+ * Variant 5 · Secondary Outline
+ * ========================================================================= */
+.variantSecondaryOutline {
+  background: var(--context-background-surface-bg-surface-white);
+  color: var(--context-foreground-surface-on-surface);
+  border-color: var(--border-border-surface-border-surface);
+}
+.variantSecondaryOutline:hover,
+.variantSecondaryOutline[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  color: var(--context-foreground-surface-on-surface-hover);
+  border-color: var(--border-border-surface-border-surface-hover);
+}
+.variantSecondaryOutline:disabled,
+.variantSecondaryOutline[aria-disabled="true"],
+.variantSecondaryOutline[data-force-state="disable"] {
+  background: var(--context-background-surface-bg-surface-white);
+  color: var(--context-foreground-surface-on-surface-disabled);
+  border-color: var(--border-border-surface-border-surface-disabled);
+}
+
+/* ===========================================================================
+ * Variant 6 · Secondary Outline White Invert
+ *   - 흰색 배경 위 어두운 화면에 얹는 "밝은 반투명" 버튼
+ *   bg=white-opacity-50, fg=on-neutral, border=surface-lightest(#FFF)
+ * ========================================================================= */
+.variantSecondaryOutlineWhiteInvert {
+  background: var(--opacity-white-opacity-50);
+  color: var(--context-foreground-surface-on-surface);
+  border-color: var(--border-border-surface-border-surface-lightest);
+}
+.variantSecondaryOutlineWhiteInvert:hover,
+.variantSecondaryOutlineWhiteInvert[data-force-state="hover"] {
+  background: var(--opacity-white-opacity-70);
+  color: var(--context-foreground-surface-on-surface-hover);
+}
+.variantSecondaryOutlineWhiteInvert:disabled,
+.variantSecondaryOutlineWhiteInvert[aria-disabled="true"],
+.variantSecondaryOutlineWhiteInvert[data-force-state="disable"] {
+  background: var(--opacity-white-opacity-50);
+  color: var(--context-foreground-surface-on-surface-disabled);
+  border-color: var(--border-border-surface-border-surface-lightest);
+}
+
+/* ===========================================================================
+ * Variant 7 · Secondary Outline Dark Invert
+ *   - 어두운 배경 위에 얹는 "어두운 반투명" 버튼
+ *   bg=white-opacity-8, fg=on-neutral-invert, border=border-neutral-dark, opacity 80
+ * ========================================================================= */
+.variantSecondaryOutlineDarkInvert {
+  background: var(--opacity-white-opacity-8);
+  color: var(--context-foreground-neutral-on-neutral-invert);
+  border-color: var(--border-neutral-border-neutral-dark);
+  opacity: 0.8;
+}
+.variantSecondaryOutlineDarkInvert:hover,
+.variantSecondaryOutlineDarkInvert[data-force-state="hover"] {
+  opacity: 1;
+}
+.variantSecondaryOutlineDarkInvert:disabled,
+.variantSecondaryOutlineDarkInvert[aria-disabled="true"],
+.variantSecondaryOutlineDarkInvert[data-force-state="disable"] {
+  background: var(--opacity-white-opacity-8);
+  color: var(--context-foreground-neutral-on-neutral-disabled);
+  border-color: var(--border-neutral-border-neutral-dark);
+  opacity: 0.8;
+}
+
+/* ===========================================================================
+ * Variant 8 · Secondary Ghost
+ * ========================================================================= */
+.variantSecondaryGhost {
+  background: transparent;
+  color: var(--context-foreground-surface-on-surface);
+  border-color: transparent;
+}
+.variantSecondaryGhost:hover,
+.variantSecondaryGhost[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  color: var(--context-foreground-surface-on-surface-hover);
+}
+.variantSecondaryGhost:disabled,
+.variantSecondaryGhost[aria-disabled="true"],
+.variantSecondaryGhost[data-force-state="disable"] {
+  background: transparent;
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+/* ===========================================================================
+ * Variant 9 · Gray button
+ *   Default: bg-neutral-secondary(#F4F4F5) + on-neutral-teriary(#434551)
+ *   Hover  : bg-neutral-quarernary(#D7D8DC) + on-neutral-hover(#434551)
+ *   Disable: bg-neutral-disabled(#F4F4F5) + on-neutral-disabled(#B3B4BC)
+ * ========================================================================= */
+.variantGray {
+  background: var(--context-background-neutral-bg-neutral-secondary);
+  color: var(--context-foreground-neutral-on-neutral-teriary);
+  border-color: transparent;
+}
+.variantGray:hover,
+.variantGray[data-force-state="hover"] {
+  background: var(--context-background-neutral-bg-neutral-quarernary);
+  color: var(--context-foreground-neutral-on-neutral-hover, var(--context-foreground-neutral-on-neutral-teriary));
+}
+.variantGray:disabled,
+.variantGray[aria-disabled="true"],
+.variantGray[data-force-state="disable"] {
+  background: var(--context-background-neutral-bg-neutral-disabled);
+  color: var(--context-foreground-neutral-on-neutral-disabled);
+}

@@ -1,0 +1,24 @@
+/* Header — 브랜드 로고 (바 레이아웃은 components/nav/Gnb) */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--context-foreground-surface-on-surface-base);
+  flex-shrink: 0;
+}
+
+.logoImg {
+  display: block;
+  width: 184px;
+  height: 32px;
+  object-fit: contain;
+}
+
+@media (max-width: 720px) {
+  .logoImg {
+    width: 144px;
+    height: 24px;
+  }
+}
