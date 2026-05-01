@@ -1,3 +1,4 @@
 .DS_Store
 build-storybook.log
 **/build-storybook.log
+my-app./index.json

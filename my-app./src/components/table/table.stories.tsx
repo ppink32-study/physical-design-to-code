@@ -430,7 +430,7 @@ export const LightDarkCompare: Story = {
 };
 
 /* ================================================================== */
-/* 5) All types showcase (types 한눈에 보기)                           */
+/* 5) All types overview (types 한눈에 보기)                           */
 /* ================================================================== */
 const ALL_TYPES_GROUPS: Array<{
   title: string;

@@ -6,7 +6,7 @@ import {
   Gnb,
   GnbIconButton,
   GnbItem,
-} from "@/components/nav/gnb";
+} from "@/app/_ds/gnb";
 
 import styles from "./header.module.css";
 import { useTheme } from "./theme-provider";

@@ -173,3 +173,14 @@
   user-select: none;
 }
 
+/* -------- Divider (Figma Multiple levels — 그룹 구분) -------- */
+.divider {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+}
+
