@@ -23,7 +23,7 @@ import type {
 } from "react";
 import { forwardRef } from "react";
 
-import { Button } from "../button/button";
+import { Button } from "../button/button/button";
 
 import styles from "./label.module.css";
 
@@ -116,14 +116,14 @@ function LabelInner(
         : "";
   const isIconOnly = resolvedButtonLabel === "";
 
-  return (
-    <div
-      {...rest}
-      ref={ref}
-      className={rootClass}
-      data-size={size}
-      data-type={type}
-    >
+  /**
+   * text+dot 와 info icon — Figma 의 "Label" 그룹.
+   *   - normal : root 의 직계 자식 (root.gap=4 그대로 적용)
+   *   - outline/ghost : actionLabelGroup 안에 묶어 Button 과의 gap 을
+   *                    분리한다 (Figma 7378:67900 / 7378:70243 구조).
+   */
+  const labelMain = (
+    <>
       <span className={styles.textGroup}>
         <span className={styles.text}>{content}</span>
         {mandatory ? (
@@ -132,12 +132,27 @@ function LabelInner(
           </span>
         ) : null}
       </span>
-
       {infoIcon ? (
         <span className={styles.iconSlot} aria-hidden="true">
           <span className={styles.infoIcon} />
         </span>
       ) : null}
+    </>
+  );
+
+  return (
+    <div
+      {...rest}
+      ref={ref}
+      className={rootClass}
+      data-size={size}
+      data-type={type}
+    >
+      {hasButton ? (
+        <span className={styles.actionLabelGroup}>{labelMain}</span>
+      ) : (
+        labelMain
+      )}
 
       {hasButton ? (
         <Button

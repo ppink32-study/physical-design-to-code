@@ -7,7 +7,7 @@ import {
   type ButtonForceState,
   type ButtonSize,
   type ButtonVariant,
-} from "@/components/button/button";
+} from "@/components/button/button/button";
 import { DemoSection, demoStyles as s } from "../demo-block";
 import m from "./button-demo.module.css";
 

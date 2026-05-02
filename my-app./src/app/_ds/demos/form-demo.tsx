@@ -5,7 +5,7 @@ import { Input } from "@/components/Input/input";
 import { TextArea } from "@/components/Input/textarea";
 import { Checkbox } from "@/components/checkbox/checkbox";
 import { Select } from "@/components/select/select";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { DemoSection, demoStyles as s } from "../demo-block";
 
 export function FormDemo() {

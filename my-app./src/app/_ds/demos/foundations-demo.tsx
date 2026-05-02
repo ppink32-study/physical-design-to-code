@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import { DemoSection } from "../demo-block";
 import { useCopyToast } from "../toast";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { TokenRow } from "./foundations/token-row";
 import { SEMANTIC_GROUPS } from "./foundations/tokens.generated";
 import { PALETTES } from "./foundations/palette";

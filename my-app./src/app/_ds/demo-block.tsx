@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { ContentsTitleMain } from "@/components/title/contentstitlemain";
 import styles from "./demo-block.module.css";
 

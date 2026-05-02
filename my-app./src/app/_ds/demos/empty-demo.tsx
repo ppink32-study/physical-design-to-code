@@ -1,7 +1,7 @@
 "use client";
 
 import { Empty } from "@/components/empty/empty";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { DemoSection, demoStyles as s } from "../demo-block";
 
 export function EmptyDemo() {

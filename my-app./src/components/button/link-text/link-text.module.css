@@ -1,0 +1,95 @@
+/* =============================================================================
+ * LinkText — Figma MCP 재작성 (node 9813:1005)
+ * -----------------------------------------------------------------------------
+ * Variants (12) : variant{neutral,accent} × size{small,large} × state{default,hover,disabled}
+ *
+ * - 항상 underline 적용 (decoration-style:solid, skip-ink:none)
+ * - 가로 padding 2px (--spacing-3xs) — Figma 와 동일
+ * - font-weight: regular (400)
+ *
+ * 토큰
+ *   neutral default  : --context-foreground-surface-on-surface
+ *   neutral hover    : --context-foreground-surface-on-surface-selected
+ *   neutral disabled : --context-foreground-surface-on-surface-disabled
+ *   accent  default  : --context-foreground-blue-on-blue
+ *   accent  hover    : --context-foreground-blue-on-blue-hover
+ *   accent  disabled : --context-foreground-blue-on-blue-disabled
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-3xs); /* 2px */
+  background: transparent;
+  border: 0;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-regular);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  cursor: pointer;
+  user-select: none;
+  transition: color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.root[aria-disabled="true"],
+.root[data-force-state="disabled"] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Sizes
+ * ------------------------------------------------------------------------- */
+.sizeSmall {
+  font-size: var(--font-size-body-md); /* 13 */
+  line-height: var(--font-line-height-sm); /* 20 */
+}
+
+.sizeLarge {
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-lg); /* 24 */
+}
+
+/* ---------------------------------------------------------------------------
+ * Variant — Neutral
+ * ------------------------------------------------------------------------- */
+.variantNeutral {
+  color: var(--context-foreground-surface-on-surface);
+}
+.variantNeutral:hover,
+.variantNeutral[data-force-state="hover"] {
+  color: var(--context-foreground-surface-on-surface-selected);
+}
+.variantNeutral[aria-disabled="true"],
+.variantNeutral[data-force-state="disabled"] {
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+/* ---------------------------------------------------------------------------
+ * Variant — Accent
+ * ------------------------------------------------------------------------- */
+.variantAccent {
+  color: var(--context-foreground-blue-on-blue);
+}
+.variantAccent:hover,
+.variantAccent[data-force-state="hover"] {
+  color: var(--context-foreground-blue-on-blue-hover);
+}
+.variantAccent[aria-disabled="true"],
+.variantAccent[data-force-state="disabled"] {
+  color: var(--context-foreground-blue-on-blue-disabled);
+}

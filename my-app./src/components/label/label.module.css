@@ -35,7 +35,20 @@
 }
 
 .root[data-type="outline-button"] {
-  gap: var(--spacing-sm); /* 8 */
+  gap: var(--spacing-sm); /* 8 — Label-group ↔ Button */
+}
+
+/* ---------------------------------------------------------------------------
+ * Action label group — outline/ghost 변형에서 text+dot+info 를 묶어
+ * Button 과 분리한다 (Figma 7378:67900 / 7378:70243 구조).
+ *   - 내부 gap : --spacing-2xs (4) — text+dot ↔ info icon
+ *   - 높이      : --size-base-2xl (24)
+ * ------------------------------------------------------------------------- */
+.actionLabelGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  height: var(--size-base-2xl); /* 24 */
 }
 
 /* ---------------------------------------------------------------------------

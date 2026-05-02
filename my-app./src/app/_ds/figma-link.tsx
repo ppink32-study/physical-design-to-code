@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { figmaNodeUrl, type FigmaRef } from "./manifest";
 import styles from "./figma-link.module.css";
 

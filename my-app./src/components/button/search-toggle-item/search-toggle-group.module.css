@@ -1,0 +1,17 @@
+/* =============================================================================
+ * SearchToggleGroup — Figma MCP 재작성 (node 17312:17303 "Toggle All")
+ * -----------------------------------------------------------------------------
+ * SearchToggleItem 들을 하나로 묶는 외곽 컨테이너.
+ *
+ * 토큰
+ *   bg            : --context-background-surface-bg-surface-secondary (#F4F4F5)
+ *   border-radius : --radius-lg (8)
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: stretch;
+  background: var(--context-background-surface-bg-surface-secondary);
+  border-radius: var(--radius-lg);
+}

@@ -1,0 +1,78 @@
+/* =============================================================================
+ * SearchToggleItem — Figma MCP 재작성 (node 17312:17269)
+ * -----------------------------------------------------------------------------
+ * Variants (2): Default / Select
+ *
+ * 공통
+ *   height        : 32px
+ *   padding-x     : --spacing-sm (8)
+ *   border-radius : --radius-lg (8)
+ *   font-size     : --font-size-body-sm (12)
+ *   line-height   : --font-line-height-xs (16)
+ *   letter-spacing: -0.06px (Figma Body/Sm style 의 -0.5% 환산)
+ *
+ * Default
+ *   bg            : --context-background-surface-bg-surface-secondary (#F4F4F5)
+ *   text          : --context-foreground-surface-on-surface-teriary   (#9698A3)
+ *   font-weight   : --font-weight-medium (500)
+ *
+ * Select
+ *   bg            : --context-background-surface-bg-surface-white     (#FFFFFF)
+ *   border        : --border-border-primary                           (#5CC7D0)
+ *   text          : --context-foreground-primary-on-primary           (#3F9BAE)
+ *   font-weight   : --font-weight-semibold (600)
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 var(--spacing-sm); /* 8px */
+  border: var(--border-width-xs, 1px) solid transparent;
+  border-radius: var(--radius-lg); /* 8px */
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-sm); /* 12 */
+  line-height: var(--font-line-height-xs); /* 16 */
+  letter-spacing: -0.06px;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  appearance: none;
+  background: transparent;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--border-border-primary);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Default
+ * ------------------------------------------------------------------------- */
+.default {
+  background: var(--context-background-surface-bg-surface-secondary);
+  color: var(--context-foreground-surface-on-surface-teriary);
+  border-color: transparent;
+  font-weight: var(--font-weight-medium); /* 500 */
+}
+
+/* ---------------------------------------------------------------------------
+ * Select
+ * ------------------------------------------------------------------------- */
+.selected {
+  background: var(--context-background-surface-bg-surface-white);
+  color: var(--context-foreground-primary-on-primary);
+  border-color: var(--border-border-primary);
+  font-weight: var(--font-weight-semibold); /* 600 */
+}

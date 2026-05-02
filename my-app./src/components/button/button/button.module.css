@@ -268,7 +268,7 @@
 }
 .variantSecondaryOutline:hover,
 .variantSecondaryOutline[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--context-background-surface-bg-surface-white);
   color: var(--context-foreground-surface-on-surface-hover);
   border-color: var(--border-border-surface-border-surface-hover);
 }
@@ -349,23 +349,36 @@
 
 /* ===========================================================================
  * Variant 9 · Gray button
- *   Default: bg-neutral-secondary(#F4F4F5) + on-neutral-teriary(#434551)
- *   Hover  : bg-neutral-quarernary(#D7D8DC) + on-neutral-hover(#434551)
- *   Disable: bg-neutral-disabled(#F4F4F5) + on-neutral-disabled(#B3B4BC)
+ *   Default: bg-neutral-secondary(#F4F4F5) + text on-neutral-teriary(#434551) + icon icon-neutral-secondary(#787A88)
+ *   Hover  : bg-neutral-quarernary(#D7D8DC) + text on-neutral-hover(#434551) + icon icon-neutral-hover(#434551)
+ *   Disable: bg-neutral-disabled(#F4F4F5) + text on-neutral-disabled(#B3B4BC) + icon icon-neutral-disabled(#B3B4BC)
+ *   Note: 텍스트와 아이콘의 색상이 default 에서만 다르므로 .icon 을 별도 토큰으로 오버라이드한다.
  * ========================================================================= */
 .variantGray {
   background: var(--context-background-neutral-bg-neutral-secondary);
   color: var(--context-foreground-neutral-on-neutral-teriary);
   border-color: transparent;
 }
+.variantGray .icon {
+  color: var(--context-foreground-icon-neutral-icon-neutral-secondary);
+}
 .variantGray:hover,
 .variantGray[data-force-state="hover"] {
   background: var(--context-background-neutral-bg-neutral-quarernary);
   color: var(--context-foreground-neutral-on-neutral-hover, var(--context-foreground-neutral-on-neutral-teriary));
+}
+.variantGray:hover .icon,
+.variantGray[data-force-state="hover"] .icon {
+  color: var(--context-foreground-icon-neutral-icon-neutral-hover);
 }
 .variantGray:disabled,
 .variantGray[aria-disabled="true"],
 .variantGray[data-force-state="disable"] {
   background: var(--context-background-neutral-bg-neutral-disabled);
   color: var(--context-foreground-neutral-on-neutral-disabled);
+}
+.variantGray:disabled .icon,
+.variantGray[aria-disabled="true"] .icon,
+.variantGray[data-force-state="disable"] .icon {
+  color: var(--context-foreground-icon-neutral-icon-neutral-disabled);
 }

@@ -9,7 +9,7 @@ import { useCallback, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 
 import { Badge } from "@/components/badge/badge";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { Checkbox } from "@/components/checkbox/checkbox";
 import { Divider } from "@/components/divider/divider";
 import { Input } from "@/components/Input/input";

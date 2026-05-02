@@ -10,7 +10,6 @@ import {
   storyDocsGuideThStyle,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -124,14 +123,49 @@ function ControlledRadioVerticalDemo() {
 /* =================================================================
  * 0. Playground — Controls
  * =============================================================== */
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
+/* =================================================================
+ * 0. Playground — Figma Properties 패널과 동일
+ *   Checked · Focused · Disabled
+ * =============================================================== */
+
+type RadioPlaygroundArgs = {
+  checked: boolean;
+  focused: boolean;
+  disabled: boolean;
+};
+
+export const Playground: StoryObj<RadioPlaygroundArgs> = {
+  parameters: {
+    controls: {
+      sort: "none",
+      include: ["Checked", "Focused", "Disabled"],
+    },
+  },
+  argTypes: {
+    checked: { name: "Checked", description: "True / False", control: "boolean" },
+    focused: { name: "Focused", description: "True / False", control: "boolean" },
+    disabled: { name: "Disabled", description: "True / False", control: "boolean" },
+  },
+  render: function PlaygroundRender(args) {
+    return (
       <StoryPlaygroundFrame>
-        <Story />
+        <Radio
+          checked={args.checked}
+          disabled={args.disabled}
+          forceState={args.focused ? "focused" : undefined}
+          onChange={() => {}}
+          value="playground"
+        >
+          Label
+        </Radio>
       </StoryPlaygroundFrame>
-    ),
-  ],
+    );
+  },
+  args: {
+    checked: false,
+    focused: false,
+    disabled: false,
+  },
 };
 
 /* =================================================================
@@ -435,15 +469,6 @@ export const Guideline: Story = {
             </tbody>
           </table>
         </div>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Radio, RadioGroup } from "@/components/radio/radio";
-
-<RadioGroup name="plan" orientation="vertical">
-  <Radio value="free">Free</Radio>
-  <Radio value="pro" defaultChecked>Pro</Radio>
-</RadioGroup>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

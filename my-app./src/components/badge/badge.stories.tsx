@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import {
   Badge,
+  type BadgeVariant,
   type BadgeLineColor,
   type BadgeNoticeColor,
   type BadgeShape,
@@ -23,7 +24,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -72,11 +72,14 @@ const meta: Meta<typeof Badge> = {
   parameters: {
     layout: "centered",
     docs: { disable: true },
+    controls: { sort: "none" },
   },
   argTypes: {
     variant: {
+      name: "Type",
+      description: "solid · line · status · notice",
       control: "inline-radio",
-      options: ["solid", "line", "status", "notice"],
+      options: ["solid", "line", "status", "notice"] satisfies BadgeVariant[],
     },
     size: { control: "inline-radio", options: ["xs", "sm", "lg"] },
     shape: { control: "inline-radio", options: ["square", "round"] },
@@ -232,22 +235,150 @@ const NOTICE_COUNT_MATRIX_ROWS: Array<{ id: string; label: string; count: number
 ];
 
 /* =================================================================
- * 0. Default — Autodocs: Primary 캔버스 1개 + Controls 로 prop 조합 확인
+ * 0. Playground — Figma Properties 패널과 동일한 형식의 Controls
+ *   Size · Color · Style · Text · Icon View · Icon
  * =============================================================== */
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
+
+type PlaygroundIconKey = "Gear" | "Add" | "Check" | "Search";
+
+const PLAYGROUND_ICON_NODES: Record<PlaygroundIconKey, ReactNode> = {
+  Gear: <Icon src="/icon/Gear.svg" />,
+  Add: <Icon src="/icon/Add.svg" />,
+  Check: <Icon src="/icon/Check.svg" />,
+  Search: <Icon src="/icon/Search.svg" />,
+};
+
+type BadgePlaygroundArgs = {
+  variant: BadgeVariant;
+  size: BadgeSize;
+  color: BadgeSolidColor;
+  shape: BadgeShape;
+  children: string;
+  iconView: boolean;
+  iconName: PlaygroundIconKey;
+};
+
+export const Playground: StoryObj<BadgePlaygroundArgs> = {
+  parameters: {
+    /**
+     * Figma Properties 패널과 동일한 순서·라벨로 노출.
+     * `include` 는 argTypes 의 `name` 과 일치해야 함.
+     */
+    controls: {
+      sort: "none",
+      include: [
+        "Type",
+        "Size",
+        "Color",
+        "Style",
+        "Text",
+        "Icon View",
+        "Icon",
+      ],
+    },
+  },
+  argTypes: {
+    variant: {
+      name: "Type",
+      description: "Solid, Line, Status Badge, Notice",
+      options: ["Solid", "Line", "Status Badge", "Notice"],
+      mapping: {
+        Solid: "solid",
+        Line: "line",
+        "Status Badge": "status",
+        Notice: "notice",
+      } satisfies Record<string, BadgeVariant>,
+      control: "inline-radio",
+    },
+    size: {
+      name: "Size",
+      description: "S, L, xS",
+      options: ["S", "L", "xS"],
+      mapping: {
+        S: "sm",
+        L: "lg",
+        xS: "xs",
+      } satisfies Record<string, BadgeSize>,
+      control: "inline-radio",
+    },
+    color: {
+      name: "Color",
+      description: "Purple, Primary, Red, Green, Orange, Pink, Blue, Cyan, Gray, Opacity",
+      options: [
+        "Purple",
+        "Primary",
+        "Red",
+        "Green",
+        "Orange",
+        "Pink",
+        "Blue",
+        "Cyan",
+        "Gray",
+        "Opacity",
+      ],
+      mapping: {
+        Purple: "purple",
+        Primary: "primary",
+        Red: "red",
+        Green: "green",
+        Orange: "orange",
+        Pink: "pink",
+        Blue: "blue",
+        Cyan: "cyan",
+        Gray: "gray",
+        Opacity: "opacity",
+      } satisfies Record<string, BadgeSolidColor>,
+      control: "select",
+    },
+    shape: {
+      name: "Style",
+      description: "Square, Round",
+      options: ["Square", "Round"],
+      mapping: {
+        Square: "square",
+        Round: "round",
+      } satisfies Record<string, BadgeShape>,
+      control: "inline-radio",
+    },
+    children: {
+      name: "Text",
+      control: "text",
+    },
+    iconView: {
+      name: "Icon View",
+      description: "True / False",
+      control: "boolean",
+    },
+    iconName: {
+      name: "Icon",
+      description: "Gear, Add, Check, Search",
+      options: ["Gear", "Add", "Check", "Search"] satisfies PlaygroundIconKey[],
+      control: "select",
+    },
+  },
+  render: function PlaygroundRender(args) {
+    return (
       <StoryPlaygroundFrame>
-        <Story />
+        <Badge
+          variant={args.variant}
+          size={args.size}
+          color={args.color}
+          shape={args.shape}
+          icon={args.iconView ? PLAYGROUND_ICON_NODES[args.iconName] : undefined}
+        >
+          {args.children}
+        </Badge>
       </StoryPlaygroundFrame>
-    ),
-  ],
+    );
+  },
   args: {
     variant: "solid",
-    color: "primary",
     size: "lg",
+    color: "primary",
     shape: "square",
     children: "Badge",
+    iconView: false,
+    iconName: "Gear",
   },
 };
 
@@ -505,7 +636,7 @@ export const Matrix: Story = {
 
 /* =================================================================
  * 2. Guideline
- *   개요 · Variant 선택 기준 · 간격(4px) · 코드 예시.
+ *   개요 · Variant 선택 기준 · 간격(4px).
  * =============================================================== */
 const guideBlockStyle: CSSProperties = {
   padding: 16,
@@ -526,7 +657,7 @@ export const Guideline: Story = {
     actions: { disable: true },
   },
   render: () => (
-    <StoryDocsPage title="Badge" description="개요·variant 기준·간격·코드 예시입니다.">
+    <StoryDocsPage title="Badge" description="개요·variant 기준·간격입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
           Badge 는 상태, 카테고리, 알림 카운트 등 짧은 메타 정보를 강조해 전달하기 위한 작은
@@ -620,22 +751,6 @@ export const Guideline: Story = {
             </Badge>
           </div>
         </div>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Badge } from "@/components/badge/badge";
-
-// Solid — 강조 라벨
-<Badge variant="solid" color="primary" size="lg">New</Badge>
-
-// Line — 일반 태그
-<Badge variant="line" color="gray" size="lg">Tag</Badge>
-
-// Status — 상태 표시
-<Badge variant="status" color="green" size="lg">Online</Badge>
-
-// Notice — 알림 카운트 (좌우 4px · 99+ 는 +99)
-<Badge variant="notice" color="red" count={3} />`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

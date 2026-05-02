@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { Badge, type BadgeSolidColor } from "@/components/badge/badge";
 import { Divider } from "@/components/divider/divider";
 import { ContentsTitleMain } from "@/components/title/contentstitlemain";

@@ -5,7 +5,6 @@ import { Fragment, useState } from "react";
 import { Checkbox, CheckboxGroup } from "./checkbox";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -120,16 +119,51 @@ function ControlledCheckboxDemo() {
 }
 
 /* =================================================================
- * 0. Playground — Controls
+ * 0. Playground — Figma Properties 패널과 동일
+ *   Checked · Indeterminate · Focused · Disabled
  * =============================================================== */
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
+
+type CheckboxPlaygroundArgs = {
+  checked: boolean;
+  indeterminate: boolean;
+  focused: boolean;
+  disabled: boolean;
+};
+
+export const Playground: StoryObj<CheckboxPlaygroundArgs> = {
+  parameters: {
+    controls: {
+      sort: "none",
+      include: ["Checked", "Indeterminate", "Focused", "Disabled"],
+    },
+  },
+  argTypes: {
+    checked: { name: "Checked", description: "True / False", control: "boolean" },
+    indeterminate: { name: "Indeterminate", description: "True / False", control: "boolean" },
+    focused: { name: "Focused", description: "True / False", control: "boolean" },
+    disabled: { name: "Disabled", description: "True / False", control: "boolean" },
+  },
+  render: function PlaygroundRender(args) {
+    return (
       <StoryPlaygroundFrame>
-        <Story />
+        <Checkbox
+          checked={args.checked}
+          indeterminate={args.indeterminate}
+          disabled={args.disabled}
+          forceState={args.focused ? "focused" : undefined}
+          onChange={() => {}}
+        >
+          Label
+        </Checkbox>
       </StoryPlaygroundFrame>
-    ),
-  ],
+    );
+  },
+  args: {
+    checked: false,
+    indeterminate: false,
+    focused: false,
+    disabled: false,
+  },
 };
 
 /* =================================================================
@@ -399,17 +433,6 @@ export const Guideline: Story = {
             </CheckboxGroup>
           </div>
         </div>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Checkbox, CheckboxGroup } from "@/components/checkbox/checkbox";
-
-<Checkbox defaultChecked>동의</Checkbox>
-
-<CheckboxGroup name="opts" defaultValue={["a"]} orientation="horizontal">
-  <Checkbox value="a">A</Checkbox>
-  <Checkbox value="b">B</Checkbox>
-</CheckboxGroup>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

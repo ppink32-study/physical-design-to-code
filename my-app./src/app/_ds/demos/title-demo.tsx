@@ -5,7 +5,7 @@ import { ContentsTitleMain } from "@/components/title/contentstitlemain";
 import { ContentsTitleSub } from "@/components/title/contentstitlesub";
 import { ContentsTitleSub2D } from "@/components/title/contentstitlesub2d";
 import { Badge } from "@/components/badge/badge";
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { DemoSection, demoStyles as s } from "../demo-block";
 
 export function TitleDemo() {

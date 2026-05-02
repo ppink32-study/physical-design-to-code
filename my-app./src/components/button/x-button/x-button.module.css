@@ -1,0 +1,98 @@
+/* =============================================================================
+ * XButton — Figma MCP 재작성 (node 6592:270982)
+ * -----------------------------------------------------------------------------
+ * Variants (6) : size{medium,large} × state{default,hover,disable}
+ *
+ * 컨테이너 사이즈 / 아이콘 사이즈
+ *   medium : 16×16 / 12×12
+ *   large  : 18×18 / 14×14
+ *
+ * 토큰
+ *   default bg : --context-background-surface-bg-surface-secondary
+ *   default fg : --context-foreground-icon-surface-icon-surface
+ *   hover   bg : --context-background-surface-bg-surface-teriary
+ *   hover   fg : --context-foreground-icon-surface-icon-surface
+ *   disable bg : --context-background-tint-bg-gray-tint-hover
+ *   disable fg : --context-foreground-icon-surface-icon-surface-disabled
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xs); /* 2px */
+  background: var(--context-background-surface-bg-surface-secondary);
+  color: var(--context-foreground-icon-surface-icon-surface);
+  border: 0;
+  border-radius: var(--radius-full); /* 1000 */
+  cursor: pointer;
+  appearance: none;
+  user-select: none;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--context-foreground-icon-surface-icon-surface);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Hover
+ * ------------------------------------------------------------------------- */
+.root:hover,
+.root[data-force-state="hover"] {
+  background: var(--context-background-surface-bg-surface-teriary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Disable
+ * ------------------------------------------------------------------------- */
+.root:disabled,
+.root[aria-disabled="true"],
+.root[data-force-state="disable"] {
+  background: var(--context-background-tint-bg-gray-tint-hover);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+ * Sizes — 컨테이너
+ * ------------------------------------------------------------------------- */
+.sizeMedium {
+  width: 16px;
+  height: 16px;
+  --xbtn-icon-size: 12px;
+}
+
+.sizeLarge {
+  width: 18px;
+  height: 18px;
+  --xbtn-icon-size: 14px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Icon — Close-2 SVG (currentColor 상속, mask-image 기반)
+ * ------------------------------------------------------------------------- */
+.icon {
+  flex-shrink: 0;
+  display: inline-block;
+  width: var(--xbtn-icon-size, 12px);
+  height: var(--xbtn-icon-size, 12px);
+  background: currentColor;
+  -webkit-mask-image: url("/icon/Close-2.svg");
+  mask-image: url("/icon/Close-2.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}

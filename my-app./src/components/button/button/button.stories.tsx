@@ -11,7 +11,6 @@ import {
 } from "./button";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsNote,
@@ -619,7 +618,7 @@ export const Guideline: Story = {
   render: () => (
     <StoryDocsPage
       title="Button"
-      description="가이드라인 · 나란히 배치 간격 · 코드 예시입니다."
+      description="가이드라인 · 나란히 배치 간격을 보여줍니다."
     >
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
@@ -646,11 +645,6 @@ export const Guideline: Story = {
     </div>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Button } from "@/components/button/button";
-
-<Button variant="primary-solid" size="large">Button</Button>`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

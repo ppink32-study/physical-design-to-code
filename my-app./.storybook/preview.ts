@@ -24,6 +24,40 @@ const preview: Preview = {
     layout: "centered",
     options: {
       storySort: (a, b) => {
+        /**
+         * Storybook 10은 `preview` 소스에서 `storySort`만 정적 추출·eval 합니다.
+         * 외부 모듈 import 를 참조하면 정렬이 무시되고 import 경로 순(Alert 상단 등)으로 돌아갑니다.
+         * `Components/` 그룹 순서는 `src/stories/components-sidebar-order.ts` 와 동일하게 유지하세요.
+         */
+        const COMPONENTS_TITLE_PREFIX = "Components/";
+        const COMPONENTS_GROUP_ORDER = [
+          "Button",
+          "Badge",
+          "Checkbox",
+          "Radio",
+          "Toggle",
+          "Label",
+          "Divider",
+          "Pagination",
+          "Scroll",
+          "Chips",
+          "Select",
+          "Tab",
+          "Input",
+          "Form",
+          "Empty",
+          "Table",
+          "Title",
+          "PlaybookControlBar",
+          "DatePicker",
+          "Loader",
+          "Tooltip",
+          "Gnb",
+          "Dropdown",
+          "Toasts",
+          "Alert",
+        ];
+
         /** 사이드바 최상단 — `src/stories/revision-history.stories.tsx` 와 동일 문자열 */
         const REVISION_HISTORY_TITLE = "00 · 수정 히스토리";
 
@@ -42,6 +76,21 @@ const preview: Preview = {
           return idx === -1 ? 999 : idx;
         };
 
+        /** eval 추출용 — TS 타입 표기 금지(Unexpected token ':') */
+        const componentsGroupRank = (title) => {
+          if (!title.startsWith(COMPONENTS_TITLE_PREFIX)) return null;
+          const group = title.split("/")[1];
+          if (!group) return null;
+          const idx = COMPONENTS_GROUP_ORDER.indexOf(group);
+          return idx === -1 ? 999 : idx;
+        };
+        /** Foundation 다음: Components → Overview → 기타 */
+        const postFoundationSection = (title) => {
+          if (title.startsWith(COMPONENTS_TITLE_PREFIX)) return 0;
+          if (title.startsWith("Overview/")) return 1;
+          return 2;
+        };
+
         if (a.title !== b.title) {
           const aRev = a.title === REVISION_HISTORY_TITLE;
           const bRev = b.title === REVISION_HISTORY_TITLE;
@@ -57,6 +106,19 @@ const preview: Preview = {
             if (fb === -1) return -1;
             return fa - fb;
           }
+
+          const sa = postFoundationSection(a.title);
+          const sb = postFoundationSection(b.title);
+          if (sa !== sb) return sa - sb;
+
+          const ca = componentsGroupRank(a.title);
+          const cb = componentsGroupRank(b.title);
+          if (ca !== null || cb !== null) {
+            if (ca === null) return 1;
+            if (cb === null) return -1;
+            if (ca !== cb) return ca - cb;
+          }
+
           return a.title.localeCompare(b.title, undefined, { numeric: true });
         }
         const slug = (id) => (id.split("--").pop() ?? "").toLowerCase();

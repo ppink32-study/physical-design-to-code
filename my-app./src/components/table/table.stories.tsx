@@ -20,7 +20,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { StoryPlaygroundFrame } from "@/stories/story-docs-shell";
 import { Badge } from "../badge/badge";
-import { Button } from "../button/button";
+import { Button } from "../button/button/button";
 import { Checkbox } from "../checkbox/checkbox";
 import { BodyCell } from "./bodycell";
 import { GridHeader } from "./gridheader";

@@ -199,7 +199,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2xs); /* 4 */
-  padding: 1px var(--spacing-md); /* 0 12 */
+  padding: var(--spacing-none) var(--spacing-md); /* 0 12 */
   height: var(--pg-size, 32px);
   background: var(--context-background-surface-bg-surface-base);
   border: 1px solid var(--border-border-surface-border-surface);
@@ -230,22 +230,18 @@
   display: flex;
   align-items: center;
   width: 58px;
-  height: var(--size-base-4xl, 32px);
-  padding: 1px var(--spacingMd, var(--spacing-md, 12px));
-  gap: var(--spacing2Xs, var(--spacing-2xs, 4px));
-  border-radius: var(--radiusMd, var(--radius-md, 6px));
-  border: 1px solid
-    var(--Border-Border-Surface-border-surface, var(--border-border-surface-border-surface, #d7d8dc));
-  background: var(
-    --Context-Background-Surface-bg-surface-base,
-    var(--context-background-surface-bg-surface-base, #fff)
-  );
+  height: var(--size-base-4xl); /* 32 */
+  padding: var(--spacing-none) var(--spacing-md); /* 0 12 */
+  gap: var(--spacing-2xs); /* 4 */
+  border-radius: var(--radius-md); /* 6 */
+  border: 1px solid var(--border-border-surface-border-surface);
+  background: var(--context-background-surface-bg-surface-base);
   overflow: hidden;
 }
 
 .root[data-size="large"] .goToBox {
   width: 62px;
-  height: var(--sizeBase6Xl, var(--size-base-6xl, 40px));
+  height: var(--size-base-6xl); /* 40 */
   font-size: var(--font-size-body-lg);
   line-height: var(--font-line-height-lg);
 }

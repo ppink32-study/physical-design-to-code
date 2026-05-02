@@ -26,7 +26,7 @@
 import type { ButtonHTMLAttributes, ForwardedRef, ReactNode } from "react";
 import { forwardRef } from "react";
 
-import { Button } from "../button/button";
+import { Button } from "../button/button/button";
 
 import styles from "./dropdown-trigger.module.css";
 

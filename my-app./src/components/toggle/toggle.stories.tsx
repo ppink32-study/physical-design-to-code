@@ -10,7 +10,6 @@ import {
   storyDocsGuideThStyle,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -128,14 +127,48 @@ function ControlledToggleVerticalDemo() {
 /* =================================================================
  * 0. Playground — Controls
  * =============================================================== */
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
+/* =================================================================
+ * 0. Playground — Figma Properties 패널과 동일
+ *   Checked · Focused · Disabled
+ * =============================================================== */
+
+type TogglePlaygroundArgs = {
+  checked: boolean;
+  focused: boolean;
+  disabled: boolean;
+};
+
+export const Playground: StoryObj<TogglePlaygroundArgs> = {
+  parameters: {
+    controls: {
+      sort: "none",
+      include: ["Checked", "Focused", "Disabled"],
+    },
+  },
+  argTypes: {
+    checked: { name: "Checked", description: "True / False", control: "boolean" },
+    focused: { name: "Focused", description: "True / False", control: "boolean" },
+    disabled: { name: "Disabled", description: "True / False", control: "boolean" },
+  },
+  render: function PlaygroundRender(args) {
+    return (
       <StoryPlaygroundFrame>
-        <Story />
+        <Toggle
+          checked={args.checked}
+          disabled={args.disabled}
+          forceState={args.focused ? "focused" : undefined}
+          onChange={() => {}}
+        >
+          Label
+        </Toggle>
       </StoryPlaygroundFrame>
-    ),
-  ],
+    );
+  },
+  args: {
+    checked: false,
+    focused: false,
+    disabled: false,
+  },
 };
 
 /* =================================================================
@@ -440,19 +473,6 @@ export const Guideline: Story = {
             </tbody>
           </table>
         </div>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Toggle, ToggleGroup } from "@/components/toggle/toggle";
-
-<ToggleGroup orientation="vertical" aria-label="알림">
-  <Toggle defaultChecked>푸시</Toggle>
-  <Toggle>이메일</Toggle>
-</ToggleGroup>
-
-<Toggle checked={on} onChange={setOn} reverse>
-  라벨 왼쪽
-</Toggle>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

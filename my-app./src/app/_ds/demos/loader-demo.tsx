@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react";
 
-import { Button } from "@/components/button/button";
+import { Button } from "@/components/button/button/button";
 import { Loader, type LoaderColor, type LoaderSize } from "@/components/loader/loader";
 import { DemoSection, demoStyles as s } from "../demo-block";
 

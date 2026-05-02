@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties, ReactNode } from "react";
 import { useState } from "react";
 
-import { Button } from "../button/button";
+import { Button } from "../button/button/button";
 import { Tab, TabList } from "./tab";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {

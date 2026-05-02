@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties } from "react";
 
-import { Label } from "./label";
+import {
+  Label,
+  type LabelSize,
+  type LabelType,
+} from "./label";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   storyMatrixCellStyle,
@@ -46,18 +50,81 @@ const meta: Meta<typeof Label> = {
 export default meta;
 type Story = StoryObj<typeof Label>;
 
-export const Playground: Story = {
-  decorators: [
-    (Story) => (
+/* =================================================================
+ * 0. Playground — Figma Properties 패널과 동일
+ *   Type · Size · Label · Mandatory · Info Icon
+ * =============================================================== */
+
+type LabelPlaygroundArgs = {
+  type: LabelType;
+  size: LabelSize;
+  children: string;
+  mandatory: boolean;
+  infoIcon: boolean;
+};
+
+export const Playground: StoryObj<LabelPlaygroundArgs> = {
+  parameters: {
+    controls: {
+      sort: "none",
+      include: ["Type", "Size", "Label", "Mandatory", "Info Icon"],
+    },
+  },
+  argTypes: {
+    type: {
+      name: "Type",
+      description: "Normal, + Outline Btn, + Ghost Btn",
+      options: ["Normal", "+ Outline Btn", "+ Ghost Btn"],
+      mapping: {
+        Normal: "normal",
+        "+ Outline Btn": "outline-button",
+        "+ Ghost Btn": "ghost-button",
+      } satisfies Record<string, LabelType>,
+      control: "inline-radio",
+    },
+    size: {
+      name: "Size",
+      description: "Medium, Small",
+      options: ["Medium", "Small"],
+      mapping: {
+        Medium: "medium",
+        Small: "small",
+      } satisfies Record<string, LabelSize>,
+      control: "inline-radio",
+    },
+    children: {
+      name: "Label",
+      control: "text",
+    },
+    mandatory: {
+      name: "Mandatory",
+      description: "True / False",
+      control: "boolean",
+    },
+    infoIcon: {
+      name: "Info Icon",
+      description: "True / False",
+      control: "boolean",
+    },
+  },
+  render: function PlaygroundRender(args) {
+    return (
       <StoryPlaygroundFrame>
-        <Story />
+        <Label
+          type={args.type}
+          size={args.size}
+          mandatory={args.mandatory}
+          infoIcon={args.infoIcon}
+        >
+          {args.children}
+        </Label>
       </StoryPlaygroundFrame>
-    ),
-  ],
+    );
+  },
   args: {
-    children: "항목명",
-    size: "medium",
     type: "normal",
+    size: "medium",
+    children: "항목명",
     mandatory: true,
     infoIcon: true,
   },

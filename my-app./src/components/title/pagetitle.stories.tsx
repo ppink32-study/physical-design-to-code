@@ -6,7 +6,7 @@ import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { Badge } from "../badge/badge";
-import { Button } from "../button/button";
+import { Button } from "../button/button/button";
 import { PageTitle } from "./pagetitle";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import { StoryDocsMatrixPage } from "@/stories/story-docs-shell";

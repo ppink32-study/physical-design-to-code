@@ -1,0 +1,40 @@
+/* =============================================================================
+ * BottomBtnArea — Figma MCP 재작성 (node 9813:896)
+ * -----------------------------------------------------------------------------
+ * Variants (2): Default (좌·우 그룹) / Custom (children 슬롯)
+ *
+ * 토큰
+ *   container bg     : --context-background-neutral-bg-neutral (#FFFFFF)
+ *   container padding: --spacing-2xl (24)
+ *   group gap        : --spacing-sm (8)
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--spacing-2xl); /* 24px */
+  background: var(--context-background-neutral-bg-neutral);
+}
+
+/* ---------------------------------------------------------------------------
+ * Default variant — 좌·우 버튼 그룹 (justify-between)
+ * ------------------------------------------------------------------------- */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--spacing-sm);
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm); /* 8px */
+}
+
+.group[data-side="right"] {
+  margin-left: auto;
+}
