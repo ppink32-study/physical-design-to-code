@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties, ReactNode } from "react";
+import { useState } from "react";
 
-import lightCssRaw from "@/commons/constants/css/light.css?raw";
-import darkCssRaw from "@/commons/constants/css/dark.css?raw";
+import lightCssRaw    from "@/commons/constants/css/light.css?raw";
+import darkCssRaw     from "@/commons/constants/css/dark.css?raw";
+import brandCssRaw    from "@/commons/constants/css/brand.css?raw";
 import gradientCssRaw from "@/commons/constants/css/gradient.css?raw";
+import globalsCssRaw  from "@/app/globals.css?raw";
 
 import {
   SEMANTIC_GROUPS,
@@ -11,6 +14,7 @@ import {
   type SemanticToken,
 } from "@/app/_ds/demos/foundations/tokens.generated";
 import { StoryDocsPage } from "@/stories/story-docs-shell";
+import { DownloadButton } from "./foundation-shared";
 
 /* -----------------------------------------------------------
  *  Meta — single page (no autodocs, no Default/Matrix)
@@ -44,64 +48,6 @@ const tokens = {
 } as const;
 
 const TABLE_MAX_WIDTH = 1280;
-
-/* -----------------------------------------------------------
- *  Download CSS — uses Vite ?raw imports of the existing files
- * ----------------------------------------------------------- */
-function triggerCssDownload(content: string, fileName: string) {
-  const blob = new Blob([content], { type: "text/css;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = fileName;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function DownloadButton({
-  fileName,
-  css,
-}: {
-  fileName: string;
-  css: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={() => triggerCssDownload(css, fileName)}
-      style={{
-        appearance: "none",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "10px 18px",
-        background: "var(--accent-gray-accent-gray-darkest)",
-        color: "#FFFFFF",
-        border: "none",
-        borderRadius: "var(--radius-full)",
-        fontWeight: 600,
-        fontSize: 13,
-        cursor: "pointer",
-        boxShadow: "0 1px 2px rgba(0,0,0,0.12)",
-      }}
-    >
-      <span aria-hidden style={{ display: "inline-flex" }}>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M8 2v8m0 0 3-3m-3 3-3-3M3 13h10"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-      {fileName} 다운로드
-    </button>
-  );
-}
 
 /* -----------------------------------------------------------
  *  Section header (title + downloadable hint)
@@ -411,7 +357,7 @@ function ColorSectionTable({ section }: { section: SemanticSection }) {
       >
         <div style={headerCellStyle}>Token</div>
         <div style={headerCellStyle}>Light</div>
-        <div style={headerCellStyle}>Dark</div>
+        <div style={headerCellStyle}>Dark / Brand</div>
       </div>
 
       {section.tokens.map((t: SemanticToken) => (
@@ -991,11 +937,224 @@ function GradientCard({ token }: { token: GradientToken }) {
   );
 }
 
+/* -----------------------------------------------------------
+ *  Theme Overview — Standard vs Focus (Figma node 5353-15398)
+ * ----------------------------------------------------------- */
+const badgeStyle = (bg: string, color: string): CSSProperties => ({
+  display: "inline-flex",
+  alignItems: "center",
+  padding: "3px 10px",
+  borderRadius: "var(--radius-md, 6px)",
+  background: bg,
+  color,
+  fontSize: 12,
+  fontWeight: 500,
+  whiteSpace: "nowrap" as const,
+});
+
+function ThemeCard({
+  name,
+  badges,
+  description,
+  tokenLabel,
+  tokenColor,
+  badgeBg,
+  badgeColor,
+  accent,
+  note,
+}: {
+  name: string;
+  badges: string[];
+  description: string;
+  tokenLabel: ReactNode;
+  tokenColor: string;
+  badgeBg: string;
+  badgeColor: string;
+  accent: string;
+  note?: string;
+}) {
+  return (
+    <div
+      style={{
+        flex: "1 1 360px",
+        border: "1px solid #E4E4E7",
+        borderRadius: 16,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* 상단 accent 바 */}
+      <div style={{ height: 4, background: accent, flexShrink: 0 }} />
+
+      <div style={{ padding: "20px 22px", display: "flex", flexDirection: "column", gap: 14, flex: 1 }}>
+        {/* 제목 + 배지 */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <span
+            style={{
+              fontSize: 15,
+              fontWeight: 700,
+              color: "#111111",
+              lineHeight: 1.3,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {name}
+          </span>
+          {badges.map((b) => (
+            <span key={b} style={badgeStyle(badgeBg, badgeColor)}>
+              {b}
+            </span>
+          ))}
+        </div>
+
+        {/* 설명 */}
+        <p
+          style={{
+            margin: 0,
+            fontSize: 13,
+            color: "#6B6B7B",
+            lineHeight: 1.75,
+          }}
+        >
+          {description}
+        </p>
+
+        {/* 구분선 */}
+        <div style={{ height: 1, background: "#F0F0F2" }} />
+
+        {/* 토큰 */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              color: "#A1A1AA",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+            }}
+          >
+            사용 토큰
+          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            {tokenLabel}
+          </div>
+        </div>
+
+        {note ? (
+          <p
+            style={{
+              margin: 0,
+              fontSize: 11,
+              color: "#A1A1AA",
+              lineHeight: 1.6,
+            }}
+          >
+            {note}
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function ThemeOverviewSection() {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div>
+        <h2
+          style={{
+            margin: "0 0 6px",
+            fontSize: 20,
+            fontWeight: 700,
+            color: tokens.textBase,
+          }}
+        >
+          Theme 구성
+        </h2>
+        <p style={{ margin: 0, fontSize: 13, color: tokens.textMuted, lineHeight: 1.6 }}>
+          전역 Theme 변경이 아닌, 일부 강조 컴포넌트만 다른 스타일을 적용합니다.
+          강조 영역(GNB, LNB, Card 등)에는 Brand 컬러 토큰이 사용됩니다.
+        </p>
+      </div>
+
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+        <ThemeCard
+          name="Standard Theme"
+          badges={["Brand-driven", "Sales-oriented Theme"]}
+          description="강한 명도 대비와 네온 컬러를 활용하여, 로보틱 시스템의 에너지 흐름과 첨단 기술 이미지를 직관적으로 표현합니다. 그라데이션 기반의 시각 요소를 통해 다양한 플랫폼과 데이터가 유기적으로 연결된 통합 흐름을 강조하며, 역동적이고 미래 지향적인 사용자 경험을 제공합니다."
+          tokenLabel={
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <code
+                style={{
+                  padding: "3px 10px",
+                  borderRadius: "var(--radius-md, 6px)",
+                  background: "#141518",
+                  color: "#9EF7EE",
+                  fontSize: 12,
+                  fontFamily: "ui-monospace, SFMono-Regular, monospace",
+                }}
+              >
+                brand.css
+              </code>
+              <span style={{ fontSize: 12, color: tokens.textSubtle }}>일부 강조 영역에 사용 (LNB, GNB, Card)</span>
+              <span style={{ fontSize: 12, color: tokens.textSubtle }}>+</span>
+              <code
+                style={{
+                  padding: "3px 10px",
+                  borderRadius: "var(--radius-md, 6px)",
+                  background: tokens.surfaceMuted,
+                  color: tokens.textBase,
+                  fontSize: 12,
+                  fontFamily: "ui-monospace, SFMono-Regular, monospace",
+                  border: `1px solid ${tokens.borderColorMuted}`,
+                }}
+              >
+                light.css
+              </code>
+            </span>
+          }
+          tokenColor="#0AA2C0"
+          badgeBg="var(--context-background-tint-bg-cyan-tint, #E7FBFF)"
+          badgeColor="var(--accent-cyan-accent-cyan, #0AA2C0)"
+          accent="linear-gradient(105deg, #9EF7EE 50%, #971EFF 89.69%)"
+        />
+
+        <ThemeCard
+          name="Focus Theme"
+          badges={["Work-focused", "Utility Theme"]}
+          description="모노톤 중심의 절제된 컬러와 안정적인 명도 대비를 통해, 정보 밀도가 높은 대시보드 환경에서도 장시간 사용에 적합한 시각 경험을 제공합니다. 구조화된 그리드와 정제된 라인을 바탕으로 데이터와 기능의 위계를 명확히 하여, 운영 환경에 필요한 신뢰감과 집중도를 강화합니다."
+          tokenLabel={
+            <code
+              style={{
+                padding: "3px 10px",
+                borderRadius: "var(--radius-md, 6px)",
+                background: tokens.surfaceMuted,
+                color: tokens.textBase,
+                fontSize: 12,
+                fontFamily: "ui-monospace, SFMono-Regular, monospace",
+                border: `1px solid ${tokens.borderColorMuted}`,
+              }}
+            >
+              light.css
+            </code>
+          }
+          tokenColor="#3F9BAE"
+          badgeBg="var(--context-background-tint-bg-blue-tint, #E7F1FF)"
+          badgeColor="var(--accent-blue-accent-blue, #316CF4)"
+          accent="#3F9BAE"
+          note="추후 Dark 모드 추가 시 dark.css 토큰([data-theme=dark])을 사용합니다."
+        />
+      </div>
+    </div>
+  );
+}
+
 function GradientSection() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       <SectionTitle
-        index={`${pad2(SEMANTIC_GROUPS.length + 1)} — GRADIENT`}
+        index="08 — GRADIENT"
         title="Gradient color"
         description="Logo·브랜드, Card hover, Stepper 영역 등 한정적 강조 표현에 사용되는 Gradient 토큰입니다. 본 솔루션 외 임의 사용을 지양하고 정의된 4종 안에서만 사용하세요."
       />
@@ -1015,15 +1174,216 @@ function GradientSection() {
 }
 
 /* -----------------------------------------------------------
- *  Page composition (single Guideline story)
+ *  Page composition — tabbed
  * ----------------------------------------------------------- */
 const TOTAL_TOKEN_COUNT = SEMANTIC_GROUPS.reduce(
   (acc, g) => acc + g.sections.reduce((s, sec) => s + sec.tokens.length, 0),
   0,
 );
 
-function pad2(n: number) {
-  return String(n).padStart(2, "0");
+type TabId =
+  | "overview"
+  | "foreground"
+  | "background"
+  | "tint"
+  | "accent"
+  | "border"
+  | "opacity"
+  | "bgTransparency"
+  | "gradient";
+
+const TABS: { id: TabId; label: string }[] = [
+  { id: "overview",      label: "Overview" },
+  { id: "foreground",    label: "Foreground" },
+  { id: "background",    label: "Background" },
+  { id: "tint",          label: "Tint" },
+  { id: "accent",        label: "Accent" },
+  { id: "border",        label: "Border" },
+  { id: "opacity",       label: "Opacity" },
+  { id: "bgTransparency",label: "BG · Transparency" },
+  { id: "gradient",      label: "Gradient" },
+];
+
+/* Border 탭은 border / borderNeutral / borderSurface / borderOpacity 4개 그룹을 합친다 */
+const BORDER_GROUP_IDS = new Set(["border", "borderNeutral", "borderSurface", "borderOpacity"]);
+
+function ColorTabPage() {
+  const [activeTab, setActiveTab] = useState<TabId>("overview");
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 0, maxWidth: TABLE_MAX_WIDTH }}>
+
+      {/* 고정 헤더 — 다운로드 버튼 */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 12,
+          paddingBottom: 20,
+          marginBottom: 4,
+          borderBottom: `1px solid ${tokens.borderColor}`,
+        }}
+      >
+        <div>
+          <p style={{ margin: 0, fontSize: 13, color: tokens.textMuted }}>
+            총 {TOTAL_TOKEN_COUNT}개 컬러 변수 · Gradient {GRADIENT_TOKENS.length}종
+          </p>
+        </div>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <DownloadButton fileName="globals.css"  css={globalsCssRaw} />
+          <DownloadButton fileName="light.css"    css={lightCssRaw} />
+          <DownloadButton fileName="dark.css"     css={darkCssRaw} />
+          <DownloadButton fileName="brand.css"    css={brandCssRaw} />
+          <DownloadButton fileName="gradient.css" css={gradientCssRaw} />
+        </div>
+      </div>
+
+      {/* 탭 바 — 세그먼트 컨트롤 */}
+      <div
+        role="tablist"
+        style={{
+          display: "flex",
+          gap: 4,
+          padding: 4,
+          background: "#F4F4F5",
+          borderRadius: 12,
+          marginBottom: 32,
+          overflowX: "auto",
+          scrollbarWidth: "none",
+        }}
+      >
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                role="tab"
+                aria-selected={isActive}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                style={{
+                  appearance: "none",
+                  border: "none",
+                  padding: "8px 16px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: isActive ? 600 : 500,
+                  letterSpacing: isActive ? "-0.01em" : 0,
+                  color: isActive ? "#141518" : "#787A88",
+                  background: isActive ? "#FFFFFF" : "transparent",
+                  boxShadow: isActive
+                    ? "0 1px 4px rgba(0,0,0,0.10), 0 0 0 0.5px rgba(0,0,0,0.06)"
+                    : "none",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "background 0.15s, color 0.15s, box-shadow 0.15s",
+                  position: "relative",
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+      </div>
+
+      {/* 탭 컨텐츠 */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+
+        {activeTab === "overview" && (
+          <>
+            <ThemeOverviewSection />
+            <div
+              style={{
+                padding: "14px 16px",
+                background: tokens.surfaceMuted,
+                borderRadius: "var(--radius-md)",
+                fontSize: 12,
+                color: tokens.textSubtle,
+                lineHeight: 1.7,
+              }}
+            >
+              <strong style={{ color: tokens.textMuted }}>brand.css</strong>는 dark.css와 동일한 토큰 값이며{" "}
+              <code>[data-theme=brand]</code> 선택자를 사용합니다. 추후 Focus Theme에 Dark 모드가 추가되면{" "}
+              <code>[data-theme=dark]</code>(dark.css)가 사용됩니다.
+            </div>
+          </>
+        )}
+
+        {activeTab === "foreground" && (
+          <GroupBlock
+            index="01 — FOREGROUND"
+            title="Foreground"
+            description={SEMANTIC_GROUPS.find((g) => g.id === "foreground")?.description}
+            sections={SEMANTIC_GROUPS.find((g) => g.id === "foreground")?.sections ?? []}
+          />
+        )}
+
+        {activeTab === "background" && (
+          <GroupBlock
+            index="02 — BACKGROUND"
+            title="Background"
+            description={SEMANTIC_GROUPS.find((g) => g.id === "background")?.description}
+            sections={SEMANTIC_GROUPS.find((g) => g.id === "background")?.sections ?? []}
+          />
+        )}
+
+        {activeTab === "tint" && (
+          <GroupBlock
+            index="03 — TINT"
+            title="Tint"
+            description={SEMANTIC_GROUPS.find((g) => g.id === "tint")?.description}
+            sections={SEMANTIC_GROUPS.find((g) => g.id === "tint")?.sections ?? []}
+          />
+        )}
+
+        {activeTab === "accent" && (
+          <GroupBlock
+            index="04 — ACCENT"
+            title="Accent"
+            description={SEMANTIC_GROUPS.find((g) => g.id === "accent")?.description}
+            sections={SEMANTIC_GROUPS.find((g) => g.id === "accent")?.sections ?? []}
+          />
+        )}
+
+        {activeTab === "border" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
+            {SEMANTIC_GROUPS.filter((g) => BORDER_GROUP_IDS.has(g.id)).map((g, idx) => (
+              <GroupBlock
+                key={g.id}
+                index={`05.${idx + 1} — ${g.title.toUpperCase()}`}
+                title={g.title}
+                description={g.description}
+                sections={g.sections}
+              />
+            ))}
+          </div>
+        )}
+
+        {activeTab === "opacity" && (
+          <GroupBlock
+            index="06 — OPACITY"
+            title="Opacity"
+            description={SEMANTIC_GROUPS.find((g) => g.id === "opacity")?.description}
+            sections={SEMANTIC_GROUPS.find((g) => g.id === "opacity")?.sections ?? []}
+          />
+        )}
+
+        {activeTab === "bgTransparency" && (
+          <GroupBlock
+            index="07 — BG · TRANSPARENCY"
+            title="BG · Transparency"
+            description={SEMANTIC_GROUPS.find((g) => g.id === "bgTransparency")?.description}
+            sections={SEMANTIC_GROUPS.find((g) => g.id === "bgTransparency")?.sections ?? []}
+          />
+        )}
+
+        {activeTab === "gradient" && <GradientSection />}
+
+      </div>
+    </div>
+  );
 }
 
 export const Guideline: Story = {
@@ -1032,55 +1392,9 @@ export const Guideline: Story = {
     <StoryDocsPage
       eyebrow="Design System"
       title="Color"
-      description="시맨틱 컬러·그라데이션 토큰과 Light/Dark 값을 표로 확인합니다."
+      description="시맨틱 컬러·그라데이션 토큰과 Light/Dark 값을 탭별로 확인합니다."
     >
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 64,
-        maxWidth: TABLE_MAX_WIDTH,
-      }}
-    >
-      <SectionTitle
-        title="Color tokens"
-        description="모든 컴포넌트는 시맨틱 컬러 토큰만 사용합니다. 각 토큰은 Light / Dark 두 테마 값을 함께 가지고 있으며, 아래 표는 Figma 의 alias(예: Gray/100)와 실제 hex 값을 함께 표기합니다. 추가로 브랜드 강조용 Gradient 토큰 4종이 정의되어 있습니다."
-        action={
-          <>
-            <DownloadButton fileName="light.css" css={lightCssRaw} />
-            <DownloadButton fileName="dark.css" css={darkCssRaw} />
-            <DownloadButton fileName="gradient.css" css={gradientCssRaw} />
-          </>
-        }
-      />
-
-      {SEMANTIC_GROUPS.map((g, idx) => (
-        <GroupBlock
-          key={g.id}
-          index={`${pad2(idx + 1)} — ${g.title.toUpperCase()}`}
-          title={g.title}
-          description={g.description}
-          sections={g.sections}
-        />
-      ))}
-
-      <GradientSection />
-
-      <footer
-        style={{
-          fontSize: 12,
-          color: tokens.textSubtle,
-          borderTop: `1px solid ${tokens.borderColor}`,
-          paddingTop: 16,
-        }}
-      >
-        총 {TOTAL_TOKEN_COUNT}개 컬러 변수 ({SEMANTIC_GROUPS.length}개 그룹) · Gradient {GRADIENT_TOKENS.length}종 ·
-        {" "}다운로드 버튼은{" "}
-        <code>src/commons/constants/css/light.css</code>,{" "}
-        <code>src/commons/constants/css/dark.css</code>,{" "}
-        <code>src/commons/constants/css/gradient.css</code> 원본을 그대로 내려줍니다.
-      </footer>
-    </div>
+      <ColorTabPage />
     </StoryDocsPage>
   ),
 };

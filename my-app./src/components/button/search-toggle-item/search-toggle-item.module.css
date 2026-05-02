@@ -17,7 +17,7 @@
  *   font-weight   : --font-weight-medium (500)
  *
  * Select
- *   bg            : --context-background-surface-bg-surface-white     (#FFFFFF)
+ *   bg            : --context-background-surface-bg-surface-base      (#FFFFFF)
  *   border        : --border-border-primary                           (#5CC7D0)
  *   text          : --context-foreground-primary-on-primary           (#3F9BAE)
  *   font-weight   : --font-weight-semibold (600)
@@ -71,8 +71,8 @@
  * Select
  * ------------------------------------------------------------------------- */
 .selected {
-  background: var(--context-background-surface-bg-surface-white);
+  background: var(--context-background-surface-bg-surface-base, #fff);
   color: var(--context-foreground-primary-on-primary);
-  border-color: var(--border-border-primary);
+  border-color: var(--border-border-primary, #5cc7d0);
   font-weight: var(--font-weight-semibold); /* 600 */
 }

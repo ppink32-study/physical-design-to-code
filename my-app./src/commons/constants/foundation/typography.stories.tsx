@@ -5,6 +5,8 @@ import typographyCssRaw from "@/commons/constants/css/typography.css?raw";
 import { Badge } from "@/components/badge/badge";
 import { StoryDocsPage } from "@/stories/story-docs-shell";
 
+import { DownloadButton } from "./foundation-shared";
+
 import {
   ALL_ROWS,
   BODY_ROWS,
@@ -81,62 +83,6 @@ const dataCellStyle: CSSProperties = {
   color: tokens.textBase,
   borderTop: `1px solid ${tokens.borderColor}`,
 };
-
-/* -----------------------------------------------------------
- *  Download CSS — uses Vite ?raw import of the existing file
- * ----------------------------------------------------------- */
-function triggerDownload() {
-  const blob = new Blob([typographyCssRaw], {
-    type: "text/css;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "typography.css";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  // 다음 tick 에 해제하여 다운로드 안전 보장
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function DownloadButton() {
-  return (
-    <button
-      type="button"
-      onClick={triggerDownload}
-      style={{
-        appearance: "none",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "10px 18px",
-        background: "var(--accent-gray-accent-gray-darkest)",
-        color: "#FFFFFF",
-        border: "none",
-        borderRadius: "var(--radius-full)",
-        fontWeight: 600,
-        fontSize: 13,
-        cursor: "pointer",
-        boxShadow: "0 1px 2px rgba(0,0,0,0.12)",
-      }}
-    >
-      <span aria-hidden style={{ display: "inline-flex" }}>
-        {/* simple download glyph */}
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M8 2v8m0 0 3-3m-3 3-3-3M3 13h10"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-      typography.css 다운로드
-    </button>
-  );
-}
 
 /* -----------------------------------------------------------
  *  Section header (title + downloadable hint)
@@ -428,7 +374,7 @@ export const Guideline: Story = {
           index="02 — HEADLINE"
           title="Headline"
           description="페이지·콘텐츠·카드 등 위계의 ‘제목’ 영역에 사용합니다."
-          action={<DownloadButton />}
+          action={<DownloadButton fileName="typography.css" css={typographyCssRaw} />}
         />
         <TypographyTable category="Headline" rows={HEADLINE_ROWS} />
       </div>

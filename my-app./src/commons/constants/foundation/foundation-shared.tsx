@@ -1,5 +1,57 @@
 import type { CSSProperties, ReactNode } from "react";
 
+/* -----------------------------------------------------------
+ *  공통 CSS 다운로드 유틸
+ * ----------------------------------------------------------- */
+export function triggerCssDownload(content: string, fileName: string) {
+  const blob = new Blob([content], { type: "text/css;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+export function DownloadButton({ fileName, css }: { fileName: string; css: string }) {
+  return (
+    <button
+      type="button"
+      onClick={() => triggerCssDownload(css, fileName)}
+      style={{
+        appearance: "none",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        padding: "6px 12px",
+        background: "#18181B",
+        color: "#FFFFFF",
+        border: "none",
+        borderRadius: 8,
+        fontWeight: 500,
+        fontSize: 12,
+        cursor: "pointer",
+        whiteSpace: "nowrap",
+      }}
+    >
+      <span aria-hidden style={{ display: "inline-flex" }}>
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M8 2v8m0 0 3-3m-3 3-3-3M3 13h10"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+      {fileName}
+    </button>
+  );
+}
+
 export const PAGE_STYLE: CSSProperties = {
   fontFamily: "var(--font-family-korean)",
   color: "var(--context-foreground-surface-on-surface-base)",

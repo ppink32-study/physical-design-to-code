@@ -13,8 +13,9 @@
  * 그대로 사용할 수 있다.
  *
  * 테마 전환:
- *   <html data-theme="light"> (기본)  → light.css 적용
+ *   <html data-theme="light"> (기본)  → light.css 적용  — Focus 테마
  *   <html data-theme="dark">          → dark.css 적용
+ *   <html data-theme="brand">         → brand.css 적용  — Standard 테마 (강조 영역)
  *
  * 컴포넌트 사용 예:
  *   CSS Module   :  background: var(--context-background-surface-bg-surface-base);

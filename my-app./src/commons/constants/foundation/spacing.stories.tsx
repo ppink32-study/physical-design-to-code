@@ -4,6 +4,8 @@ import type { CSSProperties } from "react";
 import spacingCssRaw from "@/commons/constants/css/spacing.css?raw";
 import { StoryDocsMatrixPage } from "@/stories/story-docs-shell";
 
+import { DownloadButton } from "./foundation-shared";
+
 const SPACING_TOKENS: Array<{ token: string; value: string }> = [
   { token: "--spacing-none", value: "0px" },
   { token: "--spacing-3xs", value: "2px" },
@@ -50,57 +52,6 @@ const tokens = {
   textMuted: "var(--context-foreground-surface-on-surface)",
   textSubtle: "var(--context-foreground-surface-on-surface-secondary)",
 } as const;
-
-function triggerCssDownload() {
-  const blob = new Blob([spacingCssRaw], {
-    type: "text/css;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "spacing.css";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function DownloadButton() {
-  return (
-    <button
-      type="button"
-      onClick={triggerCssDownload}
-      style={{
-        appearance: "none",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "10px 18px",
-        background: "var(--accent-gray-accent-gray-darkest)",
-        color: "#FFFFFF",
-        border: "none",
-        borderRadius: "var(--radius-full)",
-        fontWeight: 600,
-        fontSize: 13,
-        cursor: "pointer",
-        boxShadow: "0 1px 2px rgba(0,0,0,0.12)",
-      }}
-    >
-      <span aria-hidden style={{ display: "inline-flex" }}>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M8 2v8m0 0 3-3m-3 3-3-3M3 13h10"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-      spacing.css 다운로드
-    </button>
-  );
-}
 
 const previewTrackStyle: CSSProperties = {
   width: "100%",
@@ -164,7 +115,7 @@ export const Matrix: Story = {
           marginBottom: 8,
         }}
       >
-        <DownloadButton />
+        <DownloadButton fileName="spacing.css" css={spacingCssRaw} />
       </div>
 
       <div

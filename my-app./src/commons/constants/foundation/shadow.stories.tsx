@@ -4,6 +4,8 @@ import type { CSSProperties, ReactNode } from "react";
 import shadowCssRaw from "@/commons/constants/css/shadow.css?raw";
 import { StoryDocsPage } from "@/stories/story-docs-shell";
 
+import { DownloadButton } from "./foundation-shared";
+
 /* -----------------------------------------------------------
  *  Shadow tokens
  *  Source of truth: Figma — Token Spec / Shadows (node 13382-23979)
@@ -139,60 +141,6 @@ const tokens = {
 } as const;
 
 const TABLE_MAX_WIDTH = 1280;
-
-/* -----------------------------------------------------------
- *  Download CSS — uses Vite ?raw import of the existing file
- * ----------------------------------------------------------- */
-function triggerShadowCssDownload() {
-  const blob = new Blob([shadowCssRaw], {
-    type: "text/css;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "shadow.css";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function DownloadButton() {
-  return (
-    <button
-      type="button"
-      onClick={triggerShadowCssDownload}
-      style={{
-        appearance: "none",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "10px 18px",
-        background: "var(--accent-gray-accent-gray-darkest)",
-        color: "#FFFFFF",
-        border: "none",
-        borderRadius: "var(--radius-full)",
-        fontWeight: 600,
-        fontSize: 13,
-        cursor: "pointer",
-        boxShadow: "0 1px 2px rgba(0,0,0,0.12)",
-      }}
-    >
-      <span aria-hidden style={{ display: "inline-flex" }}>
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M8 2v8m0 0 3-3m-3 3-3-3M3 13h10"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
-      shadow.css 다운로드
-    </button>
-  );
-}
 
 /* -----------------------------------------------------------
  *  Section header
@@ -621,7 +569,7 @@ export const Guideline: Story = {
           index="01 — SHADOW SCALE"
           title="Shadow scale"
           description="레이어 위계를 표현하는 6단계 표면 그림자 토큰입니다. 컴포넌트가 떠 있는 정도(layer height)에 맞춰 한 단계씩만 사용하세요."
-          action={<DownloadButton />}
+          action={<DownloadButton fileName="shadow.css" css={shadowCssRaw} />}
         />
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <ShadowPreviewGrid />
