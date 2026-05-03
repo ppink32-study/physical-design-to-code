@@ -1,0 +1,60 @@
+/* =============================================================================
+ * XButtonLarge — Figma 18369:15529 (btn/delete)
+ * -----------------------------------------------------------------------------
+ *   container : 32×32 (--size-base-4xl), rounded-100 (원형)
+ *   default bg: --opacity-black-opacity-50 (rgba(0,0,0,0.5))
+ *   hover   bg: --opacity-black-opacity-90 (rgba(0,0,0,0.9))
+ *   icon fg   : --context-foreground-neutral-on-neutral-white (흰 X)
+ *   icon size : 16×16 (Close-2.svg, mask-image)
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-base-4xl, 32px);
+  height: var(--size-base-4xl, 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 100px;
+  background: var(--opacity-black-opacity-50, rgba(0, 0, 0, 0.5));
+  color: var(--context-foreground-neutral-on-neutral-white, #FFFFFF);
+  cursor: pointer;
+  appearance: none;
+  user-select: none;
+  transition: background-color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--context-foreground-neutral-on-neutral-white, #FFFFFF);
+  outline-offset: 2px;
+}
+
+/* hover */
+.root:hover,
+.root[data-force-state="hover"] {
+  background: var(--opacity-black-opacity-90, rgba(0, 0, 0, 0.9));
+}
+
+/* icon — Close-2 SVG, currentColor 상속 (mask-image) */
+.icon {
+  flex-shrink: 0;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask-image: url("/icon/Close-2.svg");
+  mask-image: url("/icon/Close-2.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}

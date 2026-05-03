@@ -90,15 +90,6 @@
   cursor: pointer;
   box-sizing: border-box;
 }
-.closeIcon {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background: currentColor;
-  -webkit-mask: url(/icon/Close.svg) center / contain no-repeat;
-  mask: url(/icon/Close.svg) center / contain no-repeat;
-}
-
 /* =============================================================================
  * Hover
  * ========================================================================== */

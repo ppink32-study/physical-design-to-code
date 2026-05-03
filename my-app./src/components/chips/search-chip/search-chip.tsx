@@ -2,6 +2,7 @@
 
 import { forwardRef, type HTMLAttributes } from "react";
 import styles from "./search-chip.module.css";
+import { XButton } from "@/components/button/x-button/x-button";
 
 export type SearchChipState = "default" | "hover" | "selected" | "error" | "disable";
 
@@ -55,15 +56,13 @@ export const SearchChip = forwardRef<HTMLSpanElement, SearchChipProps>(
         </span>
 
         {closeIcon && (
-          <button
-            type="button"
+          <XButton
             className={styles.closeBtn}
+            size="medium"
             aria-label={closeAriaLabel}
             disabled={isDisabled}
             onClick={onClose}
-          >
-            <span className={styles.closeIcon} aria-hidden="true" />
-          </button>
+          />
         )}
       </span>
     );

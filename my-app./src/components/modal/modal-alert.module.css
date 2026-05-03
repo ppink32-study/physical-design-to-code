@@ -1,0 +1,142 @@
+/* =================================================================
+ *  Modal Alert — Figma node 5453:10090
+ *
+ *  구조
+ *    .overlay  : 전체 화면 backdrop
+ *    .dialog   : 350px 패널 (data-type: confirm|error|warning|success)
+ *      .body   : 아이콘 + 텍스트 + 선택적 dataBox (px-24 py-20)
+ *      .footer : 버튼 행 (justify-center, pb-20 px-24)
+ *
+ *  아이콘 색상 (mask-image + currentColor)
+ *    confirm → --context-foreground-neutral-on-neutral-hint   (#787A88)
+ *    error   → --context-foreground-error-on-error            (#FF312E)
+ *    warning → --context-foreground-warning-on-warning        (#FF8F0E)
+ *    success → --context-foreground-success-on-success        (#09B200)
+ * =============================================================== */
+
+/* -----------------------------------------------------------------
+ *  Overlay (backdrop)
+ * ----------------------------------------------------------------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.50);
+  box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------
+ *  Dialog 패널
+ * ----------------------------------------------------------------- */
+.dialog {
+  position: relative;
+  width: 350px;
+  border-radius: var(--radius-lg, 8px);
+  border: 1px solid var(--border-border-surface-border-surface-secondary);
+  background: var(--context-background-surface-bg-surface-base);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.16);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* -----------------------------------------------------------------
+ *  Body (아이콘 + 텍스트)
+ * ----------------------------------------------------------------- */
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  padding: var(--spacing-xl, 20px) var(--spacing-2xl, 24px);
+  box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------
+ *  Icon
+ * ----------------------------------------------------------------- */
+.icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------------
+ *  텍스트 영역
+ * ----------------------------------------------------------------- */
+.textCon {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.titleBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-heading-h6, 16px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-md, 22px);
+  color: var(--context-foreground-surface-on-surface-base);
+  letter-spacing: 0;
+}
+
+.message {
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-surface-on-surface);
+  letter-spacing: 0;
+}
+
+/* -----------------------------------------------------------------
+ *  Data Box (선택적 회색 정보 박스)
+ * ----------------------------------------------------------------- */
+.dataBox {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-lg, 8px);
+  background: var(--context-background-neutral-bg-neutral-secondary);
+  box-sizing: border-box;
+  text-align: center;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-neutral-on-neutral-base);
+}
+
+/* -----------------------------------------------------------------
+ *  Footer
+ * ----------------------------------------------------------------- */
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 0 24px 20px;
+  box-sizing: border-box;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm, 8px);
+  width: 300px;
+}
+
+.btn {
+  width: 146px;
+}

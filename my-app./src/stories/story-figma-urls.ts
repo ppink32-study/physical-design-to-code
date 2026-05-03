@@ -54,6 +54,7 @@ const TITLE_TO_NODE: Record<string, string | null> = {
   /** Full-page dim + centered loader — PageLoaderOverlay */
   "Components/Loader/Full page overlay": "18219:10393",
   "Components/Tooltip": "5543:321819",
+  "Components/Modal": "6446:446809",
   "Components/Gnb": "17945:4068",
   /** 섹션 루트 — 개별 스토리에 `parameters.figma` 가 없을 때 */
   "Components/Dropdown": "5262-317642",

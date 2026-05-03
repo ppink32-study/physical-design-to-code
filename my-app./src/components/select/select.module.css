@@ -69,13 +69,20 @@
   height: var(--size-base-6xl); /* 40 */
 }
 
-/* 다중 wrap(2line) 모드에서는 높이를 auto 로 풀어 줌 */
+/* chip 있음 — 양쪽 패딩 비대칭(left 8) + 상하 4 */
+.trigger[data-has-chips="true"] {
+  padding: var(--spacing-2xs) var(--spacing-md) var(--spacing-2xs) var(--spacing-sm); /* 4 12 4 8 */
+}
+/* medium + chip → align flex-start / large + chip → center 유지 */
+.trigger[data-size="medium"][data-has-chips="true"] {
+  align-items: flex-start;
+}
+
+/* 2line wrap 모드에서는 높이를 auto 로 풀어 줌 */
 .trigger[data-multiline="true"] {
   height: auto;
   min-height: var(--size-base-4xl);
   align-items: flex-start;
-  padding-top: var(--spacing-2xs);
-  padding-bottom: var(--spacing-2xs);
 }
 .trigger[data-size="large"][data-multiline="true"] {
   min-height: var(--size-base-6xl);
@@ -90,7 +97,11 @@
   gap: var(--spacing-2xs);
   flex: 1 1 0;
   min-width: 0;
-  padding-right: var(--spacing-lg); /* 16 — 우측 아이콘과 겹치지 않도록 */
+  padding-right: var(--spacing-lg); /* 16 — value 텍스트가 chevron 과 겹치지 않도록 */
+}
+/* chip 모드는 우측 아이콘이 별도 flex 아이템 — 추가 padding 불필요 */
+.trigger[data-has-chips="true"] .input {
+  padding-right: 0;
 }
 .input[data-multiline="true"] {
   flex-wrap: wrap;
@@ -101,7 +112,7 @@
 /* Label 타입 좌측 텍스트 — Body/Md-Medium, on-surface-hint */
 .labelText {
   flex-shrink: 0;
-  margin-right: var(--spacing-sm);
+  margin-right: var(--spacing-2xs);
   color: var(--context-foreground-surface-on-surface-hint, #787a88);
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
   font-size: var(--font-size-body-md, 13px);

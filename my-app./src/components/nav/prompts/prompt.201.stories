@@ -1,0 +1,38 @@
+아래의 조건을 모두 적용하여, 아래의 요구사항을 모두 구현할 것.
+구현 결과를 체크리스트로 반환할 것.
+
+==============================================
+
+조건-커서룰) 아래의 커서룰을 적용하여 작업하고, 이 작업이 끝나면 해당 rules 적용 결과를 체크리스트로 반환할 것.
+            - @01-common.mdc
+            - @02-wireframe
+            - @03-ui.mdc
+
+
+==============================================
+
+조건-파일경로) 구현 TSX     파일경로: src/components/nav/gnb.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/nav/gnb.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/nav/gnb.stories.tsx
+
+==============================================
+
+핵심요구사항) 피그마 파일과 동일한 스펙의 페이지네이션을 구현할 것. 
+  - 피그마 링크 (gnb): @https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17945-4069&m=dev
+  - 피그마 링크 (gnb/select):@https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17945-3583&m=dev
+  - 피그마 링크 (gnb/icon):@https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=16508-163773&m=dev
+  - 수치가 불명확하면 임의로 설정하지 말고 질문할 것.
+  - mcp를 활용하여 피그마의 디자인을 그대로 소스코드로 구현할 것. 피그마에 적용된 것과 동일한 토큰을 global.css와 매칭하여 반영할 것 
+
+==============================================
+
+조건-파일경로) 구현 TSX     파일경로: src/components/nav/lnb.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/nav/lnb.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/nav/lnb.stories.tsx
+
+핵심요구사항) 피그마 파일과 동일한 스펙의 페이지네이션을 구현할 것. 
+  - 피그마 링크 (lnb/item): @https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17945-12791&m=dev
+  - 피그마 링크 (lnb): @https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17947-9157&m=dev
+  - 수치가 불명확하면 임의로 설정하지 말고 질문할 것.
+  - mcp를 활용하여 피그마의 디자인을 그대로 소스코드로 구현할 것. 피그마에 적용된 것과 동일한 토큰을 global.css와 매칭하여 반영할 것 
+

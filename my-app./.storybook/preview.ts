@@ -52,10 +52,11 @@ const preview: Preview = {
           "DatePicker",
           "Loader",
           "Tooltip",
-          "Gnb",
           "Dropdown",
           "Toasts",
           "Alert",
+          "Nav",
+          "Modal",
         ];
 
         /** 사이드바 최상단 — `src/stories/revision-history.stories.tsx` 와 동일 문자열 */
@@ -76,7 +77,7 @@ const preview: Preview = {
           return idx === -1 ? 999 : idx;
         };
 
-        /** eval 추출용 — TS 타입 표기 금지(Unexpected token ':') */
+        /** eval 추출용 — TS 타입 표기 금지 */
         const componentsGroupRank = (title) => {
           if (!title.startsWith(COMPONENTS_TITLE_PREFIX)) return null;
           const group = title.split("/")[1];

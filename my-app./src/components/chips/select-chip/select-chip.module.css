@@ -124,6 +124,10 @@
   background: var(--context-background-tint-bg-red-tint);
   border-color: var(--context-foreground-error-on-error-hover);
 }
+.chip[data-state="default"][data-error="true"]:hover .warningIcon,
+.chip[data-force-state="hover"][data-error="true"] .warningIcon {
+  color: var(--context-foreground-error-on-error-hover);
+}
 
 /* =============================================================================
  * Readonly

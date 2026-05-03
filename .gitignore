@@ -2,3 +2,6 @@
 build-storybook.log
 **/build-storybook.log
 my-app./index.json
+
+# Storybook dev debug log (local only)
+**/debug-storybook.log

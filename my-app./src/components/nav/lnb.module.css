@@ -1,0 +1,723 @@
+/* =================================================================
+ *  LNB — Figma node 17947:9157 (Brand) / 17947:9158 (Light)
+ *
+ *  Light 토큰 (data-theme="light")
+ *    bg              : --context-background-surface-bg-surface-white  = #FFFFFF
+ *    1depth normal   : --context-foreground-surface-on-surface-teriary = #9698A3
+ *    1depth hover    : --context-foreground-surface-on-surface-hover   = #434551
+ *    1depth expanded : --context-foreground-surface-on-surface-selected= #434551  (semibold)
+ *    1depth selected : --context-foreground-primary-on-primary         = #3F9BAE  (semibold)
+ *    1depth sel-bg   : --opacity-primary-opacity-20                    = rgba(67,198,193,0.2)
+ *    1depth exp-bg   : --context-background-surface-bg-surface-base-selected = #F4F4F5
+ *    1depth hover-bg : --context-background-surface-bg-surface-base-hover    = #ECECEE
+ *    2/3depth normal : --context-foreground-surface-on-surface         = #565967
+ *    3depth sel-text : --context-foreground-primary-on-primary         = #3F9BAE  (semibold)
+ *
+ *  Brand 토큰 (data-theme="brand")
+ *    bg              : --context-background-surface-bg-surface-white  = #141518
+ *    1depth normal   : --context-foreground-surface-on-surface-teriary = #787A88
+ *    1depth hover    : --context-foreground-surface-on-surface-hover   = #787A88
+ *    1depth expanded : --context-foreground-surface-on-surface-selected= #B3B4BC  (semibold)
+ *    1depth selected : --context-foreground-surface-on-surface-base    = #F4F4F5  (semibold) ← 예외 토큰
+ *    1depth sel-bg   : gradient + border
+ *    1depth exp-bg   : --context-background-surface-bg-surface-base-selected = #1F2025
+ *    1depth hover-bg : --context-background-surface-bg-surface-base-hover    = #26282E
+ *    2/3depth normal : --context-foreground-surface-on-surface         = #9698A3
+ *    3depth sel-text : --context-foreground-primary-on-primary         = #9EF7EE  (semibold)
+ * =============================================================== */
+
+/* -----------------------------------------------------------------
+ *  컨테이너
+ * ----------------------------------------------------------------- */
+.lnb {
+  position: relative;                  /* selected indicator 의 absolute 기준점 */
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  height: 100%;
+  background: var(--context-background-surface-bg-surface-white);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------
+ *  Selected Indicator (Figma node 18367:11455)
+ *  좌측 mint 핀 — 선택된 아이템 옆에 표시되며 다른 아이템 선택 시 슬라이드.
+ *  두 레이어: sharp (z-10) + blur(4px) glow (z-9, 같은 위치).
+ * ----------------------------------------------------------------- */
+.selectedIndicator,
+.selectedIndicatorBlur {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 26px;
+  /* brand 토큰 사용 — light/brand 모두 #7EF2F1 (mint-500) 로 일관 */
+  background: var(--context-foreground-primary-on-primary-secondary);
+  border-radius: 0 4px 4px 0;
+  pointer-events: none;
+  /* transform: translateY(...) 로 위치 지정. cubic-bezier 로 부드럽게 슬라이드 */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.selectedIndicator {
+  z-index: 10;
+}
+
+.selectedIndicatorBlur {
+  z-index: 9;
+  filter: blur(4px);
+}
+
+/* -----------------------------------------------------------------
+ *  상단 프로젝트 셀렉터 영역
+ * ----------------------------------------------------------------- */
+.topArea {
+  flex-shrink: 0;
+  padding: 12px 16px 16px;
+}
+
+.projectSelect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 100px;
+  /*
+   * Gradient border — Figma 정확 매칭:
+   *   - Linear, top-left(#7EF2F1) → bottom-right(#7972F7), stops 0% / 100%
+   * CSS 는 border-image 가 radius 와 호환되지 않아 double background + background-clip 트릭 사용:
+   *   - 상단 레이어 (padding-box): LNB 표면색으로 inner 를 채워 그라데이션 가림
+   *   - 하단 레이어 (border-box): mint→violet 그라데이션이 2px border 영역에만 노출
+   */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(
+      var(--context-background-surface-bg-surface-white),
+      var(--context-background-surface-bg-surface-white)
+    ) padding-box,
+    linear-gradient(to bottom right, #7972F7 0%, #7EF2F1 100%) border-box;
+  /* 행 color = ChevronRight 등 plain 아이콘 색 (라벨은 별도 토큰으로 오버라이드) */
+  color: var(--context-foreground-icon-surface-icon-surface);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Flag 아이콘 — Figma 원본 SVG 그라데이션 정확 매칭.
+ * SVG: linearGradient (13.09, 14.59) → (-1.41, 1.57), stops #7EF2F1 → #7972F7
+ *      = bottom-right(cyan) → top-left(violet)
+ * IconMask 의 inline `background-color: currentColor` 위에 background-image 페인팅 → mask 로 아이콘 모양만 노출.
+ */
+.projectSelectIcon {
+  background-image: linear-gradient(to top left, #7EF2F1 0%, #7972F7 100%);
+}
+
+.projectSelectInner {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  gap: 4px;          /* icon ↔ label */
+  min-width: 0;
+}
+
+.projectSelectLabel {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-md, 13px);   /* Body/Md_SemiB */
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.052px;
+  color: var(--context-foreground-surface-on-surface-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* -----------------------------------------------------------------
+ *  내비게이션 영역 (스크롤 가능)
+ * ----------------------------------------------------------------- */
+.navArea {
+  flex: 1 0 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--context-background-surface-bg-surface-base-hover) transparent;
+}
+
+.navArea::-webkit-scrollbar {
+  width: 4px;
+}
+
+.navArea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.navArea::-webkit-scrollbar-thumb {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  border-radius: 2px;
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  /* 기본 gap 0 — 1depth 하위 (2depth/3depth) 들은 한 묶음으로 flush */
+  gap: 0;
+  padding: 4px 0 24px;
+}
+
+/* 1depth 아이템 사이에만 4px 간격 적용
+ * - li(1depth) + li(1depth) : 두 1depth 사이 4px
+ * - li(2/3depth) + li(1depth) : 그룹이 끝나고 새 1depth 시작 시 4px
+ * - 첫 li(1depth) : margin 없음 (앞 형제가 없으므로 :has 매칭 안됨)
+ */
+.menuList li + li:has(> .item1) {
+  margin-top: 4px;
+}
+
+/* -----------------------------------------------------------------
+ *  1depth 아이템 (Figma node 17945:12791)
+ *  ── 행 기본: gap-8, h-36, pr-4
+ *  ── color 를 행에서 driving 해서 Label/Chevron/Glyph 가 모두 currentColor 따라감
+ * ----------------------------------------------------------------- */
+.item1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+  padding-right: 4px;
+  border: 1px solid transparent;       /* Selected Brand 의 1px border 와 정렬 맞추기 위해 */
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  /* 기본 상태 색상 */
+  color: var(--context-foreground-surface-on-surface-teriary);
+}
+
+.item1:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: -2px;
+}
+
+/* 아이콘 래퍼 — 36×36 (Expanded 만 bg 적용) */
+.item1IconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: background-color 0.1s ease;
+}
+
+.item1Glyph {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex-shrink: 0;
+  /* 아이콘 전용 토큰 (텍스트와 분리) — Normal */
+  color: var(--context-foreground-icon-surface-icon-surface-teriary);
+}
+
+.item1Label {
+  flex: 1 0 0;
+  min-width: 0;
+  padding-left: 8px;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-heading-h6, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-md, 22px);
+  color: inherit;                       /* 행 color = 텍스트 색 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item1Chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  /* 아이콘 전용 토큰 — Normal */
+  color: var(--context-foreground-icon-surface-icon-surface-teriary);
+}
+
+/* --- Hover (text/icon 색만 바뀜, bg 없음) --- */
+.item1:hover,
+.item1[data-force-hover="true"] {
+  color: var(--context-foreground-surface-on-surface-hover);
+}
+.item1:hover .item1Glyph,
+.item1:hover .item1Chevron,
+.item1[data-force-hover="true"] .item1Glyph,
+.item1[data-force-hover="true"] .item1Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* --- Expanded (행 + icon wrap 모두 bg-surface-base-selected) --- */
+.item1[data-expanded="true"] {
+  background: var(--context-background-surface-bg-surface-base-selected);
+  color: var(--context-foreground-surface-on-surface-selected);
+}
+
+.item1[data-expanded="true"] .item1IconWrap {
+  background: var(--context-background-surface-bg-surface-base-selected);
+}
+
+.item1[data-expanded="true"] .item1Label {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+/* Expanded 아이콘 — Figma 가 Hover 와 동일 SVG 사용 → icon-surface-hover */
+.item1[data-expanded="true"] .item1Glyph,
+.item1[data-expanded="true"] .item1Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* --- Selected Light (행만 bg-opacity-primary-20, icon wrap 은 bg 없음) --- */
+.item1[data-selected="true"] {
+  background: var(--opacity-primary-opacity-20);
+  color: var(--context-foreground-primary-on-primary);
+}
+
+.item1[data-selected="true"] .item1Label {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+/* Selected 아이콘 — primary token (텍스트와 동일) */
+.item1[data-selected="true"] .item1Glyph,
+.item1[data-selected="true"] .item1Chevron {
+  color: var(--context-foreground-primary-on-primary);
+}
+
+/* --- Selected Brand — Figma 정확 매칭:
+ *   BG     : cyan #5CC7D0 (opacity 20%) → dark #1F2025 (opacity 50%, stop @ ~25%)
+ *            = bg-primary-secondary → bg-surface-base-selected (brand 토큰)
+ *   Border : cyan #5CC7D0 → dark #33343D (full opacity, stop @ ~30%)
+ *            = bg-primary-secondary → bg-surface-secondary (brand 토큰)
+ *   double background + background-clip 으로 BG/Border 분리.
+ */
+[data-theme="brand"] .item1[data-selected="true"] {
+  border-color: transparent;
+  background:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--context-background-primary-bg-primary-secondary) 3%, transparent) 0%,
+      color-mix(in srgb, var(--context-background-surface-bg-surface-base-selected) 50%, transparent) 25%
+    ) padding-box,
+    linear-gradient(
+      to right,
+      var(--context-background-primary-bg-primary-secondary) 0%,
+      var(--context-background-surface-bg-surface-secondary) 30%
+    ) border-box;
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
+/* Selected 시에는 icon wrap 의 별도 bg(Expanded 잔여) 제거 →
+ * 그라데이션이 행 전체에 깔리도록 함 (이중 bg 방지) */
+.item1[data-selected="true"] .item1IconWrap {
+  background: transparent;
+}
+
+/* Selected Brand 아이콘 — icon-surface-base (#F4F4F5) */
+[data-theme="brand"] .item1[data-selected="true"] .item1Glyph,
+[data-theme="brand"] .item1[data-selected="true"] .item1Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-base);
+}
+
+/* --- Disabled --- */
+.item1[data-disabled="true"] {
+  pointer-events: none;
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+.item1[data-disabled="true"] .item1Glyph,
+.item1[data-disabled="true"] .item1Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+}
+
+/* -----------------------------------------------------------------
+ *  2depth 아이템 (Figma)
+ *  ── h-32, px-8, gap-8, chevron 12px (왼쪽 leading), label 14px
+ *  ── color 행에서 driving
+ * ----------------------------------------------------------------- */
+.item2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 32px;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: var(--context-foreground-surface-on-surface);
+  transition: color 0.1s ease;
+}
+
+/* 2depth no-chevron variant — chevron 자리(12px) + gap(8px) 만큼 pl 보정해 라벨 위치 동일하게 유지
+ * 8(원래 pl) + 12(chevron) + 8(gap) = 28px → padding-left: 28px
+ */
+.item2[data-no-chevron="true"] {
+  padding-left: 28px;
+}
+
+.item2:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+.item2Chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  /* 아이콘 전용 토큰 — Normal */
+  color: var(--context-foreground-icon-surface-icon-surface);
+}
+
+.item2Label {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-sm, 20px);
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Hover --- */
+.item2:hover,
+.item2[data-force-hover="true"] {
+  color: var(--context-foreground-surface-on-surface-hover);
+}
+
+.item2:hover .item2Chevron,
+.item2[data-force-hover="true"] .item2Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* --- Expanded (chevron Up, semibold) --- */
+.item2[data-expanded="true"] {
+  color: var(--context-foreground-surface-on-surface-selected);
+}
+
+.item2[data-expanded="true"] .item2Label {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.item2[data-expanded="true"] .item2Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+
+/* --- Selected (chevron Down 유지, primary 색) --- */
+.item2[data-selected="true"] {
+  color: var(--context-foreground-primary-on-primary);
+}
+
+.item2[data-selected="true"] .item2Label {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.item2[data-selected="true"] .item2Chevron {
+  color: var(--context-foreground-primary-on-primary);
+}
+
+/* --- Disabled --- */
+.item2[data-disabled="true"] {
+  pointer-events: none;
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+.item2[data-disabled="true"] .item2Chevron {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+}
+
+/* -----------------------------------------------------------------
+ *  3depth 아이템 (Figma)
+ *  ── 행 기본: h-32, pl-8 pr-0, gap-4
+ *  ── [Blank 12/16] [Content (border-left + label)]
+ *  ── Selected: blank 16, content pl-0 + border 2px primary + bg-opacity-primary-20
+ *  ── Normal/Hover/Expanded/Disabled: blank 12, content pl-4 + border 1px
+ * ----------------------------------------------------------------- */
+.item3 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 32px;
+  padding-left: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: var(--context-foreground-surface-on-surface);
+  transition: color 0.1s ease;
+}
+
+.item3:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+/* 왼쪽 들여쓰기 공백 */
+.item3Blank {
+  width: 12px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.item3[data-selected="true"] .item3Blank {
+  width: 16px;
+}
+
+/* 내용 래퍼 (Border 엘리먼트 + text)
+ * Figma 구조: [pl-4][Border 1px][gap-8][Label][pr-8]
+ * 이전에는 border-left 사용 → border 가 box 좌측 끝에 위치해 Figma 와 4px 어긋남
+ * 별도 .item3Border 엘리먼트로 분리하여 pl-4 가 Border 앞에 적용되도록 함
+ */
+.item3Content {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  gap: 8px;                            /* Border ↔ Label */
+  height: 100%;
+  min-width: 0;
+  padding: 0 8px 0 4px;                /* pl-4 pr-8 */
+  box-sizing: border-box;
+}
+
+/* 세로 구분선 (Figma 의 Border 엘리먼트, 1px 라인) */
+.item3Border {
+  width: 1px;
+  height: 100%;
+  flex-shrink: 0;
+  /* Brand: hint-muted 유지 */
+  background: var(--context-foreground-surface-on-surface-hint-muted, #b3b4bc);
+}
+
+/* Light: Border / border-surface-secondary (Figma Border Surface) */
+[data-theme="light"] .item3Border {
+  background: var(--border-border-surface-border-surface-secondary, #ececee);
+}
+
+.item3Label {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--font-line-height-sm, 20px);
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Hover --- */
+.item3:hover,
+.item3[data-force-hover="true"] {
+  color: var(--context-foreground-surface-on-surface-hover);
+}
+
+/* --- Selected (Light · Brand 모두) ---
+ *  Figma: blank 16px (.item3Blank 에서 처리), content pl-0,
+ *         Border 2px primary, bg-opacity-primary-20
+ */
+.item3[data-selected="true"] {
+  color: var(--context-foreground-primary-on-primary);
+}
+
+.item3[data-selected="true"] .item3Content {
+  background: var(--opacity-primary-opacity-20);
+  padding-left: 0;                     /* pl-4 제거 → Border 가 .item3Content 좌측 끝에 붙음 */
+}
+
+.item3[data-selected="true"] .item3Border {
+  width: 1px;
+  background: var(--context-foreground-primary-on-primary);
+}
+
+.item3[data-selected="true"] .item3Label {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+/* --- Disabled (Figma: Medium 500, Normal/Hover 의 Regular 와 다름) --- */
+.item3[data-disabled="true"] {
+  pointer-events: none;
+  color: var(--context-foreground-surface-on-surface-disabled);
+}
+
+.item3[data-disabled="true"] .item3Label {
+  font-weight: var(--font-weight-medium, 500);
+}
+
+/* -----------------------------------------------------------------
+ *  하단 사용자 프로필 영역
+ * ----------------------------------------------------------------- */
+.bottomArea {
+  flex-shrink: 0;
+  /* Figma node 17947:8600: pt-12 px-12 pb-16 */
+  padding: 12px 12px 16px;
+  border-top: 1px solid var(--border-border-surface-border-surface-secondary);
+  /* Figma: --context/foreground/surface/on-suface-white (Figma typo "on-suface")
+     Light: #FFFFFF, Brand: #1F2025 (LNB 본체보다 살짝 밝아 구분) */
+  background: var(--context-foreground-surface-on-suface-white);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  /* Light: bg-surface-secondary (#F4F4F5) — silhouette #B3B4BC 가 살짝 어둡게 보임 */
+  background: var(--context-background-surface-bg-surface-secondary);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Brand: on-surface-secondary (#565967) — LNB 본체(#141518) 대비 충분한 밝기 + silhouette 시인성 확보 */
+[data-theme="brand"] .avatar {
+  background: var(--context-foreground-surface-on-surface-secondary);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userInfo {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.userName {
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-surface-on-surface-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userRole {
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-md, 13px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.052px;
+  color: var(--context-foreground-primary-on-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.editProfileBtn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  height: 32px;
+  padding: 1px 13px;
+  border: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+  border-radius: 6px;
+  background: var(--context-background-surface-bg-surface-white);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
+  overflow: hidden;
+  /* IconMask 의 currentColor 가 Pencil/ChevronRight 색으로 사용됨.
+   * Brand 모드: icon-surface = #9698A3 (어두운 버튼 위 회색 아이콘)
+   * Light 모드: icon-surface = #565967 (흰 버튼 위 회색 아이콘)
+   */
+  color: var(--context-foreground-icon-surface-icon-surface);
+}
+
+.editProfileBtn:hover {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+
+.editProfileIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--context-foreground-surface-on-surface);
+}
+
+.editProfileLabel {
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 0 2px;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-base, 14px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--context-foreground-surface-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.editProfileChevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--context-foreground-surface-on-surface);
+}

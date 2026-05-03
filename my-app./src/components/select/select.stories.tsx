@@ -85,9 +85,9 @@ const matrixCellStyle: CSSProperties = {
 };
 
 const CHIPS_MULTI = [
-  <InputChip key="a">Option A</InputChip>,
-  <InputChip key="b">Option B</InputChip>,
-  <InputChip key="c">Option C</InputChip>,
+  <InputChip key="a">Text</InputChip>,
+  <InputChip key="b">Text</InputChip>,
+  <InputChip key="c">Text</InputChip>,
 ];
 
 const TONE_COLS: Array<{ key: SelectTone | "label"; label: string }> = [

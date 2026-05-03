@@ -113,6 +113,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
       data-tone={tone}
       data-state={state}
       data-type={type}
+      data-has-chips={hasChips || undefined}
       data-multiline={multiline || undefined}
       data-open={open || undefined}
       aria-expanded={open}

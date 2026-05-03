@@ -13,7 +13,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -81,6 +80,9 @@ const STATE_ROWS: StateRow[] = [
 ];
 
 export const Playground: Story = {
+  argTypes: {
+    forceState: { table: { disable: true } },
+  },
   decorators: [
     (Story) => (
       <StoryPlaygroundFrame>
@@ -194,13 +196,6 @@ export const Guideline: Story = {
         </StoryDocsPanelInset>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { SearchChip } from "@/components/chips/search-chip/search-chip";
-
-<SearchChip label="Status" state="selected" onClose={() => {}}>
-  Active
-</SearchChip>`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

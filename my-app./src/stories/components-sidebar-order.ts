@@ -30,8 +30,9 @@ export const COMPONENTS_GROUP_ORDER = [
   "DatePicker",
   "Loader",
   "Tooltip",
-  "Gnb",
   "Dropdown",
   "Toasts",
   "Alert",
+  "Nav",
+  "Modal",
 ] as const;

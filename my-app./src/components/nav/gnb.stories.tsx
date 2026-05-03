@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { useState } from "react";
 import type { CSSProperties } from "react";
 
 import { FigmaLinkCard } from "@/stories/figma-link-card";
@@ -27,7 +28,7 @@ import {
 /* ----------------------------------------------------------------- */
 
 const meta: Meta<typeof Gnb> = {
-  title: "Components/Gnb",
+  title: "Components/Nav/Gnb",
   component: Gnb,
   parameters: {
     layout: "fullscreen",
@@ -59,12 +60,32 @@ function Logo({ theme }: { theme: GnbTheme }) {
   );
 }
 
+/* 정적 매트릭스용 — selectedIndex prop 으로 강제 지정 */
 function NavItems({ selectedIndex = 0 }: { selectedIndex?: number }) {
   const labels = ["Home", "Menu 1", "Menu 1", "Menu 1"];
   return (
     <>
       {labels.map((label, i) => (
         <GnbItem key={i} selected={i === selectedIndex}>
+          {label}
+        </GnbItem>
+      ))}
+    </>
+  );
+}
+
+/* 인터랙티브 — Playground 용. 클릭 시 selected 전환 */
+function InteractiveNavItems({ defaultSelected = 0 }: { defaultSelected?: number }) {
+  const [selected, setSelected] = useState(defaultSelected);
+  const labels = ["Home", "Menu 1", "Menu 1", "Menu 1"];
+  return (
+    <>
+      {labels.map((label, i) => (
+        <GnbItem
+          key={i}
+          selected={i === selected}
+          onClick={() => setSelected(i)}
+        >
           {label}
         </GnbItem>
       ))}
@@ -105,7 +126,8 @@ export const Playground: Story = {
         <Gnb
           theme={theme}
           brand={<Logo theme={theme} />}
-          items={<NavItems />}
+          /* 클릭하면 selected 전환되는 인터랙티브 메뉴 */
+          items={<InteractiveNavItems />}
           actions={<ActionButtons />}
         />
       </div>
@@ -131,7 +153,7 @@ const labelStyle: CSSProperties = {
   letterSpacing: "0.06em",
 };
 
-/* GNB 전체 바 */
+/* GNB 전체 바 — Matrix 상단도 클릭으로 selected 전환 가능 */
 function GnbRow({ theme, bg }: { theme: GnbTheme; bg: string }) {
   return (
     <div style={{ overflowX: "auto", borderRadius: 4, border: "1px solid var(--border-border-surface-border-surface)" }}>
@@ -139,7 +161,7 @@ function GnbRow({ theme, bg }: { theme: GnbTheme; bg: string }) {
         <Gnb
           theme={theme}
           brand={<Logo theme={theme} />}
-          items={<NavItems />}
+          items={<InteractiveNavItems />}
           actions={<ActionButtons />}
         />
       </div>

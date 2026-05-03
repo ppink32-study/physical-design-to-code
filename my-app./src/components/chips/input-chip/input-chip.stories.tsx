@@ -13,7 +13,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -78,6 +77,9 @@ const STATE_ROWS: Array<{
 ];
 
 export const Playground: Story = {
+  argTypes: {
+    forceState: { table: { disable: true } },
+  },
   decorators: [
     (Story) => (
       <StoryPlaygroundFrame>
@@ -190,11 +192,6 @@ export const Guideline: Story = {
         </StoryDocsPanelInset>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { InputChip } from "@/components/chips/input-chip/input-chip";
-
-<InputChip size="medium" onClose={() => {}}>Text</InputChip>`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

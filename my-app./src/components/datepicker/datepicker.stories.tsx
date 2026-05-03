@@ -34,8 +34,8 @@ const meta: Meta<typeof DatePicker> = {
     label: { control: "text" },
     placeholder: { control: "text" },
     clearable: { control: "boolean" },
-    disabled: { control: "boolean" },
-    readOnly: { control: "boolean" },
+    disabled: { table: { disable: true } },
+    readOnly: { table: { disable: true } },
   },
 };
 export default meta;

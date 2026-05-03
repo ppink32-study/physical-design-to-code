@@ -17,7 +17,7 @@
   align-items: center;
   box-sizing: border-box;
   gap: var(--spacing-2xs, 4px);
-  padding: 1px var(--spacing-md, 13px);
+  padding: var(--spacing-none, 0) var(--spacing-md, 13px);
   border-radius: var(--radius-md, 6px);
   border: 1px solid
     var(--border-border-surface-border-surface, #d7d8dc);
@@ -184,9 +184,11 @@
 
 /* Disable / Readonly 시 텍스트 컬러 override */
 .root[data-state="disable"] .singleText,
-.root[data-state="disable"] .dateText,
-.root[data-state="disable"] .label {
+.root[data-state="disable"] .dateText {
   color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+}
+.root[data-state="disable"] .label {
+  color: var(--context-foreground-surface-on-surface-hint, #787a88);
 }
 
 .root[data-state="readonly"] .singleText[data-empty="false"],

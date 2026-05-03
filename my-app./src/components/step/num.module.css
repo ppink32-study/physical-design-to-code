@@ -1,0 +1,84 @@
+/* =============================================================================
+ * Num — Figma 18374:238 (24×24 원형 step 번호 배지)
+ * -----------------------------------------------------------------------------
+ * states × modes (6 variants)
+ *   light · finish  : white bg + 1.5px mint border + mint text
+ *   light · current : mint solid bg + white text
+ *   light · next    : quaternary gray bg + hint text
+ *   dark  · finish  : transparent + mint border + mint text
+ *   dark  · current : mint solid bg + invert (dark) text
+ *   dark  · next    : quaternary gray bg (brand=#565967) + on-surface text
+ * ========================================================================== */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+  padding: var(--spacing-3xs, 2px);
+}
+
+.anchor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 32px;       /* size 24 + radius 32 → 원형 */
+  box-sizing: border-box;
+}
+
+.label {
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-sm, 12px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-xs, 16px);
+  letter-spacing: -0.06px;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * Finish — 외곽선만 mint, 안은 표면색
+ * ------------------------------------------------------------------------- */
+.root[data-state="finish"] .anchor {
+  background: var(--context-background-surface-bg-surface-base);
+  border: var(--border-width-sm, 1.5px) solid var(--border-border-primary);
+}
+.root[data-state="finish"] .label {
+  color: var(--context-foreground-primary-on-primary);
+}
+
+/* dark · finish 만 bg transparent (border 만 노출) */
+.root[data-theme="brand"][data-state="finish"] .anchor {
+  background: transparent;
+  border-color: var(--context-foreground-primary-on-primary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Current — solid mint bg
+ * ------------------------------------------------------------------------- */
+.root[data-state="current"] .anchor {
+  background: var(--context-foreground-primary-on-primary);
+}
+.root[data-state="current"] .label {
+  color: var(--context-foreground-surface-on-suface-white);
+}
+
+/* dark · current — text 는 dark (invert) */
+.root[data-theme="brand"][data-state="current"] .label {
+  color: var(--context-foreground-surface-on-suface-invert);
+}
+
+/* ---------------------------------------------------------------------------
+ * Next — quaternary gray bg
+ * ------------------------------------------------------------------------- */
+.root[data-state="next"] .anchor {
+  background: var(--context-background-surface-bg-surface-quarernary);
+}
+.root[data-state="next"] .label {
+  color: var(--context-foreground-surface-on-surface-hint);
+}
+
+/* dark · next — 텍스트는 on-surface (#9698A3) */
+.root[data-theme="brand"][data-state="next"] .label {
+  color: var(--context-foreground-surface-on-surface);
+}

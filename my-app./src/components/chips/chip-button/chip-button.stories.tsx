@@ -13,7 +13,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -78,6 +77,10 @@ const ROWS: ChipRow[] = [
 ];
 
 export const Playground: Story = {
+  argTypes: {
+    forceState: { table: { disable: true } },
+    icon: { table: { disable: true } },
+  },
   decorators: [
     (Story) => (
       <StoryPlaygroundFrame>
@@ -106,7 +109,6 @@ export const Matrix: Story = {
             <tr>
               <th style={{ ...thStyle, ...stickyCorner, minWidth: 100, zIndex: 2 }} />
               <th style={thStyle}>without icon</th>
-              <th style={thStyle}>with icon</th>
             </tr>
           </thead>
           <tbody>
@@ -117,11 +119,6 @@ export const Matrix: Story = {
                 </th>
                 <td style={tdStyle}>
                   <ChipButton state={row.state}>Chip</ChipButton>
-                </td>
-                <td style={tdStyle}>
-                  <ChipButton state={row.state} icon>
-                    Chip
-                  </ChipButton>
                 </td>
               </tr>
             ))}
@@ -172,11 +169,6 @@ export const Guideline: Story = {
         </StoryDocsPanelInset>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { ChipButton } from "@/components/chips/chip-button/chip-button";
-
-<ChipButton selected onClick={() => {}}>Chip</ChipButton>`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

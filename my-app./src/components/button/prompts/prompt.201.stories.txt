@@ -15,9 +15,33 @@
 조건-파일경로) 구현 CSS     파일경로: src/components/button/button.module.css
 조건-파일경로) 구현 CSS     파일경로: src/components/button/button.stories.tsx
 
+조건-파일경로) 구현 TSX     파일경로: src/components/button/linktext.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/button/linktext.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/button/linktext.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/button/xbutton.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/button/xbutton.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/button/xbutton.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/button/searchtoggleitem.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/button/searchtoggleitem.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/button/searchtoggleitem.stories.tsx
+
+조건-파일경로) 구현 TSX     파일경로: src/components/button/bottombtnarea.tsx
+조건-파일경로) 구현 CSS     파일경로: src/components/button/bottombtnarea.module.css
+조건-파일경로) 구현 CSS     파일경로: src/components/button/bottombtnarea.stories.tsx
+
+
+
+
 ==============================================
 
 핵심요구사항) 피그마 파일과 동일한 스펙의 버튼·스토리를 구현할 것.
   - 피그마 링크: https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17987-47864&m=dev
+  - 피그마 링크 (linktext):@https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=9813-1005&m=dev
+  - 피그마 링크 (xbutton):@https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=6592-270982&m=dev
+  - 피그마 링크 (searchtoggleitem): @https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17312-17269&m=dev
+  - 피그마 링크 (bottombtnarea): @https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=9813-896&m=dev
+
   - 수치가 불명확하면 임의로 설정하지 말고 질문할 것.
   - mcp를 활용하여 피그마의 디자인을 그대로 소스코드로 구현할 것. 피그마에 적용된 것과 동일한 토큰을 global.css와 매칭하여 반영할 것 
