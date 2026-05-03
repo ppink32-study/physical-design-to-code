@@ -1,6 +1,8 @@
-# Chromatic에 Storybook을 게시합니다.
+# Chromatic 에 Storybook 을 게시합니다.
 # 사용 전: GitHub 저장소 Settings → Secrets and variables → Actions 에서
 # CHROMATIC_PROJECT_TOKEN 을 추가하세요. (https://www.chromatic.com/ 프로젝트 설정에서 발급)
+#
+# Storybook 소스는 my-app. 서브디렉토리에 있어 working-directory 로 지정합니다.
 
 name: Chromatic
 
@@ -31,8 +33,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: my-app./package-lock.json
 
       - name: Install dependencies
+        working-directory: ./my-app.
         run: npm ci
 
       - name: Publish to Chromatic
@@ -41,3 +45,4 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-storybook
           exitZeroOnChanges: true
+          workingDir: my-app.
