@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
-import { Badge } from "@/components/badge/badge";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   storyMatrixCellStyle,
@@ -86,9 +85,7 @@ export const Matrix: Story = {
                 <DataTableBody variant="text" width={405}>v1.0</DataTableBody>
               </td>
               <td style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle" }}>
-                <DataTableBody variant="badge" width={405}>
-                  <Badge variant="solid" color="purple" size="sm" shape="square">Badge</Badge>
-                </DataTableBody>
+                <DataTableBody variant="badge" width={405}>Badge</DataTableBody>
               </td>
             </tr>
           </tbody>
@@ -124,15 +121,9 @@ export const Matrix: Story = {
           {/* Row 2 — badge cells */}
           <div style={{ display: "flex" }}>
             <DataTableHeader width={H_W}>Status</DataTableHeader>
-            <DataTableBody variant="badge" width={B_W}>
-              <Badge variant="solid" color="purple" size="sm" shape="square">Active</Badge>
-              <Badge variant="solid" color="purple" size="sm" shape="square">Online</Badge>
-            </DataTableBody>
+            <DataTableBody variant="badge" width={B_W}>Active</DataTableBody>
             <DataTableHeader width={H_W}>Category</DataTableHeader>
-            <DataTableBody variant="badge" width={B_W}>
-              <Badge variant="solid" color="purple" size="sm" shape="square">AI</Badge>
-              <Badge variant="solid" color="purple" size="sm" shape="square">NLP</Badge>
-            </DataTableBody>
+            <DataTableBody variant="badge" width={B_W}>AI</DataTableBody>
           </div>
 
           {/* Row 3 — text cells */}

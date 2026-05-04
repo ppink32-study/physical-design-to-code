@@ -5,7 +5,7 @@
  *
  * 단일 데이터 셀 컴포넌트.
  *   variant="text"  : 텍스트 표시 (Body/Md Regular 13px)
- *   variant="badge" : Badge 슬롯 (children 으로 주입)
+ *   variant="badge" : Badge solid / purple / sm (children = 뱃지 라벨 텍스트)
  *
  *   - 405×40px 기본 크기 (width prop으로 override 가능)
  *   - bg-surface-base, border-right + border-bottom
@@ -13,6 +13,8 @@
  */
 
 import type { ReactNode, CSSProperties } from "react";
+
+import { Badge } from "@/components/badge/badge";
 
 import styles from "./body.module.css";
 
@@ -45,7 +47,9 @@ export function DataTableBody({
         <span className={styles.text}>{children}</span>
       )}
       {variant === "badge" && (
-        <div className={styles.badgeSlot}>{children}</div>
+        <div className={styles.badgeSlot}>
+          <Badge variant="solid" color="purple" size="sm">{children}</Badge>
+        </div>
       )}
     </div>
   );
