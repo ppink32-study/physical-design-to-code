@@ -52,8 +52,6 @@ const WIDTHS: { label: string; width: number }[] = [
   { label: "300px", width: 300 },
 ];
 
-const HEADERS = ["Version", "Model Name", "Status", "Date", "Actions"];
-
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
@@ -90,17 +88,6 @@ export const Matrix: Story = {
         </table>
       </section>
 
-      {/* Row 미리보기 */}
-      <section style={{ marginTop: 32 }}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
-          Header Row 미리보기
-        </h3>
-        <div style={{ display: "flex" }}>
-          {HEADERS.map((label) => (
-            <DataTableHeader key={label} width={150}>{label}</DataTableHeader>
-          ))}
-        </div>
-      </section>
     </StoryDocsMatrixPage>
   ),
 };
