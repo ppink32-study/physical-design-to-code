@@ -96,39 +96,36 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Items 영역
+ * Items wrap — 스크롤바 absolute 포지션 기준점
+ * ------------------------------------------------------------------------- */
+.itemsWrap {
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------------
+ * Items 영역 — native 스크롤바 숨김, 커스텀 Scrollbar 컴포넌트 사용
  * ------------------------------------------------------------------------- */
 .items {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3xs);
   min-width: 0;
-}
-.items[data-scrollable] {
   overflow-y: auto;
   overflow-x: hidden;
+  /* native 스크롤바 숨김 */
+  scrollbar-width: none;
+}
+.items::-webkit-scrollbar {
+  display: none;
 }
 
-/* Custom scrollbar (WebKit) — Figma scrollbar 스펙에 맞춤 */
-.list[data-scrollbar] .items::-webkit-scrollbar {
-  width: 8px;
-}
-.list[data-scrollbar] .items::-webkit-scrollbar-track {
-  background: transparent;
-}
-.list[data-scrollbar] .items::-webkit-scrollbar-thumb {
-  background: var(--context-background-surface-bg-surface-quarernary);
-  border-radius: 8px;
-  border: 2px solid transparent; /* 좌우 2px 여백 효과 */
-  background-clip: padding-box;
-}
-.list[data-scrollbar] .items::-webkit-scrollbar-thumb:hover {
-  background: var(--context-foreground-icon-surface-icon-surface-teriary);
-  background-clip: padding-box;
-}
-/* Firefox */
-.list[data-scrollbar] .items {
-  scrollbar-width: thin;
-  scrollbar-color: var(--context-background-surface-bg-surface-quarernary)
-    transparent;
+/* ---------------------------------------------------------------------------
+ * 커스텀 Scrollbar — absolute, 우측 고정
+ *   Figma: Size=Small, Vertical (W=8, padding 4/2)
+ * ------------------------------------------------------------------------- */
+.scrollbarOverlay {
+  position: absolute;
+  right: 0;
+  top: 0;
+  pointer-events: none;
 }

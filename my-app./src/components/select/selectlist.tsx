@@ -1,28 +1,27 @@
 "use client";
 /* =============================================================================
- * SelectList — Figma Code Connect (node 11959:26477)
+ * SelectList — Figma node 11959:26477
  * -----------------------------------------------------------------------------
  * Select 의 드롭다운 컨테이너(panel). 내부에 SelectItem 들을 children 으로 렌더한다.
  *
  * Variants
  *   type     : "1-level" | "2-levels" | "search"
- *     - "search" 는 상단에 검색 Input 이 기본 노출된다. (items 스크롤 영역 분리)
- *     - search prop 을 명시적으로 넘기면 "1-level" 에서도 검색 input 노출 가능.
- *   showScrollbar : 시각적 스크롤바 트랙 표시 (custom WebKit scrollbar 로 처리)
+ *   showScrollbar : maxHeight 초과 시 커스텀 Scrollbar 컴포넌트(absolute) 표시
  *   maxHeight     : items 영역의 최대 높이 — 넘치면 내부 스크롤
- *
- * Props
- *   - children    : SelectItem 들 (또는 임의 노드)
- *   - search      : boolean | ReactNode   — true 이면 기본 검색 Input 노출
- *   - searchValue, onSearchChange, searchPlaceholder
- *   - width       : 기본 220
  * ========================================================================== */
 import {
   forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
   type ChangeEvent,
   type HTMLAttributes,
   type ReactNode,
 } from "react";
+
+import { Scrollbar } from "@/components/scroll/scroll";
+
 import styles from "./selectlist.module.css";
 
 export type SelectListType = "1-level" | "2-levels" | "search";
@@ -34,9 +33,9 @@ export interface SelectListProps extends HTMLAttributes<HTMLDivElement> {
   searchValue?: string;
   onSearchChange?: (value: string) => void;
   searchPlaceholder?: string;
-  /** items 영역 max-height (px). 기본 없음 — 내용만큼. */
+  /** items 영역 max-height (px). 기본 없음 — 내용만큼 */
   maxHeight?: number;
-  /** 스크롤바 표시 여부 (native scroll 에 커스텀 스타일 적용) */
+  /** 넘칠 때 커스텀 스크롤바 표시 여부. 기본 true */
   showScrollbar?: boolean;
   /** 기본 220 */
   width?: number | string;
@@ -60,20 +59,54 @@ export const SelectList = forwardRef<HTMLDivElement, SelectListProps>(
     },
     ref,
   ) {
+    const itemsRef = useRef<HTMLDivElement>(null);
+    const [isOverflow, setIsOverflow] = useState(false);
+    const [trackHeight, setTrackHeight] = useState(0);
+    const [thumbLength, setThumbLength] = useState(40);
+    const [thumbOffset, setThumbOffset] = useState(0);
+
+    const syncScrollbar = useCallback(() => {
+      const el = itemsRef.current;
+      if (!el) return;
+      const { scrollHeight, clientHeight, scrollTop } = el;
+      const overflow = scrollHeight > clientHeight;
+      setTrackHeight(clientHeight);
+      setIsOverflow(overflow);
+      if (!overflow) return;
+
+      const ratio = clientHeight / scrollHeight;
+      const len = Math.max(clientHeight * ratio, 24);
+      const maxThumbOffset = clientHeight - len;
+      const scrollFraction = scrollTop / (scrollHeight - clientHeight);
+      setThumbLength(len);
+      setThumbOffset(maxThumbOffset * scrollFraction);
+    }, []);
+
+    useEffect(() => {
+      const el = itemsRef.current;
+      if (!el || maxHeight == null) return;
+      syncScrollbar();
+      el.addEventListener("scroll", syncScrollbar);
+      const ro = new ResizeObserver(syncScrollbar);
+      ro.observe(el);
+      return () => {
+        el.removeEventListener("scroll", syncScrollbar);
+        ro.disconnect();
+      };
+    }, [syncScrollbar, maxHeight]);
+
     const showSearch = type === "search" || Boolean(search);
     const customSearchNode =
       typeof search === "object" && search !== null ? (search as ReactNode) : null;
+
+    const renderScrollbar = showScrollbar && maxHeight != null && isOverflow;
 
     return (
       <div
         ref={ref}
         className={[styles.list, className].filter(Boolean).join(" ")}
         data-type={type}
-        data-scrollbar={showScrollbar || undefined}
-        style={{
-          width,
-          ...style,
-        }}
+        style={{ width, ...style }}
         role="listbox"
         {...rest}
       >
@@ -92,12 +125,25 @@ export const SelectList = forwardRef<HTMLDivElement, SelectListProps>(
           </>
         )}
 
-        <div
-          className={styles.items}
-          style={maxHeight != null ? { maxHeight } : undefined}
-          data-scrollable={maxHeight != null || undefined}
-        >
-          {children}
+        <div className={styles.itemsWrap}>
+          <div
+            ref={itemsRef}
+            className={styles.items}
+            style={maxHeight != null ? { maxHeight } : undefined}
+          >
+            {children}
+          </div>
+
+          {renderScrollbar && (
+            <Scrollbar
+              className={styles.scrollbarOverlay}
+              orientation="vertical"
+              size="small"
+              length={trackHeight}
+              thumbLength={thumbLength}
+              thumbOffset={thumbOffset}
+            />
+          )}
         </div>
       </div>
     );
