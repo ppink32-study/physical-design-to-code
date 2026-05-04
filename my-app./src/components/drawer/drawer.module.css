@@ -69,7 +69,13 @@
   box-sizing: border-box;
 }
 
-/* Left: Back버튼 + Title row */
+/* -----------------------------------------------------------------
+ *  Header 내부 — Figma 순서
+ *    Left : [Back] [titlePrefix] [badges] [title] [titleActions]
+ *    Right: [headerControls] [X btn]
+ * ----------------------------------------------------------------- */
+
+/* Left: 전체 확장 영역 */
 .headerLeft {
   display: flex;
   flex: 1 0 0;
@@ -78,15 +84,22 @@
   gap: var(--spacing-sm, 8px);
 }
 
-/* Title row: title text + badges + titleActions */
-.titleRow {
+/* titlePrefix 슬롯 (Bookmark/Like 32×32 등) */
+.titlePrefix {
   display: flex;
-  flex: 1 0 0;
-  min-width: 0;
   align-items: center;
-  gap: var(--spacing-sm, 8px);
+  flex-shrink: 0;
 }
 
+/* badges 슬롯 — titlePrefix 뒤, title 앞 */
+.badges {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3xs, 4px);
+  flex-shrink: 0;
+}
+
+/* title text */
 .title {
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
   font-size: var(--font-size-heading-h3, 24px);
@@ -97,18 +110,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-shrink: 1;
+  flex: 1 0 0;
+  min-width: 0;
 }
 
-/* badges 슬롯 */
-.badges {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-3xs, 4px);
-  flex-shrink: 0;
-}
-
-/* titleActions 슬롯 (Pencil-Line, ChevronDown 등 24×24 아이콘 버튼) */
+/* titleActions 슬롯 — title 뒤 (Pencil-Line, ChevronDown 등) */
 .titleActions {
   display: flex;
   align-items: center;

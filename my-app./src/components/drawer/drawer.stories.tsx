@@ -17,7 +17,7 @@ import {
   StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
-import { Drawer, type DrawerSize } from "./drawer";
+import { Drawer, DrawerHeader, type DrawerSize } from "./drawer";
 import styles from "./drawer.module.css";
 
 /* ----------------------------------------------------------------- */
@@ -40,6 +40,49 @@ export default meta;
 type Story = StoryObj<typeof Drawer>;
 
 /* -----------------------------------------------------------------
+ *  공용 슬롯 — 헤더 케이스별 재사용
+ * ----------------------------------------------------------------- */
+const BookmarkBtn = () => (
+  <button
+    type="button"
+    aria-label="북마크"
+    style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: 32, height: 32, padding: 0, border: "none", background: "transparent",
+      color: "var(--context-foreground-surface-on-surface)", cursor: "pointer",
+      borderRadius: "var(--radius-xs, 2px)",
+    }}
+  >
+    <span style={{
+      display: "inline-block", width: 24, height: 24,
+      backgroundColor: "currentColor",
+      WebkitMaskImage: "url('/icon/Star.svg')", maskImage: "url('/icon/Star.svg')",
+      WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat",
+      WebkitMaskPosition: "center", maskPosition: "center",
+      WebkitMaskSize: "contain", maskSize: "contain",
+    }} aria-hidden="true" />
+  </button>
+);
+
+const BadgeSlot = () => (
+  <>
+    <Badge variant="solid" color="gray" size="sm">Solid</Badge>
+    <Badge variant="solid" color="teal" size="sm">Teal</Badge>
+  </>
+);
+
+const EditActions = () => (
+  <>
+    <button type="button" className={styles.iconBtn} aria-label="편집">
+      <span className={styles.iconBtnGlyph} data-icon="pencil" aria-hidden="true" />
+    </button>
+    <button type="button" className={styles.iconBtn} aria-label="펼치기">
+      <span className={styles.iconBtnGlyph} data-icon="chevron-down" aria-hidden="true" />
+    </button>
+  </>
+);
+
+/* -----------------------------------------------------------------
  *  Playground
  * ----------------------------------------------------------------- */
 export const Playground: Story = {
@@ -60,12 +103,8 @@ export const Playground: Story = {
           onClose={() => setOpen(false)}
           footer={
             <>
-              <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>
-                취소
-              </Button>
-              <Button variant="primary-solid" size="large" onClick={() => setOpen(false)}>
-                확인
-              </Button>
+              <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>취소</Button>
+              <Button variant="primary-solid" size="large" onClick={() => setOpen(false)}>확인</Button>
             </>
           }
         >
@@ -79,122 +118,107 @@ export const Playground: Story = {
 };
 
 /* -----------------------------------------------------------------
- *  Size Matrix — 3가지 사이즈
+ *  Size 미리보기 (drawer 열기 버튼)
  * ----------------------------------------------------------------- */
+function DrawerPreview({ size }: { size: DrawerSize }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="secondary-outline" size="small" onClick={() => setOpen(true)}>{size}</Button>
+      <Drawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Drawer Title"
+        size={size}
+        footer={
+          <>
+            <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>취소</Button>
+            <Button variant="primary-solid" size="large" onClick={() => setOpen(false)}>확인</Button>
+          </>
+        }
+      >
+        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>Swap content</p>
+      </Drawer>
+    </>
+  );
+}
+
 const SIZES: { label: string; size: DrawerSize }[] = [
   { label: "Small (420px)", size: "small" },
   { label: "Medium (720px)", size: "medium" },
   { label: "Large (max 1140px)", size: "large" },
 ];
 
-function DrawerPreview({ size }: { size: DrawerSize }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Button variant="secondary-outline" size="small" onClick={() => setOpen(true)}>
-        {size}
-      </Button>
-      <Drawer
-        open={open}
-        onClose={() => setOpen(false)}
-        title="Drawer Title"
-        size={size}
-        footer={
-          <>
-            <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>
-              취소
-            </Button>
-            <Button variant="primary-solid" size="large" onClick={() => setOpen(false)}>
-              확인
-            </Button>
-          </>
-        }
-      >
-        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>
-          Swap content
-        </p>
-      </Drawer>
-    </>
-  );
-}
+/* -----------------------------------------------------------------
+ *  Header 인라인 미리보기 케이스
+ *  Figma 순서: [Back?] [titlePrefix?] [badges?] [title] [titleActions?] | [headerControls?] [X]
+ * ----------------------------------------------------------------- */
+type HeaderCase = {
+  label: string;
+  props: {
+    title: string;
+    onBack?: () => void;
+    titlePrefix?: React.ReactNode;
+    badges?: React.ReactNode;
+    titleActions?: React.ReactNode;
+    headerControls?: React.ReactNode;
+  };
+};
+
+const HEADER_CASES: HeaderCase[] = [
+  {
+    label: "Default",
+    props: { title: "Drawer Title" },
+  },
+  {
+    label: "Back",
+    props: { title: "Drawer Title", onBack: () => {} },
+  },
+  {
+    label: "Bookmark",
+    props: { title: "Drawer Title", titlePrefix: <BookmarkBtn /> },
+  },
+  {
+    label: "Badges",
+    props: { title: "Drawer Title", badges: <BadgeSlot /> },
+  },
+  {
+    label: "Edit Actions",
+    props: { title: "Drawer Title", titleActions: <EditActions /> },
+  },
+  {
+    label: "Toggle",
+    props: {
+      title: "Drawer Title",
+      headerControls: <Toggle defaultChecked={false} aria-label="토글" />,
+    },
+  },
+  {
+    label: "Full (모두)",
+    props: {
+      title: "Drawer Title",
+      onBack: () => {},
+      titlePrefix: <BookmarkBtn />,
+      badges: <BadgeSlot />,
+      titleActions: <EditActions />,
+      headerControls: <Toggle defaultChecked={false} aria-label="토글" />,
+    },
+  },
+];
 
 /* -----------------------------------------------------------------
- *  Full Header Preview — Back + Badges + Edit Actions + Toggle
- *  Figma 8256:8490 의 모든 헤더 옵션이 켜진 케이스
+ *  Matrix
  * ----------------------------------------------------------------- */
-function DrawerFullPreview({ size }: { size: DrawerSize }) {
-  const [open, setOpen] = useState(false);
-  const [toggled, setToggled] = useState(false);
-
-  return (
-    <>
-      <Button variant="secondary-outline" size="small" onClick={() => setOpen(true)}>
-        {size} · Full
-      </Button>
-      <Drawer
-        open={open}
-        onClose={() => setOpen(false)}
-        title="Drawer Title"
-        size={size}
-        onBack={() => setOpen(false)}
-        badges={
-          <>
-            <Badge variant="solid" color="gray" size="sm">Solid</Badge>
-            <Badge variant="solid" color="teal" size="sm">Teal</Badge>
-          </>
-        }
-        titleActions={
-          <>
-            <button type="button" className={styles.iconBtn} aria-label="편집">
-              <span className={styles.iconBtnGlyph} data-icon="pencil" aria-hidden="true" />
-            </button>
-            <button type="button" className={styles.iconBtn} aria-label="펼치기">
-              <span className={styles.iconBtnGlyph} data-icon="chevron-down" aria-hidden="true" />
-            </button>
-          </>
-        }
-        headerControls={
-          <Toggle
-            checked={toggled}
-            onChange={(checked) => setToggled(checked)}
-            aria-label="토글"
-          />
-        }
-        footer={
-          <>
-            <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>
-              취소
-            </Button>
-            <Button variant="primary-solid" size="large" onClick={() => setOpen(false)}>
-              확인
-            </Button>
-          </>
-        }
-      >
-        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>
-          Back · Badges · Edit Actions · Toggle 이 모두 활성화된 케이스입니다.
-        </p>
-      </Drawer>
-    </>
-  );
-}
-
 export const Matrix: Story = {
   name: "Matrix",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-  },
+  parameters: { layout: "padded", nextjs: { appDirectory: true } },
   render: () => (
     <StoryDocsMatrixPage
       title="Drawer"
-      description="3가지 사이즈(small · medium · large)의 Side Drawer 매트릭스입니다."
+      description="Side Drawer — Size 매트릭스 및 Header 케이스입니다."
       figmaNode="8256-8490"
     >
-      <FigmaLinkCard
-        nodeId="8256-8490"
-        caption="Components / Drawer — Small·Medium·Large 매트릭스 원본"
-      />
+      <FigmaLinkCard nodeId="8256-8490" caption="Components / Drawer — 원본" />
 
       {/* Size 매트릭스 */}
       <section>
@@ -203,11 +227,7 @@ export const Matrix: Story = {
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
           <thead>
-            <tr>
-              {SIZES.map(({ label }) => (
-                <th key={label} style={storyMatrixColHeaderStyle}>{label}</th>
-              ))}
-            </tr>
+            <tr>{SIZES.map(({ label }) => <th key={label} style={storyMatrixColHeaderStyle}>{label}</th>)}</tr>
           </thead>
           <tbody>
             <tr>
@@ -221,30 +241,39 @@ export const Matrix: Story = {
         </table>
       </section>
 
-      {/* 전체 케이스 매트릭스 — Back + Badges + Edit + Toggle */}
+      {/* Header 케이스 인라인 미리보기 */}
       <section style={{ marginTop: 32 }}>
         <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
-          Drawer / Full Header (Back · Badges · Edit Actions · Toggle)
+          Drawer / Header Cases
         </h3>
         <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-secondary)" }}>
-          Figma node 8256:8490 — Back Button / Badge / Edit / Toggle 옵션이 모두 활성화된 케이스
+          Figma node 8252-1461 — 순서: [Back] [Bookmark] [Badges] [Title] [Edit Actions] | [Toggle] [X]
         </p>
-        <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
+        <table style={{ ...storyMatrixTableBase, fontSize: 12, width: "100%" }}>
           <thead>
             <tr>
-              {SIZES.map(({ label }) => (
-                <th key={label} style={storyMatrixColHeaderStyle}>{label} · Full</th>
-              ))}
+              <th style={{ ...storyMatrixColHeaderStyle, width: 120 }}>케이스</th>
+              <th style={storyMatrixColHeaderStyle}>Header 미리보기</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {SIZES.map(({ size }) => (
-                <td key={size} style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle", textAlign: "center" }}>
-                  <DrawerFullPreview size={size} />
+            {HEADER_CASES.map(({ label, props }) => (
+              <tr key={label}>
+                <td style={{ ...storyMatrixCellStyle, padding: "8px 16px", verticalAlign: "middle", fontWeight: 600 }}>
+                  {label}
                 </td>
-              ))}
-            </tr>
+                <td style={{ ...storyMatrixCellStyle, padding: 0, verticalAlign: "middle" }}>
+                  <div style={{
+                    background: "var(--context-background-surface-bg-surface-base)",
+                    border: "1px solid var(--border-border-surface-border-surface-secondary)",
+                    borderRadius: "var(--radius-lg, 8px)",
+                    overflow: "hidden",
+                  }}>
+                    <DrawerHeader {...props} onClose={() => {}} />
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>
@@ -267,45 +296,27 @@ export const Guideline: Story = {
     <StoryDocsPage title="Drawer" description="사이드 드로어 컴포넌트 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          createPortal을 사용해 document.body에 직접 마운트합니다.
-          오버레이 클릭 또는 ESC 키로 닫힙니다.
+          createPortal을 사용해 document.body에 직접 마운트합니다. 오버레이 클릭 또는 ESC 키로 닫힙니다.
         </StoryDocsParagraph>
       </StoryDocsSection>
 
       <StoryDocsSection title="사이즈">
-        <StoryDocsParagraph>
-          <strong>small</strong> — 420px. 짧은 폼·필터·상세보기 등.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>medium</strong> — 720px. 기본값. 일반적인 폼·정보 입력.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>large</strong> — max-width 1140px. 복잡한 콘텐츠·테이블 표시.
-        </StoryDocsParagraph>
+        <StoryDocsParagraph><strong>small</strong> — 420px.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>medium</strong> — 720px. 기본값.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>large</strong> — max-width 1140px.</StoryDocsParagraph>
       </StoryDocsSection>
 
-      <StoryDocsSection title="헤더 슬롯">
-        <StoryDocsParagraph>
-          <strong>onBack</strong>: 제공 시 Back(ChevronLeft) 버튼을 타이틀 앞에 표시합니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>badges</strong>: 타이틀 옆 Badge 슬롯입니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>titleActions</strong>: 타이틀 옆 아이콘 액션 슬롯입니다 (Pencil-Line, ChevronDown 등).
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>headerControls</strong>: X 버튼 앞 우측 슬롯입니다 (Toggle 등).
-        </StoryDocsParagraph>
+      <StoryDocsSection title="헤더 슬롯 (Figma 순서)">
+        <StoryDocsParagraph><strong>onBack</strong>: Back(ChevronLeft 40×40) 버튼. 타이틀 가장 앞.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>titlePrefix</strong>: Back 버튼 뒤 슬롯 (Bookmark/Like 32×32 등).</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>badges</strong>: titlePrefix 뒤, 타이틀 앞 Badge 슬롯.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>titleActions</strong>: 타이틀 뒤 아이콘 액션 슬롯 (Pencil-Line, ChevronDown 등).</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>headerControls</strong>: X 버튼 앞 우측 슬롯 (Toggle 등).</StoryDocsParagraph>
       </StoryDocsSection>
 
       <StoryDocsSection title="콘텐츠 슬롯">
-        <StoryDocsParagraph>
-          <strong>children</strong>: body 콘텐츠 슬롯. overflow-y: auto로 스크롤됩니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>footer</strong>: 버튼 행 슬롯. justify-end 정렬입니다.
-        </StoryDocsParagraph>
+        <StoryDocsParagraph><strong>children</strong>: body 콘텐츠 슬롯. overflow-y: auto로 스크롤됩니다.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>footer</strong>: 버튼 행 슬롯. justify-end 정렬입니다.</StoryDocsParagraph>
       </StoryDocsSection>
     </StoryDocsPage>
   ),
