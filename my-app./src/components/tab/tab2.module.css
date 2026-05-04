@@ -131,7 +131,7 @@
 }
 
 .state-default .count {
-  color: var(--context-foreground-surface-on-surface-hint-muted);
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
 }
 
 .state-default .leadingIcon,

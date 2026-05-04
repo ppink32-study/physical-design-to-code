@@ -173,6 +173,9 @@
 .state-default .leading {
   color: var(--context-foreground-icon-surface-icon-surface-disabled);
 }
+.state-default .count {
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+}
 .state-default.type-more .moreIcon {
   color: var(--context-foreground-icon-surface-icon-surface-disabled);
 }
@@ -183,6 +186,9 @@
 }
 .state-hover .leading {
   color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+.state-hover .count {
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
 }
 .state-hover.type-more {
   background: var(--context-background-surface-bg-surface-secondary);
@@ -196,6 +202,9 @@
 .state-default:not([disabled]):hover .label,
 .state-default:not([disabled]):hover .leading {
   color: var(--context-foreground-icon-surface-icon-surface-hover);
+}
+.state-default:not([disabled]):hover .count {
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
 }
 .state-default.type-more:not([disabled]):hover {
   background: var(--context-background-surface-bg-surface-secondary);
