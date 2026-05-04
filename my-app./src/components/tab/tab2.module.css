@@ -212,9 +212,15 @@
 }
 
 /* -----------------------------------------------------------------
- *  Tab2List (그룹 컨테이너)
+ *  Tab2List (그룹 컨테이너) — Figma node 6565:223085
+ *    border: 1px solid --border-neutral-border-neutral
+ *    border-radius: 6px
+ *    overflow: hidden  (첫/마지막 탭 모서리 클리핑)
  * ----------------------------------------------------------------- */
 .list {
   display: inline-flex;
   align-items: stretch;
+  border: 1px solid var(--border-neutral-border-neutral);
+  border-radius: var(--radius-md, 6px);
+  overflow: hidden;
 }
