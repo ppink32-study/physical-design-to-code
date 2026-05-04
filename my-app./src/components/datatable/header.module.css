@@ -1,0 +1,57 @@
+/* =================================================================
+ *  DataTableHeader (Figma node 18385:9746)
+ *
+ *  구조
+ *    .root    : 셀 컨테이너 (150×40, bg-surface-secondary)
+ *      .wrapper : 내부 수평 레이아웃 (padding-left 12, right 8)
+ *        .label : 텍스트 영역 (flex: 1)
+ *          .text  : SemiBold 13/20
+ *
+ *  Token 매핑
+ *    bg     : --context-background-surface-bg-surface-secondary
+ *    border : --border-border-surface-border-surface-secondary  (right + bottom)
+ *    text   : --context-foreground-surface-on-surface-base
+ * =============================================================== */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 150px;
+  height: 40px;
+  background: var(--context-background-surface-bg-surface-secondary);
+  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+  border-bottom: 1px solid var(--border-border-surface-border-surface-secondary);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: var(--spacing-md, 12px);
+  padding-right: var(--spacing-sm, 8px);
+  gap: var(--spacing-sm, 8px);
+  box-sizing: border-box;
+}
+
+.label {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.text {
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-md, 13px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.4px;
+  color: var(--context-foreground-surface-on-surface-base);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
