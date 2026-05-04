@@ -3,9 +3,8 @@
 /**
  * Drawer — Side Drawer
  *
- * - <Drawer>      : overlay + side panel (createPortal 사용)
+ * - <Drawer>      : overlay + side panel (createPortal 사용, 우측 고정)
  * - size          : "small"(420px) | "medium"(720px) | "large"(1140px max)
- * - side          : "right"(기본) | "left"
  * - footer        : 버튼 슬롯 (justify-end, border-top)
  *
  * Modal 컴포넌트와 동일한 portal/overlay/ESC/scroll-lock 패턴을 사용한다.
@@ -18,14 +17,12 @@ import type { ReactNode } from "react";
 import styles from "./drawer.module.css";
 
 export type DrawerSize = "small" | "medium" | "large";
-export type DrawerSide = "left" | "right";
 
 export type DrawerProps = {
   open: boolean;
   onClose: () => void;
   title?: string;
   size?: DrawerSize;
-  side?: DrawerSide;
   /** body 콘텐츠 슬롯 */
   children?: ReactNode;
   /** footer 버튼 슬롯 */
@@ -37,7 +34,6 @@ export function Drawer({
   onClose,
   title,
   size = "medium",
-  side = "right",
   children,
   footer,
 }: DrawerProps) {
@@ -66,7 +62,6 @@ export function Drawer({
   return createPortal(
     <div
       className={styles.overlay}
-      data-side={side}
       role="presentation"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -79,7 +74,6 @@ export function Drawer({
         aria-labelledby={title ? "drawer-title" : undefined}
         className={styles.panel}
         data-size={size}
-        data-side={side}
       >
         {/* Header */}
         <div className={styles.header}>

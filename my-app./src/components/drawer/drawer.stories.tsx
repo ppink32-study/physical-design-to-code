@@ -15,7 +15,7 @@ import {
   StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
-import { Drawer, type DrawerSize, type DrawerSide } from "./drawer";
+import { Drawer, type DrawerSize } from "./drawer";
 
 /* ----------------------------------------------------------------- */
 
@@ -29,7 +29,6 @@ const meta: Meta<typeof Drawer> = {
   },
   argTypes: {
     size: { control: "inline-radio", options: ["small", "medium", "large"] },
-    side: { control: "inline-radio", options: ["left", "right"] },
     open: { control: "boolean" },
     title: { control: "text" },
   },
@@ -44,7 +43,6 @@ export const Playground: Story = {
   args: {
     title: "Drawer Title",
     size: "medium",
-    side: "right",
   },
   render: function PlaygroundRender(args) {
     const [open, setOpen] = useState(false);
@@ -86,7 +84,7 @@ const SIZES: { label: string; size: DrawerSize }[] = [
   { label: "Large (max 1140px)", size: "large" },
 ];
 
-function DrawerPreview({ size, side = "right" }: { size: DrawerSize; side?: DrawerSide }) {
+function DrawerPreview({ size }: { size: DrawerSize }) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -98,7 +96,6 @@ function DrawerPreview({ size, side = "right" }: { size: DrawerSize; side?: Draw
         onClose={() => setOpen(false)}
         title="Drawer Title"
         size={size}
-        side={side}
         footer={
           <>
             <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>
@@ -158,30 +155,6 @@ export const Matrix: Story = {
           </tbody>
         </table>
       </section>
-
-      <section style={{ marginTop: 24 }}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
-          Drawer / Side
-        </h3>
-        <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
-          <thead>
-            <tr>
-              <th style={storyMatrixColHeaderStyle}>Right (기본)</th>
-              <th style={storyMatrixColHeaderStyle}>Left</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle", textAlign: "center" }}>
-                <DrawerPreview size="medium" side="right" />
-              </td>
-              <td style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle", textAlign: "center" }}>
-                <DrawerPreview size="medium" side="left" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
     </StoryDocsMatrixPage>
   ),
 };
@@ -215,15 +188,6 @@ export const Guideline: Story = {
         </StoryDocsParagraph>
         <StoryDocsParagraph>
           <strong>large</strong> — max-width 1140px. 복잡한 콘텐츠·테이블 표시.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="방향">
-        <StoryDocsParagraph>
-          <strong>right</strong> — 화면 우측에서 등장 (기본값).
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>left</strong> — 화면 좌측에서 등장.
         </StoryDocsParagraph>
       </StoryDocsSection>
 
