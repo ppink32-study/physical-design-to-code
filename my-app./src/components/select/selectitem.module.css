@@ -78,10 +78,7 @@
   color: var(--context-foreground-icon-surface-icon-surface);
 }
 
-/* 2-level ChevronRight 아이콘 — icon-surface-teriary */
-.item[data-type="2-level"] .trailingIcon {
-  color: var(--context-foreground-icon-surface-icon-surface-teriary);
-}
+
 .checkMask,
 .chevronRightMask {
   display: inline-block;
@@ -128,6 +125,12 @@
 .item[data-state="select"] .trailingIcon,
 .item[data-selected="true"] .trailingIcon {
   color: var(--context-foreground-primary-on-primary, #28738c);
+}
+/* 2-level ChevronRight 아이콘 — 모든 state에서 icon-surface-teriary (select 규칙 이후 배치) */
+.item[data-type="2-level"] .trailingIcon,
+.item[data-type="2-level"][data-state="select"] .trailingIcon,
+.item[data-type="2-level"][data-selected="true"] .trailingIcon {
+  color: var(--context-foreground-icon-surface-icon-surface-teriary);
 }
 
 /* ---------------------------------------------------------------------------
