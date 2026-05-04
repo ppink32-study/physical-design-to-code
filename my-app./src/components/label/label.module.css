@@ -64,7 +64,7 @@
 .text {
   white-space: nowrap;
   color: inherit;
-  letter-spacing: var(--label-letter-spacing, -0.4px);
+  letter-spacing: var(--label-letter-spacing, -0.052px);
   font-weight: var(--font-weight-semibold);
   font-size: var(--label-font-size, var(--font-size-body-md)); /* 13 */
   line-height: var(--label-line-height, var(--font-line-height-sm)); /* 20 */
@@ -74,7 +74,7 @@
 .root[data-size="small"] .text {
   --label-font-size: var(--font-size-body-sm); /* 12 */
   --label-line-height: var(--font-line-height-xs); /* 16 */
-  --label-letter-spacing: -0.5px;
+  --label-letter-spacing: -0.06px;
 }
 
 /* ---------------------------------------------------------------------------

@@ -71,6 +71,12 @@ export type TypographyRow = {
   className: string;
   /** Guideline 표에서 표준 본문으로 뱃지·행 강조 */
   standard?: boolean;
+  /**
+   * Figma letter-spacing 퍼센트 값 (Md=-0.4%, Sm=-0.5%).
+   * 미지정 = letter-spacing 없음(0 or normal).
+   * CSS 환산: sizePx × (value/100) → 예) 13px × -0.4% = -0.052px
+   */
+  letterSpacingPct?: "-0.4%" | "-0.5%";
 };
 
 /** Section 2 — Headline 표 (Figma 9행) */
@@ -226,6 +232,7 @@ export const BODY_ROWS: TypographyRow[] = [
     sizePx: 13,
     lineHeightPx: 20,
     className: "typography-body-md-semibold",
+    letterSpacingPct: "-0.4%",
   },
   {
     name: "Md-Medium",
@@ -235,6 +242,7 @@ export const BODY_ROWS: TypographyRow[] = [
     sizePx: 13,
     lineHeightPx: 20,
     className: "typography-body-md-medium",
+    letterSpacingPct: "-0.4%",
   },
   {
     name: "Md-Regular",
@@ -244,6 +252,7 @@ export const BODY_ROWS: TypographyRow[] = [
     sizePx: 13,
     lineHeightPx: 20,
     className: "typography-body-md-regular",
+    letterSpacingPct: "-0.4%",
   },
   {
     name: "Sm-SemiB",
@@ -254,6 +263,7 @@ export const BODY_ROWS: TypographyRow[] = [
     sizePx: 12,
     lineHeightPx: 16,
     className: "typography-body-sm-semibold",
+    letterSpacingPct: "-0.5%",
   },
   {
     name: "Sm-Medium",
@@ -263,6 +273,7 @@ export const BODY_ROWS: TypographyRow[] = [
     sizePx: 12,
     lineHeightPx: 16,
     className: "typography-body-sm-medium",
+    letterSpacingPct: "-0.5%",
   },
   {
     name: "Xs-Medium",

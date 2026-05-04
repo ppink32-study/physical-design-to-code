@@ -8,11 +8,11 @@
  *    max-width  : 240px (Figma)
  *
  *  ─ title (Body/Sm_SemiB)
- *    12px / 16px / weight 600 / letter-spacing -0.5 (≈ -0.06px in figma)
+ *    12px / 16px / weight 600 / letter-spacing -0.5% → -0.06px
  *    color: --context-foreground-neutral-on-neutral-hint-muted (#9698A3)
  *
  *  ─ text (Body/Md_Regular)
- *    13px / 20px / weight 400 / letter-spacing -0.4 (≈ -0.052px)
+ *    13px / 20px / weight 400 / letter-spacing -0.4% → -0.052px
  *    color: --context-foreground-neutral-on-neutral-white (#FFFFFF)
  *
  *  ─ arrow : 12 × 5 (top/bottom), 5 × 12 (left/right) CSS border triangle
@@ -48,7 +48,7 @@
   font-family: var(--font-family-korean, "Pretendard", system-ui, sans-serif);
   font-size: 13px;
   line-height: 20px;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   font-weight: 400;
   word-break: keep-all;
   pointer-events: none;
@@ -98,7 +98,7 @@
   color: var(--context-foreground-neutral-on-neutral-hint-muted, #9698a3);
   font-size: 12px;
   line-height: 16px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.06px;
   font-weight: 600;
   white-space: nowrap;
 }

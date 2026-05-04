@@ -41,10 +41,11 @@ type Story = StoryObj;
  * ----------------------------------------------------------- */
 const COLUMN_WIDTHS = {
   category: 160,
-  type: 460,
-  weight: 230,
-  size: 230,
-  lineHeight: 230,
+  type: 400,
+  weight: 200,
+  size: 180,
+  lineHeight: 180,
+  letterSpacing: 180,
 } as const;
 
 const TABLE_WIDTH =
@@ -52,7 +53,14 @@ const TABLE_WIDTH =
   COLUMN_WIDTHS.type +
   COLUMN_WIDTHS.weight +
   COLUMN_WIDTHS.size +
-  COLUMN_WIDTHS.lineHeight;
+  COLUMN_WIDTHS.lineHeight +
+  COLUMN_WIDTHS.letterSpacing;
+
+/** Figma % → CSS px 환산 (e.g. "-0.4%", 13 → "-0.052px") */
+function toLetterSpacingPx(pct: string, sizePx: number): string {
+  const val = (parseFloat(pct) / 100) * sizePx;
+  return `${val.toFixed(3)}px`;
+}
 
 const tokens = {
   borderColor: "var(--context-border-neutral-border-base)",
@@ -226,7 +234,7 @@ function TypographyTable({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `${COLUMN_WIDTHS.category}px 1fr ${COLUMN_WIDTHS.weight}px ${COLUMN_WIDTHS.size}px ${COLUMN_WIDTHS.lineHeight}px`,
+          gridTemplateColumns: `${COLUMN_WIDTHS.category}px 1fr ${COLUMN_WIDTHS.weight}px ${COLUMN_WIDTHS.size}px ${COLUMN_WIDTHS.lineHeight}px ${COLUMN_WIDTHS.letterSpacing}px`,
           background: tokens.surfaceMuted,
         }}
       >
@@ -235,6 +243,7 @@ function TypographyTable({
         <div style={headerCellStyle}>Weight</div>
         <div style={headerCellStyle}>Size</div>
         <div style={headerCellStyle}>Line Height</div>
+        <div style={headerCellStyle}>Letter Spacing</div>
       </div>
 
       {/* Body */}
@@ -274,7 +283,7 @@ function TypographyTable({
                 key={row.className}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: `1fr ${COLUMN_WIDTHS.weight}px ${COLUMN_WIDTHS.size}px ${COLUMN_WIDTHS.lineHeight}px`,
+                  gridTemplateColumns: `1fr ${COLUMN_WIDTHS.weight}px ${COLUMN_WIDTHS.size}px ${COLUMN_WIDTHS.lineHeight}px ${COLUMN_WIDTHS.letterSpacing}px`,
                   background: rowSurface,
                   borderTop:
                     idx === 0 ? `1px solid ${tokens.borderColor}` : undefined,
@@ -291,8 +300,11 @@ function TypographyTable({
                     fontWeight: WEIGHT_VALUE[row.weight],
                     lineHeight: `${row.lineHeightPx}px`,
                     fontFamily: "var(--font-family-korean)",
+                    letterSpacing: row.letterSpacingPct
+                      ? toLetterSpacingPx(row.letterSpacingPct, row.sizePx)
+                      : undefined,
                   }}
-                  title={`font-size:${row.sizePx}px / line-height:${row.lineHeightPx}px`}
+                  title={`font-size:${row.sizePx}px / line-height:${row.lineHeightPx}px${row.letterSpacingPct ? ` / letter-spacing:${row.letterSpacingPct}` : ""}`}
                 >
                   <span
                     style={{
@@ -336,6 +348,23 @@ function TypographyTable({
                   }}
                 >
                   {row.lineHeightPx}
+                </div>
+                <div
+                  style={{
+                    ...dataCellStyle,
+                    borderTop: cellBorderTop,
+                    color: row.letterSpacingPct ? tokens.textBase : tokens.textSubtle,
+                    fontWeight: row.letterSpacingPct ? 500 : 400,
+                  }}
+                >
+                  {row.letterSpacingPct ? (
+                    <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                      <span>{row.letterSpacingPct}</span>
+                      <span style={{ fontSize: 11, color: tokens.textSubtle, fontWeight: 400 }}>
+                        {toLetterSpacingPx(row.letterSpacingPct, row.sizePx)}
+                      </span>
+                    </span>
+                  ) : "—"}
                 </div>
               </div>
             );

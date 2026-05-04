@@ -79,14 +79,14 @@
 .label {
   font-weight: var(--font-weight-medium, 500);
   line-height: var(--font-line-height-sm, 20px);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   white-space: nowrap;
 }
 
 .count {
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-sm, 20px);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   white-space: nowrap;
 }
 
@@ -123,7 +123,7 @@
  * ----------------------------------------------------------------- */
 .state-default {
   background: var(--context-background-surface-bg-surface-base);
-  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+  box-shadow: inset -1px 0 0 var(--border-border-surface-border-surface-secondary);
 }
 
 .state-default .label {
@@ -149,7 +149,7 @@
 .state-hover,
 .state-default:not([disabled]):hover {
   background: var(--context-background-surface-bg-surface-base-hover);
-  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+  box-shadow: inset -1px 0 0 var(--border-border-surface-border-surface-secondary);
 }
 
 .state-hover .label,
@@ -197,7 +197,7 @@
  * ----------------------------------------------------------------- */
 .state-disabled {
   background: var(--context-background-neutral-bg-neutral);
-  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+  box-shadow: inset -1px 0 0 var(--border-border-surface-border-surface-secondary);
 }
 
 .state-disabled .label,
@@ -220,7 +220,13 @@
 .list {
   display: inline-flex;
   align-items: stretch;
-  border: 1px solid var(--border-neutral-border-neutral);
+  height: 32px;
+  box-sizing: border-box;
+  border: 1px solid var(--border-neutral-border-neutral, #D7D8DC);
   border-radius: var(--radius-md, 6px);
   overflow: hidden;
+}
+
+.list > *:last-child {
+  box-shadow: none;
 }

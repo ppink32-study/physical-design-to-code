@@ -33,7 +33,7 @@
   font-size: var(--font-size-body-md, 13px);
   font-weight: var(--font-weight-regular, 400);
   line-height: var(--font-line-height-sm, 20px);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   color: var(--context-foreground-surface-on-surface-base);
   overflow: hidden;
   text-overflow: ellipsis;

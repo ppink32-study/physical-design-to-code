@@ -131,7 +131,7 @@
   padding: 0 var(--spacing-xs); /* 6 */
   font-size: var(--font-size-body-sm); /* 12 */
   line-height: var(--font-line-height-xs); /* 16 */
-  --btn-letter-spacing: -0.5px;
+  --btn-letter-spacing: -0.06px;
   --btn-icon-size: 16px;
   --btn-gap: var(--spacing-3xs); /* 2 */
 }

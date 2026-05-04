@@ -7,7 +7,7 @@
  *   - text       : --context-foreground-surface-on-surface (#565967)
  *   - icon       : --context-foreground-icon-surface-icon-surface (#565967)
  *   - icon-hint  : --context-foreground-icon-surface-icon-surface-teriary (#787a88)
- *   - font       : Body/Md Semibold (13/20, letter-spacing -0.4)
+ *   - font       : Body/Md Semibold (13/20, letter-spacing -0.4% → -0.052px)
  *   - padding    : px = --spacing-md (12) / gap = --spacing-xs (6)
  *   - cell size  : single 32 / double 64
  * ========================================================================== */
@@ -24,7 +24,7 @@
   font-size: var(--font-size-body-md, 13px);
   line-height: var(--font-line-height-sm, 20px);
   font-weight: var(--font-weight-semibold, 600);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   box-sizing: border-box;
   overflow: hidden;
 }

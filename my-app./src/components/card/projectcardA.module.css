@@ -138,7 +138,6 @@
   font-size: var(--font-size-body-lg, 16px);
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-md, 22px);
-  letter-spacing: -0.4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -156,7 +155,7 @@
   font-size: var(--font-size-body-md, 13px);
   font-weight: var(--font-weight-regular, 400);
   line-height: var(--font-line-height-sm, 20px);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -205,7 +204,7 @@
   font-size: var(--font-size-body-md, 13px);
   font-weight: var(--font-weight-regular, 400);
   line-height: var(--font-line-height-sm, 20px);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.052px;
   white-space: nowrap;
 }
 
