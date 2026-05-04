@@ -1,0 +1,214 @@
+/* =================================================================
+ *  Tab2 — Tabs Level 2 (Figma node 6141:10283)
+ *
+ *  type=text  : h=32, px=12, gap=4  / [LeadingIcon?] [label+count] [Close?]
+ *  type=icon  : h=32, px=8          / [Icon center]
+ *
+ *  State 토큰 매핑
+ *    default  bg : --context-background-surface-bg-surface-base
+ *    hover    bg : --context-background-surface-bg-surface-base-hover
+ *    selected bg : --context-background-gray-bg-darkgray
+ *    disabled bg : --context-background-neutral-bg-neutral
+ *    border-right: --border-border-surface-border-surface-secondary
+ *
+ *    label default/hover : --context-foreground-neutral-on-neutral
+ *    label selected      : --context-foreground-neutral-on-neutral-white
+ *    label disabled      : --context-foreground-neutral-on-neutral-disabled
+ *    count default       : --context-foreground-surface-on-surface-hint-muted
+ *    count hover         : --context-foreground-neutral-on-neutral-hint-muted
+ *    count selected      : --context-foreground-neutral-on-neutral-white
+ *    icon  default       : --context-foreground-icon-surface-icon-surface
+ *    icon  hover         : --context-foreground-icon-neutral-icon-neutral
+ *    close hover         : --context-foreground-icon-neutral-icon-neutral-hover
+ *    icon  selected      : --context-foreground-neutral-on-neutral-white
+ *    icon  disabled      : --border-border-surface-border-surface-disabled
+ * =============================================================== */
+
+/* -----------------------------------------------------------------
+ *  Base
+ * ----------------------------------------------------------------- */
+.root {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-md, 13px);
+  flex-shrink: 0;
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: -2px;
+}
+
+.root[disabled],
+.root[data-state="disabled"] {
+  cursor: not-allowed;
+}
+
+/* -----------------------------------------------------------------
+ *  type=text
+ * ----------------------------------------------------------------- */
+.type-text {
+  gap: 4px;
+  padding-left: var(--spacing-md, 12px);
+  padding-right: var(--spacing-md, 12px);
+}
+
+.leadingIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.textGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.label {
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.count {
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-sm, 20px);
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: var(--radius-xs, 2px);
+}
+
+/* -----------------------------------------------------------------
+ *  type=icon
+ * ----------------------------------------------------------------- */
+.type-icon {
+  padding-left: var(--spacing-sm, 8px);
+  padding-right: var(--spacing-sm, 8px);
+  justify-content: center;
+}
+
+.iconCenter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+/* -----------------------------------------------------------------
+ *  State: default
+ * ----------------------------------------------------------------- */
+.state-default {
+  background: var(--context-background-surface-bg-surface-base);
+  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+}
+
+.state-default .label {
+  color: var(--context-foreground-neutral-on-neutral);
+}
+
+.state-default .count {
+  color: var(--context-foreground-surface-on-surface-hint-muted);
+}
+
+.state-default .leadingIcon,
+.state-default .iconCenter,
+.state-default .closeBtn {
+  color: var(--context-foreground-icon-surface-icon-surface);
+}
+
+/* -----------------------------------------------------------------
+ *  State: hover (mouse + 명시적 prop)
+ * ----------------------------------------------------------------- */
+.state-hover,
+.state-default:not([disabled]):hover {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+}
+
+.state-hover .label,
+.state-default:not([disabled]):hover .label {
+  color: var(--context-foreground-neutral-on-neutral);
+}
+
+.state-hover .count,
+.state-default:not([disabled]):hover .count {
+  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+}
+
+.state-hover .leadingIcon,
+.state-hover .iconCenter,
+.state-default:not([disabled]):hover .leadingIcon,
+.state-default:not([disabled]):hover .iconCenter {
+  color: var(--context-foreground-icon-neutral-icon-neutral);
+}
+
+.state-hover .closeBtn,
+.state-default:not([disabled]):hover .closeBtn {
+  color: var(--context-foreground-icon-neutral-icon-neutral-hover);
+}
+
+/* -----------------------------------------------------------------
+ *  State: selected — 어두운 bg + 흰 텍스트/아이콘, border 없음
+ * ----------------------------------------------------------------- */
+.state-selected {
+  background: var(--context-background-gray-bg-darkgray);
+}
+
+.state-selected .label,
+.state-selected .count,
+.state-selected .leadingIcon,
+.state-selected .iconCenter,
+.state-selected .closeBtn {
+  color: var(--context-foreground-neutral-on-neutral-white);
+}
+
+/* -----------------------------------------------------------------
+ *  State: disabled
+ * ----------------------------------------------------------------- */
+.state-disabled {
+  background: var(--context-background-neutral-bg-neutral);
+  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
+}
+
+.state-disabled .label,
+.state-disabled .count {
+  color: var(--context-foreground-neutral-on-neutral-disabled);
+}
+
+.state-disabled .leadingIcon,
+.state-disabled .iconCenter,
+.state-disabled .closeBtn {
+  color: var(--border-border-surface-border-surface-disabled);
+}
+
+/* -----------------------------------------------------------------
+ *  Tab2List (그룹 컨테이너)
+ * ----------------------------------------------------------------- */
+.list {
+  display: inline-flex;
+  align-items: stretch;
+}
