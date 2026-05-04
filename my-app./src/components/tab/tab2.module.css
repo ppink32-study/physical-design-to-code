@@ -135,9 +135,12 @@
 }
 
 .state-default .leadingIcon,
-.state-default .iconCenter,
-.state-default .closeBtn {
+.state-default .iconCenter {
   color: var(--context-foreground-icon-surface-icon-surface);
+}
+
+.state-default .closeBtn {
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
 }
 
 /* -----------------------------------------------------------------
