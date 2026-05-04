@@ -1,17 +1,19 @@
 "use client";
 
 /**
- * Progress — Figma node 13262:76705
+ * Progress — Figma node 13262:76705 (default 16px) · 7370:219807 (sm 8px)
  *
  * Progress (single bar)
  *   - value   : 0–100 (fill %)
  *   - color   : primary | success | info | warning | danger
  *   - striped : Pattern overlay (White_8% diagonal)
+ *   - size    : "default" (16px, with label) | "sm" (8px, no label)
  *
  * ProgressMultiple (multi-segment bar)
  *   - segments : { value: number; color?: ProgressColor }[]
  *                value 는 상대 가중치 (합산 후 % 환산)
  *   - striped  : 동일한 Pattern overlay
+ *   - size     : "default" | "sm"
  */
 
 import type { HTMLAttributes } from "react";
@@ -25,10 +27,13 @@ export type ProgressColor =
   | "warning"
   | "danger";
 
+export type ProgressSize = "default" | "sm";
+
 export type ProgressProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
   value?: number;
   color?: ProgressColor;
   striped?: boolean;
+  size?: ProgressSize;
 };
 
 export type ProgressSegment = {
@@ -42,6 +47,7 @@ export type ProgressMultipleProps = Omit<
 > & {
   segments: ProgressSegment[];
   striped?: boolean;
+  size?: ProgressSize;
 };
 
 const COLOR_SEQUENCE: ProgressColor[] = [
@@ -67,6 +73,7 @@ export function Progress({
   value = 0,
   color = "primary",
   striped = false,
+  size = "default",
   className,
   ...rest
 }: ProgressProps) {
@@ -76,6 +83,7 @@ export function Progress({
     <div
       {...rest}
       className={joinCls(styles.track, className)}
+      data-size={size !== "default" ? size : undefined}
       role="progressbar"
       aria-valuenow={pct}
       aria-valuemin={0}
@@ -86,7 +94,7 @@ export function Progress({
         data-color={color}
         style={{ width: `${pct}%` }}
       >
-        <span className={styles.label}>{pct}%</span>
+        {size !== "sm" && <span className={styles.label}>{pct}%</span>}
       </div>
     </div>
   );
@@ -98,6 +106,7 @@ export function Progress({
 export function ProgressMultiple({
   segments,
   striped = false,
+  size = "default",
   className,
   ...rest
 }: ProgressMultipleProps) {
@@ -110,6 +119,7 @@ export function ProgressMultiple({
     <div
       {...rest}
       className={joinCls(styles.track, styles.multiple, className)}
+      data-size={size !== "default" ? size : undefined}
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}
