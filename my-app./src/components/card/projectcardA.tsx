@@ -6,9 +6,9 @@
  * type="brand" : neutral 계열 토큰, default border=border-neutral
  * type="light" : surface 계열 토큰, default border=border-surface
  *
- * state="default" : 2px solid 컬러 테두리
+ * state="default" : 1px inline border
  * state="hover"   : 2px gradient border Mint→Purple (inline)
- *                   brand 타입 hover 시 이미지 bg → background.svg
+ *                   brand: backgroundhover.svg
  *
  * Layout: vertical, width=266px, radius=12px
  * 구조: [ImageArea 200px] [ContentArea: title + desc + meta]
@@ -28,7 +28,6 @@ export type ProjectCardAProps = HTMLAttributes<HTMLDivElement> & {
   title?: string;
   description?: string;
   members?: string;
-  onLink?: () => void;
 };
 
 function MaskIcon({ src, size = 16 }: { src: string; size?: number }) {
@@ -57,7 +56,6 @@ export function ProjectCardA({
   title = "Traffic_Sign_Dataset",
   description = "Collected from urban intersections",
   members = "8 members",
-  onLink,
   className,
   ...rest
 }: ProjectCardAProps) {
@@ -96,10 +94,8 @@ export function ProjectCardA({
             </span>
             <span className={styles.memberText}>{members}</span>
           </div>
-          <button type="button" className={styles.linkBtn} onClick={onLink}>
-            계정 연결하기
-          </button>
         </div>
+
       </div>
     </div>
   );

@@ -1,15 +1,15 @@
 /* =================================================================
  *  ModelCard — Figma node 18397:3969 > Model Card
  *
- *  variant=default  : bg-surface-white, 3px gradient border (Mint→Purple)
- *  variant=variant2 : bg-surface-secondary, 1px border-surface-secondary
+ *  state=default : bg-surface-secondary, 3px transparent border (inline)
+ *  state=hover   : bg-surface-white + 3px gradient border (Mint→Purple)
  *
  *  Layout: vertical, padding=20px (--spacing-xl), gap=8px (--spacing-sm)
  *  Border-radius: --radius-xl (12px)
  * =============================================================== */
 
 /* -----------------------------------------------------------------
- *  Root
+ *  Root — border 포함 높이 158px 고정 (box-sizing: border-box)
  * ----------------------------------------------------------------- */
 .root {
   box-sizing: border-box;
@@ -19,14 +19,17 @@
   padding: var(--spacing-xl, 20px);
   border-radius: var(--radius-xl, 12px);
   width: 355px;
+  height: 158px;
+  border: 3px solid transparent;
+  background: var(--context-background-surface-bg-surface-secondary);
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
 }
 
 /* -----------------------------------------------------------------
- *  Variants
+ *  Hover state (CSS hover + 명시적 data-state)
  * ----------------------------------------------------------------- */
-.variant-default {
-  border: 3px solid transparent;
+.root:hover,
+.root[data-state="hover"] {
   background:
     linear-gradient(
         var(--context-background-surface-bg-surface-white, #fff),
@@ -36,43 +39,15 @@
     linear-gradient(to right, #5cc7d0, #d5a5ff) border-box;
 }
 
-.variant-variant2 {
-  background: var(--context-background-surface-bg-surface-secondary);
-  border: 1px solid var(--border-border-surface-border-surface-secondary);
-}
-
 /* -----------------------------------------------------------------
  *  Header row: thumbnail + badge
  * ----------------------------------------------------------------- */
 .header {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-sm, 8px);
-}
-
-/* -----------------------------------------------------------------
- *  Thumbnail
- * ----------------------------------------------------------------- */
-.thumbnail {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-lg, 8px);
-  border: 1px solid var(--opacity-white-opacity-8, rgba(255, 255, 255, 0.08));
-  background:
-    var(--context-background-tint-bg-blue-tint-hover),
-    var(--accent-blue-accent-blue);
-}
-
-.thumbnailIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
 }
 
 /* -----------------------------------------------------------------
@@ -81,7 +56,9 @@
 .content {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--spacing-sm, 8px);
+  align-self: stretch;
 }
 
 .nameGroup {

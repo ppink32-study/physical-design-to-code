@@ -3,10 +3,10 @@
 /**
  * DatasetCard — Figma node 18397:4135 (Dataset Card)
  *
- * variant="default"  : white bg + 3px gradient border (Mint→Purple)
- * variant="variant2" : bg-surface-secondary + 1px border-surface-secondary
+ * state="default" : bg-surface-secondary, 테두리 없음
+ * state="hover"   : bg-surface-white + 3px gradient border Mint→Purple (inline)
  *
- * Layout: vertical, padding=20px, gap=8px, radius=12px
+ * Layout: vertical, padding=20px, gap=8px, radius=12px, width=355px, height=158px
  */
 
 import type { CSSProperties, HTMLAttributes } from "react";
@@ -15,14 +15,13 @@ import { Badge } from "@/components/badge/badge";
 
 import styles from "./datasetcard.module.css";
 
-export type DatasetCardVariant = "default" | "variant2";
+export type DatasetCardState = "default" | "hover";
 
 export type DatasetCardProps = HTMLAttributes<HTMLDivElement> & {
-  variant?: DatasetCardVariant;
+  state?: DatasetCardState;
   title?: string;
   description?: string;
   badgeLabel?: string;
-  badgeCount?: number | string;
   platform?: string;
   fileSize?: string;
   createdAt?: string;
@@ -47,12 +46,18 @@ function MaskIcon({ src, size = 16 }: { src: string; size?: number }) {
   return <span aria-hidden="true" style={style} />;
 }
 
+function CardIcon({ src, size = 24 }: { src: string; size?: number }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt="" aria-hidden="true" width={size} height={size} style={{ display: "block", flexShrink: 0 }} />
+  );
+}
+
 export function DatasetCard({
-  variant = "default",
+  state = "default",
   title = "Traffic_Sign_Dataset",
   description = "Collected from urban intersections",
   badgeLabel = "Local",
-  badgeCount = 1,
   platform = "Forge Core",
   fileSize = "2.4GB",
   createdAt = "Created 3 hours ago",
@@ -62,18 +67,12 @@ export function DatasetCard({
   return (
     <div
       {...rest}
-      className={[styles.root, styles[`variant-${variant}`], className]
-        .filter(Boolean)
-        .join(" ")}
-      data-variant={variant}
+      className={[styles.root, className].filter(Boolean).join(" ")}
+      data-state={state}
     >
       <div className={styles.header}>
-        <div className={styles.thumbnail}>
-          <span className={styles.thumbnailIcon}>
-            <MaskIcon src="/icon/Configuration.svg" size={24} />
-          </span>
-        </div>
-        <Badge variant="status" color="purple" size="sm" count={badgeCount}>
+        <CardIcon src="/cardicon/dataset.svg" size={40} />
+        <Badge variant="status" color="purple" size="sm">
           {badgeLabel}
         </Badge>
       </div>
@@ -86,7 +85,7 @@ export function DatasetCard({
         <div className={styles.metaRow}>
           <div className={styles.detail}>
             <span className={styles.detailIcon}>
-              <MaskIcon src="/icon/DataAnalysis.svg" size={16} />
+              <MaskIcon src="/icon/DataAnalysis-1.svg" size={16} />
             </span>
             <span className={styles.detailText}>{platform}</span>
           </div>

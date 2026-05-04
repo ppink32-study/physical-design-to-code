@@ -89,6 +89,7 @@ export const Matrix: Story = {
           ))}
         </div>
       </section>
+
     </StoryDocsMatrixPage>
   ),
 };
@@ -132,7 +133,6 @@ export const Guideline: Story = {
         <StoryDocsParagraph><strong>imageSrc</strong>: 로봇 이미지 경로 (public/robot/ 권장)</StoryDocsParagraph>
         <StoryDocsParagraph><strong>title / description</strong>: 카드 제목·설명</StoryDocsParagraph>
         <StoryDocsParagraph><strong>members</strong>: 멤버 수 텍스트</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>onLink</strong>: "계정 연결하기" 버튼 클릭 콜백</StoryDocsParagraph>
       </StoryDocsSection>
 
       <StoryDocsSection title="토큰 (brand)">
