@@ -13,7 +13,7 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
+
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -265,13 +265,6 @@ export const Guideline: Story = {
           <StoryDocsInlineCode>type=&quot;label&quot;</StoryDocsInlineCode> 등은 Matrix 와
           Playground Controls 로 확인합니다.
         </StoryDocsParagraph>
-      </StoryDocsSection>
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Select } from "@/components/select/select";
-
-<Select placeholder="Text" />
-<Select tone="success" value="Valid" />
-<Select type="label" label="label" value="Option A" />`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),
