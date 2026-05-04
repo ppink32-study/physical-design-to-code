@@ -1,0 +1,73 @@
+/* =============================================================================
+ * StepperArea — Figma node 18444:8508
+ * -----------------------------------------------------------------------------
+ * Default (Light)
+ *   bg      : --gradient-light-01
+ *   border  : 2px solid --opacity-primary-opacity-30
+ *   radius  : --radius-xl (12px)
+ *   shadow  : --shadow-sm
+ *
+ * Brand (Dark)
+ *   bg      : --context-background-surface-bg-surface-white (#141518 in brand)
+ *   border  : 2px solid --opacity-black-opacity-90
+ *   radius  : --radius-xl (12px)
+ *   shadow  : --shadow-sm
+ *
+ * Layout
+ *   root       : column, justify center, align flex-start, 1440×64, p 8/24
+ *   horizontal : row, gap --spacing-md(12px), align-items center, full-width
+ *   numstep    : row, gap --spacing-sm(8px), shrink 0
+ *   divider    : --size-base-8xl(48px) wide, 1px, border-surface-tertiary
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 1440px;
+  height: var(--size-base-10xl, 64px);
+  padding: var(--spacing-sm, 8px) var(--spacing-2xl, 24px);
+  border-radius: var(--radius-xl, 12px);
+  border: var(--border-width-md, 2px) solid var(--opacity-primary-opacity-30);
+  background: var(--gradient-light-01);
+  box-shadow: var(--shadow-sm);
+}
+
+.root[data-variant="brand"] {
+  background: var(--context-background-surface-bg-surface-white);
+  border-color: var(--opacity-black-opacity-90);
+}
+
+/* ---------------------------------------------------------------------------
+ * Inner horizontal row
+ * ------------------------------------------------------------------------- */
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-md, 12px);
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+ * Each step item: Num + Step label
+ * ------------------------------------------------------------------------- */
+.numstep {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Divider between steps — fixed 48px
+ * ------------------------------------------------------------------------- */
+.divider {
+  flex-shrink: 0;
+  width: var(--size-base-8xl, 48px);
+  height: 1px;
+  background: var(--border-border-surface-border-surface-tertiary);
+}

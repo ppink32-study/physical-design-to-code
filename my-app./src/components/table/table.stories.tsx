@@ -398,7 +398,7 @@ function MiniTable({ focusFirst = false }: { focusFirst?: boolean }) {
   );
 }
 
-function ThemeBlock({ theme, label, children }: { theme: "light" | "dark"; label: string; children: ReactNode }) {
+function ThemeBlock({ theme, label, children }: { theme: "light" | "brand"; label: string; children: ReactNode }) {
   return (
     <div
       data-theme={theme}
@@ -422,7 +422,7 @@ export const LightDarkCompare: Story = {
       <ThemeBlock theme="light" label="Light">
         <MiniTable focusFirst />
       </ThemeBlock>
-      <ThemeBlock theme="dark" label="Dark">
+      <ThemeBlock theme="brand" label="Brand">
         <MiniTable focusFirst />
       </ThemeBlock>
     </div>

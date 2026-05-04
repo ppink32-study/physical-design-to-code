@@ -45,7 +45,7 @@ function MatrixStage({
   theme,
   children,
 }: {
-  theme: "light" | "dark";
+  theme: "light" | "brand";
   children: React.ReactNode;
 }) {
   return (
@@ -134,7 +134,7 @@ export const Matrix: Story = {
                   10분 미만 (M:SS · 칸 32px) + progress
                 </th>
                 <td style={storyMatrixCellStyle}>
-                  <MatrixStage theme="dark">
+                  <MatrixStage theme="brand">
                     <PlaybookControlBar
                       currentTime={35}
                       duration={312}
@@ -148,7 +148,7 @@ export const Matrix: Story = {
                   10분 이상 (MM:SS · 48px) + progress
                 </th>
                 <td style={storyMatrixCellStyle}>
-                  <MatrixStage theme="dark">
+                  <MatrixStage theme="brand">
                     <PlaybookControlBar
                       currentTime={420}
                       duration={900}
@@ -162,7 +162,7 @@ export const Matrix: Story = {
                   1시간 이상 (H:MM:SS · 64px) + progress
                 </th>
                 <td style={storyMatrixCellStyle}>
-                  <MatrixStage theme="dark">
+                  <MatrixStage theme="brand">
                     <PlaybookControlBar
                       currentTime={1835}
                       duration={7325}
@@ -195,7 +195,7 @@ export const Matrix: Story = {
                   Default
                 </th>
                 <td style={storyMatrixCellStyle}>
-                  <MatrixStage theme="dark">
+                  <MatrixStage theme="brand">
                     <PlaybookControlBar
                       currentTime={80}
                       duration={312}
@@ -204,7 +204,7 @@ export const Matrix: Story = {
                   </MatrixStage>
                 </td>
                 <td style={storyMatrixCellStyle}>
-                  <MatrixStage theme="dark">
+                  <MatrixStage theme="brand">
                     <PlaybookControlBar
                       currentTime={80}
                       duration={312}
@@ -237,7 +237,7 @@ export const Matrix: Story = {
         <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>
           시간 진행 + 트랙 seek
         </h4>
-        <MatrixStage theme="dark">
+        <MatrixStage theme="brand">
           <TimeAndProgressTicker />
         </MatrixStage>
       </section>
