@@ -1,7 +1,9 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
+import { Badge } from "@/components/badge/badge";
 import { Button } from "@/components/button/button/button";
+import { Toggle } from "@/components/toggle/toggle";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   storyMatrixCellStyle,
@@ -16,6 +18,7 @@ import {
 } from "@/stories/story-docs-shell";
 
 import { Drawer, type DrawerSize } from "./drawer";
+import styles from "./drawer.module.css";
 
 /* ----------------------------------------------------------------- */
 
@@ -76,7 +79,7 @@ export const Playground: Story = {
 };
 
 /* -----------------------------------------------------------------
- *  Matrix — 3가지 사이즈
+ *  Size Matrix — 3가지 사이즈
  * ----------------------------------------------------------------- */
 const SIZES: { label: string; size: DrawerSize }[] = [
   { label: "Small (420px)", size: "small" },
@@ -115,6 +118,67 @@ function DrawerPreview({ size }: { size: DrawerSize }) {
   );
 }
 
+/* -----------------------------------------------------------------
+ *  Full Header Preview — Back + Badges + Edit Actions + Toggle
+ *  Figma 8256:8490 의 모든 헤더 옵션이 켜진 케이스
+ * ----------------------------------------------------------------- */
+function DrawerFullPreview({ size }: { size: DrawerSize }) {
+  const [open, setOpen] = useState(false);
+  const [toggled, setToggled] = useState(false);
+
+  return (
+    <>
+      <Button variant="secondary-outline" size="small" onClick={() => setOpen(true)}>
+        {size} · Full
+      </Button>
+      <Drawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Drawer Title"
+        size={size}
+        onBack={() => setOpen(false)}
+        badges={
+          <>
+            <Badge variant="solid" color="gray" size="sm">Solid</Badge>
+            <Badge variant="solid" color="teal" size="sm">Teal</Badge>
+          </>
+        }
+        titleActions={
+          <>
+            <button type="button" className={styles.iconBtn} aria-label="편집">
+              <span className={styles.iconBtnGlyph} data-icon="pencil" aria-hidden="true" />
+            </button>
+            <button type="button" className={styles.iconBtn} aria-label="펼치기">
+              <span className={styles.iconBtnGlyph} data-icon="chevron-down" aria-hidden="true" />
+            </button>
+          </>
+        }
+        headerControls={
+          <Toggle
+            checked={toggled}
+            onChange={(checked) => setToggled(checked)}
+            aria-label="토글"
+          />
+        }
+        footer={
+          <>
+            <Button variant="secondary-outline" size="large" onClick={() => setOpen(false)}>
+              취소
+            </Button>
+            <Button variant="primary-solid" size="large" onClick={() => setOpen(false)}>
+              확인
+            </Button>
+          </>
+        }
+      >
+        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>
+          Back · Badges · Edit Actions · Toggle 이 모두 활성화된 케이스입니다.
+        </p>
+      </Drawer>
+    </>
+  );
+}
+
 export const Matrix: Story = {
   name: "Matrix",
   parameters: {
@@ -132,6 +196,7 @@ export const Matrix: Story = {
         caption="Components / Drawer — Small·Medium·Large 매트릭스 원본"
       />
 
+      {/* Size 매트릭스 */}
       <section>
         <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
           Drawer / Size
@@ -149,6 +214,34 @@ export const Matrix: Story = {
               {SIZES.map(({ size }) => (
                 <td key={size} style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle", textAlign: "center" }}>
                   <DrawerPreview size={size} />
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      {/* 전체 케이스 매트릭스 — Back + Badges + Edit + Toggle */}
+      <section style={{ marginTop: 32 }}>
+        <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+          Drawer / Full Header (Back · Badges · Edit Actions · Toggle)
+        </h3>
+        <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-secondary)" }}>
+          Figma node 8256:8490 — Back Button / Badge / Edit / Toggle 옵션이 모두 활성화된 케이스
+        </p>
+        <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
+          <thead>
+            <tr>
+              {SIZES.map(({ label }) => (
+                <th key={label} style={storyMatrixColHeaderStyle}>{label} · Full</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {SIZES.map(({ size }) => (
+                <td key={size} style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle", textAlign: "center" }}>
+                  <DrawerFullPreview size={size} />
                 </td>
               ))}
             </tr>
@@ -191,10 +284,22 @@ export const Guideline: Story = {
         </StoryDocsParagraph>
       </StoryDocsSection>
 
-      <StoryDocsSection title="슬롯">
+      <StoryDocsSection title="헤더 슬롯">
         <StoryDocsParagraph>
-          <strong>title</strong>: 헤더 타이틀 텍스트. 생략 시 공간만 표시됩니다.
+          <strong>onBack</strong>: 제공 시 Back(ChevronLeft) 버튼을 타이틀 앞에 표시합니다.
         </StoryDocsParagraph>
+        <StoryDocsParagraph>
+          <strong>badges</strong>: 타이틀 옆 Badge 슬롯입니다.
+        </StoryDocsParagraph>
+        <StoryDocsParagraph>
+          <strong>titleActions</strong>: 타이틀 옆 아이콘 액션 슬롯입니다 (Pencil-Line, ChevronDown 등).
+        </StoryDocsParagraph>
+        <StoryDocsParagraph>
+          <strong>headerControls</strong>: X 버튼 앞 우측 슬롯입니다 (Toggle 등).
+        </StoryDocsParagraph>
+      </StoryDocsSection>
+
+      <StoryDocsSection title="콘텐츠 슬롯">
         <StoryDocsParagraph>
           <strong>children</strong>: body 콘텐츠 슬롯. overflow-y: auto로 스크롤됩니다.
         </StoryDocsParagraph>

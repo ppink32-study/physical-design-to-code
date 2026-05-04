@@ -1,13 +1,14 @@
 "use client";
 
 /**
- * Drawer — Side Drawer
+ * Drawer — Side Drawer (Figma node 8256:8490)
  *
- * - <Drawer>      : overlay + side panel (createPortal 사용, 우측 고정)
- * - size          : "small"(420px) | "medium"(720px) | "large"(1140px max)
- * - footer        : 버튼 슬롯 (justify-end, border-top)
- *
- * Modal 컴포넌트와 동일한 portal/overlay/ESC/scroll-lock 패턴을 사용한다.
+ * - size        : "small"(420px) | "medium"(720px) | "large"(1140px max)
+ * - onBack      : 제공 시 Back 버튼(ChevronLeft) 표시
+ * - badges      : 타이틀 옆 badge 슬롯
+ * - titleActions: 타이틀 옆 아이콘 액션 슬롯 (Pencil-Line, ChevronDown 등)
+ * - headerControls: X 버튼 앞 우측 영역 슬롯 (Toggle 등)
+ * - footer      : 하단 버튼 슬롯 (justify-end, border-top)
  */
 
 import { useEffect, useRef } from "react";
@@ -23,6 +24,14 @@ export type DrawerProps = {
   onClose: () => void;
   title?: string;
   size?: DrawerSize;
+  /** Back 버튼 표시 및 클릭 핸들러 */
+  onBack?: () => void;
+  /** 타이틀 옆 badge 슬롯 */
+  badges?: ReactNode;
+  /** 타이틀 옆 아이콘 액션 슬롯 (Pencil-Line, ChevronDown 등) */
+  titleActions?: ReactNode;
+  /** X 버튼 앞 우측 영역 슬롯 (Toggle 등) */
+  headerControls?: ReactNode;
   /** body 콘텐츠 슬롯 */
   children?: ReactNode;
   /** footer 버튼 슬롯 */
@@ -34,12 +43,15 @@ export function Drawer({
   onClose,
   title,
   size = "medium",
+  onBack,
+  badges,
+  titleActions,
+  headerControls,
   children,
   footer,
 }: DrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
-  /* ESC 키로 닫기 */
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -49,7 +61,6 @@ export function Drawer({
     return () => document.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
-  /* 열려 있는 동안 body 스크롤 잠금 */
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -77,19 +88,45 @@ export function Drawer({
       >
         {/* Header */}
         <div className={styles.header}>
-          {title && (
-            <span id="drawer-title" className={styles.title}>
-              {title}
-            </span>
-          )}
-          <button
-            type="button"
-            className={styles.closeBtn}
-            aria-label="닫기"
-            onClick={onClose}
-          >
-            <span className={styles.closeBtnGlyph} aria-hidden="true" />
-          </button>
+          {/* Left: Back + Title 영역 */}
+          <div className={styles.headerLeft}>
+            {onBack && (
+              <button
+                type="button"
+                className={styles.backBtn}
+                aria-label="뒤로가기"
+                onClick={onBack}
+              >
+                <span className={styles.backBtnGlyph} aria-hidden="true" />
+              </button>
+            )}
+            <div className={styles.titleRow}>
+              <span id="drawer-title" className={styles.title}>
+                {title}
+              </span>
+              {badges && (
+                <div className={styles.badges}>{badges}</div>
+              )}
+              {titleActions && (
+                <div className={styles.titleActions}>{titleActions}</div>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Controls + X 버튼 */}
+          <div className={styles.headerRight}>
+            {headerControls && (
+              <div className={styles.headerControls}>{headerControls}</div>
+            )}
+            <button
+              type="button"
+              className={styles.closeBtn}
+              aria-label="닫기"
+              onClick={onClose}
+            >
+              <span className={styles.closeBtnGlyph} aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
         {/* Body */}
