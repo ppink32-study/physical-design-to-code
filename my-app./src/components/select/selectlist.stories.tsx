@@ -14,7 +14,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -202,17 +201,6 @@ export const Guideline: Story = {
           <StoryDocsInlineCode>type=&quot;search&quot;</StoryDocsInlineCode>)을 전환합니다.{" "}
           <StoryDocsInlineCode>maxHeight</StoryDocsInlineCode> 로 목록 영역 스크롤을 줄 수 있습니다.
         </StoryDocsParagraph>
-      </StoryDocsSection>
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { SelectList } from "@/components/select/selectlist";
-import { SelectItem } from "@/components/select/selectitem";
-
-<SelectList maxHeight={220}>
-  <SelectItem>Item 1</SelectItem>
-</SelectList>
-
-<SelectList type="2-levels">...</SelectList>
-<SelectList type="search" searchPlaceholder="Text" />`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),
