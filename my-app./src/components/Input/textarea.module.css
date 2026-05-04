@@ -88,9 +88,9 @@
 .textareaScrollbarSlot {
   box-sizing: border-box;
   position: absolute;
-  right: 4px;
-  top: var(--spacing-sm, 8px);
-  bottom: var(--spacing-sm, 8px);
+  right: -4px;
+  top: 0;
+  bottom: 0;
   display: flex;
   padding: var(--spacing-2xs, 4px) var(--spacing-3xs, 2px);
   justify-content: center;
@@ -120,9 +120,6 @@
 }
 
 /* resize handle (우측 하단 16x16) — Figma: /icon/Resize.svg */
-.resize-on {
-  resize: both;
-}
 .resize-on::after {
   content: "";
   position: absolute;
@@ -130,7 +127,7 @@
   bottom: 1px;
   width: 16px;
   height: 16px;
-  background-color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  background-color: var(--context-foreground-icon-surface-icon-surface-disabled);
   -webkit-mask-image: url("/icon/Resize.svg");
   mask-image: url("/icon/Resize.svg");
   -webkit-mask-repeat: no-repeat;

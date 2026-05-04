@@ -106,9 +106,9 @@ export const Matrix: Story = {
           Tab2List — 가로 조합 (text × 3 + icon)
         </h3>
         <Tab2List>
-          <Tab2 tabType="text" state="selected" count="5" closable>Tab 1</Tab2>
-          <Tab2 tabType="text" state="default" count="2" closable>Tab 2</Tab2>
-          <Tab2 tabType="text" state="default" closable>Tab 3</Tab2>
+          <Tab2 tabType="text" state="selected" count="5" closable>Tab</Tab2>
+          <Tab2 tabType="text" state="default" count="2" closable>Tab</Tab2>
+          <Tab2 tabType="text" state="default" closable>Tab</Tab2>
           <Tab2 tabType="icon" state="default" />
         </Tab2List>
       </section>
@@ -119,9 +119,9 @@ export const Matrix: Story = {
           Leading icon 포함
         </h3>
         <Tab2List>
-          <Tab2 tabType="text" state="selected" leadingIcon count="5" closable>Tab 1</Tab2>
-          <Tab2 tabType="text" state="default" leadingIcon count="2" closable>Tab 2</Tab2>
-          <Tab2 tabType="text" state="disabled" leadingIcon closable>Tab 3</Tab2>
+          <Tab2 tabType="text" state="selected" leadingIcon count="5" closable>Tab</Tab2>
+          <Tab2 tabType="text" state="default" leadingIcon count="2" closable>Tab</Tab2>
+          <Tab2 tabType="text" state="disabled" leadingIcon closable>Tab</Tab2>
           <Tab2 tabType="icon" state="default" />
         </Tab2List>
       </section>

@@ -26,6 +26,8 @@
 
 .list {
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -125,7 +127,8 @@
  * ------------------------------------------------------------------------- */
 .scrollbarOverlay {
   position: absolute;
-  right: 0;
+  right: -4px;
   top: 0;
   pointer-events: none;
+  z-index: 1;
 }

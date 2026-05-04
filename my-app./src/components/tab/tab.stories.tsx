@@ -14,7 +14,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -326,7 +325,7 @@ function HMatrixTwoSideOverflow() {
 }
 
 function HorizontalGroupingMatrixTable() {
-  const cols = [
+  const rows = [
     { key: "basic", label: "Basic", Demo: HMatrixBasic },
     { key: "overflow", label: "Overflow", Demo: HMatrixOverflow },
     { key: "left", label: "Left extra", Demo: HMatrixLeftExtra },
@@ -346,41 +345,39 @@ function HorizontalGroupingMatrixTable() {
               style={{
                 ...matrixColHeaderStyle,
                 ...matrixStickyCornerStyle,
-                minWidth: 100,
+                minWidth: 160,
                 zIndex: 2,
               }}
               aria-hidden
             />
-            {cols.map((c) => (
-              <th key={c.key} scope="col" style={matrixColHeaderStyle}>
-                {c.label}
-              </th>
-            ))}
+            <th scope="col" style={matrixColHeaderStyle}>
+              Sample
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th
-              scope="row"
-              style={{
-                ...matrixRowHeaderStyle,
-                ...matrixStickyCornerStyle,
-                whiteSpace: "nowrap",
-              }}
-            >
-              Sample
-            </th>
-            {cols.map((c) => {
-              const Cell = c.Demo;
-              return (
-                <td key={c.key} style={matrixCellGroup}>
+          {rows.map((r) => {
+            const Cell = r.Demo;
+            return (
+              <tr key={r.key}>
+                <th
+                  scope="row"
+                  style={{
+                    ...matrixRowHeaderStyle,
+                    ...matrixStickyCornerStyle,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {r.label}
+                </th>
+                <td style={{ ...matrixCellGroup, minWidth: 320 }}>
                   <div style={hFlexEnd}>
                     <Cell />
                   </div>
                 </td>
-              );
-            })}
-          </tr>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -622,14 +619,6 @@ export const Guideline: Story = {
           상태·Text/More 타입, 가로·세로 그룹·overflow·extra 슬롯 조합은 Matrix 스토리 표를
           참고하세요.
         </StoryDocsParagraph>
-      </StoryDocsSection>
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { Tab, TabList } from "@/components/tab/tab";
-
-<TabList orientation="horizontal">
-  <Tab selected>Overview</Tab>
-  <Tab>Usage</Tab>
-</TabList>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

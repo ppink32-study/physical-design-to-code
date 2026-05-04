@@ -133,18 +133,18 @@ export const SelectList = forwardRef<HTMLDivElement, SelectListProps>(
           >
             {children}
           </div>
-
-          {renderScrollbar && (
-            <Scrollbar
-              className={styles.scrollbarOverlay}
-              orientation="vertical"
-              size="small"
-              length={trackHeight}
-              thumbLength={thumbLength}
-              thumbOffset={thumbOffset}
-            />
-          )}
         </div>
+
+        {renderScrollbar && (
+          <Scrollbar
+            className={styles.scrollbarOverlay}
+            orientation="vertical"
+            size="small"
+            length={trackHeight}
+            thumbLength={thumbLength}
+            thumbOffset={thumbOffset}
+          />
+        )}
       </div>
     );
   },

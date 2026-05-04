@@ -12,7 +12,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -192,13 +191,6 @@ export const Guideline: Story = {
           <StoryDocsInlineCode>type=&quot;2-level&quot;</StoryDocsInlineCode> 은 하위 메뉴가 있을 때
           우측 쉐브론을 표시합니다. Matrix 에서 사이즈·상태·레벨 조합을 확인하세요.
         </StoryDocsParagraph>
-      </StoryDocsSection>
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { SelectItem } from "@/components/select/selectitem";
-
-<SelectItem>Item</SelectItem>
-<SelectItem type="2-level">Submenu</SelectItem>
-<SelectItem selected>Selected</SelectItem>`}</StoryDocsCode>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

@@ -35,6 +35,7 @@
  *  Dialog 패널
  * ----------------------------------------------------------------- */
 .dialog {
+  
   position: relative;
   display: flex;
   flex-direction: column;

@@ -107,9 +107,9 @@ function EmptyInner(
         <div className={styles.iconWrap}>{renderIcon(icon)}</div>
       ) : null}
 
-      {hasText || subtext ? (
+      {hasText ? (
         <div className={styles.textGroup}>
-          {hasText ? <p className={styles.description}>{description}</p> : null}
+          <p className={styles.description}>{description}</p>
           {subtext ? <p className={styles.subtext}>{subtext}</p> : null}
         </div>
       ) : null}

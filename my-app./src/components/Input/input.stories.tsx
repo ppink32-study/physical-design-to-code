@@ -25,7 +25,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
   StoryDocsParagraph,
@@ -137,8 +136,9 @@ function chipMatrixShellStyle(
     border: borderDefault,
     borderRadius: "var(--radius-md, 6px)",
     width: INPUT_WRAPPER_DEFAULT_WIDTH_PX,
-    minHeight: tall2Line ? minH + 28 : minH,
-    overflow: layout === "1line" ? "hidden" : "visible",
+    ...(layout === "1line"
+      ? { height: minH, overflow: "hidden" }
+      : { minHeight: tall2Line ? minH + 28 : minH, overflow: "visible" }),
     boxShadow: "none",
     transition:
       "border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease",
@@ -155,11 +155,13 @@ function chipMatrixShellStyle(
     shell.border =
       "1px solid var(--border-border-surface-border-surface-disabled, #d7d8dc)";
     shell.cursor = "not-allowed";
+    shell.paddingBottom = 4;
   } else if (state === "readonly") {
     shell.backgroundColor =
       "var(--context-background-surface-bg-surface-secondary, #f4f4f5)";
     shell.border = borderDefault;
     shell.cursor = "default";
+    shell.paddingBottom = 4;
   } else {
     shell.cursor = "text";
   }
@@ -179,7 +181,7 @@ function MatrixChipField({
 }) {
   const chipSize = size === "large" ? "large" : "medium";
   const showChips =
-    state === "filled" || state === "readonly" || state === "disable";
+    state === "filled" || state === "focus" || state === "readonly" || state === "disable";
   const chipLabels = showChips
     ? layout === "2line"
       ? ["Tag1", "Tag2", "Tag Name 긴 경우", "Tag4"]
@@ -202,24 +204,14 @@ function MatrixChipField({
           {t}
         </InputChip>
       ))}
-      <input
-        type="text"
-        placeholder="Add Tag"
-        aria-label="태그 추가"
-        disabled={inputDisabled}
-        readOnly={inputReadOnly}
-        style={{
-          ...chipFieldInputSlotStyle,
-          ...(inputDisabled
-            ? {
-                color:
-                  "var(--context-foreground-surface-on-surface-disabled, #b3b4bc)",
-                cursor: "not-allowed",
-              }
-            : {}),
-          ...(inputReadOnly ? { cursor: "default" } : {}),
-        }}
-      />
+      {!inputDisabled && !inputReadOnly && (
+        <input
+          type="text"
+          placeholder="Add Tag"
+          aria-label="태그 추가"
+          style={chipFieldInputSlotStyle}
+        />
+      )}
     </div>
   );
 }
@@ -297,6 +289,7 @@ function MatrixToneInputCell({
       disabled={state === "disable"}
       readOnly={state === "readonly"}
       clearable={state === "focus"}
+      leadingIcon
     />
   );
 }
@@ -321,6 +314,7 @@ function MatrixPasswordCell({
       disabled={state === "disable"}
       readOnly={state === "readonly"}
       clearable={state === "focus"}
+      leadingIcon
     />
   );
 }
@@ -874,11 +868,6 @@ export const Guideline: Story = {
         </div>
       </StoryDocsSection>
 
-      <StoryDocsSection title="InlineMessage 코드 예시">
-        <StoryDocsCode>{`import { InlineMessage } from "@/components/Input/inlinemessage";
-
-<InlineMessage type="error" text="Invalid value." />`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

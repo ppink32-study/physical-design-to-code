@@ -19,7 +19,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -289,26 +288,6 @@ export const Guideline: Story = {
         </div>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { AlertFilledIcon } from "@/components/Alert/filledicon";
-
-<AlertFilledIcon type="info" size="small" message="A simple alert—check it out!" />
-
-<AlertFilledIcon
-  type="info"
-  size="medium"
-  title="A simple alert—check it out!"
-  message="Repeated body for wrap…"
-/>
-
-<AlertFilledIcon
-  type="success"
-  size="large"
-  title="Well done!"
-  message="Long body…"
-  extraMessage="Secondary body…"
-/>`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

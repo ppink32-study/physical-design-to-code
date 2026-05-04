@@ -15,7 +15,6 @@ import { Form, FormField } from "./form";
 import formMatrixStyles from "./form-matrix.module.css";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsNote,
@@ -53,6 +52,11 @@ const matrixCellShell: CSSProperties = {
   boxSizing: "border-box",
 };
 
+const matrixCellShellVertical: CSSProperties = {
+  ...matrixCellShell,
+  minWidth: FORM_MATRIX_COL_MIN_VERTICAL,
+};
+
 const matrixHdr: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
@@ -69,11 +73,10 @@ const matrixRowHdr: CSSProperties = {
 
 const matrixGridVertical: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: `minmax(104px,auto) repeat(7, minmax(${FORM_MATRIX_CELL_MIN}px, 1fr))`,
+  gridTemplateColumns: `minmax(104px, auto) repeat(2, minmax(${FORM_MATRIX_COL_MIN_VERTICAL}px, 1fr))`,
   gap: 16,
   rowGap: 20,
   alignItems: "start",
-  overflowX: "auto",
   paddingBottom: 16,
 };
 
@@ -156,7 +159,7 @@ function MatrixFieldControl({
       return <Toggle defaultChecked />;
     case "badge":
       return (
-        <div className={formMatrixStyles.rowNowrap}>
+        <div className={formMatrixStyles.rowNowrapBadge}>
           <Badge variant="solid" color="blue">
             Tag
           </Badge>
@@ -198,7 +201,7 @@ const HORIZONTAL_ROWS: Array<{ key: string; kind: MatrixControlKind }> = [
   { key: "Checkbox", kind: "checkbox" },
   { key: "Radio", kind: "radio" },
   { key: "Toggle", kind: "toggle" },
-  { key: "Chip", kind: "chip" },
+  { key: "Badge", kind: "badge" },
 ];
 
 const FIGMA_FORM_GUIDELINE = figmaNodeUrl("7119:411152");
@@ -327,20 +330,6 @@ export const Guideline: Story = {
         </ul>
       </StoryDocsSection>
 
-      <StoryDocsSection title="사용 예시">
-        <StoryDocsCode>{`<Form layout="top" labelSize="medium">
-  <FormField label="이름" mandatory helper="실명으로 입력해 주세요.">
-    <Input placeholder="홍길동" />
-  </FormField>
-</Form>
-
-<Form layout="left" labelWidth={160} labelSize="small">
-  <FormField label="설명" infoIcon>
-    <TextArea placeholder="내용을 입력하세요" />
-  </FormField>
-</Form>`}</StoryDocsCode>
-      </StoryDocsSection>
-
       <StoryDocsNote>
         Storybook 상단 Figma 패널은 이 파일의 <StoryDocsInlineCode>parameters.figma</StoryDocsInlineCode>
         (7119:411152)로 연결됩니다. Chromatic·디자인 리뷰 시 동일 노드를 기준으로 삼으면 됩니다.
@@ -374,24 +363,20 @@ export const Matrix: Story = {
             color: "var(--context-foreground-surface-on-surface-hint)",
           }}
         >
-          <code>layout=&quot;top&quot;</code> — 행: <code>Label=small</code> /{" "}
-          <code>Label=medium</code>, 열: Input · Text area · Select · Checkbox · Radio · Toggle ·
-          Badge
+          <code>layout=&quot;top&quot;</code> — 행: Input · Text area · Select · Checkbox · Radio · Toggle ·
+          Badge, 열: <code>Label=small</code> / <code>Label=medium</code>
         </p>
         <div style={matrixGridVertical}>
           <div />
+          <div style={matrixHdr}>Label=small</div>
+          <div style={matrixHdr}>Label=medium</div>
           {VERTICAL_COLUMNS.map((col) => (
-            <div key={col.key} style={matrixHdr}>
-              {col.key}
-            </div>
-          ))}
-          {(["small", "medium"] as const).map((labelSize) => (
-            <Fragment key={labelSize}>
-              <div style={matrixRowHdr}>Label={labelSize}</div>
-              {VERTICAL_COLUMNS.map((col) => {
+            <Fragment key={col.key}>
+              <div style={matrixRowHdr}>{col.key}</div>
+              {(["small", "medium"] as const).map((labelSize) => {
                 const suffix = `v-${labelSize}-${col.kind}`;
                 return (
-                  <div key={suffix} style={matrixCellShell}>
+                  <div key={suffix} style={matrixCellShellVertical}>
                     <Form layout="top" labelSize={labelSize}>
                       <FormField label="Label" mandatory>
                         <MatrixFieldControl kind={col.kind} nameSuffix={suffix} />
@@ -419,7 +404,7 @@ export const Matrix: Story = {
           <code>layout=&quot;left&quot;</code>, <code>labelWidth={FORM_MATRIX_LABEL_WIDTH}</code>{" "}
           — 열: <code>Label=small</code> / <code>Label=medium</code> (라벨 영역 max-width{" "}
           {FORM_MATRIX_LABEL_WIDTH}px), 행: Input · Text area · Select · Checkbox · Radio · Toggle ·
-          Chip
+          Badge
         </p>
         <div style={matrixGridHorizontal}>
           <div />

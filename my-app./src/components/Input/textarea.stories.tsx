@@ -19,7 +19,6 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsCode,
   StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
@@ -315,13 +314,6 @@ export const Guideline: Story = {
         </div>
       </StoryDocsSection>
 
-      <StoryDocsSection title="코드 예시">
-        <StoryDocsCode>{`import { TextArea } from "@/components/Input/textarea";
-
-<TextArea placeholder="설명을 입력하세요" />
-
-<TextArea tone="success" defaultValue="저장되었습니다." />`}</StoryDocsCode>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

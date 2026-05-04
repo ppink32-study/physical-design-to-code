@@ -11,3 +11,12 @@
   gap: 8px;
   min-width: 0;
 }
+
+.rowNowrapBadge {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  min-width: 0;
+}
