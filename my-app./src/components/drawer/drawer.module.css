@@ -1,0 +1,173 @@
+/* =================================================================
+ *  Drawer — Side Drawer
+ *
+ *  구조
+ *    .overlay   : 전체 화면 backdrop (drawer 측면 정렬)
+ *    .panel     : 사이드 패널 (full-height)
+ *      .header  : 제목 + 닫기 버튼  (px-24 py-16)
+ *      .body    : 콘텐츠 슬롯       (px-24 pb-24, overflow-y: auto)
+ *      .footer  : 버튼 행           (border-top, px-24 py-20)
+ *
+ *  크기 (data-size)
+ *    small  → 420px
+ *    medium → 720px
+ *    large  → 1140px (max-width)
+ *
+ *  Shadows/Lg: 0px 12px 32px rgba(0,0,0,0.16)
+ * =============================================================== */
+
+/* -----------------------------------------------------------------
+ *  Overlay (backdrop)
+ *    - flexbox 정렬: side="right" → 우측 끝 / side="left" → 좌측 끝
+ * ----------------------------------------------------------------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+  background: rgba(0, 0, 0, 0.50);
+  box-sizing: border-box;
+}
+
+.overlay[data-side="right"] {
+  justify-content: flex-end;
+}
+
+.overlay[data-side="left"] {
+  justify-content: flex-start;
+}
+
+/* -----------------------------------------------------------------
+ *  Panel (drawer 본체)
+ * ----------------------------------------------------------------- */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border: 1px solid var(--border-border-surface-border-surface-secondary);
+  background: var(--context-background-surface-bg-surface-base);
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.16);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 크기 */
+.panel[data-size="small"]  { max-width: 420px;  width: 420px; }
+.panel[data-size="medium"] { max-width: 720px;  width: 720px; }
+.panel[data-size="large"]  { max-width: 1140px; width: 100%; }
+
+/* -----------------------------------------------------------------
+ *  Header
+ * ----------------------------------------------------------------- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.title {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  font-size: var(--font-size-body-xl, 18px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--font-line-height-lg, 24px);
+  letter-spacing: 0;
+  color: var(--context-foreground-surface-on-surface-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--context-foreground-surface-on-surface);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.closeBtn:hover {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+
+.closeBtn:focus-visible {
+  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline-offset: 2px;
+}
+
+.closeBtnGlyph {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask-image: url('/icon/Close.svg');
+  mask-image: url('/icon/Close.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* -----------------------------------------------------------------
+ *  Body (콘텐츠 슬롯)
+ * ----------------------------------------------------------------- */
+.body {
+  flex: 1 0 0;
+  overflow-y: auto;
+  padding: 0 24px 24px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--context-background-surface-bg-surface-base-hover) transparent;
+}
+
+.body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: var(--context-background-surface-bg-surface-base-hover);
+  border-radius: 2px;
+}
+
+/* -----------------------------------------------------------------
+ *  Footer
+ * ----------------------------------------------------------------- */
+.footer {
+  display: flex;
+  padding: var(--spacing-xl, 20px) var(--spacing-2xl, 24px);
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: var(--spacing-xs, 6px);
+  align-self: stretch;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-border-surface-border-surface-secondary);
+  box-sizing: border-box;
+}
+
+.btnGroup {
+  display: flex;
+  width: 300px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+}
