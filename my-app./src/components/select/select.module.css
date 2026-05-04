@@ -278,13 +278,10 @@
   box-shadow: var(--shadow-focus-ring-form-invalid);
 }
 
-/* Focus 시 placeholder · labelText 폰트 컬러 → on-surface-base */
+/* Focus 시 placeholder 폰트 컬러 → on-surface-base */
 .trigger:focus-visible .placeholder,
 .trigger[data-state="focus"] .placeholder,
-.trigger[data-open="true"] .placeholder,
-.trigger:focus-visible .labelText,
-.trigger[data-state="focus"] .labelText,
-.trigger[data-open="true"] .labelText {
+.trigger[data-open="true"] .placeholder {
   color: var(--context-foreground-surface-on-surface-base);
 }
 
