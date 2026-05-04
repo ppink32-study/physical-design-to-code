@@ -171,10 +171,10 @@
   color: var(--context-foreground-surface-on-surface-hint);
 }
 .state-default .leading {
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
 }
 .state-default.type-more .moreIcon {
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
 }
 
 /* hover state (명시적 prop) */

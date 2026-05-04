@@ -136,7 +136,7 @@
 
 .state-default .leadingIcon,
 .state-default .iconCenter {
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--context-foreground-icon-surface-icon-surface-disabled);
 }
 
 .state-default .closeBtn {
