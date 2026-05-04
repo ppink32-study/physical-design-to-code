@@ -15,6 +15,7 @@ import {
 } from "@/stories/story-docs-shell";
 
 import { DataTableBody } from "./body";
+import { DataTableHeader } from "./header";
 
 /* ----------------------------------------------------------------- */
 
@@ -42,18 +43,20 @@ export const Playground: Story = {
   args: {
     variant: "text",
     children: "v1.0",
-    width: 405,
+    width: 496,
   },
 };
 
 /* -----------------------------------------------------------------
+ *  상수
+ * ----------------------------------------------------------------- */
+/** Figma 5269:129425 기준 — header 200px / body 496px */
+const H_W = 200;
+const B_W = 496;
+
+/* -----------------------------------------------------------------
  *  Matrix
  * ----------------------------------------------------------------- */
-const VARIANTS: { label: string; variant: "text" | "badge" }[] = [
-  { label: "Text", variant: "text" },
-  { label: "Badge", variant: "badge" },
-];
-
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
@@ -73,9 +76,8 @@ export const Matrix: Story = {
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
           <thead>
             <tr>
-              {VARIANTS.map(({ label }) => (
-                <th key={label} style={storyMatrixColHeaderStyle}>{label}</th>
-              ))}
+              <th style={storyMatrixColHeaderStyle}>text</th>
+              <th style={storyMatrixColHeaderStyle}>badge</th>
             </tr>
           </thead>
           <tbody>
@@ -93,18 +95,53 @@ export const Matrix: Story = {
         </table>
       </section>
 
-      {/* 테이블 Row 미리보기 */}
-      <section style={{ marginTop: 32 }}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
-          Body Row 미리보기
+      {/* -------------------------------------------------------
+       *  Step Layout (Figma 5269:129425)
+       *  가로 배치: [Header 200] + [Body 496] × 2 = 1392px
+       * ----------------------------------------------------- */}
+      <section style={{ marginTop: 40 }}>
+        <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+          Step Layout — 가로 배치 (Figma 5269:129425)
         </h3>
-        <div style={{ display: "flex" }}>
-          <DataTableBody variant="text" width={150}>v1.0</DataTableBody>
-          <DataTableBody variant="text" width={150}>v1.2</DataTableBody>
-          <DataTableBody variant="badge" width={150}>
-            <Badge variant="solid" color="purple" size="sm" shape="square">Active</Badge>
-          </DataTableBody>
-          <DataTableBody variant="text" width={150}>2026-05-04</DataTableBody>
+        <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-secondary)" }}>
+          Header(200px) + Body(496px) × 2컬럼, 3행 구성
+        </p>
+
+        <div style={{
+          display: "inline-flex",
+          flexDirection: "column",
+          border: "1px solid var(--border-border-surface-border-surface-secondary)",
+          boxSizing: "border-box",
+        }}>
+          {/* Row 1 — text cells */}
+          <div style={{ display: "flex" }}>
+            <DataTableHeader width={H_W}>Version</DataTableHeader>
+            <DataTableBody variant="text" width={B_W}>v1.0</DataTableBody>
+            <DataTableHeader width={H_W}>Model Name</DataTableHeader>
+            <DataTableBody variant="text" width={B_W}>GPT-4 Turbo</DataTableBody>
+          </div>
+
+          {/* Row 2 — badge cells */}
+          <div style={{ display: "flex" }}>
+            <DataTableHeader width={H_W}>Status</DataTableHeader>
+            <DataTableBody variant="badge" width={B_W}>
+              <Badge variant="solid" color="purple" size="sm" shape="square">Active</Badge>
+              <Badge variant="solid" color="purple" size="sm" shape="square">Online</Badge>
+            </DataTableBody>
+            <DataTableHeader width={H_W}>Category</DataTableHeader>
+            <DataTableBody variant="badge" width={B_W}>
+              <Badge variant="solid" color="purple" size="sm" shape="square">AI</Badge>
+              <Badge variant="solid" color="purple" size="sm" shape="square">NLP</Badge>
+            </DataTableBody>
+          </div>
+
+          {/* Row 3 — text cells */}
+          <div style={{ display: "flex" }}>
+            <DataTableHeader width={H_W}>Created</DataTableHeader>
+            <DataTableBody variant="text" width={B_W}>2026-05-04</DataTableBody>
+            <DataTableHeader width={H_W}>Author</DataTableHeader>
+            <DataTableBody variant="text" width={B_W}>Physical AI Platform</DataTableBody>
+          </div>
         </div>
       </section>
     </StoryDocsMatrixPage>
@@ -132,7 +169,17 @@ export const Guideline: Story = {
 
       <StoryDocsSection title="Variant">
         <StoryDocsParagraph><strong>text</strong> — 텍스트를 표시합니다. children으로 문자열을 전달하세요.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>badge</strong> — Badge 슬롯입니다. children으로 Badge 컴포넌트를 주입하세요.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>badge</strong> — Badge 슬롯입니다. children으로 Badge 컴포넌트를 주입하세요. 여러 Badge는 4px gap으로 자동 배치됩니다.</StoryDocsParagraph>
+      </StoryDocsSection>
+
+      <StoryDocsSection title="Step Layout 조합">
+        <StoryDocsParagraph>
+          Figma 5269:129425 기준 — DataTableHeader(200px)와 DataTableBody(496px)를 교대로 배치해
+          가로 2컬럼 key-value 테이블을 구성합니다.
+        </StoryDocsParagraph>
+        <StoryDocsParagraph>
+          <code>{`[Header 200] + [Body 496] + [Header 200] + [Body 496] = 1392px`}</code>
+        </StoryDocsParagraph>
       </StoryDocsSection>
 
       <StoryDocsSection title="크기">
