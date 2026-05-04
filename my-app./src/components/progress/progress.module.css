@@ -1,0 +1,128 @@
+/* =============================================================================
+ * Progress — Figma node 13262:76705
+ * -----------------------------------------------------------------------------
+ * Track
+ *   height        : 16px
+ *   border-radius : --radius-full (1000px)
+ *   bg            : --context-background-surface-bg-surface-teriary
+ *
+ * Bar colors
+ *   primary : --context-background-primary-bg-primary-hover
+ *   success : --accent-green-accent-green
+ *   info    : --accent-cyan-accent-cyan
+ *   warning : --accent-yellow-accent-yellow
+ *   danger  : --accent-red-accent-red
+ *
+ * Label (percentage text)
+ *   Body/Xs-Medium  11px / 14px / weight 500
+ *   color (default) : --context-foreground-surface-on-suface-invert (white)
+ *   color (warning) : --context-foreground-neutral-on-neutral-base  (dark)
+ *
+ * Striped pattern
+ *   White_8%  diagonal overlay via background-image
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * Track
+ * ------------------------------------------------------------------------- */
+.track {
+  position: relative;
+  width: 100%;
+  height: 16px;
+  border-radius: var(--radius-full, 1000px);
+  background: var(--context-background-surface-bg-surface-teriary);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+ * Bar (single + multiple segment)
+ * ------------------------------------------------------------------------- */
+.bar {
+  height: 100%;
+  border-radius: var(--radius-full, 1000px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--context-background-primary-bg-primary-hover);
+  color: var(--context-foreground-surface-on-suface-invert);
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-body-xs, 11px);
+  line-height: var(--font-line-height-2xs, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  transition: width 200ms ease;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Color variants */
+.bar[data-color="primary"] {
+  background-color: var(--context-background-primary-bg-primary-hover);
+  color: var(--context-foreground-surface-on-suface-invert);
+}
+.bar[data-color="success"] {
+  background-color: var(--accent-green-accent-green);
+  color: var(--context-foreground-surface-on-suface-invert);
+}
+.bar[data-color="info"] {
+  background-color: var(--accent-cyan-accent-cyan);
+  color: var(--context-foreground-surface-on-suface-invert);
+}
+.bar[data-color="warning"] {
+  background-color: var(--accent-yellow-accent-yellow);
+  color: var(--context-foreground-neutral-on-neutral-base);
+}
+.bar[data-color="danger"] {
+  background-color: var(--accent-red-accent-red);
+  color: var(--context-foreground-surface-on-suface-invert);
+}
+
+/* ---------------------------------------------------------------------------
+ * Striped pattern overlay — White_8% diagonal stripes
+ * ------------------------------------------------------------------------- */
+.bar.striped::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--opacity-white-opacity-8) 0,
+    var(--opacity-white-opacity-8) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Percentage label
+ * ------------------------------------------------------------------------- */
+.label {
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Multiple — segments laid side by side
+ * ------------------------------------------------------------------------- */
+.multiple {
+  display: flex;
+  overflow: hidden;
+}
+
+.multiple .bar {
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.multiple .bar:first-child {
+  border-radius: var(--radius-full, 1000px) 0 0 var(--radius-full, 1000px);
+}
+
+.multiple .bar:last-child {
+  border-radius: 0 var(--radius-full, 1000px) var(--radius-full, 1000px) 0;
+}
+
+.multiple .bar:only-child {
+  border-radius: var(--radius-full, 1000px);
+}
