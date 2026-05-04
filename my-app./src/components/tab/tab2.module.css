@@ -182,11 +182,14 @@
 }
 
 .state-selected .label,
-.state-selected .count,
+.state-selected .count {
+  color: var(--context-foreground-neutral-on-neutral-white);
+}
+
 .state-selected .leadingIcon,
 .state-selected .iconCenter,
 .state-selected .closeBtn {
-  color: var(--context-foreground-neutral-on-neutral-white);
+  color: var(--context-foreground-icon-surface-icon-surface);
 }
 
 /* -----------------------------------------------------------------
