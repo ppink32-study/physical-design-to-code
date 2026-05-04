@@ -150,13 +150,15 @@ export function DrawerHeader({
         {titlePrefix && (
           <div className={styles.titlePrefix}>{titlePrefix}</div>
         )}
-        {badges && (
-          <div className={styles.badges}>{badges}</div>
-        )}
-        <span id="drawer-title" className={styles.title}>{title}</span>
-        {titleActions && (
-          <div className={styles.titleActions}>{titleActions}</div>
-        )}
+        <div className={styles.titleContent}>
+          <span id="drawer-title" className={styles.title}>{title}</span>
+          {badges && (
+            <div className={styles.badges}>{badges}</div>
+          )}
+          {titleActions && (
+            <div className={styles.titleActions}>{titleActions}</div>
+          )}
+        </div>
       </div>
 
       {/* Right: [headerControls] [X btn] */}

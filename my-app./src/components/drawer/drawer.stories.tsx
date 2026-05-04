@@ -49,14 +49,14 @@ const BookmarkBtn = () => (
     style={{
       display: "inline-flex", alignItems: "center", justifyContent: "center",
       width: 32, height: 32, padding: 0, border: "none", background: "transparent",
-      color: "var(--context-foreground-surface-on-surface)", cursor: "pointer",
+      color: "var(--context-background-surface-bg-surface-quarernary)", cursor: "pointer",
       borderRadius: "var(--radius-xs, 2px)",
     }}
   >
     <span style={{
       display: "inline-block", width: 24, height: 24,
       backgroundColor: "currentColor",
-      WebkitMaskImage: "url('/icon/Star.svg')", maskImage: "url('/icon/Star.svg')",
+      WebkitMaskImage: "url('/icon/StarFill.svg')", maskImage: "url('/icon/StarFill.svg')",
       WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat",
       WebkitMaskPosition: "center", maskPosition: "center",
       WebkitMaskSize: "contain", maskSize: "contain",
@@ -66,20 +66,14 @@ const BookmarkBtn = () => (
 
 const BadgeSlot = () => (
   <>
-    <Badge variant="solid" color="gray" size="sm">Solid</Badge>
-    <Badge variant="solid" color="teal" size="sm">Teal</Badge>
+    <Badge variant="solid" color="purple" size="lg">12</Badge>
   </>
 );
 
 const EditActions = () => (
-  <>
-    <button type="button" className={styles.iconBtn} aria-label="편집">
-      <span className={styles.iconBtnGlyph} data-icon="pencil" aria-hidden="true" />
-    </button>
-    <button type="button" className={styles.iconBtn} aria-label="펼치기">
-      <span className={styles.iconBtnGlyph} data-icon="chevron-down" aria-hidden="true" />
-    </button>
-  </>
+  <button type="button" className={styles.iconBtn} aria-label="편집">
+    <span className={styles.iconBtnGlyph} data-icon="pencil" aria-hidden="true" />
+  </button>
 );
 
 /* -----------------------------------------------------------------
@@ -167,41 +161,12 @@ type HeaderCase = {
 
 const HEADER_CASES: HeaderCase[] = [
   {
-    label: "Default",
-    props: { title: "Drawer Title" },
-  },
-  {
-    label: "Back",
-    props: { title: "Drawer Title", onBack: () => {} },
-  },
-  {
-    label: "Bookmark",
-    props: { title: "Drawer Title", titlePrefix: <BookmarkBtn /> },
-  },
-  {
-    label: "Badges",
-    props: { title: "Drawer Title", badges: <BadgeSlot /> },
-  },
-  {
-    label: "Edit Actions",
-    props: { title: "Drawer Title", titleActions: <EditActions /> },
-  },
-  {
-    label: "Toggle",
-    props: {
-      title: "Drawer Title",
-      headerControls: <Toggle defaultChecked={false} aria-label="토글" />,
-    },
-  },
-  {
     label: "Full (모두)",
     props: {
       title: "Drawer Title",
-      onBack: () => {},
       titlePrefix: <BookmarkBtn />,
       badges: <BadgeSlot />,
       titleActions: <EditActions />,
-      headerControls: <Toggle defaultChecked={false} aria-label="토글" />,
     },
   },
 ];
@@ -306,11 +271,18 @@ export const Guideline: Story = {
         <StoryDocsParagraph><strong>large</strong> — max-width 1140px.</StoryDocsParagraph>
       </StoryDocsSection>
 
-      <StoryDocsSection title="헤더 슬롯 (Figma 순서)">
-        <StoryDocsParagraph><strong>onBack</strong>: Back(ChevronLeft 40×40) 버튼. 타이틀 가장 앞.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>titlePrefix</strong>: Back 버튼 뒤 슬롯 (Bookmark/Like 32×32 등).</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>badges</strong>: titlePrefix 뒤, 타이틀 앞 Badge 슬롯.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>titleActions</strong>: 타이틀 뒤 아이콘 액션 슬롯 (Pencil-Line, ChevronDown 등).</StoryDocsParagraph>
+      <StoryDocsSection title="헤더 슬롯 순서">
+        <StoryDocsParagraph>
+          Left (좌→우): <strong>titlePrefix</strong> · <strong>title</strong> · <strong>badges</strong> · <strong>titleActions</strong>
+        </StoryDocsParagraph>
+        <StoryDocsParagraph>
+          Right: <strong>headerControls</strong> · X 닫기 버튼
+        </StoryDocsParagraph>
+        <StoryDocsParagraph><strong>onBack</strong>: 제공 시 Back(ChevronLeft 40×40) 버튼이 가장 앞에 표시됩니다.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>titlePrefix</strong>: Back 버튼 뒤, 타이틀 앞 슬롯 (Bookmark/StarFill 32×32 등). 이후 요소와 간격 12px.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>title</strong>: 텍스트 길이에 따라 자연스럽게 늘어납니다 (flex: 0 0 auto).</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>badges</strong>: 타이틀 뒤 Badge 슬롯. title · badges · titleActions 간격 8px.</StoryDocsParagraph>
+        <StoryDocsParagraph><strong>titleActions</strong>: 타이틀 뒤 아이콘 액션 슬롯 (Pencil-Line 등).</StoryDocsParagraph>
         <StoryDocsParagraph><strong>headerControls</strong>: X 버튼 앞 우측 슬롯 (Toggle 등).</StoryDocsParagraph>
       </StoryDocsSection>
 
