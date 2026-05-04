@@ -278,6 +278,16 @@
   box-shadow: var(--shadow-focus-ring-form-invalid);
 }
 
+/* Focus 시 placeholder · labelText 폰트 컬러 → on-surface-base */
+.trigger:focus-visible .placeholder,
+.trigger[data-state="focus"] .placeholder,
+.trigger[data-open="true"] .placeholder,
+.trigger:focus-visible .labelText,
+.trigger[data-state="focus"] .labelText,
+.trigger[data-open="true"] .labelText {
+  color: var(--context-foreground-surface-on-surface-base);
+}
+
 /* Filled 상태는 placeholder 대신 value/chips 노출만 달라지며,
  * 색상/border 는 default 와 동일하므로 별도 규칙 없음 */
 
