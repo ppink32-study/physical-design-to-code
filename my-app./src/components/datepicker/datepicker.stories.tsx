@@ -67,7 +67,7 @@ const MATRIX_COLS: ColSpec[] = [
   { key: "label", header: "Label", tone: "normal", label: "label" },
 ];
 
-/** Figma 행: Normal → Hover/Active(clear) → Filled → Disabled → Read-only */
+/** Figma 행: Normal → Focus(clear) → Filled → Disabled → Read-only */
 const MATRIX_ROWS: Array<{
   label: string;
   forcedState?: DatePickerForcedState;
@@ -80,7 +80,7 @@ const MATRIX_ROWS: Array<{
 }> = [
   { label: "Normal", withValue: false },
   {
-    label: "Hover / Active",
+    label: "Focus",
     forcedState: "focus",
     withValue: true,
     clearable: true,
@@ -247,7 +247,7 @@ export const Matrix: Story = {
     docs: {
       description: {
         story:
-          "Figma 매트릭스: **열** Default / Success / Error / Label · **행** Normal · Hover·Active(포커스+clear) · Filled · Disabled · Read-only. Medium 단일 크기. Large 는 Default 스토리 Controls 로 확인.",
+          "Figma 매트릭스: **열** Default / Success / Error / Label · **행** Normal · Focus(+clear) · Filled · Disabled · Read-only. Medium 단일 크기. Large 는 Default 스토리 Controls 로 확인.",
       },
     },
   },

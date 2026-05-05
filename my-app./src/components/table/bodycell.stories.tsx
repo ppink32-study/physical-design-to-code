@@ -326,10 +326,10 @@ const PHASE5_TYPES: Array<{
     label: "Badge",
     render: ({ state, focus, cellKey }) => (
       <BodyCell key={cellKey} type="badge" state={state} focus={focus}>
-        <Badge variant="status" color="purple" shape="round" size="sm">
+        <Badge variant="solid" color="purple" shape="square" size="sm">
           Badge
         </Badge>
-        <Badge variant="status" color="purple" shape="round" size="sm">
+        <Badge variant="solid" color="purple" shape="square" size="sm">
           Badge
         </Badge>
       </BodyCell>
@@ -378,11 +378,7 @@ const PHASE5_TYPES: Array<{
         state={state}
         focus={focus}
         subText="Sub Text"
-        badge={
-          <Badge variant="solid" color="primary" shape="round" size="sm">
-            99
-          </Badge>
-        }
+        badge={<Badge variant="notice" color="primary" count={99} />}
       >
         Multiple line Title 최대 한줄
       </BodyCell>

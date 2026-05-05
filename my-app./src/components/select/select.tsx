@@ -19,7 +19,9 @@
  * ========================================================================== */
 import {
   forwardRef,
+  useState,
   type ButtonHTMLAttributes,
+  type FocusEvent,
   type MouseEvent,
   type ReactNode,
 } from "react";
@@ -83,10 +85,14 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
     disabled,
     className,
     children,
+    onFocus: onFocusProp,
+    onBlur: onBlurProp,
     ...rest
   },
   ref,
 ) {
+  const [focused, setFocused] = useState(false);
+
   const hasChips = Array.isArray(chips) && chips.length > 0;
   const isFilled = hasChips || value != null || children != null;
 
@@ -96,7 +102,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
       ? "disable"
       : readOnly
         ? "readonly"
-        : open
+        : open || focused
           ? "focus"
           : isFilled
             ? "filled"
@@ -120,6 +126,14 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
       aria-disabled={disabled || undefined}
       aria-readonly={readOnly || undefined}
       disabled={disabled}
+      onFocus={(e: FocusEvent<HTMLButtonElement>) => {
+        if (!disabled && !readOnly) setFocused(true);
+        onFocusProp?.(e);
+      }}
+      onBlur={(e: FocusEvent<HTMLButtonElement>) => {
+        setFocused(false);
+        onBlurProp?.(e);
+      }}
       {...rest}
     >
       <span className={styles.input} data-multiline={multiline || undefined}>
@@ -152,64 +166,64 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
         )}
       </span>
 
-      {/* 다중 선택 시 x-button — tone 아이콘보다 앞 (Figma 순서) */}
-      {hasChips && clearable && (
-        <span
-          className={styles.clear}
-          role="button"
-          tabIndex={-1}
-          aria-label="전체 지우기"
-          onClick={(e) => {
-            e.stopPropagation();
-            onClear?.(e as unknown as MouseEvent<HTMLButtonElement>);
-          }}
-        >
-          <span className={styles.clearIcon} aria-hidden="true" />
-        </span>
-      )}
+      {/* x-button / tone-icon / chevron — 2line 에서 h-24 고정 그룹으로 상단 정렬 */}
+      <span className={styles.trailingGroup}>
+        {hasChips && clearable && (
+          <span
+            className={styles.clear}
+            role="button"
+            tabIndex={-1}
+            aria-label="전체 지우기"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClear?.(e as unknown as MouseEvent<HTMLButtonElement>);
+            }}
+          >
+            <span className={styles.clearIcon} aria-hidden="true" />
+          </span>
+        )}
 
-      {/* tone 아이콘 (success: Check, error: Alert) */}
-      {tone === "success" && (
+        {tone === "success" && (
+          <span
+            className={styles.toneIcon}
+            data-tone="success"
+            aria-hidden="true"
+            style={{ width: iconSize, height: iconSize }}
+          >
+            <span
+              className={styles.toneIconMask}
+              style={{
+                WebkitMaskImage: "url(/icon/Check.svg)",
+                maskImage: "url(/icon/Check.svg)",
+              }}
+            />
+          </span>
+        )}
+        {tone === "error" && (
+          <span
+            className={styles.toneIcon}
+            data-tone="error"
+            aria-hidden="true"
+            style={{ width: iconSize, height: iconSize }}
+          >
+            <span
+              className={styles.toneIconMask}
+              style={{
+                WebkitMaskImage: "url(/icon/Alert.svg)",
+                maskImage: "url(/icon/Alert.svg)",
+              }}
+            />
+          </span>
+        )}
+
         <span
-          className={styles.toneIcon}
-          data-tone="success"
+          className={styles.chevron}
+          data-open={open || undefined}
           aria-hidden="true"
           style={{ width: iconSize, height: iconSize }}
         >
-          <span
-            className={styles.toneIconMask}
-            style={{
-              WebkitMaskImage: "url(/icon/Check.svg)",
-              maskImage: "url(/icon/Check.svg)",
-            }}
-          />
+          <span className={styles.chevronMask} />
         </span>
-      )}
-      {tone === "error" && (
-        <span
-          className={styles.toneIcon}
-          data-tone="error"
-          aria-hidden="true"
-          style={{ width: iconSize, height: iconSize }}
-        >
-          <span
-            className={styles.toneIconMask}
-            style={{
-              WebkitMaskImage: "url(/icon/Alert.svg)",
-              maskImage: "url(/icon/Alert.svg)",
-            }}
-          />
-        </span>
-      )}
-
-      {/* Chevron */}
-      <span
-        className={styles.chevron}
-        data-open={open || undefined}
-        aria-hidden="true"
-        style={{ width: iconSize, height: iconSize }}
-      >
-        <span className={styles.chevronMask} />
       </span>
     </button>
   );

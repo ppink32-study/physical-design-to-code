@@ -69,20 +69,23 @@
   height: var(--size-base-6xl); /* 40 */
 }
 
-/* chip 있음 — 양쪽 패딩 비대칭(left 8) + 상하 4 */
+/* chip 있음 — 양쪽 패딩 비대칭(left 8)
+ * medium 1line : py 0   / large 1line : py 4px */
 .trigger[data-has-chips="true"] {
-  padding: var(--spacing-2xs) var(--spacing-md) var(--spacing-2xs) var(--spacing-sm); /* 4 12 4 8 */
+  padding: 0 var(--spacing-md) 0 var(--spacing-sm); /* 0 12 0 8 */
 }
-/* medium + chip → align flex-start / large + chip → center 유지 */
-.trigger[data-size="medium"][data-has-chips="true"] {
-  align-items: flex-start;
+.trigger[data-size="large"][data-has-chips="true"] {
+  padding-top: var(--spacing-2xs);    /* 4px */
+  padding-bottom: var(--spacing-2xs); /* 4px */
 }
 
-/* 2line wrap 모드에서는 높이를 auto 로 풀어 줌 */
+/* 2line wrap 모드 — 높이 auto, 상하 4px padding, align-items flex-start */
 .trigger[data-multiline="true"] {
   height: auto;
   min-height: var(--size-base-4xl);
   align-items: flex-start;
+  padding-top: var(--spacing-2xs);    /* 4px */
+  padding-bottom: var(--spacing-2xs); /* 4px */
 }
 .trigger[data-size="large"][data-multiline="true"] {
   min-height: var(--size-base-6xl);
@@ -192,6 +195,21 @@
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;
+}
+
+/* ---------------------------------------------------------------------------
+ * Trailing group (x-button + tone-icon + chevron)
+ *   1line : 부모 align-items:center 에 의해 자동 수직 중앙
+ *   2line : height:24px 고정 → flex-start 부모에서 상단 정렬
+ * ------------------------------------------------------------------------- */
+.trailingGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  flex-shrink: 0;
+}
+.trigger[data-multiline="true"] .trailingGroup {
+  height: 24px;
 }
 
 /* ---------------------------------------------------------------------------

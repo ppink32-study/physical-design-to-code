@@ -69,7 +69,7 @@ export type BadgeStatusColor =
   | "gray"
   | "orange";
 
-export type BadgeNoticeColor = "red" | "purple";
+export type BadgeNoticeColor = "red" | "purple" | "primary";
 
 export type BadgeColor =
   | BadgeSolidColor

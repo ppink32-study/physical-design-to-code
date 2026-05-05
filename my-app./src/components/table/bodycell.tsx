@@ -43,9 +43,15 @@ import type {
 } from "react";
 import { forwardRef } from "react";
 
+import { Badge } from "../badge/badge";
+import { Button } from "../button/button/button";
 import { Checkbox } from "../checkbox/checkbox";
+import { LinkText } from "../button/link-text/link-text";
 import { Radio } from "../radio/radio";
 import { Toggle } from "../toggle/toggle";
+import { Input } from "../Input/input";
+import { Select } from "../select/select";
+import { DatePicker } from "../datepicker/datepicker";
 
 import styles from "./bodycell.module.css";
 
@@ -226,7 +232,7 @@ function BodyCellInner(
     treeExpanded = false,
     subText,
     badge,
-    fileIcon = "/icon/PDF.svg",
+    fileIcon = "/icon/%E2%9D%96%20Data%20Grid/Data%20Grid/ic_file.svg",
     thumbnailSrc,
     width,
     lastCol = false,
@@ -350,28 +356,58 @@ function BodyCellInner(
     }
 
     case "link": {
-      const linkClass = [styles.link, disabled ? styles.linkDisabled : null]
-        .filter(Boolean)
-        .join(" ");
-      content = href != null ? (
-        <a
-          className={linkClass}
-          href={href}
+      content = (
+        <LinkText
+          className={styles.link}
+          href={href ?? "#"}
           target={target}
-          aria-disabled={disabled || undefined}
-          onClick={disabled ? (e) => e.preventDefault() : undefined}
+          disabled={disabled}
+          variant="accent"
+          size="large"
         >
           {children ?? "Link Text"}
-        </a>
-      ) : (
-        <span className={linkClass}>{children ?? "Link Text"}</span>
+        </LinkText>
       );
       break;
     }
 
-    case "button":
+    case "button": {
+      content = (
+        <div className={styles.buttonGroup}>
+          {children ?? (
+            <>
+              <Button variant="secondary-outline" size="small">Button</Button>
+              <Button variant="secondary-outline" size="small">Button</Button>
+            </>
+          )}
+        </div>
+      );
+      break;
+    }
+
     case "button-icon-only": {
-      content = <div className={styles.buttonGroup}>{children}</div>;
+      content = (
+        <div className={styles.buttonGroup}>
+          {children ?? (
+            <>
+              <Button
+                variant="secondary-outline"
+                size="small"
+                iconOnly
+                leftIcon={<MaskIcon src="/icon/Search.svg" size={16} />}
+                aria-label="action"
+              />
+              <Button
+                variant="secondary-outline"
+                size="small"
+                iconOnly
+                leftIcon={<MaskIcon src="/icon/Search.svg" size={16} />}
+                aria-label="action"
+              />
+            </>
+          )}
+        </div>
+      );
       break;
     }
 
@@ -387,7 +423,7 @@ function BodyCellInner(
           onClick={(e) => onLikeToggle?.(!isLiked, e)}
         >
           <MaskIcon
-            src={isLiked ? "/icon/StarFill.svg" : "/icon/Star.svg"}
+            src="/icon/StarFill.svg"
             size={20}
             className={isLiked ? styles.likeIconOn : styles.likeIconOff}
           />
@@ -401,76 +437,82 @@ function BodyCellInner(
      * --------------------------------------------------------- */
     case "text-field": {
       content = (
-        <div className={styles.formBox}>
-          <span
-            className={styles.formBoxText}
-            data-placeholder={value ? undefined : "true"}
-          >
-            {value ?? placeholder ?? "Placeholder"}
-          </span>
-        </div>
+        <Input
+          size="medium"
+          width="100%"
+          value={value}
+          placeholder={placeholder ?? "Placeholder"}
+          trailingIcon={false}
+          disabled={disabled}
+        />
       );
       break;
     }
 
     case "search": {
       content = (
-        <div className={styles.formBox}>
-          <span
-            className={styles.formBoxText}
-            data-placeholder={value ? undefined : "true"}
-          >
-            {value ?? placeholder ?? "Placeholder"}
-          </span>
-          <MaskIcon src="/icon/Search.svg" size={16} className={styles.formBoxTrailing} />
-        </div>
+        <Input
+          size="medium"
+          width="100%"
+          leadingIcon
+          value={value}
+          placeholder={placeholder ?? "Placeholder"}
+          trailingIcon={false}
+          disabled={disabled}
+        />
       );
       break;
     }
 
     case "select": {
       content = (
-        <div className={styles.formBox}>
-          <span className={styles.formBoxText}>
-            {children ?? "Text"}
-          </span>
-          <MaskIcon
-            src={expanded ? "/icon/ChevronDown.svg" : "/icon/ChevronDown.svg"}
-            size={16}
-            className={styles.formBoxTrailing}
-          />
-        </div>
+        <Select
+          size="medium"
+          style={{ width: "100%" }}
+          placeholder={placeholder ?? "Text"}
+          value={value}
+          open={expanded}
+          disabled={disabled}
+        >
+          {children}
+        </Select>
       );
       break;
     }
 
     case "date-picker": {
       content = (
-        <div className={styles.formBox}>
-          <span
-            className={styles.formBoxText}
-            data-placeholder={value ? undefined : "true"}
-          >
-            {value ?? "yyyy-mm-dd"}
-          </span>
-          <MaskIcon src="/icon/Calendar.svg" size={16} className={styles.formBoxTrailing} />
-        </div>
+        <DatePicker
+          size="medium"
+          style={{ width: "100%" }}
+          placeholder={placeholder ?? "yyyy-mm-dd"}
+          value={value}
+          disabled={disabled}
+        />
       );
       break;
     }
 
     case "state": {
       content = (
-        <div className={styles.stateWrap}>
-          <span className={styles.stateDot} data-tone={stateTone} aria-hidden="true" />
-          <span className={styles.stateText}>{children ?? "Badge"}</span>
-        </div>
+        <Badge variant="status" color="cyan" size="sm">
+          {children ?? "Badge"}
+        </Badge>
       );
       break;
     }
 
     case "badge": {
-      content = <div className={styles.badgeGroup}>{children}</div>;
+      content = (
+        <div className={styles.badgeGroup}>
+          {children ?? (
+            <>
+              <Badge variant="solid" color="purple" shape="square" size="sm">Badge</Badge>
+              <Badge variant="solid" color="purple" shape="square" size="sm">Badge</Badge>
+            </>
+          )}
+        </div>
+      );
       break;
     }
 
@@ -478,7 +520,7 @@ function BodyCellInner(
       content = (
         <div className={styles.fileWrap}>
           <span className={styles.fileIcon}>
-            <MaskIcon src={fileIcon} size={20} />
+            <img src={fileIcon} width={20} height={20} alt="" aria-hidden="true" />
           </span>
           <span className={styles.text} data-align="left">
             {children ?? "File Name.pdf"}
@@ -545,9 +587,6 @@ function BodyCellInner(
           ) : (
             <div className={styles.videoThumbFallback} aria-hidden="true" />
           )}
-          <span className={styles.videoPlay} aria-hidden="true">
-            <MaskIcon src="/icon/Play.svg" size={12} />
-          </span>
         </div>
       );
       break;

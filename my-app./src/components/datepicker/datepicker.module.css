@@ -94,15 +94,6 @@
   box-shadow: var(--shadow-focus-ring-form-invalid);
 }
 
-/* Hover — 포인터 기기, 포커스/비활성/읽기전용 제외 (Normal 톤만 토큰 반영) */
-@media (hover: hover) {
-  .root[data-tone="normal"]:hover:not([data-state="disable"]):not([data-state="readonly"]):not(
-      [data-state="focus"]
-    ) {
-    border-color: var(--border-border-primary-hover, #28738c);
-  }
-}
-
 /* Disable */
 .root[data-state="disable"] {
   background-color: var(

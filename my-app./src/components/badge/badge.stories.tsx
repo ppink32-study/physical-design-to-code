@@ -178,7 +178,7 @@ const STATUS_COLORS: BadgeStatusColor[] = [
   "orange",
 ];
 
-const NOTICE_COLORS: BadgeNoticeColor[] = ["red", "purple"];
+const NOTICE_COLORS: BadgeNoticeColor[] = ["red", "purple", "primary"];
 
 const SOLID_MATRIX_ROWS: Array<{
   id: string;
@@ -550,7 +550,7 @@ export const Matrix: Story = {
         </div>
       </SectionFrame>
 
-      <SectionFrame title="Badge / Notice — red · purple (+99 규칙)">
+      <SectionFrame title="Badge / Notice — red · purple · primary (+99 규칙)">
         <div style={matrixScrollWrap}>
           <table style={matrixTableBase}>
             <thead>
@@ -708,11 +708,17 @@ export const Guideline: Story = {
               </tr>
               <tr>
                 <td style={tdStyle}>
-                  <Badge variant="notice" color="red" count={3} />
+                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                    <Badge variant="notice" color="red" count={3} />
+                    <Badge variant="notice" color="purple" count={99} />
+                    <Badge variant="notice" color="primary" count={1} />
+                  </div>
                 </td>
                 <td style={tdStyle}>
                   알림 · 메시지 카운트(1~98 그대로, 99+ 는 +99). 아이콘 상단 우측에 겹쳐
-                  사용. 좌우 패딩 <StoryDocsInlineCode>4px</StoryDocsInlineCode>.
+                  사용. 좌우 패딩 <StoryDocsInlineCode>4px</StoryDocsInlineCode>,
+                  최소 너비 <StoryDocsInlineCode>15px</StoryDocsInlineCode>.
+                  색상: red · purple · primary(teal).
                 </td>
               </tr>
             </tbody>

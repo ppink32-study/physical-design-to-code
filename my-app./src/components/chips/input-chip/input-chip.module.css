@@ -10,7 +10,7 @@
  *     붙는다. Type=Error 가 겹치면 border 가 on-error 로 덮어쓴다.
  *   - Hover 상태에서는 bg 만 bg-surface-base-hover 로 교체된다.
  *
- * 패딩: 좌우 8px 고정. large 는 상하 3px · 높이 40px (Input large 행과 정렬).
+ * 패딩: 좌우 8px 고정. large 는 상하 2px · 높이 32px (Select large 40px 컨테이너 내 py 4px 기준).
  *
  * 토큰 매핑 (재확인 완료)
  *   bg base            : --context-background-surface-bg-surface-teriary
@@ -50,9 +50,9 @@
   padding-bottom: 2px;
 }
 .chip[data-size="large"] {
-  height: 40px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  height: 32px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 /* Text */

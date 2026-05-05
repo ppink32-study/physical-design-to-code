@@ -251,17 +251,18 @@
 
 /* ==============================================================
  * Variant: Notice
- * 높이 12px · 좌우 4px padding (--spacing-2xs) · 99+ 는 "+99" (TS)
+ * 높이 auto(15px) · 최소 너비 15px · 좌우 4px · 하단 1px padding
+ * 99+ 는 "+99" (TS)
  * ============================================================ */
 .variantNotice {
   box-sizing: border-box;
-  height: 12px;
-  min-width: 12px;
-  padding: 0 var(--spacing-2xs) 1px; /* 0 4px 1px — Figma 좌우 4px */
+  min-width: 15px;
+  padding: 0 var(--spacing-2xs) 1px; /* 0 4px 1px */
   justify-content: center;
   overflow: hidden;
   border-radius: var(--radius-full);
   font-size: var(--font-size-body-xs); /* 11 */
+  font-weight: var(--font-weight-medium); /* 500 */
   line-height: var(--font-line-height-2xs); /* 14 */
   letter-spacing: 0;
   background: var(--badge-bg);
@@ -275,6 +276,10 @@
 .variantNotice.colorPurple {
   --badge-bg: var(--accent-purple-accent-purple);
   --badge-fg: var(--context-foreground-neutral-on-neutral-invert);
+}
+.variantNotice.colorPrimary {
+  --badge-bg: var(--context-foreground-primary-on-primary, #3f9bae);
+  --badge-fg: var(--context-foreground-neutral-on-neutral-white);
 }
 
 .noticeCount {

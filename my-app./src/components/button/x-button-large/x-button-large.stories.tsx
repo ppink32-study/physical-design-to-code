@@ -6,12 +6,7 @@ import {
   storyMatrixColHeaderStyle,
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
-import {
-  StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
-} from "@/stories/story-docs-shell";
+import { StoryDocsMatrixPage } from "@/stories/story-docs-shell";
 
 import { XButtonLarge } from "./x-button-large";
 
@@ -85,43 +80,3 @@ export const Matrix: Story = {
   ),
 };
 
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage
-      title="XButton Large"
-      description="비디오/이미지 등 미디어 오버레이용 32×32 원형 X 버튼."
-    >
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          기존 <code>XButton</code>(chip surface) 과 별개의 컴포넌트로, 어두운 배경 위에서
-          시인성을 갖는 검은 50% 오버레이 + 흰 X 아이콘 스타일입니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="토큰">
-        <StoryDocsParagraph>
-          <strong>default bg</strong>: <code>--opacity-black-opacity-50</code>
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>hover bg</strong>: <code>--opacity-black-opacity-90</code>
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>icon fg</strong>: <code>--context-foreground-neutral-on-neutral-white</code>
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>container size</strong>: <code>--size-base-4xl</code> = 32px
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
-  ),
-};
