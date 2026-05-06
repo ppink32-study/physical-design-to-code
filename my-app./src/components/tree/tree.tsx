@@ -1,44 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { Checkbox } from "@/components/checkbox/checkbox";
 import styles from "./tree.module.css";
-
-// ─── Inline SVG Icons ─────────────────────────────────────────────────────────
-
-function ChevronRightIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M8.79834 6.41559C8.48249 6.09923 8.48219 5.58625 8.79834 5.27008C9.11467 4.95376 9.6285 4.95376 9.94482 5.27008L16.1011 11.4273C16.4174 11.7436 16.4174 12.2565 16.1011 12.5728L9.94482 18.73C9.6285 19.0464 9.11466 19.0464 8.79834 18.73C8.48202 18.4137 8.48202 17.8999 8.79834 17.5836L14.3823 12.0005L8.79834 6.41559Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M17.5845 8.7984C17.9008 8.48255 18.4138 8.48225 18.73 8.7984C19.0463 9.11473 19.0463 9.62856 18.73 9.94489L12.5728 16.1011C12.2564 16.4175 11.7436 16.4175 11.4272 16.1011L5.27002 9.94489C4.95369 9.62856 4.95369 9.11473 5.27002 8.7984C5.58634 8.48208 6.10018 8.48208 6.4165 8.7984L11.9995 14.3824L17.5845 8.7984Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function FolderIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M10.7104 3.30027C11.4855 3.30042 12.2214 3.64484 12.7172 4.2407L14.4399 6.31101H18.9802C20.5376 6.31101 21.7486 7.66581 21.5739 9.21336L20.7595 18.3825C20.6101 19.7018 19.4944 20.6986 18.1667 20.6989H5.84292C4.51509 20.6988 3.39848 19.7019 3.24917 18.3825L2.43569 9.21336C2.35712 8.5174 2.56016 7.86139 2.94741 7.3491C2.91066 7.27125 2.88554 7.18645 2.87515 7.09617L2.77358 6.2075C2.59586 4.65835 3.80704 3.30027 5.36636 3.30027H10.7104ZM5.02847 7.93016C4.43792 7.93044 3.97878 8.44485 4.04507 9.03172L4.85952 18.1999C4.91609 18.7003 5.33927 19.0787 5.84292 19.0788H18.1667C18.6702 19.0785 19.0935 18.7002 19.1501 18.1999L19.9636 9.03172C20.0299 8.44466 19.571 7.93016 18.9802 7.93016H5.02847ZM5.36636 4.91941C4.77489 4.91941 4.31555 5.43532 4.38296 6.02293L4.42397 6.38328C4.61772 6.33738 4.81975 6.31105 5.02847 6.31101H12.3325L11.4721 5.27684C11.2841 5.05089 11.0043 4.91956 10.7104 4.91941H5.36636Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -108,35 +72,37 @@ export function TreeNodeRow({
                 tabIndex={-1}
                 aria-hidden="true"
               >
-                <span className={styles.arrowIcon}>
-                  {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
-                </span>
+                {/* CSS mask-image 방식으로 currentColor 아이콘 렌더링 */}
+                <span
+                  className={[
+                    styles.arrowIconBase,
+                    expanded ? styles.arrowIconDown : styles.arrowIconRight,
+                  ].join(" ")}
+                />
               </button>
             )}
           </div>
         )}
 
         <div className={styles.innerContent}>
+          {/* 기존 Checkbox 컴포넌트 사용 */}
           {checkbox && (
-            <span className={styles.checkboxWrap}>
-              <input
-                type="checkbox"
-                className={styles.checkboxInput}
+            <span
+              className={styles.checkboxWrap}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Checkbox
                 checked={checked}
                 disabled={isDisabled}
-                onChange={(e) => onCheckChange?.(e.target.checked)}
-                onClick={(e) => e.stopPropagation()}
-                aria-hidden="true"
-                tabIndex={-1}
-                readOnly={!onCheckChange}
+                onChange={(c) => onCheckChange?.(c)}
               />
-              <span className={styles.checkboxBox} aria-hidden="true" />
             </span>
           )}
 
+          {/* CSS mask-image 방식 폴더 아이콘 */}
           {leadingIcon && (
             <span className={styles.folderIconWrap}>
-              <FolderIcon />
+              <span className={styles.folderIcon} aria-hidden="true" />
             </span>
           )}
 

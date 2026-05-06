@@ -1,35 +1,23 @@
 /* =============================================================================
  * Tree — Figma MCP 기반 (node 6786:991 / 12044:13917)
  *
- * 색상 토큰 (variable_defs 기준)
- *   - bg default        : transparent
- *   - bg hover          : --color-neutral-secondary  (#f4f4f5)
- *   - bg focus          : --color-neutral             (#ffffff)
- *   - bg selected       : --color-tint-primary        (#e5fef5)
- *   - text default L1,3,4,5 : --color-on-neutral      (#565967)
- *   - text default L2   : --color-on-neutral-hint     (#787a88)
- *   - text hover        : --color-on-neutral-base     (#141518)
- *   - text focus        : --color-on-neutral-base, weight medium
- *   - text selected     : --color-on-primary          (#3f9bae), weight medium
- *   - text disabled     : --color-on-neutral-disabled (#b3b4bc)
- *   - count focus/selected weight : semibold
- *   - count selected color : --color-on-primary-hover (#28738c)
- *   - arrow/folder default : --color-icon-neutral-secondary (#787a88)
- *   - arrow/folder disabled : --color-icon-neutral-disabled (#b3b4bc)
- *   - folder selected   : --color-on-primary          (#3f9bae)
+ * 아이콘: CSS mask-image + currentColor (pagination/drawer 동일 패턴)
+ * 체크박스: 기존 Checkbox 컴포넌트 사용
+ * 텍스트 말줄임표: label flex:1 + overflow:hidden + text-overflow:ellipsis
  *
- * 수치 (Figma spacing 토큰)
- *   - height: 32px
- *   - py: spacing-2xs (4px)
- *   - pr: spacing-sm (8px)
- *   - L1 pl: spacing-sm (8px)
- *   - L2 pl: spacing-2xl (24px)
- *   - L3 pl: spacing-5xl (40px)
- *   - L4 pl: spacing-8xl (56px)
- *   - L5 pl: 76px (L4 pl + arrow 16px + gap 4px)
- *   - border-radius: radius-sm (4px)
- *   - content gap (arrow ↔ innerContent): spacing-2xs (4px)
- *   - innerContent gap: spacing-2xs (4px)
+ * 색상 토큰 (globals.css 기준)
+ *   bg hover          : --color-neutral-secondary  (#f4f4f5)
+ *   bg focus          : --color-neutral             (#ffffff)
+ *   bg selected       : --color-tint-primary        (#e5fef5)
+ *   text default L1,3,4,5 : --color-on-neutral      (#565967)
+ *   text default L2   : --color-on-neutral-hint     (#787a88)
+ *   text hover/focus  : --color-on-neutral-base     (#141518)
+ *   text selected     : --color-on-primary          (#3f9bae)
+ *   text disabled     : --color-on-neutral-disabled (#b3b4bc)
+ *   count selected    : --color-on-primary-hover    (#28738c)
+ *   icon default      : --color-icon-neutral-secondary (#787a88)
+ *   icon disabled     : --color-icon-neutral-disabled (#b3b4bc)
+ *   icon selected     : --color-on-primary          (#3f9bae)
  * ========================================================================== */
 
 /* ─── Tree container ──────────────────────────────────────────────────────── */
@@ -86,7 +74,7 @@
   gap: var(--spacing-2xs);
 }
 
-/* level5는 arrow 영역이 없으므로 gap 불필요 */
+/* level5 는 arrow 영역 없으므로 gap 불필요 */
 .level5 .content {
   gap: 0;
 }
@@ -115,19 +103,37 @@
   cursor: not-allowed;
 }
 
-.arrowIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ─── Arrow icon (mask-image + currentColor) ─────────────────────────────── */
+.arrowIconBase {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
   color: var(--color-icon-neutral-secondary);
 }
 
-.node[data-state="disabled"] .arrowIcon {
+.arrowIconRight {
+  -webkit-mask-image: url('/icon/ChevronRight.svg');
+  mask-image: url('/icon/ChevronRight.svg');
+}
+
+.arrowIconDown {
+  -webkit-mask-image: url('/icon/ChevronDown.svg');
+  mask-image: url('/icon/ChevronDown.svg');
+}
+
+.node[data-state="disabled"] .arrowIconBase {
   color: var(--color-icon-neutral-disabled);
 }
 
 /* hover 시 arrow icon 색상 유지 */
-.node[data-state="default"]:hover .arrowIcon {
+.node[data-state="default"]:hover .arrowIconBase {
   color: var(--color-icon-neutral-secondary);
 }
 
@@ -140,47 +146,15 @@
   gap: var(--spacing-2xs);
 }
 
-/* ─── Checkbox (16 × 16) ─────────────────────────────────────────────────── */
+/* ─── Checkbox wrap (기존 Checkbox 컴포넌트 수용) ─────────────────────────── */
 .checkboxWrap {
-  position: relative;
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 네이티브 input 숨김 (접근성 유지) */
-.checkboxInput {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.checkboxBox {
-  display: block;
-  box-sizing: border-box;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border-neutral);
-  background: var(--color-neutral);
-}
-
-.node[data-state="disabled"] .checkboxBox {
-  border-color: var(--color-border-neutral-disabled);
-}
-
-/* ─── Folder icon (16 × 16) ──────────────────────────────────────────────── */
+/* ─── Folder icon (mask-image + currentColor) ────────────────────────────── */
 .folderIconWrap {
   flex-shrink: 0;
   display: flex;
@@ -188,25 +162,41 @@
   justify-content: center;
   width: 16px;
   height: 16px;
+}
+
+.folderIcon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask-image: url('/icon/Folder.svg');
+  mask-image: url('/icon/Folder.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
   color: var(--color-icon-neutral-secondary);
 }
 
-.node[data-state="selected"] .folderIconWrap {
+.node[data-state="selected"] .folderIcon {
   color: var(--color-on-primary);
 }
 
-.node[data-state="disabled"] .folderIconWrap {
+.node[data-state="disabled"] .folderIcon {
   color: var(--color-icon-neutral-disabled);
 }
 
 /* hover 시 folder icon 색상 유지 */
-.node[data-state="default"]:hover .folderIconWrap {
+.node[data-state="default"]:hover .folderIcon {
   color: var(--color-icon-neutral-secondary);
 }
 
-/* ─── Label ──────────────────────────────────────────────────────────────── */
+/* ─── Label (말줄임표 처리) ─────────────────────────────────────────────── */
 .label {
-  flex-shrink: 0;
+  flex: 1 0 0;
+  min-width: 0;
   font-family: var(--font-family-korean, Pretendard, sans-serif);
   font-size: var(--font-size-body-base);
   line-height: var(--font-line-height-sm);
@@ -221,19 +211,19 @@
   color: var(--color-on-neutral);
 }
 
-/* default L2만 on-neutral-hint */
+/* default L2 만 on-neutral-hint */
 .level2.node[data-state="default"] .label {
   color: var(--color-on-neutral-hint);
 }
 
-/* hover (CSS pseudo + forced state) */
+/* hover */
 .node[data-state="hover"] .label,
 .node[data-state="default"]:hover .label {
   font-weight: var(--font-weight-regular);
   color: var(--color-on-neutral-base);
 }
 
-/* focus (expanded folder) */
+/* focus (펼쳐진 폴더) */
 .node[data-state="focus"] .label {
   font-weight: var(--font-weight-medium);
   color: var(--color-on-neutral-base);
@@ -251,7 +241,7 @@
   color: var(--color-on-neutral-disabled);
 }
 
-/* ─── Count ──────────────────────────────────────────────────────────────── */
+/* ─── Count (항상 flex-shrink:0 으로 말줄임표 영향 없음) ─────────────────── */
 .count {
   flex-shrink: 0;
   font-family: var(--font-family-korean, Pretendard, sans-serif);
