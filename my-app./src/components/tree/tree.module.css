@@ -1,0 +1,288 @@
+/* =============================================================================
+ * Tree — Figma MCP 기반 (node 6786:991 / 12044:13917)
+ *
+ * 색상 토큰 (variable_defs 기준)
+ *   - bg default        : transparent
+ *   - bg hover          : --color-neutral-secondary  (#f4f4f5)
+ *   - bg focus          : --color-neutral             (#ffffff)
+ *   - bg selected       : --color-tint-primary        (#e5fef5)
+ *   - text default L1,3,4,5 : --color-on-neutral      (#565967)
+ *   - text default L2   : --color-on-neutral-hint     (#787a88)
+ *   - text hover        : --color-on-neutral-base     (#141518)
+ *   - text focus        : --color-on-neutral-base, weight medium
+ *   - text selected     : --color-on-primary          (#3f9bae), weight medium
+ *   - text disabled     : --color-on-neutral-disabled (#b3b4bc)
+ *   - count focus/selected weight : semibold
+ *   - count selected color : --color-on-primary-hover (#28738c)
+ *   - arrow/folder default : --color-icon-neutral-secondary (#787a88)
+ *   - arrow/folder disabled : --color-icon-neutral-disabled (#b3b4bc)
+ *   - folder selected   : --color-on-primary          (#3f9bae)
+ *
+ * 수치 (Figma spacing 토큰)
+ *   - height: 32px
+ *   - py: spacing-2xs (4px)
+ *   - pr: spacing-sm (8px)
+ *   - L1 pl: spacing-sm (8px)
+ *   - L2 pl: spacing-2xl (24px)
+ *   - L3 pl: spacing-5xl (40px)
+ *   - L4 pl: spacing-8xl (56px)
+ *   - L5 pl: 76px (L4 pl + arrow 16px + gap 4px)
+ *   - border-radius: radius-sm (4px)
+ *   - content gap (arrow ↔ innerContent): spacing-2xs (4px)
+ *   - innerContent gap: spacing-2xs (4px)
+ * ========================================================================== */
+
+/* ─── Tree container ──────────────────────────────────────────────────────── */
+.tree {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm);
+  background: var(--color-neutral);
+  width: 244px;
+}
+
+/* ─── Node row ────────────────────────────────────────────────────────────── */
+.node {
+  box-sizing: border-box;
+  display: flex;
+  height: 32px;
+  align-items: center;
+  overflow: hidden;
+  padding-top: var(--spacing-2xs);
+  padding-bottom: var(--spacing-2xs);
+  padding-right: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+}
+
+/* Level left-padding (indent) */
+.level1 { padding-left: var(--spacing-sm); }
+.level2 { padding-left: var(--spacing-2xl); }
+.level3 { padding-left: var(--spacing-5xl); }
+.level4 { padding-left: var(--spacing-8xl); }
+.level5 { padding-left: 76px; }
+
+/* ─── State: background ───────────────────────────────────────────────────── */
+.node[data-state="default"]  { background: transparent; }
+.node[data-state="hover"]    { background: var(--color-neutral-secondary); }
+.node[data-state="focus"]    { background: var(--color-neutral); }
+.node[data-state="selected"] { background: var(--color-tint-primary); }
+.node[data-state="disabled"] { background: transparent; cursor: not-allowed; }
+
+/* CSS hover — default 노드에만 적용 */
+.node[data-state="default"]:hover {
+  background: var(--color-neutral-secondary);
+}
+
+/* ─── Content wrapper ────────────────────────────────────────────────────── */
+.content {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+/* level5는 arrow 영역이 없으므로 gap 불필요 */
+.level5 .content {
+  gap: 0;
+}
+
+/* ─── Arrow area (16 × 16 placeholder, level 1-4) ────────────────────────── */
+.arrowArea {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowBtn {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.node[data-state="disabled"] .arrowBtn {
+  cursor: not-allowed;
+}
+
+.arrowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-icon-neutral-secondary);
+}
+
+.node[data-state="disabled"] .arrowIcon {
+  color: var(--color-icon-neutral-disabled);
+}
+
+/* hover 시 arrow icon 색상 유지 */
+.node[data-state="default"]:hover .arrowIcon {
+  color: var(--color-icon-neutral-secondary);
+}
+
+/* ─── Inner content (checkbox · folder icon · label · count) ─────────────── */
+.innerContent {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+/* ─── Checkbox (16 × 16) ─────────────────────────────────────────────────── */
+.checkboxWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 네이티브 input 숨김 (접근성 유지) */
+.checkboxInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.checkboxBox {
+  display: block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border-neutral);
+  background: var(--color-neutral);
+}
+
+.node[data-state="disabled"] .checkboxBox {
+  border-color: var(--color-border-neutral-disabled);
+}
+
+/* ─── Folder icon (16 × 16) ──────────────────────────────────────────────── */
+.folderIconWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--color-icon-neutral-secondary);
+}
+
+.node[data-state="selected"] .folderIconWrap {
+  color: var(--color-on-primary);
+}
+
+.node[data-state="disabled"] .folderIconWrap {
+  color: var(--color-icon-neutral-disabled);
+}
+
+/* hover 시 folder icon 색상 유지 */
+.node[data-state="default"]:hover .folderIconWrap {
+  color: var(--color-icon-neutral-secondary);
+}
+
+/* ─── Label ──────────────────────────────────────────────────────────────── */
+.label {
+  flex-shrink: 0;
+  font-family: var(--font-family-korean, Pretendard, sans-serif);
+  font-size: var(--font-size-body-base);
+  line-height: var(--font-line-height-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* default: L1, L3, L4, L5 = on-neutral */
+.node[data-state="default"] .label {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-on-neutral);
+}
+
+/* default L2만 on-neutral-hint */
+.level2.node[data-state="default"] .label {
+  color: var(--color-on-neutral-hint);
+}
+
+/* hover (CSS pseudo + forced state) */
+.node[data-state="hover"] .label,
+.node[data-state="default"]:hover .label {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-on-neutral-base);
+}
+
+/* focus (expanded folder) */
+.node[data-state="focus"] .label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-neutral-base);
+}
+
+/* selected */
+.node[data-state="selected"] .label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-primary);
+}
+
+/* disabled */
+.node[data-state="disabled"] .label {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-on-neutral-disabled);
+}
+
+/* ─── Count ──────────────────────────────────────────────────────────────── */
+.count {
+  flex-shrink: 0;
+  font-family: var(--font-family-korean, Pretendard, sans-serif);
+  font-size: var(--font-size-body-md);
+  line-height: var(--font-line-height-sm);
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.node[data-state="default"] .count {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-neutral-hint);
+}
+
+.node[data-state="hover"] .count,
+.node[data-state="default"]:hover .count {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-neutral-base);
+}
+
+.node[data-state="focus"] .count {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-on-neutral-base);
+}
+
+.node[data-state="selected"] .count {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-on-primary-hover);
+}
+
+.node[data-state="disabled"] .count {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-neutral-disabled);
+}
