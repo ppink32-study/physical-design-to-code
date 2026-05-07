@@ -1,0 +1,375 @@
+/* ProjectListPage — Figma 25:28013 (Standard) / 25:28115 (Focus)
+ * Viewport 1920px, content area 1440px (240px margin 양측)
+ * flexbox only, position: absolute 미사용 */
+
+/* ----------------------------------------------------------------
+ * Root
+ * ---------------------------------------------------------------- */
+/* Figma 25:28115 Workspace — backboard 배경 */
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  background: var(--context-background-backdrop-bg-backboard);
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------
+ * GNB — Figma 25:28159
+ * 56px / full width / pl-16px pr-24px / gap-80px
+ * data-theme="brand" (Standard) or data-theme="light" (Focus)
+ * ---------------------------------------------------------------- */
+.gnb {
+  flex-shrink: 0;
+  width: 100%;
+  height: 56px;
+  box-sizing: border-box;
+  background: var(--context-background-surface-bg-surface-white);
+  border-bottom: 1px solid var(--border-border-surface-border-surface-secondary);
+}
+
+.gnbInner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding-left: 16px;
+  padding-right: 24px;
+  gap: 80px;
+  box-sizing: border-box;
+}
+
+/* 로고 — 184px 고정 */
+.gnbLogo {
+  flex-shrink: 0;
+  width: 184px;
+  display: flex;
+  align-items: center;
+}
+
+/* 네비 — flex-1, 탭 간격 36px */
+.gnbNav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* Body/Lg_Regular — 16px / 400 / lh 24px */
+.gnbNavItem {
+  font-family: var(--font-family-korean);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--context-foreground-surface-on-surface);
+  padding: 16px 24px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Body/Lg_SemiB — 600, primary color */
+.gnbNavItemActive {
+  font-weight: 600;
+  color: var(--context-foreground-primary-on-primary);
+}
+
+/* ----------------------------------------------------------------
+ * GNB 우측 — 아이콘 × 4 + 토글
+ * ---------------------------------------------------------------- */
+.gnbRight {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 32×32 아이콘 버튼 컨테이너 */
+.gnbIconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* 알림 버튼만 bg-surface-base-hover 배경 */
+.gnbIconBtnFill {
+  background: var(--context-background-surface-bg-surface-base-hover);
+}
+
+/* 20×20 아이콘 공통 마스크 — icon-surface 시맨틱 토큰 사용 */
+.gnbIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: var(--context-foreground-icon-surface-icon-surface);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+.gnbIconNoti {
+  mask-image: url(/icon/Noti.svg);
+  -webkit-mask-image: url(/icon/Noti.svg);
+}
+
+.gnbIconUser {
+  mask-image: url(/icon/User.svg);
+  -webkit-mask-image: url(/icon/User.svg);
+}
+
+.gnbIconConnection {
+  mask-image: url(/icon/Connection.svg);
+  -webkit-mask-image: url(/icon/Connection.svg);
+}
+
+.gnbIconGear {
+  mask-image: url(/icon/Gear.svg);
+  -webkit-mask-image: url(/icon/Gear.svg);
+}
+
+/* 알림 뱃지 빨간 점 — left:18px top:7px (배지 오버레이) */
+.gnbNotiBadge {
+  position: absolute;
+  top: 7px;
+  left: 18px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--context-background-error-bg-error);
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------------
+ * Main Area — Standard: teriary bg / Focus: backboard bg
+ * ---------------------------------------------------------------- */
+.mainAreaStandard,
+.mainAreaFocus {
+  flex: 1 0 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--context-background-backdrop-bg-backboard);
+  box-sizing: border-box;
+}
+
+/* Standard 모드 — Dashboard.png 배경 (backboard 위에 cover) */
+.mainAreaStandard {
+  background-image: url("/Dashboard.png");
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* ----------------------------------------------------------------
+ * Content Area — 1440px 컨테이너
+ * ---------------------------------------------------------------- */
+.contentArea {
+  flex-shrink: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------
+ * Header — 68px, 1440px
+ * Figma 25:28117: items-end + pb-12px
+ * ---------------------------------------------------------------- */
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  height: 68px;
+  padding-bottom: 12px;
+  box-sizing: border-box;
+}
+
+/* 제목 + 버블 수평 정렬 */
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerH1 {
+  margin: 0;
+  font-family: var(--font-family-korean);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0;
+  color: var(--context-foreground-surface-on-surface-base);
+  white-space: nowrap;
+}
+
+/* 버블: TL 50px / TR 1000px / BR 1000px / BL 8px */
+.headerBubble {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding-left: 16px;
+  padding-right: 12px;
+  border-radius: 50px 1000px 1000px 8px;
+  box-sizing: border-box;
+}
+
+.bubbleIcon {
+  flex-shrink: 0;
+  width: 11px;
+  height: 8px;
+  display: inline-block;
+  background-color: var(--context-foreground-surface-on-surface-hint);
+  mask-image: url(/icon/Bubble.svg);
+  -webkit-mask-image: url(/icon/Bubble.svg);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+.bubbleText {
+  font-family: var(--font-family-korean);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.052px;
+  color: var(--context-foreground-surface-on-surface-hint);
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------------------
+ * Contents Panel — Standard: surface-teriary / Focus: backboard
+ * ---------------------------------------------------------------- */
+/* Figma 25:28120 Step — bg-surface-base 패널, top radius 20, padding 2xl, gap 5xl */
+.contentsStandard,
+.contentsFocus {
+  flex: 1 0 0;
+  min-height: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing-2xl);
+  gap: var(--spacing-5xl);
+  box-sizing: border-box;
+  background: var(--context-background-surface-bg-surface-base);
+  border-radius: 20px 20px 0 0;
+}
+
+/* Section 1, Section 2 — 내부 항목 간 gap-md(12px) */
+.contentSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+ * Filter Bar — Figma 25:28077
+ * Input(Search 240) + Divider + 오른쪽(chip slot + Sort Select)
+ * ---------------------------------------------------------------- */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+/* 오른쪽 영역 — flex-1, justify-end, gap-16 */
+.filterRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* chip 영역 placeholder (Figma 222px 빈 공간) */
+.filterChipSlot {
+  width: 222px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+/* Sort Select wrapper — popover 앵커 */
+.sortWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* SelectList 위치 — Select 아래 4px 띄움, 우측 정렬 */
+.sortPopover {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 10;
+}
+
+/* ----------------------------------------------------------------
+ * ProjectCardA Grid — 5열, 줄 추가 시 row-gap (--spacing-md, 12px)
+ * 카드 자체가 width:266px 로 고정돼 있어 자식에서 width 자동으로 override
+ * ---------------------------------------------------------------- */
+.cardAGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: var(--spacing-lg);
+  row-gap: var(--spacing-md);
+  width: 100%;
+}
+
+.cardAGrid > * {
+  width: auto;
+  min-width: 0;
+}
+
+/* ----------------------------------------------------------------
+ * Show More Row
+ * ---------------------------------------------------------------- */
+.showMoreRow {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+/* ----------------------------------------------------------------
+ * ProjectCardB Grid — 3열 가로 배치 (Figma 25:29150)
+ * row-gap / column-gap 모두 --spacing-md (12px)
+ * ProjectCardB 자체가 width:600px 고정 → 자식에서 width 자동 override
+ * ---------------------------------------------------------------- */
+.cardBList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--spacing-md);
+  row-gap: var(--spacing-md);
+  width: 100%;
+}
+
+.cardBList > * {
+  width: auto;
+  min-width: 0;
+}

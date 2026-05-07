@@ -4,15 +4,17 @@
  *  type=brand : neutral 계열 토큰
  *  type=light : surface 계열 토큰
  *
- *  state=default : 1px solid border (타입별 토큰 색상)
- *  state=hover   : 2px gradient border Mint→Purple
- *                  padding-box/border-box 기법으로 border ring 만 gradient 표시
- *                  brand hover: backgroundhover.svg
- *                  light hover: Figma Gradient/Light Gradient_01 (#F6F6F6→#F3F7EE→#DCFBFA)
+ *  border 는 모두 컴포넌트의 inline style 로 처리
+ *  (default: 2px solid token, hover: 2px gradient)
+ *  → default/hover 모두 box dimensions 동일
+ *
+ *  brand hover : backgroundhover.svg
+ *  light hover : Figma Gradient/Light Gradient_01
+ *                (#F6F6F6→#F3F7EE→#DCFBFA)
  * =============================================================== */
 
 /* -----------------------------------------------------------------
- *  Root
+ *  Root — border 는 inline style 에서 주입
  * ----------------------------------------------------------------- */
 .root {
   box-sizing: border-box;
@@ -21,35 +23,7 @@
   width: 266px;
   border-radius: var(--radius-xl, 12px);
   overflow: hidden;
-  border: 1px solid transparent;
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
-}
-
-/* -----------------------------------------------------------------
- *  Type: brand — default 1px border
- * ----------------------------------------------------------------- */
-.root.typeBrand {
-  border-color: var(--border-neutral-border-neutral);
-}
-
-/* -----------------------------------------------------------------
- *  Type: light — default 1px border
- * ----------------------------------------------------------------- */
-.root.typeLight {
-  border-color: var(--border-border-surface-border-surface);
-}
-
-/* -----------------------------------------------------------------
- *  Hover — 2px gradient border ring (두 타입 공통)
- *  root background 가 border-box 전체에 gradient 를 채우고
- *  자식(imageArea, content) 배경이 padding-box 내부를 덮어
- *  결과적으로 2px border ring 영역에만 gradient 가 표시됨
- * ----------------------------------------------------------------- */
-.root:hover,
-.root[data-state="hover"] {
-  border-width: 2px;
-  border-color: transparent;
-  background: linear-gradient(to right, #5cc7d0, #d5a5ff);
 }
 
 /* -----------------------------------------------------------------
