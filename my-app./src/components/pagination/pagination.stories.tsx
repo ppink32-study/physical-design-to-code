@@ -3,6 +3,8 @@ import type { CSSProperties, ReactNode } from "react";
 import { useState } from "react";
 
 import { Pagination, type PaginationSize } from "./pagination";
+import { BodyCell } from "@/components/table/bodycell";
+import { GridHeader } from "@/components/table/gridheader";
 import styles from "./pagination.module.css";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
@@ -14,6 +16,7 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
+  StoryDocsNote,
   StoryDocsPage,
   StoryDocsParagraph,
   StoryDocsSection,
@@ -326,10 +329,54 @@ export const Guideline: Story = {
     <StoryDocsPage title="Pagination" description="페이지네이션 컴포넌트 사용 가이드입니다.">
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          총 건수·페이지 크기·Go to(레이블 밖 + 입력 박스·placeholder Page, Enter) 영역은 옵션으로 켜고
-          끌 수
-          있습니다. Matrix에서 전체 바·아이템 상태·controlled 예시를 확인하세요.
+          Pagination은 주로 테이블 오른쪽 하단에 배치하며, 테이블과의 간격은 <strong>16px</strong>입니다.
         </StoryDocsParagraph>
+        <div style={{ padding: "20px 0", width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%" }}>
+            <div
+              style={{
+                borderBottom: "1px solid var(--border-neutral-border-neutral, #d7d8dc)",
+                borderRadius: "6px 6px 0 0",
+                overflow: "hidden",
+              }}
+            >
+              {/* Header */}
+              <div style={{ display: "flex" }}>
+                <GridHeader type="expand-all" width={40} />
+                <GridHeader type="no" width={48} />
+                <GridHeader type="default" width={160} align="left">MCP명</GridHeader>
+                <GridHeader type="default" style={{ flex: 1 }} rPipe={false} align="left">설명</GridHeader>
+              </div>
+              {/* Rows */}
+              {[
+                { no: 18, name: "MCP Name", desc: "MCP의 설명이 나타나는 영역입니다." },
+                { no: 17, name: "MCP Name", desc: "MCP의 설명이 나타나는 영역입니다." },
+                { no: 16, name: "MCP Name", desc: "MCP의 설명이 나타나는 영역입니다." },
+                { no: 15, name: "MCP Name", desc: "MCP의 설명이 나타나는 영역입니다." },
+              ].map((row) => (
+                <div key={row.no} style={{ display: "flex" }}>
+                  <BodyCell type="blank" width={40} />
+                  <BodyCell type="text-center" width={48}>{row.no}</BodyCell>
+                  <BodyCell type="text-left" width={160}>{row.name}</BodyCell>
+                  <BodyCell type="text-left" style={{ flex: 1 }} lastCol>{row.desc}</BodyCell>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Pagination
+                total={85}
+                page={1}
+                pageSize={10}
+                showTotal
+                showPerPage
+                showGoTo
+              />
+            </div>
+          </div>
+        </div>
+        <StoryDocsNote>
+          Pagination은 테이블 우측 하단에 배치하며, 테이블과의 간격은 <strong>16px</strong>입니다.
+        </StoryDocsNote>
       </StoryDocsSection>
     </StoryDocsPage>
   ),

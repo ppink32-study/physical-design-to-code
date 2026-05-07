@@ -8,9 +8,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { DataTableHeader } from "./header";
@@ -89,38 +86,5 @@ export const Matrix: Story = {
       </section>
 
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="DataTable / Header" description="데이터 테이블 헤더 셀 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          단일 헤더 셀 컴포넌트입니다. 여러 셀을 나란히 배치해 헤더 행을 구성합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="크기">
-        <StoryDocsParagraph><strong>기본</strong> — 150px × 40px. width prop으로 override 가능합니다.</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="토큰">
-        <StoryDocsParagraph><strong>배경</strong>: --context-background-surface-bg-surface-secondary</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>테두리</strong>: --border-border-surface-border-surface-secondary (우측 + 하단 1px)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>텍스트</strong>: --context-foreground-surface-on-surface-base, SemiBold 13/20</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>패딩</strong>: left 12px (--spacing-md), right 8px (--spacing-sm)</StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

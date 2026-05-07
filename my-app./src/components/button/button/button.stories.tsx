@@ -9,6 +9,7 @@ import {
   type ButtonSize,
   type ButtonVariant,
 } from "./button";
+import { Divider } from "@/components/divider/divider";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   StoryDocsInlineCode,
@@ -52,6 +53,9 @@ const AddIcon = ({ size }: { size?: number }) => (
 );
 const SearchIcon = ({ size }: { size?: number }) => (
   <Icon src="/icon/Search.svg" size={size} />
+);
+const MinusIcon = ({ size }: { size?: number }) => (
+  <Icon src="/icon/Minus.svg" size={size} />
 );
 
 /* -----------------------------------------------------------------
@@ -509,38 +513,10 @@ const BUTTON_GROUP_SPACING: Array<{
   size: ButtonSize;
   label: string;
   gap: number;
-  description: ReactNode;
 }> = [
-  {
-    size: "large",
-    label: "Large (h.40)",
-    gap: 8,
-    description: (
-      <>
-        Large 높이(40px) 버튼을 나란히 둘 때, 그룹 사이 간격은 <strong>8px</strong>입니다.
-      </>
-    ),
-  },
-  {
-    size: "medium",
-    label: "Medium (h.32)",
-    gap: 6,
-    description: (
-      <>
-        Medium 높이(32px) 버튼을 나란히 둘 때, 그룹 사이 간격은 <strong>6px</strong>입니다.
-      </>
-    ),
-  },
-  {
-    size: "small",
-    label: "Small (h.24)",
-    gap: 4,
-    description: (
-      <>
-        Small 높이(24px) 버튼을 나란히 둘 때, 그룹 사이 간격은 <strong>4px</strong>입니다.
-      </>
-    ),
-  },
+  { size: "large",  label: "Large Button Group",  gap: 8 },
+  { size: "medium", label: "Medium Button Group", gap: 6 },
+  { size: "small",  label: "Small Button Group",  gap: 4 },
 ];
 
 const buttonsCardLabelStyle: CSSProperties = {
@@ -551,58 +527,27 @@ const buttonsCardLabelStyle: CSSProperties = {
   color: "var(--context-foreground-surface-on-surface-base)",
 };
 
-const buttonsCardDescStyle: CSSProperties = {
-  margin: 0,
-  fontSize: 14,
-  lineHeight: 1.65,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
-};
 
 function ButtonGroupSpacingCard({
   size,
   label,
   gap,
-  description,
 }: {
   size: ButtonSize;
   label: string;
   gap: number;
-  description: ReactNode;
 }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
-        minWidth: 0,
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
       <div style={buttonsCardLabelStyle}>{label}</div>
-      <p style={buttonsCardDescStyle}>{description}</p>
       <StoryDocsPanelInset>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: 88,
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 80 }}>
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap,
-            }}
-            aria-label={`${label} button group · gap ${gap}px`}
+            style={{ display: "inline-flex", alignItems: "center", gap }}
+            aria-label={`${label} · gap ${gap}px`}
           >
-            <Button variant="secondary-outline" size={size}>
-              Button
-            </Button>
-            <Button variant="primary-solid" size={size} leftIcon={<CheckIcon />}>
-              Button
-            </Button>
+            <Button variant="secondary-outline" size={size}>Button</Button>
+            <Button variant="secondary-outline" size={size}>Button</Button>
           </div>
         </div>
       </StoryDocsPanelInset>
@@ -646,20 +591,49 @@ export const Guideline: Story = {
       </StoryDocsSection>
 
       <StoryDocsSection
-        title="버튼 그룹 간격"
-        description="같은 높이의 버튼을 가로로 나란히 둘 때 권장 간격입니다. 레이아웃에서는 flex의 gap 또는 동일한 margin으로 맞춥니다."
+        title="Button Group & Spacings"
+        description="3개 이상의 Button을 함께 배치할 때는 기능에 따라 Divider로 구분합니다."
       >
+        {/* Button Group with Dividers */}
+        <div style={buttonsCardLabelStyle}>Button Group</div>
+        <StoryDocsPanelInset>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 80 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <Button variant="secondary-outline" size="medium">업무버튼</Button>
+              <Divider orientation="vertical" length={16} />
+              <Button variant="secondary-outline" size="medium">선택 다운로드</Button>
+              <Button variant="secondary-outline" size="medium">전체 다운로드</Button>
+              <Button variant="secondary-outline" size="medium">엑셀 다운로드</Button>
+              <Divider orientation="vertical" length={16} />
+              <Button variant="secondary-outline" size="medium" leftIcon={<MinusIcon />}>행삭제</Button>
+              <Button variant="secondary-outline" size="medium" leftIcon={<AddIcon />}>행추가</Button>
+            </div>
+          </div>
+        </StoryDocsPanelInset>
+
+        {/* Per-size groups */}
         <div
-        style={{
+          style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: 24,
+            marginTop: 24,
           }}
         >
           {BUTTON_GROUP_SPACING.map((item) => (
             <ButtonGroupSpacingCard key={item.size} {...item} />
           ))}
-    </div>
+        </div>
+
+        {/* Rules */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 4, marginTop: 16 }}>
+          <StoryDocsNote>
+            버튼 그룹은 Divider로 구분되며, 버튼 그룹과 Divider 사이 간격은 <strong>8px</strong>입니다.
+          </StoryDocsNote>
+          <StoryDocsNote>
+            버튼 그룹 내 버튼 사이 간격은 <strong>Large 8px · Medium 6px · Small 4px</strong>입니다.
+          </StoryDocsNote>
+        </div>
       </StoryDocsSection>
 
     </StoryDocsPage>

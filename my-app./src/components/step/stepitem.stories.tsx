@@ -9,9 +9,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { StepItem, type StepItemProps } from "./stepitem";
@@ -139,48 +136,5 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage
-      title="StepItem"
-      description="세로 배치 step 아이템. Num 배지와 하단 연결선으로 구성됩니다."
-    >
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          세로(vertical) step 목록에서 각 단계를 표현하는 단위 컴포넌트.
-          내부적으로 <code>Num</code> 컴포넌트를 사용하며, 모든 Num 상태를 지원합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Props">
-        <StoryDocsParagraph>
-          <strong>numState</strong> — Num의 시각 상태.
-          number states(finish·current·next)와 icon states(complete·error·success·stop) 지원.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>hasLine</strong> — true(line O): 하단 연결선 표시 (중간 항목).
-          false(line X): 연결선 없음 (마지막 항목).
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>number</strong> — Num에 표시할 번호. icon states에서는 불필요.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>mode</strong> — light(기본) / dark. Num의 mode와 동일하게 전달됩니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

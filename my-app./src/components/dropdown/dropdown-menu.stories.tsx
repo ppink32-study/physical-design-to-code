@@ -12,10 +12,7 @@ import { DropdownSubMenu } from "./dropdown-sub-menu";
 import { DropdownMenu, type DropdownMenuArrow } from "./dropdown-menu";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -318,36 +315,5 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Menu" description="드롭다운 메뉴 패널 컴포넌트 사용 가이드입니다.">
-      <StoryDocsSection title="사용 가이드">
-        <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.65 }}>
-          <li>
-            트리거와의 간격·플립·포커스는 <strong>Dropdown Trigger with menu</strong>{" "}
-            Composite 에서 다룹니다. 이 컴포넌트는 패널·스크롤·비크만 담당합니다.
-          </li>
-          <li>
-            <StoryDocsInlineCode>arrow</StoryDocsInlineCode> 는 트리거에 붙이는 말풍선 비크
-            위치입니다. 트리거 정렬에 맞춰 <StoryDocsInlineCode>top-*</StoryDocsInlineCode> /{" "}
-            <StoryDocsInlineCode>bottom-*</StoryDocsInlineCode> 를 고릅니다.
-          </li>
-          <li>
-            긴 목록은 <StoryDocsInlineCode>maxHeight</StoryDocsInlineCode> 로 스크롤 영역을
-            제한하세요. 다단 구조는 같은 <strong>Matrix</strong> 페이지의 Multi-level 블록을
-            참고합니다.
-          </li>
-        </ul>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

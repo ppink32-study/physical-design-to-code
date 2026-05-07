@@ -12,9 +12,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { Drawer, DrawerHeader, type DrawerSize } from "./drawer";
@@ -243,53 +240,5 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Drawer" description="사이드 드로어 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          createPortal을 사용해 document.body에 직접 마운트합니다. 오버레이 클릭 또는 ESC 키로 닫힙니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="사이즈">
-        <StoryDocsParagraph><strong>small</strong> — 420px.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>medium</strong> — 720px. 기본값.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>large</strong> — max-width 1140px.</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="헤더 슬롯 순서">
-        <StoryDocsParagraph>
-          Left (좌→우): <strong>titlePrefix</strong> · <strong>title</strong> · <strong>badges</strong> · <strong>titleActions</strong>
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          Right: <strong>headerControls</strong> · X 닫기 버튼
-        </StoryDocsParagraph>
-        <StoryDocsParagraph><strong>onBack</strong>: 제공 시 Back(ChevronLeft 40×40) 버튼이 가장 앞에 표시됩니다.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>titlePrefix</strong>: Back 버튼 뒤, 타이틀 앞 슬롯 (Bookmark/StarFill 32×32 등). 이후 요소와 간격 12px.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>title</strong>: 텍스트 길이에 따라 자연스럽게 늘어납니다 (flex: 0 0 auto).</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>badges</strong>: 타이틀 뒤 Badge 슬롯. title · badges · titleActions 간격 8px.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>titleActions</strong>: 타이틀 뒤 아이콘 액션 슬롯 (Pencil-Line 등).</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>headerControls</strong>: X 버튼 앞 우측 슬롯 (Toggle 등).</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="콘텐츠 슬롯">
-        <StoryDocsParagraph><strong>children</strong>: body 콘텐츠 슬롯. overflow-y: auto로 스크롤됩니다.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>footer</strong>: 버튼 행 슬롯. justify-end 정렬입니다.</StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

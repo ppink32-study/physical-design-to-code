@@ -7,7 +7,6 @@ import { Select } from "@/components/select/select";
 import { Divider } from "./divider";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
   StoryDocsPage,
   StoryDocsPanelInset,
@@ -130,28 +129,20 @@ export const Guideline: Story = {
   },
   render: () => (
     <StoryDocsPage title="Divider" description="구분선 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
+      <StoryDocsSection title="Horizontal Divider">
         <StoryDocsParagraph>
-          가로 구분선은 <StoryDocsInlineCode>title</StoryDocsInlineCode> 또는 자식 텍스트로 중앙
-          라벨을 넣을 수 있고, 세로 구분은{" "}
-          <StoryDocsInlineCode>orientation=&quot;vertical&quot;</StoryDocsInlineCode> 과{" "}
-          <StoryDocsInlineCode>length</StoryDocsInlineCode> 로 높이를 조절합니다. Matrix 에서
-          가로·세로·타이틀 변형을 확인하세요.
+          Divider는 콘텐츠 그룹을 구분할 때 사용합니다. Divider의 너비는 컨테이너의 전체 너비를 채웁니다.
         </StoryDocsParagraph>
+        <StoryDocsPanelInset>
+          <div style={{ width: "100%", padding: "24px 0" }}>
+            <Divider />
+          </div>
+        </StoryDocsPanelInset>
       </StoryDocsSection>
 
-      <StoryDocsSection title="세로 구분선 (입력 필드)">
+      <StoryDocsSection title="Vertical Divider">
         <StoryDocsParagraph>
-          세로 구분선은 입력 필드 사이에 두어 정보를 그룹별로 나눌 때 사용합니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          세로 구분선의 선 길이(높이)는 16px로 고정합니다. 사이 gap은 12px입니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          가이드라인 Option 패턴과 동일하게, 검색{" "}
-          <StoryDocsInlineCode>Input</StoryDocsInlineCode> · 세로{" "}
-          <StoryDocsInlineCode>Divider</StoryDocsInlineCode>(16px) · 라벨형{" "}
-          <StoryDocsInlineCode>Select</StoryDocsInlineCode> 를 한 줄에 배치한 예시입니다.
+          Vertical Divider는 입력 필드 사이에서 정보 그룹을 구분할 때 사용합니다. Vertical Divider의 선 길이는 16px로 고정됩니다.
         </StoryDocsParagraph>
         <StoryDocsPanelInset>
           <div

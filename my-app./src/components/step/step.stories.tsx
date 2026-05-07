@@ -9,9 +9,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { Num } from "./num";
@@ -124,45 +121,5 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Step" description="Step 라벨 컴포넌트. Num 과 함께 사용해 Numstep 조합 구성.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          단계(Step)의 라벨 텍스트를 표시. mode 와 state 두 prop 으로 시각 상태 표현.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="States">
-        <StoryDocsParagraph>
-          <strong>default</strong> — 비활성. 텍스트만 표시 (회색).
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>active</strong> — 현재 단계. light 는 white opacity bg + 흰 border,
-          dark 는 invert 다크 bg + 4-layer mint glow inset shadow.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Numstep 조합">
-        <StoryDocsParagraph>
-          Figma 18374:295 의 Numstep 은 별도 컴포넌트로 만들지 않고
-          <code>{`<Num /> + <Step />`}</code> 를 함께 배치하는 방식으로 구성합니다.
-          Matrix 스토리 하단 예시 참고.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

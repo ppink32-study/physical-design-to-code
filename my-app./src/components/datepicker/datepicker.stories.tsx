@@ -5,11 +5,7 @@ import { DatePicker } from "./datepicker";
 import type { DatePickerForcedState, DatePickerTone } from "./datepicker";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -251,23 +247,4 @@ export const Matrix: Story = {
       },
     },
   },
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="DatePicker" description="날짜 입력 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          Matrix 는 스펙 시트와 동일하게 단일·구간 각각 5×4 배치입니다. 달력 UI 는 외부에서{" "}
-          <StoryDocsInlineCode>onOpen</StoryDocsInlineCode> 으로 연결합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
-  ),
 };

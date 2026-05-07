@@ -8,9 +8,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { DataTableBody } from "./body";
@@ -136,53 +133,5 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="DataTable / Body" description="데이터 테이블 바디 셀 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          단일 데이터 셀 컴포넌트입니다. Text와 Badge 두 가지 variant를 지원합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Variant">
-        <StoryDocsParagraph><strong>text</strong> — 텍스트를 표시합니다. children으로 문자열을 전달하세요.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>badge</strong> — Badge 슬롯입니다. children으로 Badge 컴포넌트를 주입하세요. 여러 Badge는 4px gap으로 자동 배치됩니다.</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Step Layout 조합">
-        <StoryDocsParagraph>
-          Figma 5269:129425 기준 — DataTableHeader(200px)와 DataTableBody(496px)를 교대로 배치해
-          가로 2컬럼 key-value 테이블을 구성합니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <code>{`[Header 200] + [Body 496] + [Header 200] + [Body 496] = 1392px`}</code>
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="크기">
-        <StoryDocsParagraph><strong>기본</strong> — 405px × 40px. width prop으로 override 가능합니다.</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="토큰">
-        <StoryDocsParagraph><strong>배경</strong>: --context-background-surface-bg-surface-base</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>테두리</strong>: --border-border-surface-border-surface-secondary (우측 + 하단 1px)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>텍스트</strong>: --context-foreground-surface-on-surface-base, Regular 13/20</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>패딩</strong>: 양측 12px (--spacing-md)</StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

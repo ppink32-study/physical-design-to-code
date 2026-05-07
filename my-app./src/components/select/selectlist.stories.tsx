@@ -14,11 +14,7 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -181,27 +177,5 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="SelectList" description="선택 목록 패널 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          <StoryDocsInlineCode>SelectItem</StoryDocsInlineCode> 을 children 으로 넣고{" "}
-          <StoryDocsInlineCode>type</StoryDocsInlineCode> 으로 1단·2단·검색(
-          <StoryDocsInlineCode>search</StoryDocsInlineCode> /{" "}
-          <StoryDocsInlineCode>type=&quot;search&quot;</StoryDocsInlineCode>)을 전환합니다.{" "}
-          <StoryDocsInlineCode>maxHeight</StoryDocsInlineCode> 로 목록 영역 스크롤을 줄 수 있습니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

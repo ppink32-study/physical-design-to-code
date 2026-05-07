@@ -9,9 +9,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { Tab2, Tab2List, type Tab2State, type Tab2Type } from "./tab2";
@@ -126,57 +123,5 @@ export const Matrix: Story = {
         </Tab2List>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage
-      title="Tab2"
-      description="Tabs Level 2 — browser-tab 스타일 탭 컴포넌트."
-    >
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          탭 항목마다 우측 border로 구분되는 browser-tab 스타일입니다.
-          선택된 탭은 어두운 배경(bg-darkgray) + 흰 텍스트로 강조됩니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Type">
-        <StoryDocsParagraph><strong>text</strong> — [LeadingIcon?] [label + count] [닫기?]. h=32, px=12, gap=4.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>icon</strong> — 중앙 아이콘(기본 Add). h=32, px=8.</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="States">
-        <StoryDocsParagraph><strong>default</strong> — bg-surface-base, border-right.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>hover</strong> — bg-surface-base-hover, border-right.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>selected</strong> — bg-darkgray (어두운 bg), 흰 텍스트/아이콘, border-right 없음.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>disabled</strong> — bg-neutral, border-right, 비활성 색상.</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Props">
-        <StoryDocsParagraph><strong>tabType</strong>: "text" | "icon"</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>leadingIcon</strong>: true (Search 아이콘) | ReactNode (커스텀)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>count</strong>: 우측 숫자 카운트 (SemiBold)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>closable</strong>: 닫기 버튼 표시. onClose 콜백 연동.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>icon</strong>: type=icon 일 때 중앙 아이콘 (기본 Add)</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Tab2List">
-        <StoryDocsParagraph>
-          Tab2List로 탭을 감싸면 gap 없이 수평 나열됩니다. 각 탭의 border-right가 구분선 역할을 합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

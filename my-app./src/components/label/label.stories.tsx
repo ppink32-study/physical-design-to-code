@@ -15,9 +15,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -230,22 +227,3 @@ export const Matrix: Story = {
   ),
 };
 
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Label" description="폼 라벨 컴포넌트 사용 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          폼 필드 라벨·필수 표시·정보 아이콘·outline/ghost 버튼 슬롯을 한 컴포넌트로 다룹니다.
-          Type×Size 매트릭스(Normal / Ghost / Outline × Medium / Small)는 Matrix 스토리 표에서
-          확인할 수 있습니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
-  ),
-};

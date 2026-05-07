@@ -14,11 +14,7 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -600,26 +596,5 @@ export const Matrix: Story = {
         />
       </Section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Tab" description="탭 컴포넌트 사용 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          <StoryDocsInlineCode>Tab</StoryDocsInlineCode> 단일 항목과{" "}
-          <StoryDocsInlineCode>TabList</StoryDocsInlineCode> 컨테이너를 조합합니다. Level 1
-          상태·Text/More 타입, 가로·세로 그룹·overflow·extra 슬롯 조합은 Matrix 스토리 표를
-          참고하세요.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

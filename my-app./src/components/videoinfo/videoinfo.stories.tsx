@@ -8,9 +8,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { XButtonLarge } from "@/components/button/x-button-large/x-button-large";
@@ -136,38 +133,5 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Video Info" description="비디오 썸네일 카드 + 정보 배지 컴포넌트.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          <strong>VideoInfoBadge</strong> — 검은 50% 오버레이 위에 흰 11px 텍스트.
-          max-width 188px 초과 시 말 줄임표(ellipsis) 적용. title 어트리뷰트로 전체 텍스트 노출.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>VideoInfoCard</strong> — 16:9 기본 비율의 썸네일 카드 (rounded-10).
-          imageSrc 미지정 시 placeholder 영역만 잡고, badge prop 으로 좌측 하단 (8px 여백) 자유 배치.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="사용 예">
-        <StoryDocsParagraph>
-          <code>{`<VideoInfoCard width={240} badge={<VideoInfoBadge text="/path/to/file.mp4" />} />`}</code>
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

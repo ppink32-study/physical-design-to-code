@@ -3,9 +3,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { ProjectCardB, type ProjectCardBState } from "./projectcardB";
@@ -73,48 +70,5 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage
-      title="ProjectCardB"
-      description="프로젝트 카드 B 컴포넌트 — Figma node 18403:1736."
-    >
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          로봇 이미지 썸네일 + 타이틀/설명 + 멤버 수 + Accept 버튼으로 구성된 가로형 카드입니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="State">
-        <StoryDocsParagraph><strong>default</strong> — bg-surface-secondary, 테두리 없음.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>hover</strong> — bg-surface-secondary + Mint→Purple 2px 그라디언트 테두리 (inline, box-sizing: border-box).</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Props">
-        <StoryDocsParagraph><strong>imageSrc</strong>: 썸네일 이미지 경로 (public/robot/ 권장)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>title / description</strong>: 카드 제목·설명</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>members</strong>: 멤버 수 텍스트 (Users 아이콘)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>onAccept</strong>: Accept 버튼 클릭 콜백</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="토큰">
-        <StoryDocsParagraph><strong>배경</strong>: --context-background-surface-bg-surface-secondary</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>hover 테두리</strong>: #5CC7D0 → #D5A5FF (2px, padding-box inline)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>Accept 버튼</strong>: --context-background-gray-bg-darkgray</StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

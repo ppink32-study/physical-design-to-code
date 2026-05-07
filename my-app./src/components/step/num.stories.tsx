@@ -9,9 +9,6 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { Num, type NumMode, type NumState } from "./num";
@@ -120,55 +117,5 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Num" description="Step 번호 배지 (24×24).">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          Step 진행 표시에 사용되는 24×24 원형 번호 배지. mode 와 state 두 prop 으로
-          현재 단계의 시각 상태를 표현합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Number States">
-        <StoryDocsParagraph>
-          <strong>finish</strong> — 완료된 단계. 외곽선 + mint 텍스트.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>current</strong> — 현재 단계. solid mint 배경 + 흰/dark 텍스트.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>next</strong> — 다가올 단계. 회색 배경 + 흐린 텍스트.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Icon States (Light only)">
-        <StoryDocsParagraph>
-          <strong>complete</strong> — 완전 종료. 다크 배경 + 흰 체크 아이콘.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>error</strong> — 에러 발생. 빨간 배경 + 흰 경고 아이콘.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>success</strong> — 성공. 초록 배경 + 흰 체크서클 아이콘.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>stop</strong> — 정지. 노란 배경 + 다크 스톱 아이콘.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

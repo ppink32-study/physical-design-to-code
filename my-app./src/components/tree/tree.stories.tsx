@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { Tree, TreeNodeRow } from "./tree";
 import type { NodeLevel, NodeState, TreeItem } from "./tree";
@@ -14,6 +14,7 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
+  StoryDocsNote,
   StoryDocsPage,
   StoryDocsParagraph,
   StoryDocsSection,
@@ -320,43 +321,166 @@ export const TreeViewStory: Story = {
 /* =================================================================
  * Guideline
  * =============================================================== */
+
+const anatomyListStyle: CSSProperties = {
+  margin: "16px 0 0",
+  padding: 0,
+  listStyle: "none",
+  display: "flex",
+  flexDirection: "column",
+  gap: 10,
+};
+
+const anatomyItemStyle: CSSProperties = {
+  display: "flex",
+  gap: 10,
+  alignItems: "flex-start",
+  fontSize: 14,
+  lineHeight: "22px",
+  color: "var(--context-foreground-surface-on-surface-base, #141518)",
+};
+
+const anatomyBadgeStyle: CSSProperties = {
+  flexShrink: 0,
+  width: 20,
+  height: 20,
+  borderRadius: 999,
+  background: "var(--context-background-gray-bg-darkgray, #26282e)",
+  color: "#fff",
+  fontSize: 10,
+  fontWeight: 700,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginTop: 1,
+};
+
+function AnatomyItem({ num, children }: { num: number; children: ReactNode }) {
+  return (
+    <li style={anatomyItemStyle}>
+      <span style={anatomyBadgeStyle}>{num}</span>
+      <span>{children}</span>
+    </li>
+  );
+}
+
+const GUIDELINE_ITEMS: TreeItem[] = [
+  {
+    id: "g-root1",
+    label: "1depth Name",
+    count: 5,
+    children: [
+      {
+        id: "g-l2a",
+        label: "2depth Name",
+        count: 5,
+        children: [
+          {
+            id: "g-l3a",
+            label: "3depth Name",
+            count: 5,
+            children: [
+              {
+                id: "g-l4a",
+                label: "4depth Name",
+                count: 5,
+                children: [
+                  { id: "g-l5a", label: "5depth Name", count: 5 },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export const Guideline: Story = {
   name: "Guideline",
+  parameters: {
+    layout: "padded",
+    controls: { hideNoControlsWarning: true, disable: true },
+    actions: { disable: true },
+  },
   render: () => (
-    <StoryDocsPage
-      title="Tree"
-      description="계층 구조 데이터를 탐색하는 트리 컴포넌트입니다."
-    >
-      <StoryDocsSection title="개요">
+    <StoryDocsPage title="Tree" description="계층 구조 데이터를 탐색하는 트리 컴포넌트 가이드입니다.">
+
+      {/* ── Tree view ── */}
+      <StoryDocsSection title="Tree view">
         <StoryDocsParagraph>
-          Tree는 최대 5단계 깊이의 계층적 데이터를 표시합니다. 각 노드는
-          펼치기/접기가 가능하며, 선택 및 비활성화 상태를 지원합니다.
+          Tree는 계층적 데이터를 탐색할 때 사용합니다. Branch node는 펼치기/접기가 가능하며,
+          Leaf node는 하위 노드가 없는 최하위 항목입니다. Leading icon은 선택적으로 표시할 수 있습니다.
         </StoryDocsParagraph>
+        <div style={{ marginTop: 20, display: "flex", gap: 48, alignItems: "flex-start", flexWrap: "wrap" }}>
+          <div style={{ width: 244, flexShrink: 0 }}>
+            <Tree
+              items={GUIDELINE_ITEMS}
+              leadingIcon
+              defaultExpandedIds={["g-root1", "g-l2a", "g-l3a", "g-l4a"]}
+            />
+          </div>
+          <ul style={anatomyListStyle}>
+            <AnatomyItem num={1}>
+              <strong>Chevron icon</strong>, 16px: 브랜치 노드를 펼치거나 접기 위한 화살표 아이콘입니다.
+            </AnatomyItem>
+            <AnatomyItem num={2}>
+              <strong>Branch node</strong>: 하위 노드를 표시하거나 숨기기 위해 펼치거나 접을 수 있는 노드입니다.
+            </AnatomyItem>
+            <AnatomyItem num={3}>
+              <strong>Leaf node</strong>: 펼칠 수 없으며 하위 노드가 없는 최하위 노드입니다.
+            </AnatomyItem>
+            <AnatomyItem num={4}>
+              <strong>Text level</strong>: 들여쓰기로 계층 깊이를 나타냅니다. 최대 5단계(1depth ~ 5depth)를 지원합니다.
+            </AnatomyItem>
+            <AnatomyItem num={5}>
+              <strong>Leading icon</strong> (optional), 16px: 노드 앞에 선택적으로 표시되는 폴더 아이콘입니다.
+            </AnatomyItem>
+          </ul>
+        </div>
+        <StoryDocsNote>
+          <strong>leadingIcon</strong> prop을 사용하면 모든 노드에 폴더 아이콘이 표시됩니다.
+        </StoryDocsNote>
       </StoryDocsSection>
 
-      <StoryDocsSection title="States">
+      {/* ── Selectable Tree view ── */}
+      <StoryDocsSection title="Selectable Tree view (+ Checkbox)">
         <StoryDocsParagraph>
-          각 노드는 Default · Hover · Focus(펼쳐진 상태) · Selected · Disabled
-          총 5가지 상태를 가집니다. Focus는 해당 폴더 노드가 열려 있을 때 적용됩니다.
+          <strong>selectable</strong> prop을 사용하면 각 노드에 Checkbox가 추가되어 항목을 선택할 수 있습니다.
+          Leading icon과 함께 사용할 수 있습니다.
         </StoryDocsParagraph>
+        <div style={{ marginTop: 20, display: "flex", gap: 48, alignItems: "flex-start", flexWrap: "wrap" }}>
+          <div style={{ width: 244, flexShrink: 0 }}>
+            <Tree
+              items={GUIDELINE_ITEMS}
+              leadingIcon
+              selectable
+              defaultExpandedIds={["g-root1", "g-l2a", "g-l3a", "g-l4a"]}
+            />
+          </div>
+          <ul style={anatomyListStyle}>
+            <AnatomyItem num={1}>
+              <strong>Chevron icon</strong>, 16px: 브랜치 노드를 펼치거나 접기 위한 화살표 아이콘입니다.
+            </AnatomyItem>
+            <AnatomyItem num={2}>
+              <strong>Checkbox</strong>: 노드를 선택하기 위한 체크박스입니다. <strong>selectable</strong> prop 활성화 시 표시됩니다.
+            </AnatomyItem>
+            <AnatomyItem num={3}>
+              <strong>Branch node</strong>: 하위 노드를 표시하거나 숨기기 위해 펼치거나 접을 수 있는 노드입니다.
+            </AnatomyItem>
+            <AnatomyItem num={4}>
+              <strong>Leaf node</strong>: 펼칠 수 없으며 하위 노드가 없는 최하위 노드입니다.
+            </AnatomyItem>
+            <AnatomyItem num={5}>
+              <strong>Leading icon</strong> (optional), 16px: 노드 앞에 선택적으로 표시되는 폴더 아이콘입니다.
+            </AnatomyItem>
+          </ul>
+        </div>
+        <StoryDocsNote>
+          Checkbox 선택 상태는 <strong>selectedIds</strong> / <strong>onSelectionChange</strong> prop으로 제어합니다.
+        </StoryDocsNote>
       </StoryDocsSection>
 
-      <StoryDocsSection title="Level Indent">
-        <StoryDocsParagraph>
-          레벨별 좌측 여백: L1 = 8px · L2 = 24px · L3 = 40px · L4 = 56px · L5 = 76px.
-          L5는 리프 노드로 화살표가 표시되지 않습니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Variants">
-        <StoryDocsParagraph>
-          <strong>Basic</strong>: 화살표만 표시 (leadingIcon=false, selectable=false)
-          <br />
-          <strong>Leading Icon</strong>: 폴더 아이콘 추가 (leadingIcon=true)
-          <br />
-          <strong>Selectable</strong>: 체크박스 + 폴더 아이콘 (selectable=true)
-        </StoryDocsParagraph>
-      </StoryDocsSection>
     </StoryDocsPage>
   ),
 };

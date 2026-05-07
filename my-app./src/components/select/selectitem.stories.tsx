@@ -12,11 +12,7 @@ import {
   storyMatrixTableBase,
 } from "@/stories/story-matrix-table-styles";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -173,25 +169,5 @@ export const Matrix: Story = {
         <ItemMatrixTable size="large" />
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="SelectItem" description="선택 목록의 한 줄 옵션 컴포넌트 가이드입니다.">
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          드롭다운·<StoryDocsInlineCode>SelectList</StoryDocsInlineCode> 안에서 사용합니다.{" "}
-          <StoryDocsInlineCode>type=&quot;2-level&quot;</StoryDocsInlineCode> 은 하위 메뉴가 있을 때
-          우측 쉐브론을 표시합니다. Matrix 에서 사이즈·상태·레벨 조합을 확인하세요.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

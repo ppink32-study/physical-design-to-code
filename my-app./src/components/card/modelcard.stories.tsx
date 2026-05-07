@@ -3,9 +3,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { ModelCard, type ModelCardState } from "./modelcard";
@@ -78,48 +75,5 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage
-      title="ModelCard"
-      description="모델 카드 컴포넌트 — Figma node 18397:3969."
-    >
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          AI 모델을 카드 형태로 표시합니다. 썸네일, 상태 뱃지, 타이틀, 설명, 메타 정보(플랫폼·파일 크기·생성일)로 구성됩니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="State">
-        <StoryDocsParagraph><strong>default</strong> — bg-surface-secondary, 테두리 없음.</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>hover</strong> — bg-surface-white + Mint→Purple 3px 그라디언트 테두리 (inline, box-sizing: border-box).</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Props">
-        <StoryDocsParagraph><strong>title</strong>: 모델 이름 (16px SemiBold)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>description</strong>: 부연 설명 (13px Regular)</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>badgeLabel</strong>: 상태 뱃지 텍스트</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>platform / fileSize / createdAt</strong>: 메타 정보 3종</StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="토큰">
-        <StoryDocsParagraph><strong>배경(default)</strong>: --context-background-surface-bg-surface-secondary</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>배경(hover)</strong>: --context-background-surface-bg-surface-white</StoryDocsParagraph>
-        <StoryDocsParagraph><strong>hover 테두리</strong>: #5CC7D0 → #D5A5FF (3px, padding-box inline)</StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

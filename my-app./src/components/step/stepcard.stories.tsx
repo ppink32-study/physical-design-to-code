@@ -3,9 +3,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
 import { StepCard, StepCardList } from "./stepcard";
@@ -110,59 +107,5 @@ export const Matrix: Story = {
         </StepCardList>
       </section>
     </StoryDocsMatrixPage>
-  ),
-};
-
-/* -----------------------------------------------------------------
- *  Guideline
- * ----------------------------------------------------------------- */
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    nextjs: { appDirectory: true },
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage
-      title="StepCard"
-      description="세로 step 목록의 단위 행. StepItem(좌)과 정보 카드(우)로 구성됩니다."
-    >
-      <StoryDocsSection title="개요">
-        <StoryDocsParagraph>
-          <code>StepItem</code>과 정보 카드를 가로로 조합한 행 컴포넌트.
-          여러 <code>StepCard</code>를 세로로 쌓아 step 목록(파이프라인)을 구성합니다.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Props">
-        <StoryDocsParagraph>
-          <strong>numState</strong> — StepItem에 전달. Num 배지 시각 상태 결정.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>hasLine</strong> — true: 하단 연결선 표시 (중간 항목), false: 선 없음 (마지막 항목).
-          연결선은 카드 높이에 맞춰 끝까지 채워집니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>statusLabel / statusColor</strong> — 우측 상태 배지 텍스트·색상.
-          Badge <code>variant="solid"</code> 사용.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="목록 사용법">
-        <StoryDocsParagraph>
-          여러 <code>StepCard</code>를 나열할 때는 <code>StepCardList</code>로 감싸세요.
-          카드 간 간격 <code>spacing-md(12px)</code>이 자동 적용됩니다.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          {`<StepCardList>
-  <StepCard hasLine numState="success" ... />
-  <StepCard hasLine numState="current" ... />
-  <StepCard hasLine={false} numState="next" ... />
-</StepCardList>`}
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };

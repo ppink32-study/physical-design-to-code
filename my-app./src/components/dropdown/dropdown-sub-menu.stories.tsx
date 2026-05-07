@@ -11,10 +11,7 @@ import {
 import { DropdownSubMenu } from "./dropdown-sub-menu";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  StoryDocsInlineCode,
   StoryDocsMatrixPage,
-  StoryDocsPage,
-  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -216,34 +213,5 @@ export const Matrix: Story = {
         </section>
       </div>
     </StoryDocsMatrixPage>
-  ),
-};
-
-export const Guideline: Story = {
-  name: "Guideline",
-  parameters: {
-    layout: "padded",
-    controls: { hideNoControlsWarning: true, disable: true },
-    actions: { disable: true },
-  },
-  render: () => (
-    <StoryDocsPage title="Sub Menu" description="다단 드롭다운 서브 메뉴 사용 가이드입니다.">
-      <StoryDocsSection title="사용 가이드">
-        <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.65 }}>
-          <li>
-            서브 메뉴는 hover(지연)·클릭·키보드(ArrowRight / Enter / Space)로 열리고, ArrowLeft
-            ·ESC 로 닫힙니다.
-          </li>
-          <li>
-            화면 오른쪽 끝에서는 <StoryDocsInlineCode>flip</StoryDocsInlineCode> 으로 서브를
-            트리거 왼쪽에 펼칠 수 있습니다.
-          </li>
-          <li>
-            항목 선택 시 루트 <StoryDocsInlineCode>Dropdown</StoryDocsInlineCode> 까지 함께
-            닫히도록 설계되어 있습니다.
-          </li>
-        </ul>
-      </StoryDocsSection>
-    </StoryDocsPage>
   ),
 };
