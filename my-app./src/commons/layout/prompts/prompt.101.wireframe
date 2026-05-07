@@ -14,31 +14,8 @@
 
 ==============================================
 
-핵심요구사항) 각 영역은 아래의 수치값을 그대로 반영할 것. (단위: px)
 
-기준 viewport: 1920px
 
-layout 구조:
-- GNB (top)
-- body: contents (flex)
-
-GNB:
-- width: 100%
-- height: 56px
-
-Detail Page - Header Area : 
-- width: 100%
-- height: 68px
-
-Detail Page - Stepper Area
-- width: 1440px
-- height: 64px
-
-Main Contents Area
-- display: flex;
-- width: 1920px;
-- height: 68px;
-- padding: var(--spacingNone, 0) 240px var(--spacingMd, 12px) 240px;
 
 ==============================================
 figma mcp를 사용해서 그대로 구현할 것. 현재 있는 디자인 토큰만을 사용할 것 

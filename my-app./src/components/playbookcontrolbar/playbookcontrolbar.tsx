@@ -32,9 +32,11 @@ function clamp(v: number, min: number, max: number): number {
   return Math.min(Math.max(v, min), max);
 }
 
-type IconKind = "expand" | "more";
+type IconKind = "play" | "pause" | "expand" | "more";
 
 const ICON_MAP: Record<IconKind, { src: string; className: string }> = {
+  play: { src: "/icon/PlayTriangle_2.svg", className: styles.playIcon },
+  pause: { src: "/icon/Pause.svg", className: styles.playIcon },
   expand: { src: "/icon/Expand-2.svg", className: styles.expandIcon },
   more: { src: "/icon/MoreHorizontal.svg", className: styles.moreIcon },
 };
@@ -88,6 +90,9 @@ export type PlaybookControlBarProps = {
   currentTime?: number;
   duration?: number;
   defaultCurrentTime?: number;
+  /** 재생 중 여부 — 지정 시 controlled 모드 */
+  isPlaying?: boolean;
+  onPlay?: () => void;
   onSeek?: (time: number) => void;
   onFullscreen?: () => void;
   onMore?: () => void;
@@ -105,6 +110,8 @@ export const PlaybookControlBar = forwardRef<
     currentTime: currentTimeProp,
     defaultCurrentTime = 0,
     duration = 0,
+    isPlaying = false,
+    onPlay,
     onSeek,
     onFullscreen,
     onMore,
@@ -161,6 +168,11 @@ export const PlaybookControlBar = forwardRef<
       {...rest}
     >
       <div className={styles.leftGroup}>
+        <IconBtn
+          icon={isPlaying ? "pause" : "play"}
+          label={isPlaying ? "일시정지" : "재생"}
+          onClick={onPlay}
+        />
         <div className={styles.timePill}>
           <span className={styles.timePart} data-time-format={timeFormat}>
             {curText}

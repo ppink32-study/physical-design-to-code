@@ -31,6 +31,7 @@ import styles from "./button.module.css";
 
 export type ButtonVariant =
   | "primary-solid"
+  | "primary-2-solid"
   | "primary-outline"
   | "primary-ghost"
   | "secondary-solid"
@@ -66,6 +67,7 @@ export type ButtonProps = NativeButtonProps & {
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
   "primary-solid": styles.variantPrimarySolid,
+  "primary-2-solid": styles.variantPrimary2Solid,
   "primary-outline": styles.variantPrimaryOutline,
   "primary-ghost": styles.variantPrimaryGhost,
   "secondary-solid": styles.variantSecondarySolid,

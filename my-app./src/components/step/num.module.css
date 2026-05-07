@@ -1,13 +1,19 @@
 /* =============================================================================
  * Num — Figma 18374:238 (24×24 원형 step 번호 배지)
  * -----------------------------------------------------------------------------
- * states × modes (6 variants)
+ * Number states × modes (6 variants)
  *   light · finish  : white bg + 1.5px mint border + mint text
  *   light · current : mint solid bg + white text
  *   light · next    : quaternary gray bg + hint text
  *   dark  · finish  : transparent + mint border + mint text
  *   dark  · current : mint solid bg + invert (dark) text
  *   dark  · next    : quaternary gray bg (brand=#565967) + on-surface text
+ *
+ * Icon states (light only)
+ *   complete : dark bg (#141518)  + white check icon
+ *   error    : red bg             + white alert icon
+ *   success  : green bg           + white check-circle icon
+ *   stop     : yellow bg          + dark stop icon
  * ========================================================================== */
 
 .root {
@@ -81,4 +87,48 @@
 /* dark · next — 텍스트는 on-surface (#9698A3) */
 .root[data-theme="brand"][data-state="next"] .label {
   color: var(--context-foreground-surface-on-surface);
+}
+
+/* ===========================================================================
+ * Icon states — root 자체가 24×24 컬러 원형 배지
+ * ========================================================================= */
+.root[data-state="complete"],
+.root[data-state="error"],
+.root[data-state="success"],
+.root[data-state="stop"] {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  justify-content: center;
+  /* padding을 0으로 리셋 — flex center만으로 정렬 (24px 원 안에 16px 아이콘 = 4px 여백) */
+  padding: 0;
+  gap: 0;
+}
+
+.root[data-state="complete"] { background: var(--context-foreground-surface-on-surface-base); }
+.root[data-state="error"]    { background: var(--context-background-error-bg-error); }
+.root[data-state="success"]  { background: var(--accent-green-accent-green); }
+.root[data-state="stop"]     { background: var(--accent-yellow-accent-yellow); }
+
+/* Icon mask-image (16×16) */
+.icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background: currentColor;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* 모든 icon state — Context/Foreground/Icon-Neutral/icon-neutral-white */
+.root[data-state="complete"] .icon,
+.root[data-state="error"] .icon,
+.root[data-state="success"] .icon,
+.root[data-state="stop"] .icon {
+  color: var(--context-foreground-icon-neutral-icon-neutral-white);
 }

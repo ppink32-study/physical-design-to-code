@@ -33,7 +33,7 @@ export const StepperArea = forwardRef<HTMLDivElement, StepperAreaProps>(
     { variant = "default", steps, activeStep = 0, className, ...rest },
     ref,
   ) {
-    const mode = variant === "brand" ? "dark" : "light";
+    const mode = variant === "brand" ? "brand" : "light";
 
     return (
       <div

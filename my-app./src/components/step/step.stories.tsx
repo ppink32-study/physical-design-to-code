@@ -27,7 +27,7 @@ const meta: Meta<typeof Step> = {
   },
   argTypes: {
     state: { control: "inline-radio", options: ["default", "active"] },
-    mode: { control: "inline-radio", options: ["light", "dark"] },
+    mode: { control: "inline-radio", options: ["light", "brand"] },
     label: { control: "text" },
   },
 };
@@ -47,7 +47,7 @@ export const Playground: Story = {
 const STATES: StepState[] = ["default", "active"];
 const MODES: { label: string; mode: StepMode; bg: string }[] = [
   { label: "Light", mode: "light", bg: "#F4F7F7" },
-  { label: "Dark",  mode: "dark",  bg: "#1F2025" },
+  { label: "Brand", mode: "brand", bg: "#1F2025" },
 ];
 
 export const Matrix: Story = {
@@ -115,8 +115,8 @@ export const Matrix: Story = {
               </td>
               <td style={{ ...storyMatrixCellStyle, padding: 24, background: "#1F2025" }}>
                 <div style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
-                  <Num number={1} state="finish" mode="dark" />
-                  <Step label="Configure Parameters" state="default" mode="dark" />
+                  <Num number={1} state="finish" mode="brand" />
+                  <Step label="Configure Parameters" state="default" mode="brand" />
                 </div>
               </td>
             </tr>

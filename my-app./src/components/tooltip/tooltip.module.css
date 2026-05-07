@@ -50,6 +50,7 @@
   line-height: 20px;
   letter-spacing: -0.052px;
   font-weight: 400;
+  text-align: left;
   word-break: keep-all;
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);

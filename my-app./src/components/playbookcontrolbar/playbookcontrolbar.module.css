@@ -183,6 +183,11 @@
   mask-size: contain;
 }
 
+.playIcon {
+  width: 16px;
+  height: 16px;
+}
+
 .expandIcon {
   width: 16px;
   height: 16px;

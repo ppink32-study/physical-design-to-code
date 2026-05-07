@@ -89,8 +89,10 @@ const CHEVRON_DOWN_FILL_PATH =
 
 function Chevron({
   direction,
+  color,
 }: {
   direction: DropdownTriggerDropDirection;
+  color?: string;
 }) {
   const rotation: Record<DropdownTriggerDropDirection, number> = {
     down: 0,
@@ -105,6 +107,7 @@ function Chevron({
         width: 16,
         height: 16,
         transform: `rotate(${rotation[direction]}deg)`,
+        ...(color ? { color } : undefined),
       }}
       aria-hidden="true"
     >
@@ -148,7 +151,11 @@ function DropdownTriggerInner(
   } = props;
 
   const variant = TYPE_TO_VARIANT[type];
-  const chevron = <Chevron direction={dropDirection} />;
+  const chevronColor =
+    type === "secondary"
+      ? "var(--context-foreground-icon-neutral-icon-neutral-disabled)"
+      : undefined;
+  const chevron = <Chevron direction={dropDirection} color={chevronColor} />;
   /** Figma: 비-split 일 때 Right 만 케럿이 라벨 오른쪽, 그 외(D/U/L)는 왼쪽 */
   const chevronOnRight = dropDirection === "right";
   const chevronFirstSplit = splitButton && dropDirection === "left";

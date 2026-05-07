@@ -1,0 +1,47 @@
+/* =============================================================================
+ * StepItem — Figma 18505:14797
+ * -----------------------------------------------------------------------------
+ * 세로 배치 step 아이템. Num 배지 + 하단 1px 연결선(옵션).
+ *
+ * property1
+ *   "line O" → hasLine=true  : 연결선 표시 (중간 항목)
+ *   "line X" → hasLine=false : 연결선 없음 (마지막 항목)
+ *
+ * 크기 (Figma 기준)
+ *   root    : 32×60px
+ *   numWrap : 28×28px (Num 24px + padding 2px×2)
+ *   line    : 1px × 나머지 높이 (flex-grow)
+ *
+ * 토큰
+ *   pt: (numunit)×1.5 = 6px  /  px: (numunit)×0.5 = 2px  /  pb: 0
+ *   gap: spacing-2xs = 4px
+ *   line color: border-surface
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32px;
+  height: 60px;
+  padding: 6px 2px 0;
+  gap: var(--spacing-2xs, 4px);
+}
+
+/* Num 주변 패딩 래퍼 */
+.numWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xs, 2px);
+  flex-shrink: 0;
+}
+
+/* 하단 연결선 — 1px 세로선, flex-grow로 나머지 높이 채움 */
+.line {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 1px;
+  background: var(--border-border-surface-border-surface);
+}

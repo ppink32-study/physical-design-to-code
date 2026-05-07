@@ -76,7 +76,7 @@ function BtnIcon({ src, size = 16 }: { src: string; size?: number }) {
 const backButton2d = (
   <Button
     type="button"
-    variant="secondary-ghost"
+    variant="secondary-outline-white-invert"
     size="large"
     iconOnly
     aria-label="뒤로 가기"
@@ -104,7 +104,7 @@ const actions2d = (
       size="large"
       iconOnly
       aria-label="Search"
-      leftIcon={<BtnIcon src="/icon/Search.svg" />}
+      leftIcon={<BtnIcon src="/icon/Search.svg" size={24} />}
     />
   </>
 );

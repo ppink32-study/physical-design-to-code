@@ -71,18 +71,25 @@ type Story = StoryObj<typeof PlaybookControlBar>;
 function TimeAndProgressTicker() {
   const duration = 312;
   const [currentTime, setCurrentTime] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
+    if (!isPlaying) return;
     const id = window.setInterval(() => {
-      setCurrentTime((t) => (t >= duration ? 0 : t + 1));
+      setCurrentTime((t) => {
+        if (t >= duration) { setIsPlaying(false); return 0; }
+        return t + 1;
+      });
     }, 1000);
     return () => window.clearInterval(id);
-  }, [duration]);
+  }, [isPlaying, duration]);
 
   return (
     <PlaybookControlBar
       currentTime={currentTime}
       duration={duration}
+      isPlaying={isPlaying}
+      onPlay={() => setIsPlaying((p) => !p)}
       onSeek={setCurrentTime}
       onFullscreen={() => {}}
       onMore={() => {}}

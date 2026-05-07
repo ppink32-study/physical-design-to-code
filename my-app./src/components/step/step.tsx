@@ -16,7 +16,7 @@ import type { ReactNode } from "react";
 import styles from "./step.module.css";
 
 export type StepState = "default" | "active";
-export type StepMode = "light" | "dark";
+export type StepMode = "light" | "brand";
 
 export type StepProps = {
   label?: ReactNode;
@@ -35,7 +35,7 @@ export function Step({
     <div
       className={[styles.root, className].filter(Boolean).join(" ")}
       data-state={state}
-      data-theme={mode === "dark" ? "brand" : "light"}
+      data-theme={mode === "brand" ? "brand" : undefined}
     >
       <span className={styles.label}>{label}</span>
     </div>

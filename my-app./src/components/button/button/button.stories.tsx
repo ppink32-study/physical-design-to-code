@@ -80,6 +80,7 @@ const meta: Meta<typeof Button> = {
       control: "select",
       options: [
         "primary-solid",
+        "primary-2-solid",
         "primary-outline",
         "primary-ghost",
         "secondary-solid",
@@ -144,10 +145,10 @@ export const Playground: Story = {
 
 /* =================================================================
  * Matrix — Figma 시트(node 17987-47864) 그대로 재현
- *   · 9 Type × {라벨, 아이콘 only} 두 셀이 한 컬럼을 구성
+ *   · 10 Type × {라벨, 아이콘 only} 두 셀이 한 컬럼을 구성
  *   · 행: Size (L/M/S, xLarge 별도) × State (Default/Hover/Disable)
  *   · Square / Round 두 섹션
- *   · Round 는 Ghost·Gray 제외, xLarge 는 Square 전용 (Primary Solid + Gray)
+ *   · Round 는 Ghost·Gray 제외, xLarge 는 Square 전용 (Primary Solid + Primary 2 Solid + Gray)
  *   · Dark Invert · White Invert 컬럼은 Figma 와 동일하게 배경 띠 적용
  * =============================================================== */
 
@@ -160,6 +161,7 @@ type ColumnDef = {
 
 const SQUARE_COLUMNS: ColumnDef[] = [
   { key: "primary-solid", label: "Primary Solid" },
+  { key: "primary-2-solid", label: "Primary 2 Solid" },
   { key: "secondary-solid", label: "Secondary Solid" },
   { key: "secondary-outline-dark-invert", label: "Sec Outline · Dark Invert", bg: "dark" },
   { key: "primary-outline", label: "Primary Outline" },
@@ -175,9 +177,9 @@ const ROUND_COLUMNS: ColumnDef[] = SQUARE_COLUMNS.filter(
   (c) => c.key !== "primary-ghost" && c.key !== "secondary-ghost" && c.key !== "gray",
 );
 
-/** xLarge 시트는 Square 전용, Primary Solid + Gray 만 정의 */
+/** xLarge 시트는 Square 전용, Primary Solid + Primary 2 Solid + Gray 만 정의 */
 const XLARGE_COLUMNS: ColumnDef[] = SQUARE_COLUMNS.filter(
-  (c) => c.key === "primary-solid" || c.key === "gray",
+  (c) => c.key === "primary-solid" || c.key === "primary-2-solid" || c.key === "gray",
 );
 
 const STATE_ROWS: Array<{ key: string; label: string; force: ButtonForceState }> = [
@@ -453,7 +455,7 @@ export const Matrix: Story = {
   render: () => (
     <StoryDocsMatrixPage
       title="Button"
-      description="Figma 시트와 동일한 축으로 variant · size · shape · state를 비교합니다. 각 셀은 라벨 버튼과 아이콘 전용 버튼을 한 쌍으로 표시합니다."
+      description="Figma 시트와 동일한 축으로 variant · size · shape · state를 비교합니다. 10개 variant 각 셀은 라벨 버튼과 아이콘 전용 버튼을 한 쌍으로 표시합니다."
       figmaNode="17987-47864"
     >
       <FigmaLinkCard
@@ -463,7 +465,7 @@ export const Matrix: Story = {
 
       <MatrixSection
           title="01 — Square"
-          description="Type 9종 × Size(Large / Medium / Small) × State(Default / Hover & Pressed / Disable). Dark·White Invert 컬럼은 Figma와 동일한 배경 띠를 적용했습니다."
+          description="Type 10종 × Size(Large / Medium / Small) × State(Default / Hover & Pressed / Disable). Dark·White Invert 컬럼은 Figma와 동일한 배경 띠를 적용했습니다."
           columns={SQUARE_COLUMNS}
           shape="square"
           sizes={SIZE_GROUPS}
@@ -471,7 +473,7 @@ export const Matrix: Story = {
 
         <MatrixSection
           title="02 — Square · xLarge"
-          description="xLarge(48px)는 Figma 정의상 Primary Solid와 Gray button만 존재합니다."
+          description="xLarge(48px)는 Figma 정의상 Primary Solid · Primary 2 Solid · Gray button만 존재합니다."
           columns={XLARGE_COLUMNS}
           shape="square"
           sizes={[{ key: "xlarge", label: "xLarge (48)" }]}
@@ -622,10 +624,25 @@ export const Guideline: Story = {
     >
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-        9개 variant · 4 size · square/round · default/hover/disable · 아이콘 조합을 지원합니다.{" "}
+          10개 variant · 4 size · square/round · default/hover/disable · 아이콘 조합을 지원합니다.{" "}
           <StoryDocsInlineCode>iconOnly</StoryDocsInlineCode>일 때는 접근성을 위해{" "}
           <StoryDocsInlineCode>aria-label</StoryDocsInlineCode>이 필요합니다.
         </StoryDocsParagraph>
+      </StoryDocsSection>
+
+      <StoryDocsSection title="Primary 2 Solid">
+        <StoryDocsParagraph>
+          <StoryDocsInlineCode>variant="primary-2-solid"</StoryDocsInlineCode>는{" "}
+          <strong>light 모드에서만 사용</strong>합니다. Primary Solid와 레이아웃은 동일하며,
+          배경색만 연한 민트(<StoryDocsInlineCode>#b2fbed</StoryDocsInlineCode>)로 다릅니다.
+        </StoryDocsParagraph>
+        <StoryDocsPanelInset>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <Button variant="primary-2-solid" size="large" forceState="default" leftIcon={<SearchIcon />}>Button</Button>
+            <Button variant="primary-2-solid" size="large" forceState="hover" leftIcon={<SearchIcon />}>Button</Button>
+            <Button variant="primary-2-solid" size="large" forceState="disable" leftIcon={<SearchIcon />}>Button</Button>
+          </div>
+        </StoryDocsPanelInset>
       </StoryDocsSection>
 
       <StoryDocsSection

@@ -73,7 +73,7 @@ export const Default: Story = {
   name: "Default (Playground)",
   render: (args) => (
     <StoryPlaygroundFrame>
-      <div style={{ width: 244, background: "var(--color-neutral)", padding: 8, borderRadius: 8 }}>
+      <div style={{ width: 244 }}>
         <TreeNodeRow {...args} />
       </div>
     </StoryPlaygroundFrame>
@@ -119,7 +119,6 @@ const nodeCellStyle: CSSProperties = {
 
 const nodeWrapStyle: CSSProperties = {
   width: 200,
-  background: "var(--color-neutral)",
 };
 
 function MatrixSection({

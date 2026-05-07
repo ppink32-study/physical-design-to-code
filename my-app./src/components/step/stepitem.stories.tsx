@@ -14,43 +14,44 @@ import {
   StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
-import { Num, type NumMode, type NumState } from "./num";
+import { StepItem, type StepItemProps } from "./stepitem";
+import type { NumState, NumMode } from "./num";
 
-const ICON_STATES: NumState[] = ["complete", "error", "success", "stop"];
-
-const meta: Meta<typeof Num> = {
-  title: "Components/Step/Num",
-  component: Num,
+const meta: Meta<typeof StepItem> = {
+  title: "Components/Step/StepItem",
+  component: StepItem,
   parameters: {
     layout: "centered",
     nextjs: { appDirectory: true },
     docs: { disable: true },
   },
   argTypes: {
-    state: {
+    numState: {
       control: "inline-radio",
       options: ["finish", "current", "next", "complete", "error", "success", "stop"],
     },
     mode: { control: "inline-radio", options: ["light", "brand"] },
+    hasLine: { control: "boolean" },
     number: { control: "text" },
   },
 };
 export default meta;
-type Story = StoryObj<typeof Num>;
+type Story = StoryObj<typeof StepItem>;
 
 /* -----------------------------------------------------------------
  *  Playground
  * ----------------------------------------------------------------- */
 export const Playground: Story = {
-  args: { number: 1, state: "finish", mode: "light" },
+  args: { number: 1, numState: "current", mode: "light", hasLine: true },
 };
 
 /* -----------------------------------------------------------------
  *  Matrix
  * ----------------------------------------------------------------- */
 const NUM_STATES: NumState[] = ["finish", "current", "next"];
+const ICON_STATES: NumState[] = ["complete", "error", "success", "stop"];
 const MODES: { label: string; mode: NumMode; bg: string }[] = [
-  { label: "Light", mode: "light", bg: "#FFFFFF" },
+  { label: "Light", mode: "light", bg: "#F4F7F7" },
   { label: "Brand", mode: "brand", bg: "#1F2025" },
 ];
 
@@ -62,22 +63,26 @@ export const Matrix: Story = {
   },
   render: () => (
     <StoryDocsMatrixPage
-      title="Num"
-      description="Step 번호 배지. mode(light·dark) × state(finish·current·next·complete·error·success·stop)"
-      figmaNode="18374-238"
+      title="StepItem"
+      description="세로 step 아이템. Num 배지 + 하단 연결선(line O·X) × mode(light·dark) 조합."
+      figmaNode="18505-14797"
     >
-      <FigmaLinkCard nodeId="18374-238" caption="Components / Step / Num" />
+      <FigmaLinkCard nodeId="18505-14797" caption="Components / Step / StepItem" />
 
+      {/* Number states */}
       <section>
         <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
-          Number State × Mode
+          Number State × Line × Mode
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
           <thead>
             <tr>
               <th style={{ ...storyMatrixColHeaderStyle, width: 64 }} />
               {NUM_STATES.map((s) => (
-                <th key={s} style={storyMatrixColHeaderStyle}>{s}</th>
+                <>
+                  <th key={`${s}-lineO`} style={storyMatrixColHeaderStyle}>{s} / line O</th>
+                  <th key={`${s}-lineX`} style={storyMatrixColHeaderStyle}>{s} / line X</th>
+                </>
               ))}
             </tr>
           </thead>
@@ -86,9 +91,14 @@ export const Matrix: Story = {
               <tr key={mode}>
                 <td style={storyMatrixRowHeaderStyle}>{label}</td>
                 {NUM_STATES.map((s, i) => (
-                  <td key={s} style={{ ...storyMatrixCellStyle, padding: 16, background: bg }}>
-                    <Num number={i + 1} state={s} mode={mode} />
-                  </td>
+                  <>
+                    <td key={`${s}-lineO`} style={{ ...storyMatrixCellStyle, padding: 16, background: bg }}>
+                      <StepItem number={i + 1} numState={s} mode={mode} hasLine />
+                    </td>
+                    <td key={`${s}-lineX`} style={{ ...storyMatrixCellStyle, padding: 16, background: bg }}>
+                      <StepItem number={i + 1} numState={s} mode={mode} hasLine={false} />
+                    </td>
+                  </>
                 ))}
               </tr>
             ))}
@@ -96,24 +106,33 @@ export const Matrix: Story = {
         </table>
       </section>
 
+      {/* Icon states */}
       <section style={{ marginTop: 24 }}>
         <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
-          Icon State (Light only)
+          Icon State × Line (Light only)
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
           <thead>
             <tr>
               {ICON_STATES.map((s) => (
-                <th key={s} style={storyMatrixColHeaderStyle}>{s}</th>
+                <>
+                  <th key={`${s}-lineO`} style={storyMatrixColHeaderStyle}>{s} / line O</th>
+                  <th key={`${s}-lineX`} style={storyMatrixColHeaderStyle}>{s} / line X</th>
+                </>
               ))}
             </tr>
           </thead>
           <tbody>
             <tr>
               {ICON_STATES.map((s) => (
-                <td key={s} style={{ ...storyMatrixCellStyle, padding: 16, background: "#FFFFFF" }}>
-                  <Num state={s} />
-                </td>
+                <>
+                  <td key={`${s}-lineO`} style={{ ...storyMatrixCellStyle, padding: 16, background: "#F4F7F7" }}>
+                    <StepItem numState={s} hasLine />
+                  </td>
+                  <td key={`${s}-lineX`} style={{ ...storyMatrixCellStyle, padding: 16, background: "#F4F7F7" }}>
+                    <StepItem numState={s} hasLine={false} />
+                  </td>
+                </>
               ))}
             </tr>
           </tbody>
@@ -135,38 +154,31 @@ export const Guideline: Story = {
     actions: { disable: true },
   },
   render: () => (
-    <StoryDocsPage title="Num" description="Step 번호 배지 (24×24).">
+    <StoryDocsPage
+      title="StepItem"
+      description="세로 배치 step 아이템. Num 배지와 하단 연결선으로 구성됩니다."
+    >
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
-          Step 진행 표시에 사용되는 24×24 원형 번호 배지. mode 와 state 두 prop 으로
-          현재 단계의 시각 상태를 표현합니다.
+          세로(vertical) step 목록에서 각 단계를 표현하는 단위 컴포넌트.
+          내부적으로 <code>Num</code> 컴포넌트를 사용하며, 모든 Num 상태를 지원합니다.
         </StoryDocsParagraph>
       </StoryDocsSection>
 
-      <StoryDocsSection title="Number States">
+      <StoryDocsSection title="Props">
         <StoryDocsParagraph>
-          <strong>finish</strong> — 완료된 단계. 외곽선 + mint 텍스트.
+          <strong>numState</strong> — Num의 시각 상태.
+          number states(finish·current·next)와 icon states(complete·error·success·stop) 지원.
         </StoryDocsParagraph>
         <StoryDocsParagraph>
-          <strong>current</strong> — 현재 단계. solid mint 배경 + 흰/dark 텍스트.
+          <strong>hasLine</strong> — true(line O): 하단 연결선 표시 (중간 항목).
+          false(line X): 연결선 없음 (마지막 항목).
         </StoryDocsParagraph>
         <StoryDocsParagraph>
-          <strong>next</strong> — 다가올 단계. 회색 배경 + 흐린 텍스트.
-        </StoryDocsParagraph>
-      </StoryDocsSection>
-
-      <StoryDocsSection title="Icon States (Light only)">
-        <StoryDocsParagraph>
-          <strong>complete</strong> — 완전 종료. 다크 배경 + 흰 체크 아이콘.
+          <strong>number</strong> — Num에 표시할 번호. icon states에서는 불필요.
         </StoryDocsParagraph>
         <StoryDocsParagraph>
-          <strong>error</strong> — 에러 발생. 빨간 배경 + 흰 경고 아이콘.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>success</strong> — 성공. 초록 배경 + 흰 체크서클 아이콘.
-        </StoryDocsParagraph>
-        <StoryDocsParagraph>
-          <strong>stop</strong> — 정지. 노란 배경 + 다크 스톱 아이콘.
+          <strong>mode</strong> — light(기본) / dark. Num의 mode와 동일하게 전달됩니다.
         </StoryDocsParagraph>
       </StoryDocsSection>
     </StoryDocsPage>

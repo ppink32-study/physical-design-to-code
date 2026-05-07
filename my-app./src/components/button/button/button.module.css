@@ -197,6 +197,28 @@
 }
 
 /* ===========================================================================
+ * Variant 1-2 · Primary 2 Solid  (light 모드 전용)
+ *   bg      = bg-primary-secondary (#b2fbed, light mint)
+ *   fg      = on-neutral-base (#141518, dark)
+ *   hover   = --seed-color-opacity-accent-primary300-45 (rgba(67,198,193,0.45))
+ *   disabled bg = bg-primary-disabled / fg = on-surface
+ * ========================================================================= */
+.variantPrimary2Solid {
+  background: var(--context-background-primary-bg-primary-secondary);
+  color: var(--context-foreground-neutral-on-neutral-base);
+}
+.variantPrimary2Solid:hover,
+.variantPrimary2Solid[data-force-state="hover"] {
+  background: var(--seed-color-opacity-accent-primary300-45);
+}
+.variantPrimary2Solid:disabled,
+.variantPrimary2Solid[aria-disabled="true"],
+.variantPrimary2Solid[data-force-state="disable"] {
+  background: var(--context-background-primary-bg-primary-disabled);
+  color: var(--context-foreground-surface-on-surface);
+}
+
+/* ===========================================================================
  * Variant 2 · Primary Outline
  *   bg=surface-white, fg=on-primary, border=border-primary
  * ========================================================================= */

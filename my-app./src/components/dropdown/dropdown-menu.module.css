@@ -51,8 +51,8 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* maxHeight 시: ScrollArea(size=small). listBody 에 pr 8px(콘텐츠).
- * ScrollArea 는 calc(100%+8px) + margin-right:-8px 로 우측으로 당겨 스크롤바는 기존처럼 리스트 우측에 유지 */
+/* maxHeight 시: ScrollArea(size=small).
+ * ScrollArea 는 calc(100%+8px) + margin-right:-8px 로 우측으로 당겨 스크롤바가 list 우측 border 에 붙음 */
 .menu[data-scrollable="true"] .listScrollable {
   max-height: var(--dm-max-height);
   min-height: 0;
@@ -78,7 +78,6 @@
 .menu[data-scrollable="true"] .listBody {
   box-sizing: border-box;
   min-width: 0;
-  padding-right: 8px;
 }
 
 /* -------- Arrow slots -------- */

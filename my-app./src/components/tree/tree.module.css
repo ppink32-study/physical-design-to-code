@@ -1,3 +1,6 @@
+
+
+
 /* =============================================================================
  * Tree — Figma MCP 기반 (node 6786:991 / 12044:13917)
  *
@@ -5,19 +8,13 @@
  * 체크박스: 기존 Checkbox 컴포넌트 사용
  * 텍스트 말줄임표: label flex:1 + overflow:hidden + text-overflow:ellipsis
  *
- * 색상 토큰 (globals.css 기준)
- *   bg hover          : --color-neutral-secondary  (#f4f4f5)
- *   bg focus          : --color-neutral             (#ffffff)
- *   bg selected       : --color-tint-primary        (#e5fef5)
- *   text default L1,3,4,5 : --color-on-neutral      (#565967)
- *   text default L2   : --color-on-neutral-hint     (#787a88)
- *   text hover/focus  : --color-on-neutral-base     (#141518)
- *   text selected     : --color-on-primary          (#3f9bae)
- *   text disabled     : --color-on-neutral-disabled (#b3b4bc)
- *   count selected    : --color-on-primary-hover    (#28738c)
- *   icon default      : --color-icon-neutral-secondary (#787a88)
- *   icon disabled     : --color-icon-neutral-disabled (#b3b4bc)
- *   icon selected     : --color-on-primary          (#3f9bae)
+ * ── 토큰 매핑 (Figma variable_defs → globals.css alias) ──────────────────
+ *  텍스트/아이콘: surface 계열 (다크 모드 적응)
+ *   - Context/Foreground/Surface/on-surface*        → --color-on-surface*
+ *   - Context/Foreground/Icon-Surface/Icon-surface*  → --color-icon-surface*
+ *  배경: surface 계열 (다크 모드 적응)
+ *   - Hover              bg-surface-secondary        → --color-surface-secondary
+ *   - Selected           bg-primary-tint             → --color-tint-primary
  * ========================================================================== */
 
 /* ─── Tree container ──────────────────────────────────────────────────────── */
@@ -26,7 +23,6 @@
   flex-direction: column;
   gap: var(--spacing-2xs);
   padding: var(--spacing-sm);
-  background: var(--color-neutral);
   width: 244px;
 }
 
@@ -55,14 +51,14 @@
 
 /* ─── State: background ───────────────────────────────────────────────────── */
 .node[data-state="default"]  { background: transparent; }
-.node[data-state="hover"]    { background: var(--color-neutral-secondary); }
-.node[data-state="focus"]    { background: var(--color-neutral); }
+.node[data-state="hover"]    { background: var(--color-surface-secondary); }
+.node[data-state="focus"]    { background: transparent; }
 .node[data-state="selected"] { background: var(--color-tint-primary); }
 .node[data-state="disabled"] { background: transparent; cursor: not-allowed; }
 
 /* CSS hover — default 노드에만 적용 */
 .node[data-state="default"]:hover {
-  background: var(--color-neutral-secondary);
+  background: var(--color-surface-secondary);
 }
 
 /* ─── Content wrapper ────────────────────────────────────────────────────── */
@@ -115,7 +111,8 @@
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: contain;
-  color: var(--color-icon-neutral-secondary);
+  /* Figma: Icon-Surface/Icon-surface */
+  color: var(--color-icon-surface);
 }
 
 .arrowIconRight {
@@ -128,13 +125,14 @@
   mask-image: url('/icon/ChevronDown.svg');
 }
 
+/* Figma: Icon-Surface/Icon-surface-disabled */
 .node[data-state="disabled"] .arrowIconBase {
-  color: var(--color-icon-neutral-disabled);
+  color: var(--color-icon-surface-disabled);
 }
 
 /* hover 시 arrow icon 색상 유지 */
 .node[data-state="default"]:hover .arrowIconBase {
-  color: var(--color-icon-neutral-secondary);
+  color: var(--color-icon-surface);
 }
 
 /* ─── Inner content (checkbox · folder icon · label · count) ─────────────── */
@@ -177,20 +175,22 @@
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: contain;
-  color: var(--color-icon-neutral-secondary);
+  /* Figma: Icon-Surface/Icon-surface-secondary */
+  color: var(--color-icon-surface-secondary);
 }
 
 .node[data-state="selected"] .folderIcon {
   color: var(--color-on-primary);
 }
 
+/* Figma: Icon-Surface/Icon-surface-disabled */
 .node[data-state="disabled"] .folderIcon {
-  color: var(--color-icon-neutral-disabled);
+  color: var(--color-icon-surface-disabled);
 }
 
 /* hover 시 folder icon 색상 유지 */
 .node[data-state="default"]:hover .folderIcon {
-  color: var(--color-icon-neutral-secondary);
+  color: var(--color-icon-surface-secondary);
 }
 
 /* ─── Label (말줄임표 처리) ─────────────────────────────────────────────── */
@@ -205,40 +205,40 @@
   text-overflow: ellipsis;
 }
 
-/* default: L1, L3, L4, L5 = on-neutral */
+/* Figma: Surface/on-surface  (default L1, L3, L4, L5) */
 .node[data-state="default"] .label {
   font-weight: var(--font-weight-regular);
-  color: var(--color-on-neutral);
+  color: var(--color-on-surface);
 }
 
-/* default L2 만 on-neutral-hint */
+/* Figma: Surface/on-surface-hint  (default L2만 한 단계 어두운 힌트) */
 .level2.node[data-state="default"] .label {
-  color: var(--color-on-neutral-hint);
+  color: var(--color-on-surface-hint);
 }
 
-/* hover */
+/* Figma: Surface/on-surface-base  (hover) */
 .node[data-state="hover"] .label,
 .node[data-state="default"]:hover .label {
   font-weight: var(--font-weight-regular);
-  color: var(--color-on-neutral-base);
+  color: var(--color-on-surface-base);
 }
 
-/* focus (펼쳐진 폴더) */
+/* Figma: Surface/on-surface-base  (focus = 펼쳐진 폴더, weight medium) */
 .node[data-state="focus"] .label {
   font-weight: var(--font-weight-medium);
-  color: var(--color-on-neutral-base);
+  color: var(--color-on-surface-base);
 }
 
-/* selected */
+/* Figma: Primary/on-primary  (selected) */
 .node[data-state="selected"] .label {
   font-weight: var(--font-weight-medium);
   color: var(--color-on-primary);
 }
 
-/* disabled */
+/* Figma: Surface/on-surface-disabled */
 .node[data-state="disabled"] .label {
   font-weight: var(--font-weight-regular);
-  color: var(--color-on-neutral-disabled);
+  color: var(--color-on-surface-disabled);
 }
 
 /* ─── Count (항상 flex-shrink:0 으로 말줄임표 영향 없음) ─────────────────── */
@@ -251,28 +251,33 @@
   white-space: nowrap;
 }
 
+/* Figma: Surface/on-surface-hint  weight medium */
 .node[data-state="default"] .count {
   font-weight: var(--font-weight-medium);
-  color: var(--color-on-neutral-hint);
+  color: var(--color-on-surface-hint);
 }
 
+/* Figma: Surface/on-surface-base  weight medium */
 .node[data-state="hover"] .count,
 .node[data-state="default"]:hover .count {
   font-weight: var(--font-weight-medium);
-  color: var(--color-on-neutral-base);
+  color: var(--color-on-surface-base);
 }
 
+/* Figma: Surface/on-surface-base  weight semibold */
 .node[data-state="focus"] .count {
   font-weight: var(--font-weight-semibold);
-  color: var(--color-on-neutral-base);
+  color: var(--color-on-surface-base);
 }
 
+/* Figma: Primary/on-primary-hover  weight semibold */
 .node[data-state="selected"] .count {
   font-weight: var(--font-weight-semibold);
   color: var(--color-on-primary-hover);
 }
 
+/* Figma: Surface/on-surface-disabled */
 .node[data-state="disabled"] .count {
   font-weight: var(--font-weight-medium);
-  color: var(--color-on-neutral-disabled);
+  color: var(--color-on-surface-disabled);
 }

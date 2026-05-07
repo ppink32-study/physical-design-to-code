@@ -1,3 +1,5 @@
+
+
 "use client";
 
 /**
@@ -28,6 +30,7 @@ export type ProjectCardAProps = HTMLAttributes<HTMLDivElement> & {
   title?: string;
   description?: string;
   members?: string;
+  onLink?: () => void;
 };
 
 function MaskIcon({ src, size = 16 }: { src: string; size?: number }) {
@@ -95,7 +98,6 @@ export function ProjectCardA({
             <span className={styles.memberText}>{members}</span>
           </div>
         </div>
-
       </div>
     </div>
   );

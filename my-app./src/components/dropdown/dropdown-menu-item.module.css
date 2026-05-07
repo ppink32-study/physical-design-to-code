@@ -29,6 +29,7 @@
   --dmi-bg: var(--color-surface-base);
   --dmi-fg: var(--color-on-surface-base);
   --dmi-icon: var(--color-icon-surface);
+  --dmi-arrow: var(--context-foreground-icon-surface-icon-surface-secondary);
 
   position: relative;
   display: flex;
@@ -70,6 +71,7 @@
 .item:hover:not(:disabled):not([data-disabled="true"]) {
   --dmi-bg: var(--color-surface-secondary);
   --dmi-icon: var(--color-icon-surface-hover);
+  --dmi-arrow: var(--color-icon-surface-hover);
 }
 
 /* -------- Selected --------
@@ -79,12 +81,15 @@
   --dmi-bg: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
 }
 
-/* 선택 행 후행 아이콘(체크 등) — 서브메뉴 chevron 은 제외, Context/Foreground/Primary/on-primary */
-.item.itemSelected:not([data-has-submenu="true"]):not(:disabled):not(
-    [data-disabled="true"]
-  )
-  .trailing {
+/* 체크 아이콘(non-submenu trailing) — 선택 여부 무관하게 항상 on-primary */
+.item:not([data-has-submenu="true"]) .trailing {
   color: var(--context-foreground-primary-on-primary, #3f9bae);
+}
+
+/* disabled 시에는 체크도 disabled 색으로 덮어쓰기 */
+.item:disabled .trailing,
+.item[data-disabled="true"] .trailing {
+  color: var(--color-icon-surface-disabled);
 }
 
 /* selected + hover : bg 는 selected 유지, icon 만 hover 색.
@@ -106,6 +111,7 @@
 .item[data-disabled="true"] {
   --dmi-fg: var(--color-on-surface-disabled);
   --dmi-icon: var(--color-icon-surface-disabled);
+  --dmi-arrow: var(--color-icon-surface-disabled);
   cursor: not-allowed;
 }
 
@@ -126,7 +132,15 @@
   justify-content: center;
   width: 16px;
   height: 16px;
+}
+
+.leading {
   color: var(--dmi-icon);
+}
+
+/* 서브메뉴 chevron trailing — secondary icon color */
+.item[data-has-submenu="true"] .trailing {
+  color: var(--dmi-arrow);
 }
 
 .leading > *,
