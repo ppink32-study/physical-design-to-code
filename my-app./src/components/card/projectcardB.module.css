@@ -52,6 +52,7 @@
   object-fit: cover;
   display: block;
   border: 1px solid var(--border-neutral-border-neutral-secondary, #e5e6ea);
+  background-color: var(--context-background-surface-bg-surface-white);
 }
 
 /* -----------------------------------------------------------------
