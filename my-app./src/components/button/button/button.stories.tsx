@@ -456,10 +456,14 @@ function MatrixSection({
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Button"
-      description="Figma 시트와 동일한 축으로 variant · size · shape · state를 비교합니다. 10개 variant 각 셀은 라벨 버튼과 아이콘 전용 버튼을 한 쌍으로 표시합니다."
+      description={locale === "en"
+        ? "Compares variant · size · shape · state along the same axes as the Figma sheet. Each cell across the 10 variants shows a paired label button and icon-only button."
+        : "Figma 시트와 동일한 축으로 variant · size · shape · state를 비교합니다. 10개 variant 각 셀은 라벨 버튼과 아이콘 전용 버튼을 한 쌍으로 표시합니다."}
       figmaNode="17987-47864"
     >
       <FigmaLinkCard
@@ -497,7 +501,8 @@ export const Matrix: Story = {
         으로 강제 표시한 프리뷰입니다.
       </StoryDocsNote>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* -----------------------------------------------------------------

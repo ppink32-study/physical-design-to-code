@@ -137,10 +137,14 @@ export const Matrix: Story = {
     },
   },
   decorators: [(Story) => <Story />],
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Sub Menu"
-      description="1 Group·Multiple Groups·Drill down 등 다단 메뉴 패턴 예시를 보여줍니다."
+      description={locale === "en"
+        ? "Examples of multi-level menu patterns including 1 Group · Multiple Groups · Drill down."
+        : "1 Group·Multiple Groups·Drill down 등 다단 메뉴 패턴 예시를 보여줍니다."}
       figmaNode="13292-56877"
     >
       <FigmaLinkCard
@@ -213,5 +217,6 @@ export const Matrix: Story = {
         </section>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

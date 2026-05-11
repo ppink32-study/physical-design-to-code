@@ -107,10 +107,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="SelectList"
-      description="Figma 매트릭스: 1 level · 2 levels · Search(Yes) 세 가지 패널 구성입니다."
+      description={locale === "en"
+        ? "Figma matrix: three panel configurations — 1 level · 2 levels · Search (Yes)."
+        : "Figma 매트릭스: 1 level · 2 levels · Search(Yes) 세 가지 패널 구성입니다."}
       figmaNode="11959-26477"
     >
       <FigmaLinkCard
@@ -177,5 +181,6 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

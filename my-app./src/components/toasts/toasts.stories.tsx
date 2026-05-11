@@ -188,10 +188,14 @@ function ViewportStackDemo() {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Toast"
-      description="4가지 타입·subText·링크+닫기·긴 메시지·뷰포트·스택·자동 닫힘을 한 페이지에서 확인합니다."
+      description={locale === "en"
+        ? "Single-page review of four types · subText · link + close · long message · viewport · stack · auto-dismiss."
+        : "4가지 타입·subText·링크+닫기·긴 메시지·뷰포트·스택·자동 닫힘을 한 페이지에서 확인합니다."}
       figmaNode="5307-14956"
     >
       <FigmaLinkCard
@@ -281,5 +285,6 @@ export const Matrix: Story = {
         <AutoDismissDemo />
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

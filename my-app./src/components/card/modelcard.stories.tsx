@@ -53,10 +53,14 @@ const STATES: ModelCardState[] = ["default", "hover"];
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="ModelCard"
-      description="모델 카드 컴포넌트 — default · hover 상태 비교."
+      description={locale === "en"
+        ? "Model card component — default · hover state comparison."
+        : "모델 카드 컴포넌트 — default · hover 상태 비교."}
       figmaNode="18397-3969"
     >
       <FigmaLinkCard nodeId="18397-3969" caption="Components / Model Card" />
@@ -75,5 +79,6 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

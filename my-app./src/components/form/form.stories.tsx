@@ -341,10 +341,14 @@ export const Guideline: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", figma: FIGMA_FORM_MATRIX },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Form"
-      description="Figma Form 스펙에 맞춘 라벨 배치 매트릭스입니다. 세로형은 행이 Label 크기(small / medium), 열이 컨트롤 종류입니다. 가로형은 열이 Label 크기(라벨 영역 max-width 160px), 행이 컨트롤 종류입니다."
+      description={locale === "en"
+        ? "Label placement matrix following the Figma Form spec. Vertical: rows are Label size (small / medium), columns are control type. Horizontal: columns are Label size (max-width 160px), rows are control type."
+        : "Figma Form 스펙에 맞춘 라벨 배치 매트릭스입니다. 세로형은 행이 Label 크기(small / medium), 열이 컨트롤 종류입니다. 가로형은 열이 Label 크기(라벨 영역 max-width 160px), 행이 컨트롤 종류입니다."}
       figmaNode="5714-108005"
     >
       <FigmaLinkCard
@@ -446,5 +450,6 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

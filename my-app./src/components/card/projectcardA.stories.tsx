@@ -55,10 +55,14 @@ const STATES: ProjectCardAState[] = ["default", "hover"];
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="ProjectCardA"
-      description="프로젝트 카드 A — type(brand/light) × state(default/hover) 매트릭스."
+      description={locale === "en"
+        ? "Project Card A — type (brand / light) × state (default / hover) matrix."
+        : "프로젝트 카드 A — type(brand/light) × state(default/hover) 매트릭스."}
       figmaNode="18404-696"
     >
       <FigmaLinkCard nodeId="18404-696" caption="Components / Project Card A (brand)" />
@@ -88,5 +92,6 @@ export const Matrix: Story = {
       </section>
 
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

@@ -111,10 +111,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Filled icon"
-      description="가로는 5가지 Type(Info·Neutral·Success·Warning·Error), 세로는 Simple(small 한 줄)·Title+body(medium)·Detailed(large)로 구성된 Filled 아이콘 알림 매트릭스입니다."
+      description={locale === "en"
+        ? "Filled-icon alert matrix — columns are 5 Types (Info · Neutral · Success · Warning · Error); rows are Simple (single-line small) · Title+body (medium) · Detailed (large)."
+        : "가로는 5가지 Type(Info·Neutral·Success·Warning·Error), 세로는 Simple(small 한 줄)·Title+body(medium)·Detailed(large)로 구성된 Filled 아이콘 알림 매트릭스입니다."}
       figmaNode="6390-256693"
     >
       <FigmaLinkCard
@@ -208,7 +212,8 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* =================================================================

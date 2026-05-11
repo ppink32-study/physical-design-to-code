@@ -286,10 +286,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Select"
-      description="Figma Select box 매트릭스: 행은 상태(Default·Focus·Filled…), 열은 Normal·Success·Error·Label, Medium(32px)·Large(40px) 두 블록입니다."
+      description={locale === "en"
+        ? "Figma Select-box matrix: rows are states (Default · Focus · Filled …), columns are Normal · Success · Error · Label, in two blocks Medium (32px) · Large (40px)."
+        : "Figma Select box 매트릭스: 행은 상태(Default·Focus·Filled…), 열은 Normal·Success·Error·Label, Medium(32px)·Large(40px) 두 블록입니다."}
       figmaNode="4811-29737"
     >
       <FigmaLinkCard
@@ -303,7 +307,8 @@ export const Matrix: Story = {
         <SelectMatrixTable size="large" />
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* -------------------------------------------------------------------------

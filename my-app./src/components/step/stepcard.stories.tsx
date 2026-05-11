@@ -75,10 +75,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="StepCard"
-      description="StepItem + 카드. numState별 시각 상태 조합."
+      description={locale === "en"
+        ? "StepItem + card. Visual state combinations per numState."
+        : "StepItem + 카드. numState별 시각 상태 조합."}
       figmaNode="16861-17888"
     >
       <FigmaLinkCard nodeId="16861-17888" caption="Components / Step / Step Card" />
@@ -107,5 +111,6 @@ export const Matrix: Story = {
         </StepCardList>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

@@ -227,10 +227,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="GNB"
-      description="Light·Dark 두 테마의 전체 바, GNB/Select, GNB/Icon 매트릭스입니다."
+      description={locale === "en"
+        ? "Matrix of the full bar, GNB/Select, and GNB/Icon for both Light and Dark themes."
+        : "Light·Dark 두 테마의 전체 바, GNB/Select, GNB/Icon 매트릭스입니다."}
       figmaNode="17945-4068"
     >
       <FigmaLinkCard
@@ -317,7 +321,8 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* -----------------------------------------------------------------

@@ -325,8 +325,12 @@ export const Guideline: Story = {
     controls: { hideNoControlsWarning: true, disable: true },
     actions: { disable: true },
   },
-  render: () => (
-    <StoryDocsPage title="Pagination" description="페이지네이션 컴포넌트 사용 가이드입니다.">
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
+    <StoryDocsPage title="Pagination" description={locale === "en"
+      ? "Usage guide for the pagination component."
+      : "페이지네이션 컴포넌트 사용 가이드입니다."}>
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
           Pagination은 주로 테이블 오른쪽 하단에 배치하며, 테이블과의 간격은 <strong>16px</strong>입니다.
@@ -379,5 +383,6 @@ export const Guideline: Story = {
         </StoryDocsNote>
       </StoryDocsSection>
     </StoryDocsPage>
-  ),
+    );
+  },
 };

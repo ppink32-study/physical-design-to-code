@@ -60,10 +60,14 @@ const VARIANTS: { variant: StepperAreaVariant; label: string }[] = [
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="StepperArea"
-      description="variant(default·brand) × activeStep(0·1·2) 조합 매트릭스."
+      description={locale === "en"
+        ? "variant (default · brand) × activeStep (0 · 1 · 2) combination matrix."
+        : "variant(default·brand) × activeStep(0·1·2) 조합 매트릭스."}
       figmaNode="18444-8508"
     >
       <FigmaLinkCard
@@ -107,5 +111,6 @@ export const Matrix: Story = {
         </section>
       ))}
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

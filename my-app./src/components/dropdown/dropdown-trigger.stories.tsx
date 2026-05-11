@@ -77,10 +77,14 @@ export const Matrix: Story = {
   parameters: {
     layout: "padded",
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Trigger"
-      description="Size·Direction 행과 Type·Split 열로 드롭다운 트리거 variant를 비교합니다."
+      description={locale === "en"
+        ? "Compares dropdown trigger variants by Size · Direction (rows) × Type · Split (columns)."
+        : "Size·Direction 행과 Type·Split 열로 드롭다운 트리거 variant를 비교합니다."}
       figmaNode="5286-121691"
     >
       <FigmaLinkCard
@@ -153,5 +157,6 @@ export const Matrix: Story = {
         )}
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

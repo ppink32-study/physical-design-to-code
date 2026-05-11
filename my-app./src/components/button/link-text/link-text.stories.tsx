@@ -127,10 +127,14 @@ const STATE_ROWS: Array<{ key: LinkTextForceState; label: string }> = [
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="LinkText"
-      description="텍스트 링크 컴포넌트의 variant · size · state 조합을 비교합니다."
+      description={locale === "en"
+        ? "Compares variant · size · state combinations of the text-link component."
+        : "텍스트 링크 컴포넌트의 variant · size · state 조합을 비교합니다."}
       figmaNode="9813-1005"
     >
       <FigmaLinkCard
@@ -183,6 +187,7 @@ export const Matrix: Story = {
         상태를 강제 표시합니다.
       </StoryDocsNote>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 

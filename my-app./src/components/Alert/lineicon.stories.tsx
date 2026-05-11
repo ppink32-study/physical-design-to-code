@@ -100,10 +100,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Line icon"
-      description="가로는 5가지 Type, 세로는 Small(한 줄)과 Large(제목·본문·추가 본문)로 라인 아이콘 알림을 비교합니다."
+      description={locale === "en"
+        ? "Compares line-icon alerts — columns are the 5 Types; rows are Small (one line) and Large (title · body · extra body)."
+        : "가로는 5가지 Type, 세로는 Small(한 줄)과 Large(제목·본문·추가 본문)로 라인 아이콘 알림을 비교합니다."}
       figmaNode="5012-68852"
     >
       <FigmaLinkCard
@@ -171,7 +175,8 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* =================================================================

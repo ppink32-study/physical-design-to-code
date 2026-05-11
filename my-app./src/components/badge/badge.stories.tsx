@@ -389,10 +389,14 @@ export const Playground: StoryObj<BadgePlaygroundArgs> = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Badge"
-      description="Solid·Line·Status·Notice별로 Size·Shape 축과 색상 팔레트를 비교합니다. Line은 아이콘+텍스트, Status Round 행에는 count=1 예시, Notice는 count 규칙과 red/purple 열을 보여줍니다."
+      description={locale === "en"
+        ? "Compares Solid · Line · Status · Notice variants along the Size · Shape axes and color palette. Line uses icon + text, the Status Round row includes a count=1 example, and Notice shows the count rule with red / purple columns."
+        : "Solid·Line·Status·Notice별로 Size·Shape 축과 색상 팔레트를 비교합니다. Line은 아이콘+텍스트, Status Round 행에는 count=1 예시, Notice는 count 규칙과 red/purple 열을 보여줍니다."}
       figmaNode="17976-110564"
     >
       <FigmaLinkCard
@@ -631,7 +635,8 @@ export const Matrix: Story = {
         </div>
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* =================================================================

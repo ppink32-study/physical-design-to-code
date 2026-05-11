@@ -52,10 +52,14 @@ const FIGMA_FULL_PAGE_LOADER = figmaNodeUrl("18219:10393");
 export const FullPageOverlay: Story = {
   name: "Full page overlay",
   parameters: { layout: "padded", figma: FIGMA_FULL_PAGE_LOADER },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="PageLoaderOverlay"
-      description="뷰포트 전체를 덮는 Dim(BlackOpacity_50) + blur 4px, 정중앙 large Loader. 프로덕션에서는 container를 생략하면 fixed 전체 화면입니다."
+      description={locale === "en"
+        ? "Full-viewport Dim (BlackOpacity_50) + 4px blur with a centered large Loader. In production, omit container to use a fixed full-screen overlay."
+        : "뷰포트 전체를 덮는 Dim(BlackOpacity_50) + blur 4px, 정중앙 large Loader. 프로덕션에서는 container를 생략하면 fixed 전체 화면입니다."}
       figmaNode="18219-10393"
     >
       <div
@@ -70,16 +74,21 @@ export const FullPageOverlay: Story = {
         <PageLoaderOverlay container="parent" />
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Loader"
-      description="preset size(small / medium / large)와 색상(mint / gray / white) 조합을 비교합니다."
+      description={locale === "en"
+        ? "Compares preset sizes (small / medium / large) × colors (mint / gray / white)."
+        : "preset size(small / medium / large)와 색상(mint / gray / white) 조합을 비교합니다."}
       figmaNode="13289-46891"
     >
       <FigmaLinkCard
@@ -131,5 +140,6 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

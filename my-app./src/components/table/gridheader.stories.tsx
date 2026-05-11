@@ -107,8 +107,12 @@ export const Guideline: Story = {
     controls: { hideNoControlsWarning: true, disable: true },
     actions: { disable: true },
   },
-  render: () => (
-    <StoryDocsPage title="GridHeader" description="데이터 그리드 헤더 및 바디 셀 레이아웃 가이드입니다.">
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
+    <StoryDocsPage title="GridHeader" description={locale === "en"
+      ? "Layout guide for data-grid header and body cells."
+      : "데이터 그리드 헤더 및 바디 셀 레이아웃 가이드입니다."}>
       <StoryDocsSection title="테이블 + Pagination 레이아웃">
         <StoryDocsParagraph>
           GridHeader와 BodyCell을 함께 사용해 데이터 테이블을 구성합니다. 헤더 행과 바디 행을 각각{" "}
@@ -165,5 +169,6 @@ export const Guideline: Story = {
         </StoryDocsNote>
       </StoryDocsSection>
     </StoryDocsPage>
-  ),
+    );
+  },
 };

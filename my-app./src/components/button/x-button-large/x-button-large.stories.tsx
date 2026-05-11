@@ -42,10 +42,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="XButton Large"
-      description="비디오/이미지 위에 오버레이로 올리는 32×32 원형 X 버튼."
+      description={locale === "en"
+        ? "A 32×32 circular X button used as an overlay on top of video/images."
+        : "비디오/이미지 위에 오버레이로 올리는 32×32 원형 X 버튼."}
       figmaNode="18369-15529"
     >
       <FigmaLinkCard
@@ -77,6 +81,7 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 

@@ -174,10 +174,14 @@ const HEADER_CASES: HeaderCase[] = [
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Drawer"
-      description="Side Drawer — Size 매트릭스 및 Header 케이스입니다."
+      description={locale === "en"
+        ? "Side Drawer — Size matrix and Header cases."
+        : "Side Drawer — Size 매트릭스 및 Header 케이스입니다."}
       figmaNode="8256-8490"
     >
       <FigmaLinkCard nodeId="8256-8490" caption="Components / Drawer — 원본" />
@@ -240,5 +244,6 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

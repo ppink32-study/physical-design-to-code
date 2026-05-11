@@ -127,10 +127,14 @@ function VariantBlock({
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="PageTitle"
-      description="프레임 폭 1612px 유지. 2d는 Figma 4790-177 기준 뒤로가기(backButton) 포함. 변형을 세로로 나열합니다."
+      description={locale === "en"
+        ? "Frame width 1612px maintained. 2d includes a back button (backButton) based on Figma 4790-177. Variants are laid out vertically."
+        : "프레임 폭 1612px 유지. 2d는 Figma 4790-177 기준 뒤로가기(backButton) 포함. 변형을 세로로 나열합니다."}
       figmaNode="4790-161"
       pageMaxWidth={1720}
     >
@@ -235,5 +239,6 @@ export const Matrix: Story = {
         </VariantBlock>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

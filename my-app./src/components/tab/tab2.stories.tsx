@@ -59,10 +59,14 @@ const TYPES: Tab2Type[] = ["text", "icon"];
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Tab2"
-      description="Tabs Level 2 — browser-tab 스타일. State × Type 매트릭스."
+      description={locale === "en"
+        ? "Tabs Level 2 — browser-tab style. State × Type matrix."
+        : "Tabs Level 2 — browser-tab 스타일. State × Type 매트릭스."}
       figmaNode="6141-10283"
     >
       <FigmaLinkCard nodeId="6141-10283" caption="Components / Tabs - level 2" />
@@ -123,5 +127,6 @@ export const Matrix: Story = {
         </Tab2List>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

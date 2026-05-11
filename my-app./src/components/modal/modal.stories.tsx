@@ -121,10 +121,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Modal"
-      description="3가지 사이즈(small · medium · large)의 Modal 매트릭스입니다."
+      description={locale === "en"
+        ? "Modal matrix across three sizes (small · medium · large)."
+        : "3가지 사이즈(small · medium · large)의 Modal 매트릭스입니다."}
       figmaNode="6446-446809"
     >
       <FigmaLinkCard
@@ -156,7 +160,8 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* -----------------------------------------------------------------

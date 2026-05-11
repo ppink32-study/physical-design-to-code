@@ -96,10 +96,14 @@ const STATE_ROWS: Array<{ key: XButtonForceState; label: string }> = [
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="XButton"
-      description="원형 닫기(X) 버튼의 size · state 조합을 비교합니다."
+      description={locale === "en"
+        ? "Compares size · state combinations of the circular close (X) button."
+        : "원형 닫기(X) 버튼의 size · state 조합을 비교합니다."}
       figmaNode="6592-270982"
     >
       <FigmaLinkCard
@@ -148,6 +152,7 @@ export const Matrix: Story = {
         상태를 강제 표시합니다.
       </StoryDocsNote>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 

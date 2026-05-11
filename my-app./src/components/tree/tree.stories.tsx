@@ -403,8 +403,12 @@ export const Guideline: Story = {
     controls: { hideNoControlsWarning: true, disable: true },
     actions: { disable: true },
   },
-  render: () => (
-    <StoryDocsPage title="Tree" description="계층 구조 데이터를 탐색하는 트리 컴포넌트 가이드입니다.">
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
+    <StoryDocsPage title="Tree" description={locale === "en"
+      ? "Tree component guide for navigating hierarchical data."
+      : "계층 구조 데이터를 탐색하는 트리 컴포넌트 가이드입니다."}>
 
       {/* ── Tree view ── */}
       <StoryDocsSection title="Tree view">
@@ -482,5 +486,6 @@ export const Guideline: Story = {
       </StoryDocsSection>
 
     </StoryDocsPage>
-  ),
+    );
+  },
 };

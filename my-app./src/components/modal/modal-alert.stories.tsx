@@ -80,10 +80,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Modal Alert"
-      description="4가지 타입(Confirm · Error · Warning · Success)의 Alert Modal 매트릭스입니다."
+      description={locale === "en"
+        ? "Alert Modal matrix across four types (Confirm · Error · Warning · Success)."
+        : "4가지 타입(Confirm · Error · Warning · Success)의 Alert Modal 매트릭스입니다."}
       figmaNode="5453-10090"
     >
       <FigmaLinkCard
@@ -124,7 +128,8 @@ export const Matrix: Story = {
 
 
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* -----------------------------------------------------------------

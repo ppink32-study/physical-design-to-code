@@ -199,10 +199,14 @@ function FigmaStateMatrixFixedGrid({ range }: { range: boolean }) {
 
 export const Matrix: Story = {
   name: "Matrix",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="DatePicker"
-      description="단일·구간 선택 각각 tone·state·라벨 열과 Figma와 동일한 5×4 매트릭스를 보여줍니다."
+      description={locale === "en"
+        ? "Shows the same 5×4 matrix as Figma — single and range pickers across tone · state · label columns."
+        : "단일·구간 선택 각각 tone·state·라벨 열과 Figma와 동일한 5×4 매트릭스를 보여줍니다."}
       figmaNode="5132-60197"
     >
       <FigmaLinkCard
@@ -237,7 +241,8 @@ export const Matrix: Story = {
         <FigmaStateMatrixFixedGrid range />
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
   parameters: {
     layout: "padded",
     docs: {

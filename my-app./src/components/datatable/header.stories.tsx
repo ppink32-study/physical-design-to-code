@@ -52,10 +52,14 @@ const WIDTHS: { label: string; width: number }[] = [
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="DataTable / Header"
-      description="데이터 테이블 헤더 셀 컴포넌트입니다."
+      description={locale === "en"
+        ? "Data table header cell component."
+        : "데이터 테이블 헤더 셀 컴포넌트입니다."}
       figmaNode="18385-9746"
     >
       <FigmaLinkCard nodeId="18385-9746" caption="Components / DataTable — Header" />
@@ -86,5 +90,6 @@ export const Matrix: Story = {
       </section>
 
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

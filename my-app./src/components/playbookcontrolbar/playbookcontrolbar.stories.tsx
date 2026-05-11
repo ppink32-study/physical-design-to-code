@@ -259,10 +259,14 @@ export const Guideline: Story = {
     controls: { hideNoControlsWarning: true, disable: true },
     actions: { disable: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsPage
       title="PlaybookControlBar"
-      description="시간 필과 프로그레스 바를 한 줄에 배치한 재생 UI입니다."
+      description={locale === "en"
+        ? "Playback UI that places the time field and progress bar on a single row."
+        : "시간 필과 프로그레스 바를 한 줄에 배치한 재생 UI입니다."}
     >
       <StoryDocsSection title="개요">
         <StoryDocsParagraph>
@@ -294,5 +298,6 @@ export const Guideline: Story = {
         </StoryDocsParagraph>
       </StoryDocsSection>
     </StoryDocsPage>
-  ),
+    );
+  },
 };

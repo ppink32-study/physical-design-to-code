@@ -555,10 +555,14 @@ function VerticalGroupingMatrixBlock({
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Tab"
-      description="Tab Level 1(상태×Text/More), Horizontal Grouping, Vertical Grouping 을 표 형태로 정리했습니다. 셀 안 샘플은 Figma와 동일하게 Tab·숫자·Gear·More·Extra Button 조합입니다."
+      description={locale === "en"
+        ? "Tab Level 1 (state × Text/More), Horizontal Grouping, and Vertical Grouping arranged in a table. Cell samples match Figma — Tab · number · Gear · More · Extra Button combinations."
+        : "Tab Level 1(상태×Text/More), Horizontal Grouping, Vertical Grouping 을 표 형태로 정리했습니다. 셀 안 샘플은 Figma와 동일하게 Tab·숫자·Gear·More·Extra Button 조합입니다."}
       figmaNode="5185-210328"
     >
       <FigmaLinkCard
@@ -596,5 +600,6 @@ export const Matrix: Story = {
         />
       </Section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

@@ -172,10 +172,14 @@ export const Playground: StoryObj<CheckboxPlaygroundArgs> = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Checkbox"
-      description="행은 Default·Focused·Disabled, 열은 Unchecked·Indeterminate·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Rows: Default · Focused · Disabled. Columns: Unchecked · Indeterminate · Checked. `forceState` is for Storybook visual lock; toggle the theme from the top toolbar."
+        : "행은 Default·Focused·Disabled, 열은 Unchecked·Indeterminate·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."}
       figmaNode="17995-61456"
     >
       <FigmaLinkCard
@@ -223,7 +227,8 @@ export const Matrix: Story = {
         <ControlledCheckboxDemo />
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function ControlledGroupSnippet() {

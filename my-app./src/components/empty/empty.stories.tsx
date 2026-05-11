@@ -62,10 +62,14 @@ type Story = StoryObj<typeof Empty>;
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Empty"
-      description="아이콘 프리셋 4종(data·image·table·upload)과 Text·Subtext·Size 조합을 정리해 보여줍니다."
+      description={locale === "en"
+        ? "Four icon presets (data · image · table · upload) shown alongside Text · Subtext · Size combinations."
+        : "아이콘 프리셋 4종(data·image·table·upload)과 Text·Subtext·Size 조합을 정리해 보여줍니다."}
       figmaNode="12368-26042"
     >
       <FigmaLinkCard
@@ -178,5 +182,6 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

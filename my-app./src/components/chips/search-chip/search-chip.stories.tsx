@@ -95,10 +95,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="SearchChip"
-      description="행은 상태 전체, 열은 라벨 유무를 비교합니다. Hover 행은 forceState로 시각 고정이며 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Rows: all states. Columns: with/without label. The Hover row is visually locked via forceState; switch the theme from the top toolbar."
+        : "행은 상태 전체, 열은 라벨 유무를 비교합니다. Hover 행은 forceState로 시각 고정이며 테마는 상단 툴바에서 전환합니다."}
     >
       <FigmaLinkCard
         storyTitle="Components/Chips/SearchChip"
@@ -136,7 +140,8 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function InteractiveDemo() {

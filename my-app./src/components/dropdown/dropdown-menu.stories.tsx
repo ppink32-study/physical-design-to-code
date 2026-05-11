@@ -126,10 +126,14 @@ export const Matrix: Story = {
   parameters: {
     layout: "padded",
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Menu"
-      description="항목 개수(1~5)·arrow 7종과 다단(Multi-level) 패턴을 한 페이지에서 비교합니다. 메뉴 패널 width는 180px로 통일합니다."
+      description={locale === "en"
+        ? "Compares item counts (1–5) · 7 arrow variants · Multi-level patterns on one page. Menu panel width is unified to 180px."
+        : "항목 개수(1~5)·arrow 7종과 다단(Multi-level) 패턴을 한 페이지에서 비교합니다. 메뉴 패널 width는 180px로 통일합니다."}
       figmaNode="5355-154239"
     >
       <FigmaLinkCard
@@ -315,5 +319,6 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

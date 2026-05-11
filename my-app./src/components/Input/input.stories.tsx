@@ -364,10 +364,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Input"
-      description="Medium·Large별 상태 행과 Normal·Success·Error·Password·Chip·In-line Message·Counter 열을 Figma 매트릭스와 동일한 축으로 비교합니다."
+      description={locale === "en"
+        ? "Compares Medium · Large state rows × Normal · Success · Error · Password · Chip · In-line Message · Counter columns on the same axes as the Figma matrix."
+        : "Medium·Large별 상태 행과 Normal·Success·Error·Password·Chip·In-line Message·Counter 열을 Figma 매트릭스와 동일한 축으로 비교합니다."}
       figmaNode="4771-26367"
     >
       <FigmaLinkCard
@@ -554,7 +558,8 @@ export const Matrix: Story = {
         </div>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 /* =================================================================

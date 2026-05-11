@@ -152,10 +152,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="SelectItem"
-      description="Figma 매트릭스: Medium(32px)·Large(40px) × 행 Default·Hover·Select·Disable × 열 1 level·2 levels."
+      description={locale === "en"
+        ? "Figma matrix: Medium (32px) · Large (40px) × rows Default · Hover · Select · Disable × columns 1 level · 2 levels."
+        : "Figma 매트릭스: Medium(32px)·Large(40px) × 행 Default·Hover·Select·Disable × 열 1 level·2 levels."}
       figmaNode="4811-36049"
     >
       <FigmaLinkCard
@@ -169,5 +173,6 @@ export const Matrix: Story = {
         <ItemMatrixTable size="large" />
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

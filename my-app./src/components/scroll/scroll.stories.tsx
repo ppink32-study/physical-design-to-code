@@ -45,10 +45,14 @@ const THUMB_SMALL = 28;
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Scroll"
-      description="Scrollbar 정적 시각 — 열: Medium · Small, 행: Vertical · Horizontal (Figma node 5250:17591). 매트릭스 표 스타일은 Badge Matrix와 동일한 토큰을 사용합니다."
+      description={locale === "en"
+        ? "Static Scrollbar visuals — columns: Medium · Small, rows: Vertical · Horizontal (Figma node 5250:17591). Matrix table styling uses the same tokens as Badge Matrix."
+        : "Scrollbar 정적 시각 — 열: Medium · Small, 행: Vertical · Horizontal (Figma node 5250:17591). 매트릭스 표 스타일은 Badge Matrix와 동일한 토큰을 사용합니다."}
       figmaNode="5250-17591"
     >
       <div style={matrixScrollWrap}>
@@ -139,5 +143,6 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

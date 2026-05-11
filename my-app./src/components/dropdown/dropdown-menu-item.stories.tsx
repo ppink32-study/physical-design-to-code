@@ -215,10 +215,14 @@ export const Matrix: Story = {
   parameters: {
     layout: "padded",
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Menu Item"
-      description="상태(Default·Hover·Select·Disable)와 유형(level·Header·Custom) 매트릭스입니다."
+      description={locale === "en"
+        ? "State (Default · Hover · Select · Disable) × Type (level · Header · Custom) matrix."
+        : "상태(Default·Hover·Select·Disable)와 유형(level·Header·Custom) 매트릭스입니다."}
       figmaNode="13292-55986"
     >
       <FigmaLinkCard
@@ -276,5 +280,6 @@ export const Matrix: Story = {
         </StoryDocsPanel>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

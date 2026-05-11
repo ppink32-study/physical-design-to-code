@@ -240,11 +240,15 @@ export const Matrix: Story = {
 export const Guideline: Story = {
   name: "Guideline",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsPage
       eyebrow="Components"
       title="Progress"
-      description="작업·로딩 진행률을 시각적으로 표현하는 단일/다중 세그먼트 바 컴포넌트입니다."
+      description={locale === "en"
+        ? "Single/multi-segment bar component that visually expresses task / loading progress."
+        : "작업·로딩 진행률을 시각적으로 표현하는 단일/다중 세그먼트 바 컴포넌트입니다."}
     >
       <StoryDocsSection title="Single progress">
         <StoryDocsParagraph>
@@ -409,5 +413,6 @@ export const Guideline: Story = {
         </div>
       </StoryDocsSection>
     </StoryDocsPage>
-  ),
+    );
+  },
 };

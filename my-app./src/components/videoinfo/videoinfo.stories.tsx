@@ -50,10 +50,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Video Info"
-      description="비디오 썸네일 카드 + 좌측 하단에 표시되는 정보 배지."
+      description={locale === "en"
+        ? "Video thumbnail card + info badge shown at the bottom-left."
+        : "비디오 썸네일 카드 + 좌측 하단에 표시되는 정보 배지."}
       figmaNode="17312-17623"
     >
       <FigmaLinkCard
@@ -133,5 +137,6 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

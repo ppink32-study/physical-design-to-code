@@ -158,10 +158,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="TextArea"
-      description="상태 행과 Normal·Success·Error tone 열을 비교하고, resize·trailing·긴 본문 예시를 포함합니다."
+      description={locale === "en"
+        ? "Compares state rows × Normal · Success · Error tone columns, including resize · trailing · long body examples."
+        : "상태 행과 Normal·Success·Error tone 열을 비교하고, resize·trailing·긴 본문 예시를 포함합니다."}
       figmaNode="4783-27558"
     >
       <FigmaLinkCard
@@ -235,7 +239,8 @@ export const Matrix: Story = {
         </div>
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 const guideBlockStyle: CSSProperties = {

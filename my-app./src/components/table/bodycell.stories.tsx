@@ -511,7 +511,7 @@ export const MatrixPhase3And4: Story = {
     return (
       <StoryDocsMatrixPage
         title="BodyCell"
-        description="Phase 3(텍스트·blank)과 Phase 4(체크·라디오·버튼 등) × 상태·포커스. Figma Body 셀(node 4456:290858) 검수용."
+        description="Phase 3 (text · blank) and Phase 4 (check · radio · button …) × state · focus. For Figma Body cell (node 4456:290858) review."
         figmaNode="4456-290858"
       >
         <FigmaLinkCard
@@ -552,7 +552,7 @@ export const MatrixPhase5: Story = {
     return (
       <StoryDocsMatrixPage
         title="BodyCell · Phase 5"
-        description="폼·배지·파일·트리·멀티라인·비디오 타입 × 상태·포커스. Phase 3–4 매트릭스와 나눠 두었습니다."
+        description="Form · badge · file · tree · multi-line · video types × state · focus. Split out from the Phase 3–4 matrices."
         figmaNode="4456-290858"
       >
         <FigmaLinkCard

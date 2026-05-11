@@ -177,10 +177,14 @@ export const Playground: StoryObj<TogglePlaygroundArgs> = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Toggle"
-      description="행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Rows: Default · Focused · Disabled. Columns: Unchecked · Checked. `forceState` is for Storybook visual lock; toggle the theme from the top toolbar."
+        : "행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."}
       figmaNode="18001-55013"
     >
       <FigmaLinkCard
@@ -242,7 +246,8 @@ export const Matrix: Story = {
         <ControlledToggleVerticalDemo />
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function ControlledToggleGroupSnippet() {

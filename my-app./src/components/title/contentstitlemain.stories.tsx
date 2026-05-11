@@ -114,10 +114,14 @@ for (const hasHint of [false, true]) {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="ContentsTitleMain"
-      description="프레임 폭 1496px. Hint · Toggle · Badge · Actions 조합을 세로로 나열합니다 (가로 스크롤 없음)."
+      description={locale === "en"
+        ? "Frame width 1496px. Hint · Toggle · Badge · Actions combinations are laid out vertically (no horizontal scroll)."
+        : "프레임 폭 1496px. Hint · Toggle · Badge · Actions 조합을 세로로 나열합니다 (가로 스크롤 없음)."}
       figmaNode="4790-206"
       pageMaxWidth={DOCS_PAGE_MAX_WIDTH}
     >
@@ -131,5 +135,6 @@ export const Matrix: Story = {
         ))}
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

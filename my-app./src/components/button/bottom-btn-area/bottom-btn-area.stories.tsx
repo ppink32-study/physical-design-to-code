@@ -75,10 +75,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="BottomBtnArea"
-      description="페이지·모달 하단 액션 영역의 좌·우 버튼 그룹과 Custom 슬롯 형태를 비교합니다."
+      description={locale === "en"
+        ? "Compares left / right button groups and the Custom slot variant of the action area at the bottom of pages and modals."
+        : "페이지·모달 하단 액션 영역의 좌·우 버튼 그룹과 Custom 슬롯 형태를 비교합니다."}
       figmaNode="9813-896"
     >
       <FigmaLinkCard
@@ -159,6 +163,7 @@ export const Matrix: Story = {
         </StoryDocsPanelInset>
       </StoryDocsSection>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 

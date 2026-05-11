@@ -174,10 +174,14 @@ export const Playground: StoryObj<RadioPlaygroundArgs> = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Radio"
-      description="행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Rows: Default · Focused · Disabled. Columns: Unchecked · Checked. `forceState` is for Storybook visual lock; toggle the theme from the top toolbar."
+        : "행은 Default·Focused·Disabled, 열은 Unchecked·Checked입니다. forceState는 Storybook 시각 고정용이며 테마는 상단 툴바에서 전환합니다."}
       figmaNode="17995-61609"
     >
       <FigmaLinkCard
@@ -225,7 +229,8 @@ export const Matrix: Story = {
         <ControlledRadioVerticalDemo />
       </SectionFrame>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function ControlledRadioGroupSnippet() {

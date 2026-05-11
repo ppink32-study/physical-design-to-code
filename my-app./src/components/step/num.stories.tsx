@@ -57,10 +57,14 @@ export const Matrix: Story = {
     layout: "padded",
     nextjs: { appDirectory: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Num"
-      description="Step 번호 배지. mode(light·dark) × state(finish·current·next·complete·error·success·stop)"
+      description={locale === "en"
+        ? "Step number badge. mode (light · dark) × state (finish · current · next · complete · error · success · stop)"
+        : "Step 번호 배지. mode(light·dark) × state(finish·current·next·complete·error·success·stop)"}
       figmaNode="18374-238"
     >
       <FigmaLinkCard nodeId="18374-238" caption="Components / Step / Num" />
@@ -117,5 +121,6 @@ export const Matrix: Story = {
         </table>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

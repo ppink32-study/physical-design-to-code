@@ -79,10 +79,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="SearchToggleItem"
-      description="검색 영역에서 옵션을 토글하는 아이템의 Default / Select 상태를 비교합니다."
+      description={locale === "en"
+        ? "Compares Default / Select states of the item that toggles options in the search area."
+        : "검색 영역에서 옵션을 토글하는 아이템의 Default / Select 상태를 비교합니다."}
       figmaNode="17312-17269"
     >
       <FigmaLinkCard
@@ -140,6 +144,7 @@ export const Matrix: Story = {
         </tbody>
       </table>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 

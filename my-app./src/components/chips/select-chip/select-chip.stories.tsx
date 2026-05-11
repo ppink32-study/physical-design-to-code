@@ -101,10 +101,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="SelectChip"
-      description="Figma와 동일하게 열은 Default·Hover·Readonly·Disable, 행은 Medium·Large × normal/error입니다. 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Matches Figma — columns: Default · Hover · Readonly · Disable; rows: Medium · Large × normal / error. Switch the theme from the top toolbar."
+        : "Figma와 동일하게 열은 Default·Hover·Readonly·Disable, 행은 Medium·Large × normal/error입니다. 테마는 상단 툴바에서 전환합니다."}
     >
       <FigmaLinkCard
         storyTitle="Components/Chips/SelectChip"
@@ -148,7 +152,8 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function InteractiveDemo() {

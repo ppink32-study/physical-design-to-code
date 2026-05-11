@@ -58,10 +58,14 @@ const rowLabelStyle: CSSProperties = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Divider"
-      description="가로·세로·타이틀 변형을 비교합니다."
+      description={locale === "en"
+        ? "Compares horizontal · vertical · title variants."
+        : "가로·세로·타이틀 변형을 비교합니다."}
       figmaNode="1-15492"
     >
       <FigmaLinkCard
@@ -117,7 +121,8 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 export const Guideline: Story = {

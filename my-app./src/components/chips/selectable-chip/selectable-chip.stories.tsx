@@ -94,10 +94,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="SelectableChip"
-      description="Input 칩과 같은 열 구성에 Selected 행이 추가되며, Hover 행에서는 휴지통 아이콘이 표시됩니다. 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Adds a Selected row to the same column layout as the Input chip; the Hover row shows a trash icon. Switch the theme from the top toolbar."
+        : "Input 칩과 같은 열 구성에 Selected 행이 추가되며, Hover 행에서는 휴지통 아이콘이 표시됩니다. 테마는 상단 툴바에서 전환합니다."}
     >
       <FigmaLinkCard
         storyTitle="Components/Chips/SelectableChip"
@@ -144,7 +148,8 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function InteractiveDemo() {

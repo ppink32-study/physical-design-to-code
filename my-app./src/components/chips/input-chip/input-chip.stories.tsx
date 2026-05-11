@@ -92,10 +92,14 @@ export const Playground: Story = {
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="InputChip"
-      description="열은 Medium·Large × Normal/Error, 행은 Default·Hover·Readonly·Disable입니다. Hover는 forceState로 시각 고정이며 테마는 상단 툴바에서 전환합니다."
+      description={locale === "en"
+        ? "Columns: Medium · Large × Normal / Error. Rows: Default · Hover · Readonly · Disable. Hover is visually locked via forceState; switch the theme from the top toolbar."
+        : "열은 Medium·Large × Normal/Error, 행은 Default·Hover·Readonly·Disable입니다. Hover는 forceState로 시각 고정이며 테마는 상단 툴바에서 전환합니다."}
     >
       <FigmaLinkCard
         storyTitle="Components/Chips/InputChip"
@@ -142,7 +146,8 @@ export const Matrix: Story = {
         </table>
       </div>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
 
 function InteractiveDemo() {

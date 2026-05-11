@@ -143,10 +143,14 @@ function MatrixCell({
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded" },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="Tooltip"
-      description="Placement × Trailing 매트릭스와, Help 아이콘 + 툴팁 4방향 예시입니다. Help 조합은 아이콘과 툴팁 사이 gap 4px입니다."
+      description={locale === "en"
+        ? "Placement × Trailing matrix plus four-direction examples of Help icon + tooltip. The Help combination uses a 4px gap between the icon and the tooltip."
+        : "Placement × Trailing 매트릭스와, Help 아이콘 + 툴팁 4방향 예시입니다. Help 조합은 아이콘과 툴팁 사이 gap 4px입니다."}
       figmaNode="5543-321819"
     >
       <FigmaLinkCard
@@ -251,5 +255,6 @@ export const Matrix: Story = {
         </tbody>
       </table>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

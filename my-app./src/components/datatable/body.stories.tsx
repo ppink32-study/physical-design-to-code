@@ -56,10 +56,14 @@ const B_W = 496;
 export const Matrix: Story = {
   name: "Matrix",
   parameters: { layout: "padded", nextjs: { appDirectory: true } },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       title="DataTable / Body"
-      description="데이터 테이블 바디 셀 컴포넌트입니다."
+      description={locale === "en"
+        ? "Data table body cell component."
+        : "데이터 테이블 바디 셀 컴포넌트입니다."}
       figmaNode="18385-9748"
     >
       <FigmaLinkCard nodeId="18385-9748" caption="Components / DataTable — Body" />
@@ -133,5 +137,6 @@ export const Matrix: Story = {
         </div>
       </section>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
