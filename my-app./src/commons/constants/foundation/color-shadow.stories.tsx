@@ -418,6 +418,8 @@ type GradientStop = {
   hex: string;
 };
 
+type LocalizedString = { ko: string; en: string };
+
 type GradientToken = {
   id: string;
   name: string;
@@ -425,8 +427,8 @@ type GradientToken = {
   value: string;
   angle: string;
   stops: GradientStop[];
-  usage: string;
-  description: string;
+  usage: LocalizedString;
+  description: LocalizedString;
   example: ReactNode;
 };
 
@@ -658,8 +660,14 @@ const GRADIENT_TOKENS: GradientToken[] = [
       { position: "50%", hex: "#9EF7EE" },
       { position: "89.69%", hex: "#971EFF" },
     ],
-    usage: "Logo · 브랜드 컬러를 이용하여 강조하고자 하는 요소에 한정적으로 사용됩니다.",
-    description: "예: 로고, 강조 라인, Highlight 영역",
+    usage: {
+      ko: "Logo · 브랜드 컬러를 이용하여 강조하고자 하는 요소에 한정적으로 사용됩니다.",
+      en: "Used sparingly with the brand color to emphasize specific elements such as the Logo.",
+    },
+    description: {
+      ko: "예: 로고, 강조 라인, Highlight 영역",
+      en: "e.g., Logo, accent lines, Highlight areas",
+    },
     example: <BrandGradientExample />,
   },
   {
@@ -672,8 +680,14 @@ const GRADIENT_TOKENS: GradientToken[] = [
       { position: "0.01%", hex: "#5CC7D0" },
       { position: "100.01%", hex: "#D5A5FF" },
     ],
-    usage: "본 솔루션의 Card List Hover 시 Border Color로 사용됩니다.",
-    description: "예: Dataset Card hover, Selectable card border",
+    usage: {
+      ko: "본 솔루션의 Card List Hover 시 Border Color로 사용됩니다.",
+      en: "Used as the border color on Card List hover in this solution.",
+    },
+    description: {
+      ko: "예: Dataset Card hover, Selectable card border",
+      en: "e.g., Dataset Card hover, selectable card border",
+    },
     example: <BorderGradientExample />,
   },
   {
@@ -687,8 +701,11 @@ const GRADIENT_TOKENS: GradientToken[] = [
       { position: "30.69%", hex: "#F3F7EE" },
       { position: "104.75%", hex: "#DDFCFA" },
     ],
-    usage: "Vertical Stepper Area",
-    description: "예: 세로형 단계 진행 영역 배경",
+    usage: { ko: "Vertical Stepper Area", en: "Vertical Stepper Area" },
+    description: {
+      ko: "예: 세로형 단계 진행 영역 배경",
+      en: "e.g., background for vertical step-progress areas",
+    },
     example: <LightGradient01Example />,
   },
   {
@@ -701,8 +718,14 @@ const GRADIENT_TOKENS: GradientToken[] = [
       { position: "0%", hex: "#EBEBF7" },
       { position: "100%", hex: "#DDFCFA" },
     ],
-    usage: "Horizontal Stepper Area, Floating Search Bar",
-    description: "예: 가로형 Stepper, Floating Search Bar 배경",
+    usage: {
+      ko: "Horizontal Stepper Area, Floating Search Bar",
+      en: "Horizontal Stepper Area, Floating Search Bar",
+    },
+    description: {
+      ko: "예: 가로형 Stepper, Floating Search Bar 배경",
+      en: "e.g., Horizontal Stepper, Floating Search Bar background",
+    },
     example: <LightGradient02Example />,
   },
 ];
@@ -774,7 +797,13 @@ function GradientStopList({ stops }: { stops: GradientStop[] }) {
   );
 }
 
-function GradientCard({ token }: { token: GradientToken }) {
+function GradientCard({
+  token,
+  locale,
+}: {
+  token: GradientToken;
+  locale: "ko" | "en";
+}) {
   return (
     <article
       data-figma-node="13385-10689"
@@ -815,7 +844,7 @@ function GradientCard({ token }: { token: GradientToken }) {
             lineHeight: 1.5,
           }}
         >
-          {token.usage}
+          {token.usage[locale]}
         </p>
       </header>
 
@@ -931,7 +960,7 @@ function GradientCard({ token }: { token: GradientToken }) {
           background: tokens.surface,
         }}
       >
-        {token.description}
+        {token.description[locale]}
       </footer>
     </article>
   );
@@ -1058,7 +1087,8 @@ function ThemeCard({
   );
 }
 
-function ThemeOverviewSection() {
+function ThemeOverviewSection({ locale }: { locale: "ko" | "en" }) {
+  const isKo = locale === "ko";
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <div>
@@ -1070,11 +1100,12 @@ function ThemeOverviewSection() {
             color: tokens.textBase,
           }}
         >
-          Theme 구성
+          {isKo ? "Theme 구성" : "Theme composition"}
         </h2>
         <p style={{ margin: 0, fontSize: 13, color: tokens.textMuted, lineHeight: 1.6 }}>
-          전역 Theme 변경이 아닌, 일부 강조 컴포넌트만 다른 스타일을 적용합니다.
-          강조 영역(GNB, LNB, Card 등)에는 Brand 컬러 토큰이 사용됩니다.
+          {isKo
+            ? "전역 Theme 변경이 아닌, 일부 강조 컴포넌트만 다른 스타일을 적용합니다. 강조 영역(GNB, LNB, Card 등)에는 Brand 컬러 토큰이 사용됩니다."
+            : "Rather than swapping the global theme, only selected emphasized components receive a different style. Brand color tokens are applied to emphasized areas such as GNB, LNB, and Card."}
         </p>
       </div>
 
@@ -1082,7 +1113,11 @@ function ThemeOverviewSection() {
         <ThemeCard
           name="Standard Theme"
           badges={["Brand-driven", "Sales-oriented Theme"]}
-          description="강한 명도 대비와 네온 컬러를 활용하여, 로보틱 시스템의 에너지 흐름과 첨단 기술 이미지를 직관적으로 표현합니다. 그라데이션 기반의 시각 요소를 통해 다양한 플랫폼과 데이터가 유기적으로 연결된 통합 흐름을 강조하며, 역동적이고 미래 지향적인 사용자 경험을 제공합니다."
+          description={
+            isKo
+              ? "강한 명도 대비와 네온 컬러를 활용하여, 로보틱 시스템의 에너지 흐름과 첨단 기술 이미지를 직관적으로 표현합니다. 그라데이션 기반의 시각 요소를 통해 다양한 플랫폼과 데이터가 유기적으로 연결된 통합 흐름을 강조하며, 역동적이고 미래 지향적인 사용자 경험을 제공합니다."
+              : "High-contrast values and neon colors intuitively express the energy flow and cutting-edge image of robotic systems. Gradient-based visual elements emphasize a unified flow that organically connects various platforms and data, delivering a dynamic, future-oriented user experience."
+          }
           tokenLabel={
             <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               <code
@@ -1097,7 +1132,11 @@ function ThemeOverviewSection() {
               >
                 brand.css
               </code>
-              <span style={{ fontSize: 12, color: tokens.textSubtle }}>일부 강조 영역에 사용 (LNB, GNB, Card)</span>
+              <span style={{ fontSize: 12, color: tokens.textSubtle }}>
+                {isKo
+                  ? "일부 강조 영역에 사용 (LNB, GNB, Card)"
+                  : "Applied to selected emphasized areas (LNB, GNB, Card)"}
+              </span>
               <span style={{ fontSize: 12, color: tokens.textSubtle }}>+</span>
               <code
                 style={{
@@ -1123,7 +1162,11 @@ function ThemeOverviewSection() {
         <ThemeCard
           name="Focus Theme"
           badges={["Work-focused", "Utility Theme"]}
-          description="모노톤 중심의 절제된 컬러와 안정적인 명도 대비를 통해, 정보 밀도가 높은 대시보드 환경에서도 장시간 사용에 적합한 시각 경험을 제공합니다. 구조화된 그리드와 정제된 라인을 바탕으로 데이터와 기능의 위계를 명확히 하여, 운영 환경에 필요한 신뢰감과 집중도를 강화합니다."
+          description={
+            isKo
+              ? "모노톤 중심의 절제된 컬러와 안정적인 명도 대비를 통해, 정보 밀도가 높은 대시보드 환경에서도 장시간 사용에 적합한 시각 경험을 제공합니다. 구조화된 그리드와 정제된 라인을 바탕으로 데이터와 기능의 위계를 명확히 하여, 운영 환경에 필요한 신뢰감과 집중도를 강화합니다."
+              : "A restrained, monotone palette with stable value contrast delivers a visual experience suited to long sessions even in high-density dashboards. A structured grid and refined lines clarify the hierarchy of data and functions, reinforcing the trust and focus required in operational environments."
+          }
           tokenLabel={
             <code
               style={{
@@ -1143,20 +1186,28 @@ function ThemeOverviewSection() {
           badgeBg="var(--context-background-tint-bg-blue-tint, #E7F1FF)"
           badgeColor="var(--accent-blue-accent-blue, #316CF4)"
           accent="#3F9BAE"
-          note="추후 Dark 모드 추가 시 dark.css 토큰([data-theme=dark])을 사용합니다."
+          note={
+            isKo
+              ? "추후 Dark 모드 추가 시 dark.css 토큰([data-theme=dark])을 사용합니다."
+              : "When Dark mode is added later, dark.css tokens ([data-theme=dark]) will be used."
+          }
         />
       </div>
     </div>
   );
 }
 
-function GradientSection() {
+function GradientSection({ locale }: { locale: "ko" | "en" }) {
+  const description =
+    locale === "en"
+      ? "Gradient tokens used for limited emphasis such as Logo·brand, Card hover, and Stepper areas. Avoid arbitrary use outside this solution — use only the defined four tokens."
+      : "Logo·브랜드, Card hover, Stepper 영역 등 한정적 강조 표현에 사용되는 Gradient 토큰입니다. 본 솔루션 외 임의 사용을 지양하고 정의된 4종 안에서만 사용하세요.";
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       <SectionTitle
         index="08 — GRADIENT"
         title="Gradient color"
-        description="Logo·브랜드, Card hover, Stepper 영역 등 한정적 강조 표현에 사용되는 Gradient 토큰입니다. 본 솔루션 외 임의 사용을 지양하고 정의된 4종 안에서만 사용하세요."
+        description={description}
       />
       <div
         style={{
@@ -1166,7 +1217,7 @@ function GradientSection() {
         }}
       >
         {GRADIENT_TOKENS.map((token) => (
-          <GradientCard key={token.id} token={token} />
+          <GradientCard key={token.id} token={token} locale={locale} />
         ))}
       </div>
     </div>
@@ -1207,8 +1258,9 @@ const TABS: { id: TabId; label: string }[] = [
 /* Border 탭은 border / borderNeutral / borderSurface / borderOpacity 4개 그룹을 합친다 */
 const BORDER_GROUP_IDS = new Set(["border", "borderNeutral", "borderSurface", "borderOpacity"]);
 
-function ColorTabPage() {
+function ColorTabPage({ locale }: { locale: "ko" | "en" }) {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
+  const isKo = locale === "ko";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 0, maxWidth: TABLE_MAX_WIDTH }}>
@@ -1228,7 +1280,9 @@ function ColorTabPage() {
       >
         <div>
           <p style={{ margin: 0, fontSize: 13, color: tokens.textMuted }}>
-            총 {TOTAL_TOKEN_COUNT}개 컬러 변수 · Gradient {GRADIENT_TOKENS.length}종
+            {isKo
+              ? `총 ${TOTAL_TOKEN_COUNT}개 컬러 변수 · Gradient ${GRADIENT_TOKENS.length}종`
+              : `${TOTAL_TOKEN_COUNT} color variables in total · ${GRADIENT_TOKENS.length} gradients`}
           </p>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -1293,7 +1347,7 @@ function ColorTabPage() {
 
         {activeTab === "overview" && (
           <>
-            <ThemeOverviewSection />
+            <ThemeOverviewSection locale={locale} />
             <div
               style={{
                 padding: "14px 16px",
@@ -1304,9 +1358,19 @@ function ColorTabPage() {
                 lineHeight: 1.7,
               }}
             >
-              <strong style={{ color: tokens.textMuted }}>brand.css</strong>는 dark.css와 동일한 토큰 값이며{" "}
-              <code>[data-theme=brand]</code> 선택자를 사용합니다. 추후 Focus Theme에 Dark 모드가 추가되면{" "}
-              <code>[data-theme=dark]</code>(dark.css)가 사용됩니다.
+              {isKo ? (
+                <>
+                  <strong style={{ color: tokens.textMuted }}>brand.css</strong>는 dark.css와 동일한 토큰 값이며{" "}
+                  <code>[data-theme=brand]</code> 선택자를 사용합니다. 추후 Focus Theme에 Dark 모드가 추가되면{" "}
+                  <code>[data-theme=dark]</code>(dark.css)가 사용됩니다.
+                </>
+              ) : (
+                <>
+                  <strong style={{ color: tokens.textMuted }}>brand.css</strong> shares the same token values as dark.css and uses the{" "}
+                  <code>[data-theme=brand]</code> selector. When Dark mode is later added to the Focus Theme,{" "}
+                  <code>[data-theme=dark]</code> (dark.css) will be used instead.
+                </>
+              )}
             </div>
           </>
         )}
@@ -1379,22 +1443,30 @@ function ColorTabPage() {
           />
         )}
 
-        {activeTab === "gradient" && <GradientSection />}
+        {activeTab === "gradient" && <GradientSection locale={locale} />}
 
       </div>
     </div>
   );
 }
 
+const COLOR_PAGE_MESSAGES = {
+  ko: "시맨틱 컬러·그라데이션 토큰과 Light/Dark 값을 탭별로 확인합니다.",
+  en: "Browse semantic color and gradient tokens with Light/Dark values across tabs.",
+} as const;
+
 export const Guideline: Story = {
   name: "Guideline",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsPage
       eyebrow="Design System"
       title="Color"
-      description="시맨틱 컬러·그라데이션 토큰과 Light/Dark 값을 탭별로 확인합니다."
+      description={COLOR_PAGE_MESSAGES[locale]}
     >
-      <ColorTabPage />
+      <ColorTabPage locale={locale} />
     </StoryDocsPage>
-  ),
+    );
+  },
 };

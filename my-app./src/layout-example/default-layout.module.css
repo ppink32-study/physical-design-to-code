@@ -1,0 +1,53 @@
+/* Default Layout — Layout Example
+ * Figma 62:77706
+ *
+ * 구조: GNB(1920×56, top) + LNB(left, 260px, full height) + 빈 content 영역
+ * theme: standard → Dashboard.png 배경 / focus → bg-backboard
+ */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 960px;
+  background: var(--context-background-backdrop-bg-backboard);
+  box-sizing: border-box;
+  container-type: inline-size;
+  container-name: default-layout;
+}
+
+.root[data-theme="standard"] {
+  background-image: url("/Dashboard.png");
+  background-color: var(--context-background-backdrop-bg-backboard);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.root[data-theme="focus"] {
+  background: var(--context-background-backdrop-bg-backboard);
+}
+
+/* ----------------------------------------------------------------
+ * Body — GNB 아래 영역 (LNB + 빈 content)
+ * ---------------------------------------------------------------- */
+.body {
+  flex: 1 0 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+/* ----------------------------------------------------------------
+ * Content Area — LNB 우측 빈 영역 (background 만 노출)
+ * ---------------------------------------------------------------- */
+.contentArea {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 100%;
+}

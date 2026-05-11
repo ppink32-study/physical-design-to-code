@@ -30,18 +30,26 @@ const linkStyle: CSSProperties = {
   wordBreak: "break-all",
 };
 
+const ICON_DESCRIPTIONS = {
+  ko: "아이콘 스펙은 아래 Figma 링크에서 확인합니다.",
+  en: "Refer to the Figma link below for the full icon specification.",
+} as const;
+
 export const Matrix: Story = {
   name: "Matrix",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    return (
     <StoryDocsMatrixPage
       eyebrow="Design System"
       title="Icon"
-      description="아이콘 스펙은 아래 Figma 링크에서 확인합니다."
+      description={ICON_DESCRIPTIONS[locale]}
       figmaNode="4823-23177"
     >
       <a href={FIGMA_ICON_URL} target="_blank" rel="noreferrer noopener" style={linkStyle}>
         {FIGMA_ICON_URL}
       </a>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

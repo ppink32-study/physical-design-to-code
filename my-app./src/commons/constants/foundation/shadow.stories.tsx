@@ -10,6 +10,8 @@ import { DownloadButton } from "./foundation-shared";
  *  Shadow tokens
  *  Source of truth: Figma — Token Spec / Shadows (node 13382-23979)
  * ----------------------------------------------------------- */
+type LocalizedString = { ko: string; en: string };
+
 type ShadowToken = {
   /** Display label (Figma 상의 이름) */
   name: string;
@@ -17,11 +19,15 @@ type ShadowToken = {
   cssVar: string;
   /** Raw box-shadow value */
   value: string;
-  /** 사용 가이드 (어디에 쓰는지) */
-  usage: string;
+  /** 사용 가이드 (ko/en) */
+  usage: string | LocalizedString;
   /** 카드 강조 (Primary tone) */
   emphasis?: boolean;
 };
+
+function pickUsage(value: string | LocalizedString, locale: "ko" | "en"): string {
+  return typeof value === "string" ? value : value[locale];
+}
 
 const SHADOW_TOKENS: ShadowToken[] = [
   {
@@ -59,7 +65,10 @@ const SHADOW_TOKENS: ShadowToken[] = [
     cssVar: "--shadow-primary",
     value:
       "0 6px 20px 0 var(--color-opacity-accent-primary-50020, rgba(67, 198, 193, 0.20))",
-    usage: "Builder · Prompt 실행창과 같이 강조가 필요한 영역의 Shadow",
+    usage: {
+      ko: "Builder · Prompt 실행창과 같이 강조가 필요한 영역의 Shadow",
+      en: "Shadow for emphasized areas such as Builder · Prompt execution panels",
+    },
     emphasis: true,
   },
 ];
@@ -68,7 +77,7 @@ type FocusRingToken = {
   name: string;
   cssVar: string;
   value: string;
-  usage: string;
+  usage: string | LocalizedString;
   /** 색 도트 미리보기에 쓸 ring color */
   ringColor: string;
 };
@@ -79,7 +88,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     cssVar: "--shadow-focus-ring-primary",
     value:
       "0 0 0 var(--border-width-lg, 4px) var(--color-opacity-accent-primary-50015, rgba(67, 198, 193, 0.15))",
-    usage: "기본 인터랙티브 요소(버튼, 입력 등)의 Focus 상태",
+    usage: {
+      ko: "기본 인터랙티브 요소(버튼, 입력 등)의 Focus 상태",
+      en: "Focus state for default interactive elements (buttons, inputs, etc.)",
+    },
     ringColor: "rgba(67, 198, 193, 0.15)",
   },
   {
@@ -87,7 +99,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     cssVar: "--shadow-focus-ring-gray",
     value:
       "0 0 0 var(--border-width-lg, 4px) var(--context-background-surface-bg-surface-teriary, #ECECEE)",
-    usage: "보조 컨트롤·중립 톤 요소의 Focus 상태",
+    usage: {
+      ko: "보조 컨트롤·중립 톤 요소의 Focus 상태",
+      en: "Focus state for secondary controls and neutral-tone elements",
+    },
     ringColor: "#ECECEE",
   },
   {
@@ -95,7 +110,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     cssVar: "--shadow-focus-ring-form-valid",
     value:
       "0 0 0 var(--border-width-lg, 4px) var(--seed-color-green-100, #CEF0CC)",
-    usage: "Form Validation 통과(성공) 상태",
+    usage: {
+      ko: "Form Validation 통과(성공) 상태",
+      en: "Form Validation pass (success) state",
+    },
     ringColor: "#CEF0CC",
   },
   {
@@ -103,7 +121,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     cssVar: "--shadow-focus-ring-form-invalid",
     value:
       "0 0 0 var(--border-width-lg, 4px) var(--seed-color-red-100, #FFD6D5)",
-    usage: "Form Validation 실패(에러) 상태",
+    usage: {
+      ko: "Form Validation 실패(에러) 상태",
+      en: "Form Validation fail (error) state",
+    },
     ringColor: "#FFD6D5",
   },
 ];
@@ -398,7 +419,7 @@ const dataCellStyle: CSSProperties = {
   borderTop: `1px solid ${tokens.borderColor}`,
 };
 
-function ShadowScaleTable() {
+function ShadowScaleTable({ locale }: { locale: "ko" | "en" }) {
   return (
     <div
       style={{
@@ -438,7 +459,7 @@ function ShadowScaleTable() {
               color: tokens.textMuted,
             }}
           >
-            {s.usage}
+            {pickUsage(s.usage, locale)}
           </div>
           <div
             style={{
@@ -458,7 +479,7 @@ function ShadowScaleTable() {
   );
 }
 
-function FocusRingScaleTable() {
+function FocusRingScaleTable({ locale }: { locale: "ko" | "en" }) {
   return (
     <div
       style={{
@@ -524,7 +545,7 @@ function FocusRingScaleTable() {
               color: tokens.textMuted,
             }}
           >
-            {r.usage}
+            {pickUsage(r.usage, locale)}
           </div>
           <div
             style={{
@@ -548,13 +569,40 @@ function FocusRingScaleTable() {
  *  Page composition (single Guideline story)
  * ----------------------------------------------------------- */
 
+const SHADOW_MESSAGES = {
+  ko: {
+    description: "표면 elevation 그림자와 포커스 링(box-shadow) 토큰 레퍼런스입니다.",
+    scaleDesc:
+      "레이어 위계를 표현하는 6단계 표면 그림자 토큰입니다. 컴포넌트가 떠 있는 정도(layer height)에 맞춰 한 단계씩만 사용하세요.",
+    focusDesc:
+      "키보드 포커스·검증 상태를 표현하는 4종 링 토큰입니다. 외곽선이 아닌 box-shadow 로 적용되어 레이아웃을 밀지 않습니다. 컴포넌트의 의미(보통/중립/성공/실패)에 맞춰 한 토큰만 사용하세요.",
+    footer: (total: number, elev: number, ring: number) =>
+      `총 ${total}개 shadow 변수 (${elev} elevation · ${ring} focus ring) · 다운로드 버튼은 `,
+    footerSuffix: "원본을 그대로 내려줍니다.",
+  },
+  en: {
+    description:
+      "Reference for surface-elevation shadows and focus-ring (box-shadow) tokens.",
+    scaleDesc:
+      "Six surface-shadow tokens expressing layer hierarchy. Use a single step that matches the component's layer height.",
+    focusDesc:
+      "Four ring tokens expressing keyboard-focus and validation state. They are applied as box-shadow rather than outline, so they do not affect layout. Use one token that matches the component's meaning (default / neutral / success / error).",
+    footer: (total: number, elev: number, ring: number) =>
+      `${total} shadow variables in total (${elev} elevation · ${ring} focus ring) · The download button serves `,
+    footerSuffix: "as the original.",
+  },
+} as const;
+
 export const Guideline: Story = {
   name: "Guideline",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    const m = SHADOW_MESSAGES[locale];
+    return (
     <StoryDocsPage
       eyebrow="Design System"
       title="Shadow"
-      description="표면 elevation 그림자와 포커스 링(box-shadow) 토큰 레퍼런스입니다."
+      description={m.description}
     >
     <div
       style={{
@@ -568,12 +616,12 @@ export const Guideline: Story = {
         <SectionTitle
           index="01 — SHADOW SCALE"
           title="Shadow scale"
-          description="레이어 위계를 표현하는 6단계 표면 그림자 토큰입니다. 컴포넌트가 떠 있는 정도(layer height)에 맞춰 한 단계씩만 사용하세요."
+          description={m.scaleDesc}
           action={<DownloadButton fileName="shadow.css" css={shadowCssRaw} />}
         />
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <ShadowPreviewGrid />
-          <ShadowScaleTable />
+          <ShadowScaleTable locale={locale} />
         </div>
       </div>
 
@@ -581,11 +629,11 @@ export const Guideline: Story = {
         <SectionTitle
           index="02 — FOCUS RING"
           title="Focus ring"
-          description="키보드 포커스·검증 상태를 표현하는 4종 링 토큰입니다. 외곽선이 아닌 box-shadow 로 적용되어 레이아웃을 밀지 않습니다. 컴포넌트의 의미(보통/중립/성공/실패)에 맞춰 한 토큰만 사용하세요."
+          description={m.focusDesc}
         />
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <FocusRingPreviewGrid />
-          <FocusRingScaleTable />
+          <FocusRingScaleTable locale={locale} />
         </div>
       </div>
 
@@ -597,12 +645,15 @@ export const Guideline: Story = {
           paddingTop: 16,
         }}
       >
-        총 {SHADOW_TOKENS.length + FOCUS_RING_TOKENS.length}개 shadow 변수 (
-        {SHADOW_TOKENS.length} elevation · {FOCUS_RING_TOKENS.length} focus ring) ·
-        다운로드 버튼은 <code>src/commons/constants/css/shadow.css</code> 원본을
-        그대로 내려줍니다.
+        {m.footer(
+          SHADOW_TOKENS.length + FOCUS_RING_TOKENS.length,
+          SHADOW_TOKENS.length,
+          FOCUS_RING_TOKENS.length,
+        )}
+        <code>src/commons/constants/css/shadow.css</code> {m.footerSuffix}
       </footer>
     </div>
     </StoryDocsPage>
-  ),
+    );
+  },
 };

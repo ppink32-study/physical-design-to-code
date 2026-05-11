@@ -143,8 +143,16 @@ const preview: Preview = {
       hideStories: true,
     },
   },
+  globalTypes: {
+    locale: {
+      name: "Language",
+      description: "가이드라인 표시 언어 (한국어 / English)",
+      defaultValue: "ko",
+    },
+  },
   initialGlobals: {
     theme: "light",
+    locale: "ko",
   },
   decorators: [
     withThemeByDataAttribute({

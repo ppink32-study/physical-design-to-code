@@ -378,13 +378,36 @@ function TypographyTable({
 /* -----------------------------------------------------------
  *  Page composition (single Guideline story)
  * ----------------------------------------------------------- */
+const TYPO_MESSAGES = {
+  ko: {
+    description: "폰트 웨이트·Headline·Body 스케일과 typography.css 클래스 레퍼런스입니다.",
+    headlineDesc: "페이지·콘텐츠·카드 등 위계의 ‘제목’ 영역에 사용합니다.",
+    bodyDesc: "본문·라벨·힌트 등 일반 텍스트에 사용합니다.",
+    footer: (n: number) => `총 ${n}개 typography 클래스 · 다운로드 버튼은 `,
+    footerSuffix: "원본을 그대로 내려줍니다.",
+  },
+  en: {
+    description:
+      "Reference for font weights, Headline / Body scales, and typography.css classes.",
+    headlineDesc:
+      "Used for hierarchical heading areas such as page, content, and card titles.",
+    bodyDesc:
+      "Used for body text, labels, hints, and other general text.",
+    footer: (n: number) => `${n} typography classes in total · The download button serves `,
+    footerSuffix: "as the original.",
+  },
+} as const;
+
 export const Guideline: Story = {
   name: "Guideline",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    const m = TYPO_MESSAGES[locale];
+    return (
     <StoryDocsPage
       eyebrow="Design System"
       title="Typography"
-      description="폰트 웨이트·Headline·Body 스케일과 typography.css 클래스 레퍼런스입니다."
+      description={m.description}
     >
       <div
         style={{
@@ -402,7 +425,7 @@ export const Guideline: Story = {
         <SectionTitle
           index="02 — HEADLINE"
           title="Headline"
-          description="페이지·콘텐츠·카드 등 위계의 ‘제목’ 영역에 사용합니다."
+          description={m.headlineDesc}
           action={<DownloadButton fileName="typography.css" css={typographyCssRaw} />}
         />
         <TypographyTable category="Headline" rows={HEADLINE_ROWS} />
@@ -412,7 +435,7 @@ export const Guideline: Story = {
         <SectionTitle
           index="03 — BODY"
           title="Body"
-          description="본문·라벨·힌트 등 일반 텍스트에 사용합니다."
+          description={m.bodyDesc}
         />
         <TypographyTable category="Body" rows={BODY_ROWS} />
       </div>
@@ -425,11 +448,11 @@ export const Guideline: Story = {
           paddingTop: 16,
         }}
       >
-        총 {ALL_ROWS.length}개 typography 클래스 · 다운로드 버튼은
-        {" "}
-        <code>src/commons/constants/css/typography.css</code> 원본을 그대로 내려줍니다.
+        {m.footer(ALL_ROWS.length)}
+        <code>src/commons/constants/css/typography.css</code> {m.footerSuffix}
       </footer>
       </div>
     </StoryDocsPage>
-  ),
+    );
+  },
 };

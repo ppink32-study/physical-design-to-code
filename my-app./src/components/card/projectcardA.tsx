@@ -64,35 +64,16 @@ export function ProjectCardA({
   ...rest
 }: ProjectCardAProps) {
   const typeClass = type === "brand" ? styles.typeBrand : styles.typeLight;
-  const isHover = state === "hover";
 
-  // border 는 두 state 모두 inline 으로 처리
-  //  - default : 1px solid (타입별 토큰)
-  //  - hover   : 2px transparent + gradient bg (border-ring 기법)
-  //  box-sizing: border-box + width:266px 로 외곽 사이즈는 동일 유지
-  const defaultBorderColor =
-    type === "brand"
-      ? "var(--border-neutral-border-neutral)"
-      : "var(--border-border-surface-border-surface)";
-
-  const rootInlineStyle: CSSProperties = isHover
-    ? {
-        border: "2px solid transparent",
-        background: "linear-gradient(to right, #5cc7d0, #d5a5ff)",
-        ...styleProp,
-      }
-    : {
-        border: `1px solid ${defaultBorderColor}`,
-        ...styleProp,
-      };
-
+  // border / hover gradient 는 CSS 모듈(:hover & [data-state="hover"])에서 처리.
+  // box-sizing:border-box + width:266px 로 default(1px) ↔ hover(2px) 외곽 사이즈 동일.
   return (
     <div
       {...rest}
       className={[styles.root, typeClass, className].filter(Boolean).join(" ")}
       data-state={state}
       data-type={type}
-      style={rootInlineStyle}
+      style={styleProp}
     >
       {/* Image area */}
       <div className={styles.imageArea}>

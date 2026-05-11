@@ -1,0 +1,256 @@
+/* List Layout — Layout Example
+ * 구조: GNB(1920×56) + Detail Page Header Area + Main Contents Area
+ * Figma 52:86004 (GNB) + 52:86140 (Header Area) + 52:86142 (Main Contents)
+ *
+ * 반응형: clamp() 로 240↔24 좌우 여백 fluid 축소, 좌우 24px safe area 유지
+ */
+
+/* ----------------------------------------------------------------
+ * Root — viewport 폭에 유동적으로 대응 (max 1920)
+ *
+ *   theme="standard" : bg-backboard 토큰 + Dashboard.png 오버레이
+ *   theme="focus"    : bg-backboard 토큰 (이미지 없음)
+ * ---------------------------------------------------------------- */
+/* .root — flex column, full viewport height, no scroll.
+ *   GNB 는 첫 번째 child 로 자연스럽게 상단에 고정,
+ *   그 아래 <ScrollArea> 가 남은 영역을 차지하며 내부 콘텐츠만 스크롤됨.
+ *
+ *   bg 는 .root 에 직접 — 스크롤하지 않으므로 항상 고정된 위치에 표시됨.
+ *
+ *   container-type: inline-size — 하위에서 100cqw 로 .root 폭 기반 계산
+ *   (Storybook iframe 폭과 무관, canvas 폭 기준 유지)
+ */
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 960px;
+  background: var(--context-background-backdrop-bg-backboard);
+  box-sizing: border-box;
+  container-type: inline-size;
+  container-name: list-layout;
+}
+
+/* GNB 아래 영역을 가득 채우는 ScrollArea 래퍼 — flex:1, min-height:0 으로
+ * flex column 안에서 남은 공간 차지 + 내부 overflow 동작 보장. */
+.scrollArea {
+  flex: 1 0 0;
+  min-height: 0;
+  width: 100%;
+  /* ScrollArea 자체는 투명 — .root 의 bg(=Dashboard.png / backboard)가 비침 */
+  background: transparent;
+}
+
+.root[data-theme="standard"] {
+  background-image: url("/Dashboard.png");
+  background-color: var(--context-background-backdrop-bg-backboard);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.root[data-theme="focus"] {
+  background: var(--context-background-backdrop-bg-backboard);
+}
+
+/* ----------------------------------------------------------------
+ * Contents wrapper — GNB 아래 영역 전체
+ *
+ *   --side-padding : 좌우 여백 공식 (Phase 1: 240→24 fluid, Phase 2: 24 고정)
+ *     · 100cqw ≥ 1920  → (100cqw-1440)/2 ≥ 240 → clamp max → 240
+ *     · 100cqw =  1488 → (100cqw-1440)/2 = 24                       (Phase 2 진입)
+ *     · 100cqw <  1488 → 음수 → clamp min → 24
+ *
+ *   변수는 .root 의 *descendant* 에서만 cqw 해석되므로 .contents 에 정의
+ * ---------------------------------------------------------------- */
+.contents {
+  flex: 1 0 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  box-sizing: border-box;
+  --side-padding: clamp(
+    24px,
+    calc((100cqw - 1440px) / 2),
+    240px
+  );
+}
+
+/* ----------------------------------------------------------------
+ * Detail Page — Header Area  (Figma 50:91773)
+ *   height: 68
+ *   padding: 0 240 12 240 (좌우 240↔24 fluid)
+ *   align-items: flex-end
+ *   gap: 40
+ *   flex-shrink: 0
+ *   align-self: stretch
+ *
+ *   반응형: clamp(24, (100cqw - 1440px)/2, 240)
+ *     · cqw = .root 컨테이너 폭 (iframe 폭이 아님)
+ *     · 1920 → 240px / 1488 → 24px / <1488 → 24 고정
+ * ---------------------------------------------------------------- */
+.headerArea {
+  display: flex;
+  height: 68px;
+  padding-block: var(--spacing-none) var(--spacing-md);
+  padding-inline: var(--side-padding);
+  align-items: flex-end;
+  gap: var(--spacing-5xl);
+  flex-shrink: 0;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------
+ * Main Contents Area (외곽) — Figma 52:86142
+ *   padding: 0 240 24 240 (좌우 240↔24 fluid, --side-padding 변수)
+ * ---------------------------------------------------------------- */
+.mainContents {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-block: var(--spacing-none) var(--spacing-2xl);
+  padding-inline: var(--side-padding);
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------
+ * Step Panel (내부 흰 패널) — Figma 52:86143
+ *   bg white, rounded 20, padding 24, gap 40
+ * ---------------------------------------------------------------- */
+.stepPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-5xl);
+  padding: var(--spacing-2xl);
+  width: 100%;
+  background: var(--context-background-surface-bg-surface-base);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------
+ * Section 공통 — gap-md(12) flex-col
+ * ---------------------------------------------------------------- */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+ * Filter Row (Section 1)
+ *   Search Input (240px) + Divider + Sort Select (220px, 우측)
+ * ---------------------------------------------------------------- */
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  width: 100%;
+}
+
+.filterRight {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.sortWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sortPopover {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 10;
+}
+
+/* ----------------------------------------------------------------
+ * Card Area Wrap — cards + show more (gap 24)
+ * ---------------------------------------------------------------- */
+.cardAreaWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+ * ProjectCardA Grid — 5 columns (Figma 52:86153: gap-16)
+ *   column-gap & row-gap 모두 16 (Figma 단일 gap-lg)
+ *   ProjectCardA 의 fixed width 를 grid cell 폭으로 override
+ *   ↳ `> div` selector 로 specificity (0,1,1) — 카드 .root (0,1,0) 보다 우선
+ * ---------------------------------------------------------------- */
+.cardAGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: var(--spacing-lg);
+  row-gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.cardAGrid > div {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ----------------------------------------------------------------
+ * Show More Row — 중앙 정렬
+ * ---------------------------------------------------------------- */
+.showMoreRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------
+ * ProjectCardB Grid — 2 columns × N rows (Figma 52:86165: gap-12)
+ *   column-gap & row-gap 모두 12, row height 120 (Figma)
+ *   ProjectCardB 의 width:600px 를 grid cell 폭으로 override
+ *   ↳ `> div` selector 로 specificity (0,1,1) — 카드 .root (0,1,0) 보다 우선
+ * ---------------------------------------------------------------- */
+.cardBGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--spacing-md);
+  row-gap: var(--spacing-md);
+  grid-auto-rows: 120px;
+  width: 100%;
+}
+
+.cardBGrid > div {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+/* ----------------------------------------------------------------
+ * Empty Box — Figma 62:75761 (검색/정렬 결과 없음)
+ *   height: 240, padding: 20 16, dashed border, rounded 12, items/justify center
+ *   안에 <Empty size="medium" icon="/icon/Folder.svg" description="..." />
+ * ---------------------------------------------------------------- */
+.emptyBox {
+  display: flex;
+  height: 240px;
+  padding: 20px 16px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  border: 1px dashed var(--border-border-surface-border-surface);
+  border-radius: 12px;
+  box-sizing: border-box;
+}

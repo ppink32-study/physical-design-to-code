@@ -14,16 +14,73 @@
  * =============================================================== */
 
 /* -----------------------------------------------------------------
- *  Root — border 는 inline style 에서 주입
+ *  Root
+ *   default : 1px solid token (타입별), inner 264 / outer 266
+ *   hover   : 2px gradient (Mint→Purple)
+ *             - 1px : .root border 자리에 (border-color: transparent + bg gradient)
+ *             - 1px : ::after pseudo 가 padding-box 안쪽으로 1px ring 오버레이
+ *             ↳ inner/outer 사이즈 모두 변화 없음
+ *               · .root border 폭 = 1px 유지 (layout 변화 0)
+ *               · pseudo 는 absolute + overflow:hidden 안쪽이라 시각적 확장 0
+ *
+ *   .imageArea / .content 가 inner 영역을 덮지만 pseudo 가 z-index:1 로
+ *   inner 의 외곽 1px 만 그라데이션으로 덧칠 → 실제 콘텐츠는 가운데 정렬된
+ *   image / 20px padding 안쪽 텍스트라 시각적 손실 없음.
  * ----------------------------------------------------------------- */
 .root {
   box-sizing: border-box;
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 266px;
   border-radius: var(--radius-xl, 12px);
   overflow: hidden;
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
+  border: 1px solid transparent;
+  transition:
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+.root.typeBrand {
+  border-color: var(--border-neutral-border-neutral);
+}
+
+.root.typeLight {
+  border-color: var(--border-border-surface-border-surface);
+}
+
+/* hover —
+ *   step 1: .root 의 1px border 위치에 그라데이션 노출
+ *     · border-color: transparent → 1px 투명 공간 확보
+ *     · background: gradient border-box → 그 공간에 그라데이션이 비침
+ *   step 2: pseudo 로 그 안쪽에 1px 그라데이션 ring 추가 (총 2px)
+ */
+.root.typeBrand:hover,
+.root.typeBrand[data-state="hover"],
+.root.typeLight:hover,
+.root.typeLight[data-state="hover"] {
+  border-color: transparent;
+  background: linear-gradient(to right, #5cc7d0, #d5a5ff) border-box;
+}
+
+.root.typeBrand:hover::after,
+.root.typeBrand[data-state="hover"]::after,
+.root.typeLight:hover::after,
+.root.typeLight[data-state="hover"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--radius-xl, 12px) - 1px);
+  padding: 1px;
+  background: linear-gradient(to right, #5cc7d0, #d5a5ff);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* -----------------------------------------------------------------

@@ -43,7 +43,6 @@ const pageTitleStyle: CSSProperties = {
 
 const leadStyle: CSSProperties = {
   margin: "12px 0 0",
-  maxWidth: 640,
   fontSize: 15,
   fontWeight: 400,
   lineHeight: 1.65,

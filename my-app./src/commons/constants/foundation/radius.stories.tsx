@@ -56,13 +56,31 @@ const previewBaseStyle: CSSProperties = {
   border: `1px solid ${tokens.borderColor}`,
 };
 
+const RADIUS_MESSAGES = {
+  ko: {
+    description:
+      "모서리 반경(border-radius) 토큰입니다. 컴포넌트 모양을 결정하는 핵심 토큰이라 별도 페이지로 분리합니다. 임의 값 사용을 금지하고 정의된 토큰만 사용하세요.",
+    footer: (n: number) => `총 ${n}개 radius 변수 · 다운로드 버튼은 `,
+    footerSuffix: "원본을 그대로 내려줍니다.",
+  },
+  en: {
+    description:
+      "Corner-radius (border-radius) tokens. These are core tokens that define component shape, so they live on a dedicated page. Use only the defined tokens — never arbitrary values.",
+    footer: (n: number) => `${n} radius variables in total · The download button serves `,
+    footerSuffix: "as the original.",
+  },
+} as const;
+
 export const Matrix: Story = {
   name: "Matrix",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    const m = RADIUS_MESSAGES[locale];
+    return (
     <StoryDocsMatrixPage
       eyebrow="Design System"
       title="Radius scale"
-      description="모서리 반경(border-radius) 토큰입니다. 컴포넌트 모양을 결정하는 핵심 토큰이라 별도 페이지로 분리합니다. 임의 값 사용을 금지하고 정의된 토큰만 사용하세요."
+      description={m.description}
     >
       <div
         style={{
@@ -131,9 +149,10 @@ export const Matrix: Story = {
           paddingTop: 16,
         }}
       >
-        총 {RADIUS_TOKENS.length}개 radius 변수 · 다운로드 버튼은{" "}
-        <code>src/commons/constants/css/border-radius.css</code> 원본을 그대로 내려줍니다.
+        {m.footer(RADIUS_TOKENS.length)}
+        <code>src/commons/constants/css/border-radius.css</code> {m.footerSuffix}
       </footer>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };

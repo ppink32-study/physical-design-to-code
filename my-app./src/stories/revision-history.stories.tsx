@@ -1,12 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { CSSProperties } from "react";
 
-import {
-  StoryDocsPage,
-  StoryDocsParagraph,
-  StoryDocsSection,
-  StoryDocsNote,
-} from "@/stories/story-docs-shell";
+import { StoryDocsPage } from "@/stories/story-docs-shell";
 
 /**
  * Storybook `meta.component` 슬롯용 — 실제 UI는 Overview 스토리 render 에서 구성합니다.
@@ -15,33 +10,274 @@ function RevisionHistoryStub() {
   return null;
 }
 
-/** 한 줄 기록 — `REVISION_HISTORY_ENTRIES` 에 추가하면 목차·본문이 자동 렌더됩니다. */
+/* -----------------------------------------------------------
+ *  Revision Entry — Figma 19415:79175 GridTable 컬럼 매핑
+ * ----------------------------------------------------------- */
+type RevisionStatus = "added" | "modified";
+
+type LocalizedString = { ko: string; en: string };
+
 type RevisionHistoryEntry = {
-  /** 목차·섹션 앵커 (`#id`). storyHref 가 있으면 목차는 외부 링크 우선 */
-  id: string;
+  status: RevisionStatus;
+  target: string;
+  change: LocalizedString;
   date: string;
-  summary: string;
-  /** 다른 스토리로 이동: `?path=/story/components-divider--guideline` 형태 */
-  storyHref?: string;
+  /** Storybook 내부 이동 (`?path=/story/...`) 또는 외부 URL */
+  href?: string;
 };
 
-/**
- * 수정 이력 데이터.
- * 내용 추가는 요청 시에만 반영합니다 — 비워 두면 목차·기록 섹션은 안내 문구만 표시됩니다.
- */
-const REVISION_HISTORY_ENTRIES: RevisionHistoryEntry[] = [];
-
-const linkStyle: CSSProperties = {
-  fontSize: 15,
-  fontWeight: 600,
-  color: "var(--context-foreground-primary-on-primary-hover)",
-  textDecoration: "none",
+const STATUS_LABELS: Record<RevisionStatus, LocalizedString> = {
+  added: { ko: "추가", en: "Added" },
+  modified: { ko: "수정", en: "Modified" },
 };
 
-const sectionAnchorStyle: CSSProperties = {
-  scrollMarginTop: 24,
+const REVISION_HISTORY_ENTRIES: RevisionHistoryEntry[] = [
+  {
+    status: "added",
+    target: "Foundation > Layout",
+    change: { ko: "Layout 가이드 추가", en: "Layout guideline added" },
+    date: "2026-05-11",
+    href: "?path=/story/design-system-foundation-layout--guideline",
+  },
+];
+
+/* -----------------------------------------------------------
+ *  GridTable — Figma 19415:79175 (header 32 + body 32, rounded 6)
+ * ----------------------------------------------------------- */
+const COLS = {
+  status: 80,
+  target: 280,
+  change: 280,
+  date: 130,
+  link: 78,
+} as const;
+
+const TABLE_WIDTH =
+  COLS.status + COLS.target + COLS.change + COLS.date + COLS.link;
+
+const BORDER_OUTER = "#ddd"; // grayscale/300
+const BORDER_CELL = "#eee"; // grayscale/200
+const HEADER_BG = "#f6f6f6"; // grayscale/100
+const HEADER_TEXT = "#666"; // grayscale/700
+const BODY_TEXT = "#333"; // grayscale/900
+const LINK_COLOR = "#2e7bff"; // primary/500
+
+const headerCellStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: 32,
+  padding: "0 10px",
+  background: HEADER_BG,
+  borderBottom: `1px solid ${BORDER_OUTER}`,
+  fontFamily: "var(--font-family-korean)",
+  fontSize: 13,
+  fontWeight: 700,
+  lineHeight: "18px",
+  color: HEADER_TEXT,
+  boxSizing: "border-box",
 };
 
+const bodyCellStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  height: 32,
+  padding: "0 12px",
+  background: "#fff",
+  borderBottom: `1px solid ${BORDER_CELL}`,
+  borderRight: `1px solid ${BORDER_CELL}`,
+  fontFamily: "var(--font-family-korean)",
+  fontSize: 13,
+  fontWeight: 400,
+  lineHeight: "18px",
+  color: BODY_TEXT,
+  boxSizing: "border-box",
+};
+
+/* ---- 상태 배지 (추가 / 수정) ---- */
+function StatusBadge({ status, locale }: { status: RevisionStatus; locale: "ko" | "en" }) {
+  const palette =
+    status === "added"
+      ? { bg: "#deeaff", border: "#c2d8ff", text: "#0050d9" }
+      : { bg: "#fce7f3", border: "#fbcfe8", text: "#be185d" };
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth: 32,
+        padding: "1px 6px",
+        borderRadius: 4,
+        background: palette.bg,
+        border: `1px solid ${palette.border}`,
+        color: palette.text,
+        fontFamily: "var(--font-family-korean)",
+        fontSize: 13,
+        fontWeight: 400,
+        lineHeight: "18px",
+      }}
+    >
+      {STATUS_LABELS[status][locale]}
+    </span>
+  );
+}
+
+type GridLabels = {
+  status: string;
+  target: string;
+  change: string;
+  date: string;
+  link: string;
+  empty: string;
+  goto: string;
+};
+
+function GridTable({
+  entries,
+  labels,
+  locale,
+}: {
+  entries: RevisionHistoryEntry[];
+  labels: GridLabels;
+  locale: "ko" | "en";
+}) {
+  return (
+    <div
+      style={{
+        width: "100%",
+        maxWidth: TABLE_WIDTH,
+        background: "#fff",
+        border: `1px solid ${BORDER_OUTER}`,
+        borderRadius: 6,
+        overflow: "hidden",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: "flex", background: HEADER_BG }}>
+        <div style={{ ...headerCellStyle, width: COLS.status, flexShrink: 0 }}>
+          {labels.status}
+        </div>
+        <div style={{ ...headerCellStyle, width: COLS.target, flexShrink: 0 }}>
+          {labels.target}
+        </div>
+        <div style={{ ...headerCellStyle, width: COLS.change, flexShrink: 0 }}>
+          {labels.change}
+        </div>
+        <div style={{ ...headerCellStyle, width: COLS.date, flexShrink: 0 }}>
+          {labels.date}
+        </div>
+        <div style={{ ...headerCellStyle, width: COLS.link, flexShrink: 0 }}>
+          {labels.link}
+        </div>
+      </div>
+
+      {/* Body */}
+      {entries.length === 0 ? (
+        <div
+          style={{
+            padding: "16px 20px",
+            fontFamily: "var(--font-family-korean)",
+            fontSize: 13,
+            color: HEADER_TEXT,
+            background: "#fff",
+            textAlign: "center",
+          }}
+        >
+          {labels.empty}
+        </div>
+      ) : (
+        entries.map((row, idx) => {
+          const isLast = idx === entries.length - 1;
+          const rowBorderBottom = isLast ? "none" : `1px solid ${BORDER_CELL}`;
+          return (
+            <div
+              key={`${row.date}-${row.target}`}
+              style={{ display: "flex", alignItems: "stretch" }}
+            >
+              <div
+                style={{
+                  ...bodyCellStyle,
+                  width: COLS.status,
+                  flexShrink: 0,
+                  justifyContent: "center",
+                  borderBottom: rowBorderBottom,
+                }}
+              >
+                <StatusBadge status={row.status} locale={locale} />
+              </div>
+              <div
+                style={{
+                  ...bodyCellStyle,
+                  width: COLS.target,
+                  flexShrink: 0,
+                  borderBottom: rowBorderBottom,
+                }}
+              >
+                {row.target}
+              </div>
+              <div
+                style={{
+                  ...bodyCellStyle,
+                  width: COLS.change,
+                  flexShrink: 0,
+                  borderBottom: rowBorderBottom,
+                }}
+              >
+                {row.change[locale]}
+              </div>
+              <div
+                style={{
+                  ...bodyCellStyle,
+                  width: COLS.date,
+                  flexShrink: 0,
+                  justifyContent: "center",
+                  borderBottom: rowBorderBottom,
+                }}
+              >
+                {row.date}
+              </div>
+              <div
+                style={{
+                  ...bodyCellStyle,
+                  width: COLS.link,
+                  flexShrink: 0,
+                  justifyContent: "center",
+                  borderRight: "none",
+                  borderBottom: rowBorderBottom,
+                }}
+              >
+                {row.href ? (
+                  <a
+                    href={row.href}
+                    target="_top"
+                    rel="noreferrer"
+                    style={{
+                      color: LINK_COLOR,
+                      textDecoration: "underline",
+                      fontFamily: "var(--font-family-korean)",
+                      fontSize: 13,
+                      lineHeight: "18px",
+                    }}
+                  >
+                    {labels.goto}
+                  </a>
+                ) : (
+                  <span style={{ color: "#9698A3" }}>—</span>
+                )}
+              </div>
+            </div>
+          );
+        })
+      )}
+    </div>
+  );
+}
+
+/* -----------------------------------------------------------
+ *  Meta
+ * ----------------------------------------------------------- */
 const meta: Meta<typeof RevisionHistoryStub> = {
   title: "00 · 수정 히스토리",
   component: RevisionHistoryStub,
@@ -54,65 +290,36 @@ const meta: Meta<typeof RevisionHistoryStub> = {
 export default meta;
 type Story = StoryObj<typeof RevisionHistoryStub>;
 
-function RevisionHistoryBody() {
-  const entries = REVISION_HISTORY_ENTRIES;
-
-  return (
-    <>
-      <StoryDocsSection
-        title="목차"
-        description="날짜·수정 항목을 누르면 아래 해당 위치(앵커)로 이동합니다. 다른 스토리로 바로 갈 때는 항목에 storyHref 를 넣습니다."
-      >
-        {entries.length === 0 ? (
-          <StoryDocsNote>기록된 항목이 없습니다. 내용 추가를 요청해 주시면 반영합니다.</StoryDocsNote>
-        ) : (
-          <nav aria-label="수정 히스토리 목차">
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                display: "flex",
-                flexDirection: "column",
-                gap: 10,
-              }}
-            >
-              {entries.map((e) => {
-                const href = e.storyHref ?? `#${e.id}`;
-                const isHash = href.startsWith("#");
-                return (
-                  <li key={e.id}>
-                    <a
-                      href={href}
-                      {...(isHash ? {} : { target: "_top", rel: "noreferrer" })}
-                      style={linkStyle}
-                    >
-                      {e.date} — {e.summary}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        )}
-      </StoryDocsSection>
-
-      <StoryDocsSection title="기록" description="날짜별 상세.">
-        {entries.length === 0 ? (
-          <StoryDocsNote>항목이 없으면 이 영역은 비어 있습니다.</StoryDocsNote>
-        ) : (
-          entries.map((e) => (
-            <section key={e.id} id={e.id} style={sectionAnchorStyle}>
-              <StoryDocsParagraph>
-                <strong>{e.date}</strong> — {e.summary}
-              </StoryDocsParagraph>
-            </section>
-          ))
-        )}
-      </StoryDocsSection>
-    </>
-  );
-}
+const PAGE_MESSAGES = {
+  ko: {
+    title: "수정 히스토리",
+    description:
+      "디자인·문서·스토리북 변경을 표로 기록합니다. Link 컬럼의 ‘바로가기’ 를 누르면 해당 가이드 페이지로 이동합니다.",
+    labels: {
+      status: "상태",
+      target: "Target",
+      change: "변경내용",
+      date: "변경일자",
+      link: "Link",
+      empty: "기록된 항목이 없습니다.",
+      goto: "바로가기",
+    } as GridLabels,
+  },
+  en: {
+    title: "Revision History",
+    description:
+      "A table of design, document, and Storybook changes. Click ‘Go’ in the Link column to jump to the corresponding guideline page.",
+    labels: {
+      status: "Status",
+      target: "Target",
+      change: "Change",
+      date: "Date",
+      link: "Link",
+      empty: "No entries recorded.",
+      goto: "Go",
+    } as GridLabels,
+  },
+} as const;
 
 export const Overview: Story = {
   name: "Overview",
@@ -120,13 +327,18 @@ export const Overview: Story = {
     controls: { hideNoControlsWarning: true, disable: true },
     actions: { disable: true },
   },
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    const m = PAGE_MESSAGES[locale];
+    return (
     <StoryDocsPage
       eyebrow="Design System"
-      title="수정 히스토리"
-      description="디자인·문서·스토리북 변경을 날짜와 항목으로 남깁니다. 목차에서 앵커로 이동하거나, 항목에 지정한 링크로 다른 스토리를 열 수 있습니다."
+      title={m.title}
+      description={m.description}
+      pageMaxWidth={TABLE_WIDTH + 32}
     >
-      <RevisionHistoryBody />
+      <GridTable entries={REVISION_HISTORY_ENTRIES} labels={m.labels} locale={locale} />
     </StoryDocsPage>
-  ),
+    );
+  },
 };

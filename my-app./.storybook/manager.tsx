@@ -1,8 +1,11 @@
 import React from "react";
 import { addons, types, useGlobals } from "storybook/manager-api";
 
-/** 기본 @storybook/addon-themes 툴바(브러시) 대신 한글 라이트/다크 전환 */
-const ADDON_ID = "ds-theme-toggle";
+/** 상단 툴바: 한국어 / English 언어 전환
+ *   storybook globals.locale 값(ko / en)을 갱신.
+ *   각 story 의 render 함수가 ctx.globals.locale 으로 언어를 읽어 분기.
+ */
+const ADDON_ID = "ds-locale-toggle";
 
 const wrapStyle: React.CSSProperties = {
   display: "flex",
@@ -26,30 +29,30 @@ function segment(active: boolean): React.CSSProperties {
   };
 }
 
-function ThemeLightDarkToggle() {
-  const [{ theme }, updateGlobals] = useGlobals();
-  const resolved = theme === "dark" ? "dark" : "light";
+function LocaleToggle() {
+  const [{ locale }, updateGlobals] = useGlobals();
+  const resolved: "ko" | "en" = locale === "en" ? "en" : "ko";
 
   return (
-    <div style={wrapStyle} title="html data-theme (라이트 / 다크)">
+    <div style={wrapStyle} title="가이드라인 언어 (한국어 / English)">
       <button
         type="button"
         style={{
-          ...segment(resolved === "light"),
+          ...segment(resolved === "ko"),
           borderRight: "1px solid rgba(0, 0, 0, 0.12)",
         }}
-        aria-pressed={resolved === "light"}
-        onClick={() => updateGlobals({ theme: "light" })}
+        aria-pressed={resolved === "ko"}
+        onClick={() => updateGlobals({ locale: "ko" })}
       >
-        라이트
+        한국어
       </button>
       <button
         type="button"
-        style={segment(resolved === "dark")}
-        aria-pressed={resolved === "dark"}
-        onClick={() => updateGlobals({ theme: "dark" })}
+        style={segment(resolved === "en")}
+        aria-pressed={resolved === "en"}
+        onClick={() => updateGlobals({ locale: "en" })}
       >
-        다크
+        English
       </button>
     </div>
   );
@@ -57,10 +60,10 @@ function ThemeLightDarkToggle() {
 
 addons.register(ADDON_ID, () => {
   addons.add(`${ADDON_ID}/tool`, {
-    title: "테마",
+    title: "언어",
     type: types.TOOL,
     match: ({ viewMode, tabId }) =>
       Boolean(viewMode?.match(/^(story|docs)$/)) && !tabId,
-    render: ThemeLightDarkToggle,
+    render: LocaleToggle,
   });
 });

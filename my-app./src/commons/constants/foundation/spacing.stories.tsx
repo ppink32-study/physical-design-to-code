@@ -98,13 +98,33 @@ function SpacingPreviewBar({ token, value }: { token: string; value: string }) {
   );
 }
 
+const SPACING_MESSAGES = {
+  ko: {
+    description:
+      "4pt 그리드 기준 spacing 토큰과 예외(2px·6px)를 카드 그리드로 확인합니다. 임의 값 대신 정의된 토큰만 사용하세요.",
+    footer: (n: number) =>
+      `총 ${n}개 spacing 변수 · 다운로드 버튼은 `,
+    footerSuffix: "원본을 그대로 내려줍니다.",
+  },
+  en: {
+    description:
+      "Spacing tokens on a 4pt grid (with exceptions at 2px and 6px) shown in a card grid. Use only the defined tokens — never arbitrary values.",
+    footer: (n: number) =>
+      `${n} spacing variables in total · The download button serves `,
+    footerSuffix: "as the original.",
+  },
+} as const;
+
 export const Matrix: Story = {
   name: "Matrix",
-  render: () => (
+  render: (_args, ctx) => {
+    const locale = (ctx.globals?.locale as "ko" | "en") === "en" ? "en" : "ko";
+    const m = SPACING_MESSAGES[locale];
+    return (
     <StoryDocsMatrixPage
       eyebrow="Design System"
       title="Spacing scale"
-      description="4pt 그리드 기준 spacing 토큰과 예외(2px·6px)를 카드 그리드로 확인합니다. 임의 값 대신 정의된 토큰만 사용하세요."
+      description={m.description}
       figmaNode="6453-348396"
     >
       <div
@@ -171,9 +191,10 @@ export const Matrix: Story = {
           paddingTop: 16,
         }}
       >
-        총 {SPACING_TOKENS.length}개 spacing 변수 · 다운로드 버튼은{" "}
-        <code>src/commons/constants/css/spacing.css</code> 원본을 그대로 내려줍니다.
+        {m.footer(SPACING_TOKENS.length)}
+        <code>src/commons/constants/css/spacing.css</code> {m.footerSuffix}
       </footer>
     </StoryDocsMatrixPage>
-  ),
+    );
+  },
 };
