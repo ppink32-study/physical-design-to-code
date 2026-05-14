@@ -108,7 +108,7 @@ const chipFieldInputSlotStyle: CSSProperties = {
   fontFamily: "var(--font-family-korean)",
   fontSize: "var(--font-size-body-base, 14px)",
   lineHeight: "var(--font-line-height-sm, 20px)",
-  color: "var(--context-foreground-surface-on-surface-base, #141518)",
+  color: "var(--on-surface-base, #141518)",
 };
 
 function chipMatrixShellStyle(
@@ -122,7 +122,7 @@ function chipMatrixShellStyle(
     (state === "filled" || state === "readonly" || state === "disable");
 
   const borderDefault =
-    "1px solid var(--border-border-surface-border-surface, #d7d8dc)";
+    "1px solid var(--border-surface, #d7d8dc)";
   const shell: CSSProperties = {
     display: "flex",
     flexWrap: layout === "1line" ? "nowrap" : "wrap",
@@ -132,7 +132,7 @@ function chipMatrixShellStyle(
     padding: size === "large" ? "3px 8px" : "4px 8px",
     boxSizing: "border-box",
     backgroundColor:
-      "var(--context-background-surface-bg-surface-base, #ffffff)",
+      "var(--bg-surface-base, #ffffff)",
     border: borderDefault,
     borderRadius: "var(--radius-md, 6px)",
     width: INPUT_WRAPPER_DEFAULT_WIDTH_PX,
@@ -145,20 +145,20 @@ function chipMatrixShellStyle(
   };
 
   if (state === "focus") {
-    shell.border = "1px solid var(--border-border-primary, #5cc7d0)";
+    shell.border = "1px solid var(--border-primary, #5cc7d0)";
     shell.boxShadow =
       "0 0 0 4px var(--color-opacity-primary-15, rgba(67, 198, 193, 0.15))";
     shell.cursor = "text";
   } else if (state === "disable") {
     shell.backgroundColor =
-      "var(--context-background-surface-bg-surface-base-disabled, #f4f4f5)";
+      "var(--bg-surface-base-disabled, #f4f4f5)";
     shell.border =
-      "1px solid var(--border-border-surface-border-surface-disabled, #d7d8dc)";
+      "1px solid var(--border-surface-disabled, #d7d8dc)";
     shell.cursor = "not-allowed";
     shell.paddingBottom = 4;
   } else if (state === "readonly") {
     shell.backgroundColor =
-      "var(--context-background-surface-bg-surface-secondary, #f4f4f5)";
+      "var(--bg-surface-secondary, #f4f4f5)";
     shell.border = borderDefault;
     shell.cursor = "default";
     shell.paddingBottom = 4;
@@ -409,9 +409,9 @@ export const Matrix: Story = {
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
                     color:
-                      "var(--context-foreground-surface-on-surface-hint)",
+                      "var(--on-surface-hint)",
                     borderBottom:
-                      "1px solid var(--border-border-surface-border-surface)",
+                      "1px solid var(--border-surface)",
                   }}
                 >
                   {sz === "medium" ? "Medium (32px)" : "Large (40px)"}
@@ -430,7 +430,7 @@ export const Matrix: Story = {
                     <span
                       style={{
                         color:
-                          "var(--context-foreground-surface-on-surface-hint)",
+                          "var(--on-surface-hint)",
                         fontWeight: 500,
                       }}
                     >
@@ -568,8 +568,8 @@ export const Matrix: Story = {
 const guideBlockStyle: CSSProperties = {
   padding: 16,
   borderRadius: 8,
-  border: "1px solid var(--border-border-surface-border-surface)",
-  background: "var(--context-background-surface-bg-surface-base)",
+  border: "1px solid var(--border-surface)",
+  background: "var(--bg-surface-base)",
 };
 
 const guideTableStyle = storyDocsGuideTableStyle;
@@ -585,7 +585,7 @@ function InputAnatomyLivePreview() {
     marginBottom: 16,
     background: "rgba(244, 244, 245, 0.72)",
     border:
-      "1px solid var(--border-border-neutral-border-neutral-secondary, #ececee)",
+      "1px solid var(--border-neutral-secondary, #ececee)",
     padding: 24,
   };
   const col: CSSProperties = {
@@ -607,7 +607,7 @@ function InputAnatomyLivePreview() {
           margin: "0 0 12px",
           fontSize: 12,
           fontWeight: 500,
-          color: "var(--context-foreground-surface-on-surface-hint)",
+          color: "var(--on-surface-hint)",
         }}
       >
         Common — Figma 12210:7424와 동일 구성(라이브)
@@ -652,7 +652,7 @@ export const Guideline: Story = {
             href={FIGMA_INPUT_ANATOMY}
             target="_blank"
             rel="noreferrer"
-            style={{ color: "var(--context-foreground-primary-on-primary-base)" }}
+            style={{ color: "var(--on-primary-base)" }}
           >
             Input Anatomy (12210:7424)
           </a>
@@ -684,7 +684,7 @@ export const Guideline: Story = {
               margin: "0 0 12px",
               fontSize: 13,
               fontWeight: 600,
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
             }}
           >
             구성 요소
@@ -695,7 +695,7 @@ export const Guideline: Story = {
               paddingLeft: 22,
               fontSize: 13,
               lineHeight: 1.65,
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
               listStyleType: "decimal",
             }}
           >
@@ -759,7 +759,7 @@ export const Guideline: Story = {
               margin: "16px 0 8px",
               fontSize: 13,
               fontWeight: 600,
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
             }}
           >
             Tag (같은 문서 섹션 요약)
@@ -770,7 +770,7 @@ export const Guideline: Story = {
               paddingLeft: 22,
               fontSize: 13,
               lineHeight: 1.65,
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
             }}
           >
             <li style={{ marginBottom: 8 }}>
@@ -801,7 +801,7 @@ export const Guideline: Story = {
             <span
               style={{
                 fontSize: 12,
-                color: "var(--context-foreground-surface-on-surface-hint)",
+                color: "var(--on-surface-hint)",
               }}
             >
               예시 (<code>InputChip</code>):

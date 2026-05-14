@@ -2,13 +2,13 @@
  * BodyCell — Data Grid/Body (Figma node 4456:290858)
  * -----------------------------------------------------------------------------
  * Tokens (variable_defs 실측)
- *   - bg base        : --context-background-surface-bg-surface-base (#ffffff)
- *   - bg hover       : --context-background-surface-bg-surface-base-hover (#ececee)
+ *   - bg base        : --bg-surface-base (#ffffff)
+ *   - bg hover       : --bg-surface-base-hover (#ececee)
  *   - bg selected    : --_color-opacity-accent-primary500-8 (rgba(67,198,193,0.08))
- *   - border         : --border-border-surface-border-surface-secondary (#ececee)
- *   - border (focus) : --context-background-primary-bg-primary-disabled (light #D5F2F1 / dark #185474)
- *   - text           : --context-foreground-surface-on-surface-base (#141518)
- *   - icon           : --context-foreground-icon-surface-icon-surface (#565967)
+ *   - border         : --border-surface-secondary (#ececee)
+ *   - border (focus) : --bg-primary-disabled (light #D5F2F1 / dark #185474)
+ *   - text           : --on-surface-base (#141518)
+ *   - icon           : --icon-surface (#565967)
  *   - font           : Body/Base_Regular (14/20, pretendard regular)
  *   - padding        : text cells → pl=12 pr=13 py=4
  *                      blank / 40w → px=8 py=4
@@ -22,8 +22,8 @@
   height: 40px;
   box-sizing: border-box;
   padding: var(--spacing-2xs, 4px) 0;
-  background: var(--context-background-surface-bg-surface-base, #ffffff);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  background: var(--bg-surface-base, #ffffff);
+  color: var(--on-surface-base, #141518);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-base, 14px);
   line-height: var(--font-line-height-sm, 20px);
@@ -32,9 +32,9 @@
 
   /* default : right + bottom 1px (secondary) */
   border-right: var(--border-width-xs, 1px) solid
-    var(--border-border-surface-border-surface-secondary, #ececee);
+    var(--border-surface-secondary, #ececee);
   border-bottom: var(--border-width-xs, 1px) solid
-    var(--border-border-surface-border-surface-secondary, #ececee);
+    var(--border-surface-secondary, #ececee);
 }
 
 /* ---------------------------------------------------------------------------
@@ -158,13 +158,13 @@
  * State
  * ------------------------------------------------------------------------- */
 .root[data-state="hovered"] {
-  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+  background: var(--bg-surface-base-hover, #ececee);
 }
 
 .root[data-state="selected"] {
   /* Figma 원본 : rgba(67,198,193, 0.08) — token "Color/Opacity/Accent/Primary500_8%"
-     실제 CSS 변수 명 : --opacity-primary-opacity-8 (light/dark 양쪽 동일 #rgba) */
-  background: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
+     실제 CSS 변수 명 : --primary-opacity-8 (light/dark 양쪽 동일 #rgba) */
+  background: var(--primary-opacity-8, rgba(67, 198, 193, 0.08));
 }
 
 /* ---------------------------------------------------------------------------
@@ -174,7 +174,7 @@
  * ------------------------------------------------------------------------- */
 .root[data-focus="true"] {
   border: var(--border-width-xs, 1px) solid
-    var(--context-background-primary-bg-primary-disabled, #d5f2f1);
+    var(--bg-primary-disabled, #d5f2f1);
 }
 
 /* ---------------------------------------------------------------------------
@@ -237,7 +237,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 
 /* ---------------------------------------------------------------------------
@@ -273,7 +273,7 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 .iconSlot .icon {
   width: 20px;
@@ -307,7 +307,7 @@
 
 /* ---------------------------------------------------------------------------
  * Like — star icon button
- *   기본 색 : icon-surface-teriary (#b3b4bc)
+ *   기본 색 : icon-surface-tertiary (#b3b4bc)
  *   활성화 : accent-primary (teal)
  * ------------------------------------------------------------------------- */
 .likeBtn {
@@ -320,26 +320,26 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  color: var(--context-background-surface-bg-surface-quarernary, #d7d8dc);
+  color: var(--bg-surface-quarernary, #d7d8dc);
   border-radius: var(--radius-xs, 4px);
   transition: color 0.15s ease;
 }
 .likeBtn:hover {
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 .likeBtn:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary, #3f9bae);
+  outline: 2px solid var(--on-primary, #3f9bae);
   outline-offset: 1px;
 }
 .likeBtn:disabled {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled, #d7d8dc);
+  color: var(--icon-surface-disabled, #d7d8dc);
   cursor: not-allowed;
 }
 .likeIconOn {
-  color: var(--context-foreground-primary-on-primary, #3f9bae);
+  color: var(--on-primary, #3f9bae);
 }
 .likeBtn:has(.likeIconOn) {
-  color: var(--context-foreground-primary-on-primary, #3f9bae);
+  color: var(--on-primary, #3f9bae);
 }
 
 
@@ -360,7 +360,7 @@
   border-radius: 999px;
 }
 .stateDot[data-tone="primary"] {
-  background: var(--context-background-primary-bg-primary, #43c6c1);
+  background: var(--bg-primary, #43c6c1);
 }
 .stateDot[data-tone="blue"] {
   background: var(--semantic-blue-base, #0093ff);
@@ -375,7 +375,7 @@
   background: var(--semantic-yellow-base, #f4c33f);
 }
 .stateDot[data-tone="gray"] {
-  background: var(--context-foreground-surface-on-surface-hint, #787a88);
+  background: var(--on-surface-hint, #787a88);
 }
 .stateText {
   flex: 1 1 auto;
@@ -384,7 +384,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: var(--font-size-body-base, 14px);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
 }
 
 /* ===========================================================================
@@ -433,7 +433,7 @@
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 
 /* ===========================================================================
@@ -450,7 +450,7 @@
 .multiLine {
   font-size: var(--font-size-body-base, 14px);
   line-height: var(--font-line-height-sm, 20px);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -477,7 +477,7 @@
   white-space: nowrap;
   font-size: var(--font-size-body-base, 14px);
   line-height: var(--font-line-height-sm, 20px);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
 }
 .multiSubBadge {
   display: inline-flex;
@@ -488,7 +488,7 @@
   font-size: var(--font-size-body-xs, 11px);
   line-height: var(--font-line-height-2xs, 14px);
   font-weight: var(--font-weight-medium, 500);
-  color: var(--context-foreground-surface-on-surface-hint-muted, #9698a3);
+  color: var(--on-surface-hint-muted, #9698a3);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -503,7 +503,7 @@
   height: 30px;
   border-radius: 2px;
   overflow: hidden;
-  background: var(--context-background-surface-bg-surface-quarernary, #e6e7ea);
+  background: var(--bg-surface-quarernary, #e6e7ea);
 }
 .videoThumb {
   width: 100%;

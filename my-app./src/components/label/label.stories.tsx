@@ -138,7 +138,7 @@ const matrixCornerTh: CSSProperties = {
 
 const matrixEmptyTd: CSSProperties = {
   ...storyMatrixCellStyle,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
   fontSize: 12,
   textAlign: "center",
 };

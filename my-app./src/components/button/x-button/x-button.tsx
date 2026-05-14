@@ -8,12 +8,12 @@
  * Variants (6) : size{medium, large} × state{default, hover, disable}
  *
  * 토큰
- *   default bg : --context-background-surface-bg-surface-secondary  (#F4F4F5)
- *   default fg : --context-foreground-icon-surface-icon-surface     (#565967)
- *   hover   bg : --context-background-surface-bg-surface-teriary    (#ECECEE)
- *   hover   fg : --context-foreground-icon-surface-icon-surface     (#565967)
- *   disable bg : --context-background-tint-bg-gray-tint-hover       (#ECECEE)
- *   disable fg : --context-foreground-icon-surface-icon-surface-disabled (#B3B4BC)
+ *   default bg : --bg-surface-secondary  (#F4F4F5)
+ *   default fg : --icon-surface     (#565967)
+ *   hover   bg : --bg-surface-tertiary    (#ECECEE)
+ *   hover   fg : --icon-surface     (#565967)
+ *   disable bg : --bg-gray-tint-hover       (#ECECEE)
+ *   disable fg : --icon-surface-disabled (#B3B4BC)
  *
  * 사이즈
  *   medium : 16×16 컨테이너, 12×12 아이콘

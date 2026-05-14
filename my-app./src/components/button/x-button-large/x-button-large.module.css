@@ -2,9 +2,9 @@
  * XButtonLarge — Figma 18369:15529 (btn/delete)
  * -----------------------------------------------------------------------------
  *   container : 32×32 (--size-base-4xl), rounded-100 (원형)
- *   default bg: --opacity-black-opacity-50 (rgba(0,0,0,0.5))
- *   hover   bg: --opacity-black-opacity-90 (rgba(0,0,0,0.9))
- *   icon fg   : --context-foreground-neutral-on-neutral-white (흰 X)
+ *   default bg: --black-opacity-50 (rgba(0,0,0,0.5))
+ *   hover   bg: --black-opacity-90 (rgba(0,0,0,0.9))
+ *   icon fg   : --on-neutral-white (흰 X)
  *   icon size : 16×16 (Close-2.svg, mask-image)
  * ========================================================================== */
 
@@ -18,8 +18,8 @@
   padding: 0;
   border: 0;
   border-radius: 100px;
-  background: var(--opacity-black-opacity-50, rgba(0, 0, 0, 0.5));
-  color: var(--context-foreground-neutral-on-neutral-white, #FFFFFF);
+  background: var(--black-opacity-50, rgba(0, 0, 0, 0.5));
+  color: var(--on-neutral-white, #FFFFFF);
   cursor: pointer;
   appearance: none;
   user-select: none;
@@ -32,14 +32,14 @@
 }
 
 .root:focus-visible {
-  outline: 2px solid var(--context-foreground-neutral-on-neutral-white, #FFFFFF);
+  outline: 2px solid var(--on-neutral-white, #FFFFFF);
   outline-offset: 2px;
 }
 
 /* hover */
 .root:hover,
 .root[data-force-state="hover"] {
-  background: var(--opacity-black-opacity-90, rgba(0, 0, 0, 0.9));
+  background: var(--black-opacity-90, rgba(0, 0, 0, 0.9));
 }
 
 /* icon — Close-2 SVG, currentColor 상속 (mask-image) */

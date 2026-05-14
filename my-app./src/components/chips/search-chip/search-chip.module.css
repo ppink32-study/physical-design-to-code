@@ -8,25 +8,25 @@
  *   [pl:8] labelName? + chipName [pr:4] [x-btn 16px]
  *
  * 토큰 (Figma 최신: neutral → surface 계열로 일괄 교체)
- *   bg default     : --context-background-surface-bg-surface-base (white)
- *   bg hover       : --context-background-surface-bg-surface-base-hover (#ececee)
- *   bg selected    : --context-background-gray-bg-darkgray (#33343d)
- *   bg error       : --context-background-tint-bg-red-tint (#ffecec)
- *   bg disable     : --context-background-surface-bg-surface-base (유지)
- *   border default : --border-border-surface-border-surface (#d7d8dc)
- *   border hover   : --border-border-surface-border-surface-hover (#b3b4bc)
- *   border error   : --context-foreground-error-on-error (#ff312e)
- *   border disabled: --border-border-surface-border-surface-disabled (#d7d8dc)
- *   label text     : --context-foreground-surface-on-surface-hint (#787a88)
- *   label selected : --context-background-surface-bg-surface-base-disabled (#f4f4f5)
- *   chip text      : --context-foreground-surface-on-surface-base
- *   chip selected  : --context-foreground-surface-on-suface-white (white)
- *   chip disabled  : --context-foreground-surface-on-surface-disabled
- *   x-btn bg default : --context-background-surface-bg-surface-secondary
- *   x-btn bg hover   : --context-background-surface-bg-surface-teriary
- *   x-btn bg selected: --context-background-surface-bg-surface-teriary
- *   x-btn bg error   : --context-background-tint-bg-gray-tint-hover
- *   x-btn bg disabled: --context-background-tint-bg-gray-tint-hover
+ *   bg default     : --bg-surface-base (white)
+ *   bg hover       : --bg-surface-base-hover (#ececee)
+ *   bg selected    : --bg-darkgray (#33343d)
+ *   bg error       : --bg-red-tint (#ffecec)
+ *   bg disable     : --bg-surface-base (유지)
+ *   border default : --border-surface (#d7d8dc)
+ *   border hover   : --border-surface-hover (#b3b4bc)
+ *   border error   : --on-error (#ff312e)
+ *   border disabled: --border-surface-disabled (#d7d8dc)
+ *   label text     : --on-surface-hint (#787a88)
+ *   label selected : --bg-surface-base-disabled (#f4f4f5)
+ *   chip text      : --on-surface-base
+ *   chip selected  : --on-surface-white (white)
+ *   chip disabled  : --on-surface-disabled
+ *   x-btn bg default : --bg-surface-secondary
+ *   x-btn bg hover   : --bg-surface-tertiary
+ *   x-btn bg selected: --bg-surface-tertiary
+ *   x-btn bg error   : --bg-gray-tint-hover
+ *   x-btn bg disabled: --bg-gray-tint-hover
  *   radius           : --radius-full (1000)
  * ========================================================================== */
 
@@ -39,8 +39,8 @@
   height: 24px;
   min-height: 24px;
   border-radius: var(--radius-full);
-  background: var(--context-background-surface-bg-surface-base);
-  border: 1px solid var(--border-border-surface-border-surface);
+  background: var(--bg-surface-base);
+  border: 1px solid var(--border-surface);
   cursor: default;
   white-space: nowrap;
 }
@@ -60,7 +60,7 @@
   font-weight: var(--font-weight-semibold);
   line-height: var(--font-line-height-xs); /* 16 */
   letter-spacing: -0.06px;
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
 }
 
 /* Chip text (Regular 13px) */
@@ -70,7 +70,7 @@
   font-weight: var(--font-weight-regular);
   line-height: var(--font-line-height-sm);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 /* ---------- Close button ---------- */
@@ -85,8 +85,8 @@
   width: var(--size-base-lg);  /* 16 */
   height: var(--size-base-lg);
   border-radius: var(--radius-full);
-  background: var(--context-background-surface-bg-surface-secondary);
-  color: var(--context-foreground-icon-surface-icon-surface);
+  background: var(--bg-surface-secondary);
+  color: var(--icon-surface);
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -95,40 +95,40 @@
  * ========================================================================== */
 .chip[data-state="default"]:hover,
 .chip[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
-  border-color: var(--border-border-surface-border-surface-hover);
+  background: var(--bg-surface-base-hover);
+  border-color: var(--border-surface-hover);
 }
 .chip[data-state="default"]:hover .closeBtn,
 .chip[data-force-state="hover"] .closeBtn {
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
 }
 
 /* =============================================================================
  * Selected
  * ========================================================================== */
 .chip[data-state="selected"] {
-  background: var(--context-background-gray-bg-darkgray);
+  background: var(--bg-darkgray);
   border-color: transparent;
 }
 .chip[data-state="selected"] .labelText {
-  color: var(--context-background-surface-bg-surface-base-disabled);
+  color: var(--bg-surface-base-disabled);
 }
 .chip[data-state="selected"] .chipText {
-  color: var(--context-foreground-surface-on-suface-white);
+  color: var(--on-surface-white);
 }
 .chip[data-state="selected"] .closeBtn {
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
 }
 
 /* =============================================================================
  * Error
  * ========================================================================== */
 .chip[data-state="error"] {
-  background: var(--context-background-tint-bg-red-tint);
-  border-color: var(--context-foreground-error-on-error);
+  background: var(--bg-red-tint);
+  border-color: var(--on-error);
 }
 .chip[data-state="error"] .closeBtn {
-  background: var(--context-background-tint-bg-gray-tint-hover);
+  background: var(--bg-gray-tint-hover);
 }
 
 /* =============================================================================
@@ -136,17 +136,17 @@
  * ========================================================================== */
 .chip[data-state="disable"],
 .chip[data-force-state="disable"] {
-  border-color: var(--border-border-surface-border-surface-disabled);
+  border-color: var(--border-surface-disabled);
   cursor: not-allowed;
 }
 .chip[data-state="disable"] .chipText,
 .chip[data-force-state="disable"] .chipText {
-  color: var(--context-foreground-surface-on-surface-disabled);
+  color: var(--on-surface-disabled);
 }
 .chip[data-state="disable"] .closeBtn,
 .chip[data-force-state="disable"] .closeBtn {
-  background: var(--context-background-tint-bg-gray-tint-hover);
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  background: var(--bg-gray-tint-hover);
+  color: var(--icon-surface-disabled);
   pointer-events: none;
   cursor: not-allowed;
 }

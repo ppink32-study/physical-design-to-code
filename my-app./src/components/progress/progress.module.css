@@ -7,19 +7,19 @@
  *
  * Track
  *   border-radius : --radius-full (1000px)
- *   bg            : --context-background-surface-bg-surface-teriary
+ *   bg            : --bg-surface-tertiary
  *
  * Bar colors
- *   primary : --context-background-primary-bg-primary-hover
- *   success : --accent-green-accent-green
- *   info    : --accent-cyan-accent-cyan
- *   warning : --accent-yellow-accent-yellow
- *   danger  : --accent-red-accent-red
+ *   primary : --bg-primary-hover
+ *   success : --accent-green
+ *   info    : --accent-cyan
+ *   warning : --accent-yellow
+ *   danger  : --accent-red
  *
  * Label (percentage text)
  *   Body/Xs-Medium  11px / 14px / weight 500
- *   color (default) : --context-foreground-surface-on-suface-invert (white)
- *   color (warning) : --context-foreground-neutral-on-neutral-base  (dark)
+ *   color (default) : --on-surface-invert (white)
+ *   color (warning) : --on-neutral-base  (dark)
  *
  * Striped pattern
  *   White_8%  diagonal overlay via background-image
@@ -33,7 +33,7 @@
   width: 100%;
   height: var(--size-base-lg, 16px);
   border-radius: var(--radius-full, 1000px);
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
   overflow: hidden;
 }
 
@@ -50,8 +50,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--context-background-primary-bg-primary-hover);
-  color: var(--context-foreground-surface-on-suface-invert);
+  background-color: var(--bg-primary-hover);
+  color: var(--on-surface-invert);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-xs, 11px);
   line-height: var(--font-line-height-2xs, 14px);
@@ -63,24 +63,24 @@
 
 /* Color variants */
 .bar[data-color="primary"] {
-  background-color: var(--context-background-primary-bg-primary-hover);
-  color: var(--context-foreground-surface-on-suface-invert);
+  background-color: var(--bg-primary-hover);
+  color: var(--on-surface-invert);
 }
 .bar[data-color="success"] {
-  background-color: var(--accent-green-accent-green);
-  color: var(--context-foreground-surface-on-suface-invert);
+  background-color: var(--accent-green);
+  color: var(--on-surface-invert);
 }
 .bar[data-color="info"] {
-  background-color: var(--accent-cyan-accent-cyan);
-  color: var(--context-foreground-surface-on-suface-invert);
+  background-color: var(--accent-cyan);
+  color: var(--on-surface-invert);
 }
 .bar[data-color="warning"] {
-  background-color: var(--accent-yellow-accent-yellow);
-  color: var(--context-foreground-neutral-on-neutral-base);
+  background-color: var(--accent-yellow);
+  color: var(--on-neutral-base);
 }
 .bar[data-color="danger"] {
-  background-color: var(--accent-red-accent-red);
-  color: var(--context-foreground-surface-on-suface-invert);
+  background-color: var(--accent-red);
+  color: var(--on-surface-invert);
 }
 
 /* ---------------------------------------------------------------------------
@@ -92,8 +92,8 @@
   inset: 0;
   background-image: repeating-linear-gradient(
     -45deg,
-    var(--opacity-white-opacity-8) 0,
-    var(--opacity-white-opacity-8) 6px,
+    var(--white-opacity-8) 0,
+    var(--white-opacity-8) 6px,
     transparent 6px,
     transparent 12px
   );

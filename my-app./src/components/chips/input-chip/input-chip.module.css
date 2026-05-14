@@ -13,14 +13,14 @@
  * 패딩: 좌우 8px 고정. large 는 상하 2px · 높이 32px (Select large 40px 컨테이너 내 py 4px 기준).
  *
  * 토큰 매핑 (재확인 완료)
- *   bg base            : --context-background-surface-bg-surface-teriary
- *   bg hover           : --context-background-surface-bg-surface-base-hover
- *   text base          : --context-foreground-surface-on-surface-base
- *   text disabled      : --context-foreground-surface-on-surface-disabled
- *   border disabled    : --border-border-surface-border-surface-disabled
- *   border error       : --context-foreground-error-on-error
- *   close icon         : --context-foreground-icon-surface-icon-surface
- *   close icon disabled: --context-foreground-icon-surface-icon-surface-disabled
+ *   bg base            : --bg-surface-tertiary
+ *   bg hover           : --bg-surface-base-hover
+ *   text base          : --on-surface-base
+ *   text disabled      : --on-surface-disabled
+ *   border disabled    : --border-surface-disabled
+ *   border error       : --on-error
+ *   close icon         : --icon-surface
+ *   close icon disabled: --icon-surface-disabled
  *   radius             : --radius-sm (4)
  * ========================================================================== */
 
@@ -33,8 +33,8 @@
   padding-inline: 8px;
   max-width: 252px;
   border-radius: var(--radius-sm);
-  background: var(--context-background-surface-bg-surface-teriary);
-  color: var(--context-foreground-surface-on-surface-base);
+  background: var(--bg-surface-tertiary);
+  color: var(--on-surface-base);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-base);
   line-height: var(--font-line-height-sm);
@@ -78,11 +78,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
   border-radius: 2px;
 }
 .close:focus-visible {
-  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline: 2px solid var(--accent-purple, #7b5cff);
   outline-offset: 1px;
 }
 .closeIcon {
@@ -100,17 +100,17 @@
 .chip[data-state="default"]:hover,
 .chip[data-state="readonly"]:hover,
 .chip[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
 }
 
 /* ---------------------------------------------------------------------------
  * Readonly — border-surface-disabled border 추가, close 는 표시만 클릭 차단
  * ------------------------------------------------------------------------- */
 .chip[data-state="readonly"] {
-  border-color: var(--border-border-surface-border-surface-disabled);
+  border-color: var(--border-surface-disabled);
 }
 .chip[data-state="readonly"] .close {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
   pointer-events: none;
   cursor: default;
 }
@@ -120,13 +120,13 @@
  * ------------------------------------------------------------------------- */
 .chip[data-state="disable"],
 .chip[data-force-state="disable"] {
-  color: var(--context-foreground-surface-on-surface-disabled);
-  border-color: var(--border-border-surface-border-surface-disabled);
+  color: var(--on-surface-disabled);
+  border-color: var(--border-surface-disabled);
   cursor: not-allowed;
 }
 .chip[data-state="disable"] .close,
 .chip[data-force-state="disable"] .close {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
   pointer-events: none;
   cursor: not-allowed;
 }
@@ -136,5 +136,5 @@
  * (Readonly/Disable 의 border 보다 우선 적용)
  * ------------------------------------------------------------------------- */
 .chip[data-type="error"] {
-  border-color: var(--context-foreground-error-on-error);
+  border-color: var(--on-error);
 }

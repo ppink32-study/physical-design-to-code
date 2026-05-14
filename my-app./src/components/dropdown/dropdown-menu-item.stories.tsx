@@ -64,7 +64,7 @@ const columnHeaderStyle: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: 0.4,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   padding: "10px 12px",
   whiteSpace: "nowrap",
   textAlign: "left",
@@ -74,7 +74,7 @@ const matrixRowLabelColumnPadding = "10px 24px 10px 16px";
 
 const rowLabelStyle: CSSProperties = {
   fontSize: 11,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
   padding: matrixRowLabelColumnPadding,
   whiteSpace: "nowrap",
   fontFamily: "ui-monospace, SFMono-Regular, monospace",
@@ -236,7 +236,7 @@ export const Matrix: Story = {
               style={{
                 display: "grid",
                 gridTemplateColumns: `${ROW_LABEL_WIDTH}px repeat(${TYPES.length}, ${COL_WIDTH}px)`,
-                background: "var(--context-background-surface-bg-surface-base)",
+                background: "var(--bg-surface-base)",
                 minWidth:
                   ROW_LABEL_WIDTH + TYPES.length * COL_WIDTH,
               }}
@@ -265,7 +265,7 @@ export const Matrix: Story = {
                   alignItems: "center",
                   minWidth: ROW_LABEL_WIDTH + TYPES.length * COL_WIDTH,
                   borderTop:
-                    "1px solid var(--border-border-surface-border-surface-secondary)",
+                    "1px solid var(--border-surface-secondary)",
                 }}
               >
                 <div style={rowLabelStyle}>{s}</div>

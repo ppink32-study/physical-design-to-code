@@ -27,18 +27,18 @@
  *   forcedState                   : 스토리북 / 강제 상태 시각화용 override
  *
  * 토큰 매핑 (light 기준)
- *   bg              : --context-background-surface-bg-surface-base (white)
- *   bg (disabled/RO): --context-background-surface-bg-surface-base-disabled (#f4f4f5)
- *   border          : --border-border-surface-border-surface (#d7d8dc)
- *   border (focus)  : --border-border-primary (#5cc7d0)
- *   border (success): --border-border-valid (#3ac133)
- *   border (error)  : --border-border-invalid (#ff5a58)
+ *   bg              : --bg-surface-base (white)
+ *   bg (disabled/RO): --bg-surface-base-disabled (#f4f4f5)
+ *   border          : --border-surface (#d7d8dc)
+ *   border (focus)  : --border-primary (#5cc7d0)
+ *   border (success): --border-valid (#3ac133)
+ *   border (error)  : --border-invalid (#ff5a58)
  *   focus ring (normal) : --shadow-focus-ring-primary (Focus Ring / Primary)
  *   focus ring (success): --shadow-focus-ring-form-valid (Focus Ring / Form Valid)
  *   focus ring (error)  : --shadow-focus-ring-form-invalid (Focus Ring / Form Invalid)
- *   text            : --context-foreground-surface-on-surface-base (#141518)
- *   placeholder     : --context-foreground-surface-on-surface-hint (#787a88)
- *   disabled text   : --context-foreground-surface-on-surface-disabled (#b3b4bc)
+ *   text            : --on-surface-base (#141518)
+ *   placeholder     : --on-surface-hint (#787a88)
+ *   disabled text   : --on-surface-disabled (#b3b4bc)
  *   radius          : --radius-md (6px)
  *   padding x       : --spacing-md (13px) / --spacing-lg (16px) for large ?  => figma: spacing-md
  *   size            : M 32, L 40

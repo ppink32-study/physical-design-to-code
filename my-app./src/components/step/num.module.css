@@ -1,134 +1,93 @@
 /* =============================================================================
- * Num — Figma 18374:238 (24×24 원형 step 번호 배지)
+ * Num — Figma node 18374:238
  * -----------------------------------------------------------------------------
- * Number states × modes (6 variants)
- *   light · finish  : white bg + 1.5px mint border + mint text
- *   light · current : mint solid bg + white text
- *   light · next    : quaternary gray bg + hint text
- *   dark  · finish  : transparent + mint border + mint text
- *   dark  · current : mint solid bg + invert (dark) text
- *   dark  · next    : quaternary gray bg (brand=#565967) + on-surface text
+ * 24×24 원형 인디케이터. variants 7종.
  *
- * Icon states (light only)
- *   complete : dark bg (#141518)  + white check icon
- *   error    : red bg             + white alert icon
- *   success  : green bg           + white check-circle icon
- *   stop     : yellow bg          + dark stop icon
+ *   stop          : bg accent-yellow,            icon Stock (on-neutral-white)
+ *   complete      : bg on-surface-base(#141518), icon Check (on-surface-white)
+ *   error         : bg bg-error,                 icon Alert (on-neutral-white)
+ *   success       : bg accent-green,             icon CheckCircle (on-neutral-white)
+ *   next          : bg bg-surface-tertiary,       text "n" (on-surface)
+ *   current-light : bg on-primary,               text "n" (on-surface-white)
+ *   current-brand : gradient(mint600→#7972f7),   text "n" (on-surface-white)
  * ========================================================================== */
 
 .root {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-sm, 8px);
-  padding: var(--spacing-3xs, 2px);
-}
-
-.anchor {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 32px;       /* size 24 + radius 32 → 원형 */
   box-sizing: border-box;
-}
-
-.label {
-  font-family: var(--font-family-korean, "Pretendard", sans-serif);
-  font-size: var(--font-size-body-sm, 12px);
-  font-weight: var(--font-weight-semibold, 600);
-  line-height: var(--font-line-height-xs, 16px);
-  letter-spacing: -0.06px;
-  text-align: center;
-}
-
-/* ---------------------------------------------------------------------------
- * Finish — 외곽선만 mint, 안은 표면색
- * ------------------------------------------------------------------------- */
-.root[data-state="finish"] .anchor {
-  background: var(--context-background-surface-bg-surface-base);
-  border: var(--border-width-sm, 1.5px) solid var(--border-border-primary);
-}
-.root[data-state="finish"] .label {
-  color: var(--context-foreground-primary-on-primary);
-}
-
-/* dark · finish 만 bg transparent (border 만 노출) */
-.root[data-theme="brand"][data-state="finish"] .anchor {
-  background: transparent;
-  border-color: var(--context-foreground-primary-on-primary);
-}
-
-/* ---------------------------------------------------------------------------
- * Current — solid mint bg
- * ------------------------------------------------------------------------- */
-.root[data-state="current"] .anchor {
-  background: var(--context-foreground-primary-on-primary);
-}
-.root[data-state="current"] .label {
-  color: var(--context-foreground-surface-on-suface-white);
-}
-
-/* dark · current — text 는 dark (invert) */
-.root[data-theme="brand"][data-state="current"] .label {
-  color: var(--context-foreground-surface-on-suface-invert);
-}
-
-/* ---------------------------------------------------------------------------
- * Next — quaternary gray bg
- * ------------------------------------------------------------------------- */
-.root[data-state="next"] .anchor {
-  background: var(--context-background-surface-bg-surface-quarernary);
-}
-.root[data-state="next"] .label {
-  color: var(--context-foreground-surface-on-surface-hint);
-}
-
-/* dark · next — 텍스트는 on-surface (#9698A3) */
-.root[data-theme="brand"][data-state="next"] .label {
-  color: var(--context-foreground-surface-on-surface);
-}
-
-/* ===========================================================================
- * Icon states — root 자체가 24×24 컬러 원형 배지
- * ========================================================================= */
-.root[data-state="complete"],
-.root[data-state="error"],
-.root[data-state="success"],
-.root[data-state="stop"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 24px;
   height: 24px;
-  border-radius: 100px;
-  justify-content: center;
-  /* padding을 0으로 리셋 — flex center만으로 정렬 (24px 원 안에 16px 아이콘 = 4px 여백) */
-  padding: 0;
-  gap: 0;
+  padding: var(--spacing-3xs); /* 2 */
+  border-radius: var(--radius-full, 100px);
+  flex-shrink: 0;
 }
 
-.root[data-state="complete"] { background: var(--context-foreground-surface-on-surface-base); }
-.root[data-state="error"]    { background: var(--context-background-error-bg-error); }
-.root[data-state="success"]  { background: var(--accent-green-accent-green); }
-.root[data-state="stop"]     { background: var(--accent-yellow-accent-yellow); }
-
-/* Icon mask-image (16×16) */
+/* ---- Icon (mask, currentColor) ---- */
 .icon {
   display: block;
   width: 16px;
   height: 16px;
-  flex-shrink: 0;
-  background: currentColor;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  background-color: currentColor;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 
-/* 모든 icon state — Context/Foreground/Icon-Neutral/icon-neutral-white */
-.root[data-state="complete"] .icon,
-.root[data-state="error"] .icon,
-.root[data-state="success"] .icon,
-.root[data-state="stop"] .icon {
-  color: var(--context-foreground-icon-neutral-icon-neutral-white);
+/* ---- Number text ---- */
+.label {
+  display: inline-block;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body-sm); /* 12 */
+  line-height: var(--font-line-height-xs); /* 16 */
+  letter-spacing: -0.06px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* =============================================================================
+ * Variants
+ * ========================================================================== */
+.variantStop {
+  background: var(--accent-yellow);
+  color: var(--on-neutral-white);
+}
+
+.variantComplete {
+  background: var(--on-surface-base);
+  color: var(--on-surface-white);
+}
+
+.variantError {
+  background: var(--bg-error);
+  color: var(--on-neutral-white);
+}
+
+.variantSuccess {
+  background: var(--accent-green);
+  color: var(--on-neutral-white);
+}
+
+.variantNext {
+  background: var(--bg-surface-tertiary);
+  color: var(--on-surface);
+}
+
+.variantCurrentLight {
+  background: var(--on-primary);
+  color: var(--on-surface-white);
+}
+
+.variantCurrentBrand {
+  background: linear-gradient(
+    -45deg,
+    var(--mint-600) 0%,
+    #7972f7 100%
+  );
+  color: var(--on-surface-white);
 }

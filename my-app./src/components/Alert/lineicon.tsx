@@ -16,7 +16,7 @@
  *
  * 아이콘
  *   public/icon/* 의 기존 SVG 를 mask-image + currentColor 로 사용.
- *   아이콘 색은 CSS 변수 --al-icon (Icon-surface-teriary) 로 주입.
+ *   아이콘 색은 CSS 변수 --al-icon (Icon-surface-tertiary) 로 주입.
  */
 
 import type { CSSProperties, ReactNode } from "react";
@@ -45,16 +45,16 @@ const TYPE_LABEL: Record<AlertType, string> = {
   grayscale: "안내",
 };
 
-/** Context/Foreground/Icon-Surface/Icon-surface-teriary — 모든 Line 타입 아이콘 공통 */
+/** Context/Foreground/Icon-Surface/Icon-surface-tertiary — 모든 Line 타입 아이콘 공통 */
 const ICON_SURFACE_TERTIARY =
-  "var(--context-foreground-icon-surface-icon-surface-teriary, #787a88)";
+  "var(--icon-surface-tertiary, #787a88)";
 
 /**
  * 타입별 컬러 토큰 — Figma `Alert / Line icon` (node 5012:68852)
  *
  *   bg     : `Context/Background/Tint/bg-{type}-tint` (Grayscale = `bg-surface-secondary`)
  *   border : `Accent/{type}/accent-{type}-light` (Grayscale = `border-surface`)
- *   icon   : 전 타입 `Icon-surface-teriary` 로 통일
+ *   icon   : 전 타입 `Icon-surface-tertiary` 로 통일
  */
 const TYPE_COLOR: Record<
   AlertType,

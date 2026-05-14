@@ -49,7 +49,7 @@ const TYPE_LABEL: Record<AlertType, string> = {
  *
  *   bg     : `Context/Background/Tint/bg-{type}-tint`   (Grayscale = `bg-surface-secondary`)
  *   border : `Border/border-{type}-tint`                (filled 변형 · Grayscale = `border-surface`)
- *   icon   : `Context/Foreground/{type}/on-{type}`      (Grayscale = `icon-surface-teriary`)
+ *   icon   : `Context/Foreground/{type}/on-{type}`      (Grayscale = `icon-surface-tertiary`)
  */
 const TYPE_COLOR: Record<
   AlertType,

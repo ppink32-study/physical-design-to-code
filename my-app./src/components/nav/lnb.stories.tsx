@@ -177,13 +177,13 @@ export const Matrix: Story = {
 
       {/* 전체 LNB */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           LNB
         </h3>
         <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
           {THEMES.map(({ label, theme }) => (
             <div key={theme}>
-              <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 600, color: "var(--context-foreground-surface-on-surface-hint)", fontFamily: "var(--font-family-korean)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 600, color: "var(--on-surface-hint)", fontFamily: "var(--font-family-korean)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 {label}
               </p>
               <LnbFull theme={theme} />
@@ -194,7 +194,7 @@ export const Matrix: Story = {
 
       {/* LNB / Item 1depth */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           LNB / Item / 1depth
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -232,7 +232,7 @@ export const Matrix: Story = {
 
       {/* LNB / Item 2depth */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           LNB / Item / 2depth
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -269,7 +269,7 @@ export const Matrix: Story = {
 
       {/* LNB / Item 3depth */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           LNB / Item / 3depth
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>

@@ -182,61 +182,64 @@
  *   fg  = on-surface (disabled)
  * ========================================================================= */
 .variantPrimarySolid {
-  background: var(--context-background-primary-bg-primary);
-  color: var(--context-foreground-neutral-on-neutral-base);
+  background: var(--bg-primary);
+  color: var(--on-neutral-base);
 }
 .variantPrimarySolid:hover,
 .variantPrimarySolid[data-force-state="hover"] {
-  background: var(--context-background-primary-bg-primary-hover);
+  background: var(--bg-primary-hover);
 }
 .variantPrimarySolid:disabled,
 .variantPrimarySolid[aria-disabled="true"],
 .variantPrimarySolid[data-force-state="disable"] {
-  background: var(--context-background-primary-bg-primary-disabled);
-  color: var(--context-foreground-surface-on-surface);
+  background: var(--bg-primary-disabled);
+  color: var(--on-surface);
 }
 
 /* ===========================================================================
- * Variant 1-2 · Primary 2 Solid  (light 모드 전용)
- *   bg      = bg-primary-secondary (#b2fbed, light mint)
- *   fg      = on-neutral-base (#141518, dark)
- *   hover   = --seed-color-opacity-accent-primary300-45 (rgba(67,198,193,0.45))
- *   disabled bg = bg-primary-disabled / fg = on-surface
+ * Variant 1-2 · Primary 2 Solid
+ *   Figma 18319-25687 / 18319-25692 / 18319-25697
+ *   bg default  = on-primary           (#3F9BAE)
+ *   bg hover    = on-primary-hover     (#28738C)
+ *   bg disabled = on-primary-disabled  (#8BC5C3)
+ *   fg default  = on-surface-white      (#FFFFFF)
+ *   fg disabled = on-surface-invert     (#F4F4F5)
  * ========================================================================= */
 .variantPrimary2Solid {
-  background: var(--context-background-primary-bg-primary-secondary);
-  color: var(--context-foreground-neutral-on-neutral-base);
+  background: var(--on-primary);
+  color: var(--on-surface-white);
 }
 .variantPrimary2Solid:hover,
 .variantPrimary2Solid[data-force-state="hover"] {
-  background: var(--seed-color-opacity-accent-primary300-45);
+  background: var(--on-primary-hover);
+  color: var(--on-surface-white);
 }
 .variantPrimary2Solid:disabled,
 .variantPrimary2Solid[aria-disabled="true"],
 .variantPrimary2Solid[data-force-state="disable"] {
-  background: var(--context-background-primary-bg-primary-disabled);
-  color: var(--context-foreground-surface-on-surface);
+  background: var(--on-primary-disabled);
+  color: var(--on-surface-invert);
 }
 
 /* ===========================================================================
  * Variant 2 · Primary Outline
- *   bg=surface-white, fg=on-primary, border=border-primary
+ *   bg=surface-base, fg=on-primary, border=border-primary
  * ========================================================================= */
 .variantPrimaryOutline {
-  background: var(--context-background-surface-bg-surface-white);
-  color: var(--context-foreground-primary-on-primary);
-  border-color: var(--border-border-primary);
+  background: var(--bg-surface-base);
+  color: var(--on-primary);
+  border-color: var(--border-primary);
 }
 .variantPrimaryOutline:hover,
 .variantPrimaryOutline[data-force-state="hover"] {
-  color: var(--context-foreground-primary-on-primary-hover);
-  border-color: var(--border-border-primary-hover);
+  color: var(--on-primary-hover);
+  border-color: var(--border-primary-hover);
 }
 .variantPrimaryOutline:disabled,
 .variantPrimaryOutline[aria-disabled="true"],
 .variantPrimaryOutline[data-force-state="disable"] {
-  color: var(--context-foreground-primary-on-primary-disabled);
-  border-color: var(--context-foreground-primary-on-primary-disabled);
+  color: var(--on-primary-disabled);
+  border-color: var(--on-primary-disabled);
 }
 
 /* ===========================================================================
@@ -244,19 +247,19 @@
  * ========================================================================= */
 .variantPrimaryGhost {
   background: transparent;
-  color: var(--context-foreground-primary-on-primary);
+  color: var(--on-primary);
   border-color: transparent;
 }
 .variantPrimaryGhost:hover,
 .variantPrimaryGhost[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
-  color: var(--context-foreground-primary-on-primary-hover);
+  background: var(--bg-surface-base-hover);
+  color: var(--on-primary-hover);
 }
 .variantPrimaryGhost:disabled,
 .variantPrimaryGhost[aria-disabled="true"],
 .variantPrimaryGhost[data-force-state="disable"] {
   background: transparent;
-  color: var(--context-foreground-primary-on-primary-disabled);
+  color: var(--on-primary-disabled);
 }
 
 /* ===========================================================================
@@ -266,17 +269,17 @@
  *   disabled: opacity 감소 (on-neutral-invert 유지)
  * ========================================================================= */
 .variantSecondarySolid {
-  background: var(--context-background-gray-bg-gray-hover);
-  color: var(--context-foreground-neutral-on-neutral-invert);
+  background: var(--bg-gray-hover);
+  color: var(--on-neutral-invert);
 }
 .variantSecondarySolid:hover,
 .variantSecondarySolid[data-force-state="hover"] {
-  background: var(--context-background-gray-bg-darkgray-hover);
+  background: var(--bg-darkgray-hover);
 }
 .variantSecondarySolid:disabled,
 .variantSecondarySolid[aria-disabled="true"],
 .variantSecondarySolid[data-force-state="disable"] {
-  background: var(--context-background-gray-bg-gray-disabled);
+  background: var(--bg-gray-disabled);
   opacity: 0.65;
 }
 
@@ -284,22 +287,22 @@
  * Variant 5 · Secondary Outline
  * ========================================================================= */
 .variantSecondaryOutline {
-  background: var(--context-background-surface-bg-surface-white);
-  color: var(--context-foreground-surface-on-surface);
-  border-color: var(--border-border-surface-border-surface);
+  background: var(--bg-surface-base);
+  color: var(--on-surface);
+  border-color: var(--border-surface);
 }
 .variantSecondaryOutline:hover,
 .variantSecondaryOutline[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-white);
-  color: var(--context-foreground-surface-on-surface-hover);
-  border-color: var(--border-border-surface-border-surface-hover);
+  background: var(--bg-surface-base);
+  color: var(--on-surface-hover);
+  border-color: var(--border-surface-hover);
 }
 .variantSecondaryOutline:disabled,
 .variantSecondaryOutline[aria-disabled="true"],
 .variantSecondaryOutline[data-force-state="disable"] {
-  background: var(--context-background-surface-bg-surface-white);
-  color: var(--context-foreground-surface-on-surface-disabled);
-  border-color: var(--border-border-surface-border-surface-disabled);
+  background: var(--bg-surface-base);
+  color: var(--on-surface-disabled);
+  border-color: var(--border-surface-disabled);
 }
 
 /* ===========================================================================
@@ -308,21 +311,21 @@
  *   bg=white-opacity-50, fg=on-neutral, border=surface-lightest(#FFF)
  * ========================================================================= */
 .variantSecondaryOutlineWhiteInvert {
-  background: var(--opacity-white-opacity-50);
-  color: var(--context-foreground-surface-on-surface);
-  border-color: var(--border-border-surface-border-surface-lightest);
+  background: var(--white-opacity-50);
+  color: var(--on-surface);
+  border-color: var(--border-surface-lightest);
 }
 .variantSecondaryOutlineWhiteInvert:hover,
 .variantSecondaryOutlineWhiteInvert[data-force-state="hover"] {
-  background: var(--opacity-white-opacity-70);
-  color: var(--context-foreground-surface-on-surface-hover);
+  background: var(--white-opacity-70);
+  color: var(--on-surface-hover);
 }
 .variantSecondaryOutlineWhiteInvert:disabled,
 .variantSecondaryOutlineWhiteInvert[aria-disabled="true"],
 .variantSecondaryOutlineWhiteInvert[data-force-state="disable"] {
-  background: var(--opacity-white-opacity-50);
-  color: var(--context-foreground-surface-on-surface-disabled);
-  border-color: var(--border-border-surface-border-surface-lightest);
+  background: var(--white-opacity-50);
+  color: var(--on-surface-disabled);
+  border-color: var(--border-surface-lightest);
 }
 
 /* ===========================================================================
@@ -331,9 +334,9 @@
  *   bg=white-opacity-8, fg=on-neutral-invert, border=border-neutral-dark, opacity 80
  * ========================================================================= */
 .variantSecondaryOutlineDarkInvert {
-  background: var(--opacity-white-opacity-8);
-  color: var(--context-foreground-neutral-on-neutral-invert);
-  border-color: var(--border-neutral-border-neutral-dark);
+  background: var(--white-opacity-8);
+  color: var(--on-neutral-invert);
+  border-color: var(--border-neutral-dark);
   opacity: 0.8;
 }
 .variantSecondaryOutlineDarkInvert:hover,
@@ -343,9 +346,9 @@
 .variantSecondaryOutlineDarkInvert:disabled,
 .variantSecondaryOutlineDarkInvert[aria-disabled="true"],
 .variantSecondaryOutlineDarkInvert[data-force-state="disable"] {
-  background: var(--opacity-white-opacity-8);
-  color: var(--context-foreground-neutral-on-neutral-disabled);
-  border-color: var(--border-neutral-border-neutral-dark);
+  background: var(--white-opacity-8);
+  color: var(--on-neutral-disabled);
+  border-color: var(--border-neutral-dark);
   opacity: 0.8;
 }
 
@@ -354,53 +357,89 @@
  * ========================================================================= */
 .variantSecondaryGhost {
   background: transparent;
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
   border-color: transparent;
 }
 .variantSecondaryGhost:hover,
 .variantSecondaryGhost[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
-  color: var(--context-foreground-surface-on-surface-hover);
+  background: var(--bg-surface-base-hover);
+  color: var(--on-surface-hover);
 }
 .variantSecondaryGhost:disabled,
 .variantSecondaryGhost[aria-disabled="true"],
 .variantSecondaryGhost[data-force-state="disable"] {
   background: transparent;
-  color: var(--context-foreground-surface-on-surface-disabled);
+  color: var(--on-surface-disabled);
 }
 
 /* ===========================================================================
- * Variant 9 · Gray button
- *   Default: bg-neutral-secondary(#F4F4F5) + text on-neutral-teriary(#434551) + icon icon-neutral-secondary(#787A88)
+ * Variant 9 · White button (Figma 17987:47895)
+ *   Default: bg-surface-base(#FFFFFF) + text on-surface(#565967)
+ *   Hover  : same bg + text on-surface-hover(#434551)
+ *   Disable: same bg + text on-surface-disabled(#B3B4BC)
+ *   border 없음 (transparent 유지). 아이콘 색은 icon-surface-* 패밀리를 따른다.
+ * ========================================================================= */
+.variantWhite {
+  background: var(--bg-surface-base);
+  color: var(--on-surface);
+  border-color: transparent;
+}
+.variantWhite .icon {
+  color: var(--icon-surface);
+}
+.variantWhite:hover,
+.variantWhite[data-force-state="hover"] {
+  background: var(--bg-surface-base);
+  color: var(--on-surface-hover);
+}
+.variantWhite:hover .icon,
+.variantWhite[data-force-state="hover"] .icon {
+  color: var(--icon-surface-hover);
+}
+.variantWhite:disabled,
+.variantWhite[aria-disabled="true"],
+.variantWhite[data-force-state="disable"] {
+  background: var(--bg-surface-base);
+  color: var(--on-surface-disabled);
+}
+.variantWhite:disabled .icon,
+.variantWhite[aria-disabled="true"] .icon,
+.variantWhite[data-force-state="disable"] .icon {
+  color: var(--icon-surface-disabled);
+}
+
+/* ===========================================================================
+ * Variant 10 · Gray button
+ *   Default: bg-neutral-secondary(#F4F4F5) + text on-neutral-tertiary(#434551) + icon icon-neutral-secondary(#787A88)
  *   Hover  : bg-neutral-quarernary(#D7D8DC) + text on-neutral-hover(#434551) + icon icon-neutral-hover(#434551)
  *   Disable: bg-neutral-disabled(#F4F4F5) + text on-neutral-disabled(#B3B4BC) + icon icon-neutral-disabled(#B3B4BC)
  *   Note: 텍스트와 아이콘의 색상이 default 에서만 다르므로 .icon 을 별도 토큰으로 오버라이드한다.
  * ========================================================================= */
 .variantGray {
-  background: var(--context-background-neutral-bg-neutral-secondary);
-  color: var(--context-foreground-neutral-on-neutral-teriary);
+  background: var(--bg-neutral-secondary);
+  color: var(--on-neutral-tertiary);
   border-color: transparent;
 }
 .variantGray .icon {
-  color: var(--context-foreground-icon-neutral-icon-neutral-secondary);
+  color: var(--icon-neutral-secondary);
 }
 .variantGray:hover,
 .variantGray[data-force-state="hover"] {
-  background: var(--context-background-neutral-bg-neutral-quarernary);
-  color: var(--context-foreground-neutral-on-neutral-hover, var(--context-foreground-neutral-on-neutral-teriary));
+  background: var(--bg-neutral-quarernary);
+  color: var(--on-neutral-hover, var(--on-neutral-tertiary));
 }
 .variantGray:hover .icon,
 .variantGray[data-force-state="hover"] .icon {
-  color: var(--context-foreground-icon-neutral-icon-neutral-hover);
+  color: var(--icon-neutral-hover);
 }
 .variantGray:disabled,
 .variantGray[aria-disabled="true"],
 .variantGray[data-force-state="disable"] {
-  background: var(--context-background-neutral-bg-neutral-disabled);
-  color: var(--context-foreground-neutral-on-neutral-disabled);
+  background: var(--bg-neutral-disabled);
+  color: var(--on-neutral-disabled);
 }
 .variantGray:disabled .icon,
 .variantGray[aria-disabled="true"] .icon,
 .variantGray[data-force-state="disable"] .icon {
-  color: var(--context-foreground-icon-neutral-icon-neutral-disabled);
+  color: var(--icon-neutral-disabled);
 }

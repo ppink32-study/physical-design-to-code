@@ -5,7 +5,7 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   flex-shrink: 0;
 }
 

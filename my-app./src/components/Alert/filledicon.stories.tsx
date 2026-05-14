@@ -222,8 +222,8 @@ export const Matrix: Story = {
 const guideBlockStyle: CSSProperties = {
   padding: 16,
   borderRadius: 8,
-  border: "1px solid var(--border-border-surface-border-surface)",
-  background: "var(--context-background-surface-bg-surface-base)",
+  border: "1px solid var(--border-surface)",
+  background: "var(--bg-surface-base)",
 };
 
 const guideTableStyle = storyDocsGuideTableStyle;

@@ -23,7 +23,7 @@ export function TableDemo() {
             style={{
               display: "grid",
               gridTemplateColumns: "56px 64px 1fr 1fr 1fr",
-              border: "1px solid var(--context-background-surface-bg-sub-2)",
+              border: "1px solid var(--bg-sub-2)",
               borderRadius: 10,
               overflow: "hidden",
               minWidth: 620,
@@ -90,7 +90,7 @@ export function TableDemo() {
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
-              border: "1px solid var(--context-background-surface-bg-sub-2)",
+              border: "1px solid var(--bg-sub-2)",
               borderRadius: 8,
               overflow: "hidden",
             }}
@@ -107,7 +107,7 @@ export function TableDemo() {
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
-              border: "1px solid var(--context-background-surface-bg-sub-2)",
+              border: "1px solid var(--bg-sub-2)",
               borderRadius: 8,
               overflow: "hidden",
             }}

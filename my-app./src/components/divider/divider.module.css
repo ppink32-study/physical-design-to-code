@@ -7,15 +7,15 @@
  *   - Type=vertical,   Title=false  (1:15507)  · 1×16 세로 선
  *
  * 토큰
- *   - line color : --border-border-surface-border-surface (#d7d8dc)
+ *   - line color : --border-surface (#d7d8dc)
  *   - radius     : --radius-full (1000)
- *   - title text : --context-foreground-neutral-on-neutral-hint-muted
+ *   - title text : --on-neutral-hint-muted
  *   - title font : Body/Md Medium (13 / 20, weight 500, letter -0.4px)
  *   - gap        : --spacing-sm (8)
  * ========================================================================== */
 
 .root {
-  --divider-color: var(--border-border-surface-border-surface);
+  --divider-color: var(--border-surface);
   --divider-thickness: 1px;
   display: flex;
   align-items: center;
@@ -57,7 +57,7 @@
 .title {
   flex-shrink: 0;
   white-space: nowrap;
-  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  color: var(--on-neutral-hint-muted);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-md); /* 13 */
   line-height: var(--font-line-height-sm); /* 20 */

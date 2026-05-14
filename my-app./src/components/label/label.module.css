@@ -16,13 +16,13 @@
  *   - onButtonClick : 버튼 variant 클릭 핸들러
  *
  * 토큰
- *   - 텍스트 색상    : --context-foreground-surface-on-surface
- *   - mandatory dot  : --context-foreground-error-on-error
- *   - info (Medium)  : --context-foreground-icon-neutral-icon-neutral-teriary
- *   - info (Small)   : --context-foreground-icon-surface-icon-surface-teriary
- *   - add  (button)  : --context-foreground-icon-surface-icon-surface
- *   - outline bg     : --context-background-surface-bg-surface-white
- *   - outline border : --border-border-surface-border-surface
+ *   - 텍스트 색상    : --on-surface
+ *   - mandatory dot  : --on-error
+ *   - info (Medium)  : --icon-neutral-tertiary
+ *   - info (Small)   : --icon-surface-tertiary
+ *   - add  (button)  : --icon-surface
+ *   - outline bg     : --bg-surface-white
+ *   - outline border : --border-surface
  * ========================================================================== */
 
 .root {
@@ -30,7 +30,7 @@
   align-items: center;
   height: var(--size-base-2xl); /* 24 */
   font-family: var(--font-family-korean);
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
   gap: var(--spacing-2xs); /* 4 (normal / ghost) */
 }
 
@@ -92,13 +92,13 @@
   width: 4px;
   height: 4px;
   border-radius: var(--radius-full);
-  background: var(--context-foreground-error-on-error);
+  background: var(--on-error);
 }
 
 /* ---------------------------------------------------------------------------
  * Info icon (16x16)
- *   - Medium : icon-neutral-teriary
- *   - Small  : icon-surface-teriary
+ *   - Medium : icon-neutral-tertiary
+ *   - Small  : icon-surface-tertiary
  * ------------------------------------------------------------------------- */
 .iconSlot {
   display: inline-flex;
@@ -113,7 +113,7 @@
   display: inline-block;
   width: 100%;
   height: 100%;
-  background: var(--context-foreground-icon-neutral-icon-neutral-teriary);
+  background: var(--icon-neutral-tertiary);
   -webkit-mask-image: url("/icon/Info.svg");
   mask-image: url("/icon/Info.svg");
   -webkit-mask-repeat: no-repeat;
@@ -125,7 +125,7 @@
 }
 
 .root[data-size="small"] .infoIcon {
-  background: var(--context-foreground-icon-surface-icon-surface-teriary);
+  background: var(--icon-surface-tertiary);
 }
 
 /* ---------------------------------------------------------------------------

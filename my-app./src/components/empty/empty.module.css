@@ -21,14 +21,14 @@
 /* ---------------------------------------------------------------------------
  * Icon
  *   - mask-image 로 currentColor 적용
- *   - color = icon-surface-secondary (light #b3b4bc / dark #434551)
+ *   - color = icon-surface-readonly (light #B3B4BC / dark #787A88)
  * ------------------------------------------------------------------------- */
 .iconWrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--context-foreground-icon-surface-icon-surface-secondary, #b3b4bc);
+  color: var(--icon-surface-readonly, #b3b4bc);
 }
 
 .icon {
@@ -51,7 +51,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: var(--context-foreground-icon-surface-icon-surface-secondary, #b3b4bc);
+  color: var(--icon-surface-readonly, #b3b4bc);
 }
 .iconCustom > svg {
   width: 100%;
@@ -93,11 +93,11 @@
 }
 
 .description {
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
 }
 
 .subtext {
-  color: var(--context-foreground-neutral-on-neutral-hint-muted, #9698a3);
+  color: var(--on-neutral-hint-muted, #9698a3);
 }
 
 /* size=small : description Body/Sm 12/16 medium, subtext Body/Xs 11/14 medium */

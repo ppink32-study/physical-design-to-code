@@ -9,12 +9,12 @@
  *   state   : default / hover / disabled
  *
  * 토큰
- *   neutral default  : --context-foreground-surface-on-surface          (#565967)
- *   neutral hover    : --context-foreground-surface-on-surface-selected (#434551)
- *   neutral disabled : --context-foreground-surface-on-surface-disabled (#B3B4BC)
- *   accent  default  : --context-foreground-blue-on-blue                (#316CF4)
- *   accent  hover    : --context-foreground-blue-on-blue-hover          (#2757C3)
- *   accent  disabled : --context-foreground-blue-on-blue-disabled       (#A6C4F9)
+ *   neutral default  : --on-surface          (#565967)
+ *   neutral hover    : --on-surface-selected (#434551)
+ *   neutral disabled : --on-surface-disabled (#B3B4BC)
+ *   accent  default  : --on-blue                (#316CF4)
+ *   accent  hover    : --on-blue-hover          (#2757C3)
+ *   accent  disabled : --on-blue-disabled       (#A6C4F9)
  *
  * forceState 는 스토리북에서 hover/disable 상태를 시각화할 때 사용.
  */

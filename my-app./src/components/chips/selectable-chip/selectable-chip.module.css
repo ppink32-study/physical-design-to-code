@@ -10,14 +10,14 @@
  *   - Type=Error 의 빨강 border 는 Readonly/Disable 의 회색 border 를 덮어쓴다.
  *
  * 토큰 매핑
- *   bg base            : --context-background-surface-bg-surface-teriary
- *   bg hover           : --context-background-surface-bg-surface-base-hover
- *   bg selected        : --context-background-surface-bg-surface-base-selected
- *   text base          : --context-foreground-surface-on-surface-base
- *   text disabled      : --context-foreground-surface-on-surface-disabled
- *   border disabled    : --border-border-surface-border-surface-disabled
- *   border error       : --context-foreground-error-on-error
- *   trash icon         : --context-foreground-icon-surface-icon-surface
+ *   bg base            : --bg-surface-tertiary
+ *   bg hover           : --bg-surface-base-hover
+ *   bg selected        : --bg-surface-base-selected
+ *   text base          : --on-surface-base
+ *   text disabled      : --on-surface-disabled
+ *   border disabled    : --border-surface-disabled
+ *   border error       : --on-error
+ *   trash icon         : --icon-surface
  * ========================================================================== */
 
 .chip {
@@ -28,8 +28,8 @@
   padding: 2px var(--spacing-sm);
   max-width: 252px;
   border-radius: var(--radius-sm);
-  background: var(--context-background-surface-bg-surface-teriary);
-  color: var(--context-foreground-surface-on-surface-base);
+  background: var(--bg-surface-tertiary);
+  color: var(--on-surface-base);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-base);
   line-height: var(--font-line-height-sm);
@@ -59,7 +59,7 @@
   width: var(--size-base-lg);
   height: var(--size-base-lg);
   margin-left: var(--spacing-2xs); /* gap 4 */
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
   display: none;
 }
 .trashIcon {
@@ -77,7 +77,7 @@
 .chip[data-state="default"]:hover,
 .chip[data-state="selected"]:hover,
 .chip[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
 }
 .chip[data-state="default"]:hover .trash,
 .chip[data-state="selected"]:hover .trash,
@@ -91,7 +91,7 @@
  * Selected : bg 교체 (text 는 그대로)
  * ------------------------------------------------------------------------- */
 .chip[data-state="selected"] {
-  background: var(--context-background-surface-bg-surface-base-selected);
+  background: var(--bg-surface-base-selected);
 }
 
 /* ---------------------------------------------------------------------------
@@ -99,10 +99,10 @@
  * ------------------------------------------------------------------------- */
 .chip[data-state="readonly"] {
   cursor: default;
-  border-color: var(--border-border-surface-border-surface-disabled);
+  border-color: var(--border-surface-disabled);
 }
 .chip[data-state="readonly"]:hover {
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
 }
 .chip[data-state="readonly"]:hover .trash {
   display: none;
@@ -113,13 +113,13 @@
  * ------------------------------------------------------------------------- */
 .chip[data-state="disable"],
 .chip[data-force-state="disable"] {
-  color: var(--context-foreground-surface-on-surface-disabled);
-  border-color: var(--border-border-surface-border-surface-disabled);
+  color: var(--on-surface-disabled);
+  border-color: var(--border-surface-disabled);
   cursor: not-allowed;
 }
 .chip[data-state="disable"]:hover,
 .chip[data-force-state="disable"]:hover {
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
 }
 .chip[data-state="disable"]:hover .trash,
 .chip[data-force-state="disable"]:hover .trash {
@@ -130,16 +130,16 @@
  * Type = Error : 텍스트는 그대로, border 만 red (모든 state 공통으로 덮어씀)
  * ------------------------------------------------------------------------- */
 .chip[data-type="error"] {
-  border-color: var(--context-foreground-error-on-error);
+  border-color: var(--on-error);
 }
 
 /* Focus ring */
 .chip:focus {
-  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline: 2px solid var(--accent-purple, #7b5cff);
   outline-offset: 1px;
 }
 .chip:focus:not(:focus-visible) {
-  outline: 2px solid var(--accent-purple-accent-purple, #7b5cff);
+  outline: 2px solid var(--accent-purple, #7b5cff);
 }
 .chip[data-state="disable"]:focus,
 .chip[data-state="readonly"]:focus {

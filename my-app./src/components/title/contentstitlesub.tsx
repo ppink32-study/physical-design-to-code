@@ -10,7 +10,7 @@
  *   - 좌측 (flex:1, gap=8):
  *     · Title+Icon (gap=4):
  *         - Label (gap=2) : title(H6) + (optional) required dot 4×4 (red)
- *         - (optional) InfoFill 16×16 (icon-surface-teriary)
+ *         - (optional) InfoFill 16×16 (icon-surface-tertiary)
  *     · (optional) Count badge : purple-tint pill, h=20, purple text
  *   - 우측 (선택 1가지):
  *     · accordion=true → 24×24 버튼 (expanded → ChevronUp, else → ChevronDown)
@@ -18,12 +18,12 @@
  *
  * 토큰
  *   - title        : Heading/H6 (16/22 semibold) on-surface-base
- *   - required dot : 4×4 circle, --accent-red-accent-red (#ff312e)
- *   - info icon    : 16×16 icon-surface-teriary
- *   - count badge  : bg --context-background-tint-bg-purple-tint
- *                    text --accent-purple-accent-purple (Body/Sm-Medium)
+ *   - required dot : 4×4 circle, --accent-red (#ff312e)
+ *   - info icon    : 16×16 icon-surface-tertiary
+ *   - count badge  : bg --bg-purple-tint
+ *                    text --accent-purple (Body/Sm-Medium)
  *   - accordion    : size 24, chevron 16, icon-surface
- *   - text button  : border --border-border-surface-border-surface
+ *   - text button  : border --border-surface
  *                    text Body/Sm_SemiB on-surface
  */
 

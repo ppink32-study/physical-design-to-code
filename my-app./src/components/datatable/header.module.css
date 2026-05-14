@@ -8,9 +8,9 @@
  *          .text  : SemiBold 13/20
  *
  *  Token 매핑
- *    bg     : --context-background-surface-bg-surface-secondary
- *    border : --border-border-surface-border-surface-secondary  (right + bottom)
- *    text   : --context-foreground-surface-on-surface-base
+ *    bg     : --bg-surface-secondary
+ *    border : --border-surface-secondary  (right + bottom)
+ *    text   : --on-surface-base
  * =============================================================== */
 
 .root {
@@ -19,9 +19,9 @@
   justify-content: center;
   width: 150px;
   height: 40px;
-  background: var(--context-background-surface-bg-surface-secondary);
-  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
-  border-bottom: 1px solid var(--border-border-surface-border-surface-secondary);
+  background: var(--bg-surface-secondary);
+  border-right: 1px solid var(--border-surface-secondary);
+  border-bottom: 1px solid var(--border-surface-secondary);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -50,7 +50,7 @@
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

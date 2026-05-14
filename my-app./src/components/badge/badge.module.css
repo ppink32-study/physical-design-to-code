@@ -93,43 +93,43 @@
 
 .variantSolid.colorPrimary {
   --badge-bg: transparent;
-  --badge-fg: var(--context-foreground-primary-on-primary);
+  --badge-fg: var(--on-primary);
 }
 .variantSolid.colorPurple {
-  --badge-bg: var(--context-background-tint-bg-purple-tint);
-  --badge-fg: var(--accent-purple-accent-purple);
+  --badge-bg: var(--bg-purple-tint);
+  --badge-fg: var(--accent-purple);
 }
 .variantSolid.colorRed {
-  --badge-bg: var(--context-background-tint-bg-red-tint);
-  --badge-fg: var(--accent-red-accent-red);
+  --badge-bg: var(--bg-red-tint);
+  --badge-fg: var(--accent-red);
 }
 .variantSolid.colorGreen {
-  --badge-bg: var(--context-background-tint-bg-green-tint);
-  --badge-fg: var(--accent-green-accent-green);
+  --badge-bg: var(--bg-green-tint);
+  --badge-fg: var(--accent-green);
 }
 .variantSolid.colorOrange {
-  --badge-bg: var(--context-background-tint-bg-orange-tint);
-  --badge-fg: var(--accent-orange-accent-orange);
+  --badge-bg: var(--bg-orange-tint);
+  --badge-fg: var(--accent-orange);
 }
 .variantSolid.colorPink {
-  --badge-bg: var(--context-background-tint-bg-pink-tint);
-  --badge-fg: var(--accent-pink-accent-pink);
+  --badge-bg: var(--bg-pink-tint);
+  --badge-fg: var(--accent-pink);
 }
 .variantSolid.colorBlue {
-  --badge-bg: var(--context-background-tint-bg-blue-tint);
-  --badge-fg: var(--accent-blue-accent-blue);
+  --badge-bg: var(--bg-blue-tint);
+  --badge-fg: var(--accent-blue);
 }
 .variantSolid.colorCyan {
-  --badge-bg: var(--context-background-tint-bg-cyan-tint);
-  --badge-fg: var(--accent-cyan-accent-cyan);
+  --badge-bg: var(--bg-cyan-tint);
+  --badge-fg: var(--accent-cyan);
 }
 .variantSolid.colorGray {
-  --badge-bg: var(--context-background-tint-bg-gray-tint);
-  --badge-fg: var(--context-foreground-surface-on-surface);
+  --badge-bg: var(--bg-gray-tint);
+  --badge-fg: var(--on-surface);
 }
 .variantSolid.colorOpacity {
-  --badge-bg: var(--opacity-black-opacity-8);
-  --badge-fg: var(--context-foreground-surface-on-surface);
+  --badge-bg: var(--black-opacity-8);
+  --badge-fg: var(--on-surface);
 }
 
 /* ==============================================================
@@ -144,48 +144,48 @@
 }
 
 .variantLine.colorGray {
-  --badge-border: var(--border-border-surface-border-surface);
-  --badge-fg: var(--context-foreground-surface-on-surface);
+  --badge-border: var(--border-surface);
+  --badge-fg: var(--on-surface);
 }
 .variantLine.colorPurple {
-  --badge-border: var(--border-border-purple-tint);
-  --badge-fg: var(--accent-purple-accent-purple);
+  --badge-border: var(--border-purple-tint);
+  --badge-fg: var(--accent-purple);
 }
 .variantLine.colorCyan {
-  --badge-border: var(--border-border-cyan-tint);
-  --badge-fg: var(--accent-cyan-accent-cyan);
+  --badge-border: var(--border-cyan-tint);
+  --badge-fg: var(--accent-cyan);
 }
 .variantLine.colorGreen {
-  --badge-border: var(--border-border-green-tint);
-  --badge-fg: var(--accent-green-accent-green);
+  --badge-border: var(--border-green-tint);
+  --badge-fg: var(--accent-green);
 }
 .variantLine.colorRed {
-  --badge-border: var(--border-border-red-tint);
-  --badge-fg: var(--accent-red-accent-red);
+  --badge-border: var(--border-red-tint);
+  --badge-fg: var(--accent-red);
 }
 .variantLine.colorOrange {
-  --badge-border: var(--border-border-orange-tint);
-  --badge-fg: var(--accent-orange-accent-orange);
+  --badge-border: var(--border-orange-tint);
+  --badge-fg: var(--accent-orange);
 }
 .variantLine.colorPink {
-  --badge-border: var(--border-border-pink-tint);
-  --badge-fg: var(--accent-pink-accent-pink);
+  --badge-border: var(--border-pink-tint);
+  --badge-fg: var(--accent-pink);
 }
 .variantLine.colorBlue {
-  --badge-border: var(--border-border-blue-tint);
-  --badge-fg: var(--accent-blue-accent-blue);
+  --badge-border: var(--border-blue-tint);
+  --badge-fg: var(--accent-blue);
 }
 .variantLine.colorTeal {
-  --badge-border: var(--border-border-teal-tint);
-  --badge-fg: var(--accent-teal-accent-teal);
+  --badge-border: var(--border-teal-tint);
+  --badge-fg: var(--accent-teal);
 }
 .variantLine.colorMagenta {
-  --badge-border: var(--border-border-magenta-tint);
-  --badge-fg: var(--accent-magenta-accent-magenta);
+  --badge-border: var(--border-magenta-tint);
+  --badge-fg: var(--accent-magenta);
 }
 .variantLine.colorGold {
-  --badge-border: var(--border-border-gold-tint);
-  --badge-fg: var(--accent-gold-accent-gold);
+  --badge-border: var(--border-gold-tint);
+  --badge-fg: var(--accent-gold);
 }
 
 /* ==============================================================
@@ -196,11 +196,11 @@
  * ============================================================ */
 .variantStatus {
   gap: var(--spacing-2xs); /* 4 */
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
   border: var(--border-width-xs, 1px) solid
-    var(--border-border-surface-border-surface);
-  color: var(--context-foreground-surface-on-surface);
-  --badge-fg: var(--context-foreground-surface-on-surface);
+    var(--border-surface);
+  color: var(--on-surface);
+  --badge-fg: var(--on-surface);
 }
 
 .variantStatus.sizeSm.shapeSquare {
@@ -216,35 +216,35 @@
 }
 
 .variantStatus.colorCyan {
-  --badge-dot: var(--accent-cyan-accent-cyan);
+  --badge-dot: var(--accent-cyan);
 }
 .variantStatus.colorBlue {
-  --badge-dot: var(--accent-blue-accent-blue);
+  --badge-dot: var(--accent-blue);
 }
 .variantStatus.colorYellow {
-  --badge-dot: var(--accent-yellow-accent-yellow);
+  --badge-dot: var(--accent-yellow);
 }
 .variantStatus.colorPink {
-  --badge-dot: var(--accent-pink-accent-pink);
+  --badge-dot: var(--accent-pink);
 }
 .variantStatus.colorPurple {
-  --badge-dot: var(--accent-purple-accent-purple);
+  --badge-dot: var(--accent-purple);
 }
 .variantStatus.colorGreen {
-  --badge-dot: var(--accent-green-accent-green);
+  --badge-dot: var(--accent-green);
 }
 .variantStatus.colorRed {
-  --badge-dot: var(--accent-red-accent-red);
+  --badge-dot: var(--accent-red);
 }
 .variantStatus.colorGray {
-  --badge-dot: var(--context-foreground-neutral-on-neutral-disabled);
+  --badge-dot: var(--on-neutral-disabled);
 }
 .variantStatus.colorOrange {
-  --badge-dot: var(--accent-orange-accent-orange);
+  --badge-dot: var(--accent-orange);
 }
 
 .statusNumber {
-  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  color: var(--on-neutral-hint-muted);
   font-weight: var(--font-weight-semibold);
   margin-left: var(--spacing-3xs); /* 2 */
 }
@@ -270,16 +270,16 @@
 }
 
 .variantNotice.colorRed {
-  --badge-bg: var(--accent-red-accent-red);
-  --badge-fg: var(--context-foreground-neutral-on-neutral-white);
+  --badge-bg: var(--accent-red);
+  --badge-fg: var(--on-neutral-white);
 }
 .variantNotice.colorPurple {
-  --badge-bg: var(--accent-purple-accent-purple);
-  --badge-fg: var(--context-foreground-neutral-on-neutral-invert);
+  --badge-bg: var(--accent-purple);
+  --badge-fg: var(--on-neutral-invert);
 }
 .variantNotice.colorPrimary {
-  --badge-bg: var(--context-foreground-primary-on-primary, #3f9bae);
-  --badge-fg: var(--context-foreground-neutral-on-neutral-white);
+  --badge-bg: var(--on-primary, #3f9bae);
+  --badge-fg: var(--on-neutral-white);
 }
 
 .noticeCount {

@@ -13,9 +13,9 @@
  *   - toggle       : 중앙에 토글 슬롯 (Toggle 컴포넌트 주입) 56w
  *
  * 공통 토큰
- *   - bg       : --context-background-surface-bg-surface-secondary (#f4f4f5)
- *   - border-b : 1px --border-border-surface-border-surface (#d7d8dc)
- *   - text     : --context-foreground-surface-on-surface
+ *   - bg       : --bg-surface-secondary (#f4f4f5)
+ *   - border-b : 1px --border-surface (#d7d8dc)
+ *   - text     : --on-surface
  *   - font     : Body/Md semibold (13 / 20, -0.4)
  *   - padding  : px=12 / gap=6 (title/icon)
  *   - pipe     : lPipe / rPipe 옵션으로 좌우 resize 파이프 표시

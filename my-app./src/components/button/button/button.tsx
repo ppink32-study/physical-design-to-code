@@ -5,7 +5,7 @@
  * ----------------------------------------------------------------
  * Figma Root: node-id=17987-47864
  *
- * variants (9)
+ * variants (10)
  *   primary-solid                           (size: sm/md/lg/xl, shape: square/round)
  *   primary-outline                         (size: sm/md/lg,    shape: square/round)
  *   primary-ghost                           (size: sm/md/lg,    shape: square)
@@ -14,6 +14,7 @@
  *   secondary-outline-white-invert          (size: sm/md/lg,    shape: square/round)
  *   secondary-outline-dark-invert           (size: sm/md/lg,    shape: square/round)
  *   secondary-ghost                         (size: sm/md/lg,    shape: square)
+ *   white                                   (size: sm/md/lg,    shape: square/round) — Figma 17987:47895
  *   gray                                    (size: sm/md/lg/xl, shape: square)
  *
  * - label 이 비어있고 icon 만 제공되면 `iconOnly` 모드로 동작 (정사각형)
@@ -39,6 +40,7 @@ export type ButtonVariant =
   | "secondary-outline-white-invert"
   | "secondary-outline-dark-invert"
   | "secondary-ghost"
+  | "white"
   | "gray";
 
 export type ButtonSize = "small" | "medium" | "large" | "xlarge";
@@ -75,6 +77,7 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   "secondary-outline-white-invert": styles.variantSecondaryOutlineWhiteInvert,
   "secondary-outline-dark-invert": styles.variantSecondaryOutlineDarkInvert,
   "secondary-ghost": styles.variantSecondaryGhost,
+  white: styles.variantWhite,
   gray: styles.variantGray,
 };
 

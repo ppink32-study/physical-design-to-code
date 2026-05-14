@@ -153,7 +153,7 @@ function DropdownTriggerInner(
   const variant = TYPE_TO_VARIANT[type];
   const chevronColor =
     type === "secondary"
-      ? "var(--context-foreground-icon-neutral-icon-neutral-disabled)"
+      ? "var(--icon-neutral-disabled)"
       : undefined;
   const chevron = <Chevron direction={dropDirection} color={chevronColor} />;
   /** Figma: 비-split 일 때 Right 만 케럿이 라벨 오른쪽, 그 외(D/U/L)는 왼쪽 */

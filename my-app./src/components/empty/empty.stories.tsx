@@ -31,7 +31,7 @@ const cellStyle: CSSProperties = {
 const labelMuted: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
 };
 
 const meta: Meta<typeof Empty> = {
@@ -106,7 +106,7 @@ export const Matrix: Story = {
                     fontSize: 12,
                     fontWeight: 600,
                     fontFamily: "ui-monospace, SFMono-Regular, monospace",
-                    color: "var(--context-foreground-surface-on-surface-base)",
+                    color: "var(--on-surface-base)",
                   }}
                 >
                   {key}
@@ -115,7 +115,7 @@ export const Matrix: Story = {
                   style={{
                     marginTop: 4,
                     fontSize: 10,
-                    color: "var(--context-foreground-surface-on-surface-hint)",
+                    color: "var(--on-surface-hint)",
                   }}
                 >
                   /icon/{file}

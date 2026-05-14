@@ -46,7 +46,7 @@ const FORM_MATRIX_CELL_MIN = Math.max(
 const matrixCellShell: CSSProperties = {
   padding: `${FORM_MATRIX_CELL_PAD_Y}px ${FORM_MATRIX_CELL_PAD_X}px`,
   border:
-    "1px dashed var(--border-border-surface-border-surface-secondary, #ececee)",
+    "1px dashed var(--border-surface-secondary, #ececee)",
   borderRadius: 10,
   minWidth: FORM_MATRIX_CELL_MIN,
   boxSizing: "border-box",
@@ -60,7 +60,7 @@ const matrixCellShellVertical: CSSProperties = {
 const matrixHdr: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   padding: "12px 10px",
   textAlign: "center",
 };
@@ -301,7 +301,7 @@ export const Guideline: Story = {
             paddingLeft: 20,
             fontSize: 15,
             lineHeight: 1.7,
-            color: "var(--context-foreground-surface-on-surface-base)",
+            color: "var(--on-surface-base)",
           }}
         >
           <li>
@@ -310,7 +310,7 @@ export const Guideline: Story = {
               href={FIGMA_FORM_GUIDELINE}
               target="_blank"
               rel="noreferrer"
-              style={{ color: "var(--context-foreground-primary-on-primary-hover)" }}
+              style={{ color: "var(--on-primary-hover)" }}
             >
               node 7119:411152
             </a>
@@ -321,7 +321,7 @@ export const Guideline: Story = {
               href={FIGMA_FORM_MATRIX}
               target="_blank"
               rel="noreferrer"
-              style={{ color: "var(--context-foreground-primary-on-primary-hover)" }}
+              style={{ color: "var(--on-primary-hover)" }}
             >
               node 5714:108005
             </a>{" "}
@@ -364,7 +364,7 @@ export const Matrix: Story = {
           style={{
             margin: "0 0 12px",
             fontSize: 12,
-            color: "var(--context-foreground-surface-on-surface-hint)",
+            color: "var(--on-surface-hint)",
           }}
         >
           <code>layout=&quot;top&quot;</code> — 행: Input · Text area · Select · Checkbox · Radio · Toggle ·
@@ -402,7 +402,7 @@ export const Matrix: Story = {
           style={{
             margin: "0 0 12px",
             fontSize: 12,
-            color: "var(--context-foreground-surface-on-surface-hint)",
+            color: "var(--on-surface-hint)",
           }}
         >
           <code>layout=&quot;left&quot;</code>, <code>labelWidth={FORM_MATRIX_LABEL_WIDTH}</code>{" "}

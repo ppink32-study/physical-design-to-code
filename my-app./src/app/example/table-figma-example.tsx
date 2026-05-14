@@ -167,11 +167,11 @@ const grid: CSSProperties = {
   display: "grid",
   gridTemplateColumns: gridCols,
   border:
-    "1px solid var(--border-border-surface-border-surface-secondary, #ececee)",
+    "1px solid var(--border-surface-secondary, #ececee)",
   borderRadius: 10,
   overflow: "hidden",
   minWidth: 1020,
-  background: "var(--context-background-surface-bg-surface-base)",
+  background: "var(--bg-surface-base)",
 };
 
 const toolbar: CSSProperties = {

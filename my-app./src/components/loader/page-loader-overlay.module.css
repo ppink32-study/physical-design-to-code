@@ -18,7 +18,7 @@
 .dim {
   position: absolute;
   inset: 0;
-  background: var(--opacity-black-opacity-50);
+  background: var(--black-opacity-50);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }

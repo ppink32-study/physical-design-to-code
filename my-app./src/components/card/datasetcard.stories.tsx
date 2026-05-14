@@ -66,13 +66,13 @@ export const Matrix: Story = {
       <FigmaLinkCard nodeId="18397-4135" caption="Components / Dataset Card" />
 
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           State
         </h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {STATES.map((s) => (
             <div key={s} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--context-foreground-surface-on-surface-hint)", fontFamily: "var(--font-family-korean)" }}>{s}</span>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "var(--on-surface-hint)", fontFamily: "var(--font-family-korean)" }}>{s}</span>
               <DatasetCard state={s} />
             </div>
           ))}

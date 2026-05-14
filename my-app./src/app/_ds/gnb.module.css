@@ -12,8 +12,8 @@
   gap: 88px;
   height: 56px;
   padding: 0 24px 0 16px;
-  background: var(--context-background-surface-bg-surface-white);
-  color: var(--context-foreground-surface-on-surface-base);
+  background: var(--bg-surface-white);
+  color: var(--on-surface-base);
 }
 
 .brandSlot {
@@ -57,7 +57,7 @@
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0;
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
   font-weight: 400;
   text-decoration: none;
   cursor: pointer;
@@ -67,13 +67,13 @@
 }
 
 .item:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: -2px;
   border-radius: 4px;
 }
 
 .item[data-selected="true"] {
-  color: var(--context-foreground-primary-on-primary);
+  color: var(--on-primary);
   font-weight: 600;
 }
 
@@ -98,7 +98,7 @@
   border: 0;
   border-radius: 4px;
   background: transparent;
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
   cursor: pointer;
   transition: background-color 0.12s ease;
   flex-shrink: 0;
@@ -106,16 +106,16 @@
 
 .iconButton:hover,
 .iconButton[data-selected="true"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
 }
 
 /* Storybook·매트릭스: 실제 호버 없이 Hovered 열 시각 고정 */
 .iconButton[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
 }
 
 .iconButton:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: 2px;
 }
 
@@ -146,7 +146,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--seed-color-red-500, #ef4444);
+  background: var(--red-500, #ef4444);
   pointer-events: none;
 }
 

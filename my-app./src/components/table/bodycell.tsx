@@ -23,14 +23,14 @@
  *   - video            : 120w, 썸네일 이미지 + play overlay
  *
  * 공통 토큰
- *   - bg (Enabled)  : --context-background-surface-bg-surface-base
- *   - bg (Hovered)  : --context-background-surface-bg-surface-base-hover
- *   - bg (Selected) : --opacity-primary-opacity-8
- *   - border        : 1px solid --border-border-surface-border-surface-secondary
+ *   - bg (Enabled)  : --bg-surface-base
+ *   - bg (Hovered)  : --bg-surface-base-hover
+ *   - bg (Selected) : --primary-opacity-8
+ *   - border        : 1px solid --border-surface-secondary
  *                     (right + bottom)
- *   - border(focus) : 1px solid --context-background-primary-bg-primary-secondary
+ *   - border(focus) : 1px solid --bg-primary-secondary
  *   - text          : Body/Base_Regular (14/20)
- *                     --context-foreground-surface-on-surface-base
+ *                     --on-surface-base
  *   - cell height   : 40px (multi-normal=56, multi-sub-text=50)
  */
 

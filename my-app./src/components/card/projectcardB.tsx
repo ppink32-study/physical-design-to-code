@@ -12,6 +12,7 @@
 
 import type { CSSProperties, HTMLAttributes } from "react";
 
+import { Button } from "../button/button/button";
 import styles from "./projectcardB.module.css";
 
 export type ProjectCardBState = "default" | "hover";
@@ -87,10 +88,10 @@ export function ProjectCardB({
         </div>
       </div>
 
-      {/* Accept Button */}
-      <button type="button" className={styles.acceptBtn} onClick={onAccept}>
+      {/* Accept Button — Button / secondary-solid, medium */}
+      <Button variant="secondary-solid" size="medium" onClick={onAccept}>
         Accept
-      </button>
+      </Button>
     </div>
   );
 }

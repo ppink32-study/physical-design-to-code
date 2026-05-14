@@ -70,7 +70,7 @@ export const Matrix: Story = {
 
       {/* Variant 매트릭스 */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Body / Variant
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -98,17 +98,17 @@ export const Matrix: Story = {
        *  가로 배치: [Header 200] + [Body 496] × 2 = 1392px
        * ----------------------------------------------------- */}
       <section style={{ marginTop: 40 }}>
-        <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Step Layout — 가로 배치 (Figma 5269:129425)
         </h3>
-        <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-secondary)" }}>
+        <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-secondary)" }}>
           Header(200px) + Body(496px) × 2컬럼, 3행 구성
         </p>
 
         <div style={{
           display: "inline-flex",
           flexDirection: "column",
-          border: "1px solid var(--border-border-surface-border-surface-secondary)",
+          border: "1px solid var(--border-surface-secondary)",
           boxSizing: "border-box",
         }}>
           {/* Row 1 — text cells */}

@@ -15,7 +15,7 @@
  *
  * 토큰
  *   - title    : Body/Base_SemiB (14/20 semibold) on-surface-base
- *   - bullet   : 4×4 circle, --accent-red-accent-red  (※ Figma svg 는 채워진 dot)
+ *   - bullet   : 4×4 circle, --accent-red  (※ Figma svg 는 채워진 dot)
  *   - badge    : ContentsTitleSub 의 count badge 와 동일 (purple tint / purple text)
  *   - addBtn   : 24×24 버튼, AddFill 16×16 icon-surface
  *   - toggle   : 외부 Toggle 컴포넌트 주입 (reverse 권장)

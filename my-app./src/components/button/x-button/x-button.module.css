@@ -8,12 +8,12 @@
  *   large  : 18×18 / 14×14
  *
  * 토큰
- *   default bg : --context-background-surface-bg-surface-secondary
- *   default fg : --context-foreground-icon-surface-icon-surface
- *   hover   bg : --context-background-surface-bg-surface-teriary
- *   hover   fg : --context-foreground-icon-surface-icon-surface
- *   disable bg : --context-background-tint-bg-gray-tint-hover
- *   disable fg : --context-foreground-icon-surface-icon-surface-disabled
+ *   default bg : --bg-surface-secondary
+ *   default fg : --icon-surface
+ *   hover   bg : --bg-surface-tertiary
+ *   hover   fg : --icon-surface
+ *   disable bg : --bg-gray-tint-hover
+ *   disable fg : --icon-surface-disabled
  * ========================================================================== */
 
 .root {
@@ -22,8 +22,8 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-3xs); /* 2px */
-  background: var(--context-background-surface-bg-surface-secondary);
-  color: var(--context-foreground-icon-surface-icon-surface);
+  background: var(--bg-surface-secondary);
+  color: var(--icon-surface);
   border: 0;
   border-radius: var(--radius-full); /* 1000 */
   cursor: pointer;
@@ -40,7 +40,7 @@
 }
 
 .root:focus-visible {
-  outline: 2px solid var(--context-foreground-icon-surface-icon-surface);
+  outline: 2px solid var(--icon-surface);
   outline-offset: 2px;
 }
 
@@ -49,7 +49,7 @@
  * ------------------------------------------------------------------------- */
 .root:hover,
 .root[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
 }
 
 /* ---------------------------------------------------------------------------
@@ -58,8 +58,8 @@
 .root:disabled,
 .root[aria-disabled="true"],
 .root[data-force-state="disable"] {
-  background: var(--context-background-tint-bg-gray-tint-hover);
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  background: var(--bg-gray-tint-hover);
+  color: var(--icon-surface-disabled);
   cursor: not-allowed;
 }
 

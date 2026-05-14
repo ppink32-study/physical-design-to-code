@@ -35,7 +35,7 @@ export function ScrollDemo() {
                   style={{
                     padding: "6px 12px",
                     borderRadius: 8,
-                    background: "var(--context-background-surface-bg-sub-1)",
+                    background: "var(--bg-sub-1)",
                     fontSize: 12,
                   }}
                 >

@@ -114,11 +114,11 @@ function ArrowSvg({ position }: { position: "top" | "bottom" }) {
     >
       <path
         d={fillPath}
-        fill="var(--context-background-surface-bg-surface-base, #fff)"
+        fill="var(--bg-surface-base, #fff)"
       />
       <path
         d={strokePath}
-        stroke="var(--border-border-surface-border-surface, #d7d8dc)"
+        stroke="var(--border-surface, #d7d8dc)"
         strokeWidth="1"
         strokeLinejoin="round"
         strokeLinecap="square"

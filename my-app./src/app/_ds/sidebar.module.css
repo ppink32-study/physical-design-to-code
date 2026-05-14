@@ -6,7 +6,7 @@
   max-height: calc(100vh - 64px);
   overflow-y: auto;
   padding: 32px 20px 48px;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   font-family: var(--font-family-primary, "Pretendard", "Inter", system-ui);
 }
 
@@ -21,7 +21,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 .list {
@@ -44,26 +44,26 @@
   font-weight: 500;
   letter-spacing: -0.005em;
   text-decoration: none;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   transition: background 140ms ease, color 140ms ease;
 }
 
 .link:hover {
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 4%,
+    var(--on-surface-base) 4%,
     transparent
   );
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 .linkActive {
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-primary) 10%,
+    var(--on-surface-primary) 10%,
     transparent
   );
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   font-weight: 700;
 }
 
@@ -76,7 +76,7 @@
   width: 3px;
   height: 16px;
   border-radius: 999px;
-  background: var(--context-foreground-surface-on-surface-primary);
+  background: var(--on-surface-primary);
 }
 
 .dot {

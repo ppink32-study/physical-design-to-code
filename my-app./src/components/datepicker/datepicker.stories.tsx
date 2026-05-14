@@ -89,7 +89,7 @@ const MATRIX_ROWS: Array<{
 const cornerStyle: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-hint, #787a88)",
+  color: "var(--on-surface-hint, #787a88)",
   textTransform: "uppercase",
   letterSpacing: "0.04em",
 };
@@ -97,13 +97,13 @@ const cornerStyle: CSSProperties = {
 const colHeaderStyle: CSSProperties = {
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-base, #141518)",
+  color: "var(--on-surface-base, #141518)",
 };
 
 const rowHeaderStyle: CSSProperties = {
   fontSize: 12,
   fontWeight: 500,
-  color: "var(--context-foreground-surface-on-surface-base, #141518)",
+  color: "var(--on-surface-base, #141518)",
 };
 
 function FigmaStateMatrixFixedGrid({ range }: { range: boolean }) {

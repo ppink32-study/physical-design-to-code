@@ -45,12 +45,12 @@ type Story = StoryObj;
 
 const tokens = {
   borderColor: "var(--context-border-neutral-border-base)",
-  borderColorMuted: "var(--border-neutral-border-neutral-secondary)",
-  surface: "var(--context-background-surface-bg-surface-base)",
-  surfaceMuted: "var(--context-background-neutral-bg-neutral-subtle)",
-  textBase: "var(--context-foreground-surface-on-surface-base)",
-  textMuted: "var(--context-foreground-surface-on-surface)",
-  textSubtle: "var(--context-foreground-surface-on-surface-secondary)",
+  borderColorMuted: "var(--border-neutral-secondary)",
+  surface: "var(--bg-surface-base)",
+  surfaceMuted: "var(--bg-neutral-subtle)",
+  textBase: "var(--on-surface-base)",
+  textMuted: "var(--on-surface)",
+  textSubtle: "var(--on-surface-secondary)",
 } as const;
 
 const previewTrackStyle: CSSProperties = {
@@ -90,7 +90,7 @@ function SpacingPreviewBar({ token, value }: { token: string; value: string }) {
           height: 18,
           width: `var(${token})`,
           flexShrink: 0,
-          background: "var(--context-foreground-primary-on-primary)",
+          background: "var(--on-primary)",
           borderRadius: 2,
         }}
       />

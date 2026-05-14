@@ -64,11 +64,11 @@ function toLetterSpacingPx(pct: string, sizePx: number): string {
 
 const tokens = {
   borderColor: "var(--context-border-neutral-border-base)",
-  surface: "var(--context-background-surface-bg-surface-base)",
-  surfaceMuted: "var(--context-background-neutral-bg-neutral-secondary)",
-  textBase: "var(--context-foreground-surface-on-surface-base)",
-  textMuted: "var(--context-foreground-surface-on-surface)",
-  textSubtle: "var(--context-foreground-surface-on-surface-secondary)",
+  surface: "var(--bg-surface-base)",
+  surfaceMuted: "var(--bg-neutral-secondary)",
+  textBase: "var(--on-surface-base)",
+  textMuted: "var(--on-surface)",
+  textSubtle: "var(--on-surface-secondary)",
 } as const;
 
 const headerCellStyle: CSSProperties = {
@@ -274,7 +274,7 @@ function TypographyTable({
           {rows.map((row, idx) => {
             const isStandard = Boolean(row.standard);
             const rowSurface = isStandard
-              ? "var(--context-background-primary-bg-primary-secondary)"
+              ? "var(--bg-primary-secondary)"
               : tokens.surface;
             const cellBorderTop =
               idx === 0 ? "none" : (`1px solid ${tokens.borderColor}` as const);
@@ -288,7 +288,7 @@ function TypographyTable({
                   borderTop:
                     idx === 0 ? `1px solid ${tokens.borderColor}` : undefined,
                   boxShadow: isStandard
-                    ? "inset 3px 0 0 var(--context-background-primary-bg-primary)"
+                    ? "inset 3px 0 0 var(--bg-primary)"
                     : undefined,
                 }}
               >

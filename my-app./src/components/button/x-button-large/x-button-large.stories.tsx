@@ -58,7 +58,7 @@ export const Matrix: Story = {
       />
 
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           State
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>

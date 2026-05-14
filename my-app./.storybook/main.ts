@@ -5,7 +5,12 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs-vite",
     options: {},
   },
-  stories: ["../src/**/*.stories.@(ts|tsx|js|jsx|mdx)"],
+  // `src/layout-example/**` 는 의도적으로 제외 — 코드는 남기되 Storybook 사이드바에는 노출하지 않는다.
+  stories: [
+    "../src/commons/**/*.stories.@(ts|tsx|js|jsx|mdx)",
+    "../src/components/**/*.stories.@(ts|tsx|js|jsx|mdx)",
+    "../src/stories/**/*.stories.@(ts|tsx|js|jsx|mdx)",
+  ],
   addons: [
     "@storybook/addon-docs",
     "@storybook/addon-themes",

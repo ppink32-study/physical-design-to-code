@@ -175,7 +175,7 @@ function InteractiveDemo() {
         </SelectChip>
       ))}
       {items.length === 0 && (
-        <span style={{ fontSize: 13, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+        <span style={{ fontSize: 13, color: "var(--on-surface-hint)" }}>
           모두 제거되었습니다.
         </span>
       )}

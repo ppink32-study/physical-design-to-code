@@ -2,15 +2,15 @@
   background:
     radial-gradient(
       1200px 600px at 80% -10%,
-      color-mix(in srgb, var(--context-foreground-surface-on-surface-primary) 10%, transparent),
+      color-mix(in srgb, var(--on-surface-primary) 10%, transparent),
       transparent 60%
     ),
     radial-gradient(
       900px 500px at 0% 10%,
-      color-mix(in srgb, var(--context-foreground-surface-on-surface-primary) 6%, transparent),
+      color-mix(in srgb, var(--on-surface-primary) 6%, transparent),
       transparent 55%
     ),
-    var(--context-background-surface-bg-surface-base);
+    var(--bg-surface-base);
   min-height: calc(100vh - 64px);
 }
 
@@ -18,7 +18,7 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 80px clamp(32px, 6vw, 96px) 120px;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   font-family: var(--font-family-primary, "Pretendard", "Inter", system-ui);
 }
 
@@ -31,7 +31,7 @@
   padding-bottom: 64px;
   margin-bottom: 64px;
   border-bottom: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 8%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 8%, transparent);
 }
 
 .title {
@@ -45,8 +45,8 @@
 .titleAccent {
   background: linear-gradient(
     135deg,
-    var(--context-foreground-surface-on-surface-primary),
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-primary) 55%, #7a5cff)
+    var(--on-surface-primary),
+    color-mix(in srgb, var(--on-surface-primary) 55%, #7a5cff)
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -57,7 +57,7 @@
   font-size: 18px;
   line-height: 1.6;
   letter-spacing: -0.01em;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   max-width: 720px;
   margin: 0;
 }
@@ -84,11 +84,11 @@
   border-radius: 24px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 4%,
+    var(--on-surface-base) 4%,
     transparent
   );
   border: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 6%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 6%, transparent);
   margin-bottom: 96px;
 }
 
@@ -103,7 +103,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 .statValue {
@@ -111,7 +111,7 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 @media (max-width: 720px) {
@@ -143,9 +143,9 @@
   gap: 14px;
   padding: 24px;
   border-radius: 20px;
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
   border: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 8%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 8%, transparent);
   color: inherit;
   text-decoration: none;
   transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -158,12 +158,12 @@
   transform: translateY(-3px);
   border-color: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-primary) 40%,
+    var(--on-surface-primary) 40%,
     transparent
   );
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04),
     0 18px 40px -18px
-      color-mix(in srgb, var(--context-foreground-surface-on-surface-primary) 30%, transparent);
+      color-mix(in srgb, var(--on-surface-primary) 30%, transparent);
 }
 
 .cardHeader {
@@ -178,13 +178,13 @@
   letter-spacing: -0.015em;
   line-height: 1.2;
   margin: 0;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 .cardDesc {
   font-size: 13.5px;
   line-height: 1.55;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   margin: 0;
   flex: 1;
   display: -webkit-box;
@@ -199,7 +199,7 @@
   gap: 6px;
   padding-top: 10px;
   border-top: 1px dashed
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 8%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 8%, transparent);
   margin-top: 2px;
 }
 
@@ -208,7 +208,7 @@
   top: 24px;
   right: 24px;
   font-size: 14px;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   opacity: 0;
   transform: translateX(-4px);
   transition: opacity 200ms ease, transform 200ms ease,
@@ -218,5 +218,5 @@
 .card:hover .cardArrow {
   opacity: 1;
   transform: translateX(0);
-  color: var(--context-foreground-surface-on-surface-primary);
+  color: var(--on-surface-primary);
 }

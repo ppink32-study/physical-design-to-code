@@ -51,7 +51,7 @@ export const Playground: Story = {
 
 const rowLabelStyle: CSSProperties = {
   fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface)",
+  color: "var(--on-surface)",
   marginBottom: 8,
 };
 
@@ -110,7 +110,7 @@ export const Matrix: Story = {
             alignItems: "center",
             gap: 12,
             fontSize: 13,
-            color: "var(--context-foreground-surface-on-surface)",
+            color: "var(--on-surface)",
           }}
         >
           <span>Left</span>

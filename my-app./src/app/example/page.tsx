@@ -47,7 +47,7 @@ export default function ExamplePage() {
             href="https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=18234-25392&m=dev"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--context-foreground-primary-on-primary-hover)" }}
+            style={{ color: "var(--on-primary-hover)" }}
           >
             Table example (18234:25392)
           </a>

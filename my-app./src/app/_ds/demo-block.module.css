@@ -4,7 +4,7 @@
   gap: 16px;
   padding: 40px 0;
   border-top: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 6%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 6%, transparent);
 }
 
 .section:first-of-type {
@@ -21,7 +21,7 @@
 .description {
   font-size: 14px;
   line-height: 1.55;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   margin: 0;
 }
 
@@ -33,11 +33,11 @@
   border-radius: 18px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 3%,
+    var(--on-surface-base) 3%,
     transparent
   );
   border: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 5%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 5%, transparent);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
@@ -91,7 +91,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -99,10 +99,10 @@
 .codeNote {
   font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo);
   font-size: 12px;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 6%,
+    var(--on-surface-base) 6%,
     transparent
   );
   padding: 2px 6px;

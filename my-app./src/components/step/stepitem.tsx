@@ -1,36 +1,59 @@
 "use client";
 
-import { Num, type NumMode, type NumState } from "./num";
+/**
+ * StepItem — Figma node 18505:14797
+ * ----------------------------------------------------------------
+ * Stepper / StepCard 의 좌측에 들어가는 세로 인디케이터.
+ * 상단 Num + 하단 세로선으로 구성. 마지막 step 에서는 line=false 로 선 숨김.
+ */
+
+import type { HTMLAttributes } from "react";
+import { forwardRef } from "react";
+
+import { Num, type NumVariant } from "./num";
 import styles from "./stepitem.module.css";
 
-export type StepItemProps = {
-  /** Num에 전달할 번호 — icon states(complete·error·success·stop)에서는 불필요 */
-  number?: number | string;
-  numState?: NumState;
-  mode?: NumMode;
-  /** true → line O (하단 연결선 표시), false → line X (마지막 항목) */
-  hasLine?: boolean;
-  className?: string;
+type NativeDivProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;
+
+export type StepItemProps = NativeDivProps & {
+  /** Num variant — Stepper / StepCard 에서 단계 상태를 표현 */
+  variant?: NumVariant;
+  /** Num text variant 일 때 표시할 스텝 숫자 */
+  step?: number | string;
+  /** 하단 세로 선 노출 여부. 마지막 단계에서는 false */
+  line?: boolean;
 };
 
-export function StepItem({
-  number,
-  numState = "next",
-  mode = "light",
-  hasLine = true,
-  className,
-}: StepItemProps) {
+function StepItemInner(
+  props: StepItemProps,
+  ref: React.ForwardedRef<HTMLDivElement>,
+) {
+  const {
+    variant = "error",
+    step = 1,
+    line = true,
+    className,
+    ...rest
+  } = props;
+
+  const rootClass = [styles.root, className].filter(Boolean).join(" ");
+
   return (
     <div
-      className={[styles.root, className].filter(Boolean).join(" ")}
-      data-theme={mode === "brand" ? "brand" : undefined}
+      {...rest}
+      ref={ref}
+      className={rootClass}
+      data-line={line ? "true" : "false"}
     >
-      <div className={styles.numWrap}>
-        <Num number={number} state={numState} mode={mode} />
-      </div>
-      {hasLine && <div className={styles.line} aria-hidden="true" />}
+      <span className={styles.numWrap}>
+        <Num variant={variant} step={step} />
+      </span>
+      <span className={styles.line} aria-hidden="true" />
     </div>
   );
 }
+
+export const StepItem = forwardRef<HTMLDivElement, StepItemProps>(StepItemInner);
+StepItem.displayName = "StepItem";
 
 export default StepItem;

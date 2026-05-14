@@ -92,10 +92,10 @@ function Counter({ value, max, tone, filled }: CounterProps) {
   const over = value > max;
   const currentColor =
     tone === "error" || over
-      ? "var(--context-foreground-error-on-error)"
+      ? "var(--on-error)"
       : filled
-        ? "var(--context-foreground-surface-on-surface-teriary)"
-        : "var(--context-foreground-surface-on-surface-secondary)";
+        ? "var(--on-surface-tertiary)"
+        : "var(--on-surface-secondary)";
   return (
     <span className={styles.counter} aria-hidden="true">
       <span style={{ color: currentColor }}>{value}</span>

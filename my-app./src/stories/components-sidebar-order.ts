@@ -24,6 +24,7 @@ export const COMPONENTS_GROUP_ORDER = [
   "Input",
   "Form",
   "Empty",
+  "Step",
   "Table",
   "Title",
   "PlaybookControlBar",

@@ -5,9 +5,9 @@
  * ----------------------------------------------------------------
  * 비디오/이미지 등 미디어 위에 오버레이로 올리는 32×32 원형 X 버튼.
  *
- *   default bg : --opacity-black-opacity-50  (rgba(0,0,0,0.5))
- *   hover   bg : --opacity-black-opacity-90  (rgba(0,0,0,0.9))
- *   icon fg    : --context-foreground-neutral-on-neutral-white  (흰 X)
+ *   default bg : --black-opacity-50  (rgba(0,0,0,0.5))
+ *   hover   bg : --black-opacity-90  (rgba(0,0,0,0.9))
+ *   icon fg    : --on-neutral-white  (흰 X)
  *
  * 사이즈
  *   container : 32×32 (--size-base-4xl), rounded-100 (pill = 원형)

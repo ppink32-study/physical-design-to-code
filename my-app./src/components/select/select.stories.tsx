@@ -60,7 +60,7 @@ const sectionTitleStyle: CSSProperties = {
   fontSize: 14,
   fontWeight: 600,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const SectionFrame = ({
@@ -362,7 +362,7 @@ function AnatLegendRow({ n, children }: { n: number; children: ReactNode }) {
         style={{
           fontSize: 14,
           lineHeight: "20px",
-          color: "var(--context-foreground-surface-on-surface-base)",
+          color: "var(--on-surface-base)",
           fontFamily: "var(--font-family-korean)",
         }}
       >
@@ -376,7 +376,7 @@ const anatColHeader: CSSProperties = {
   margin: "0 0 16px",
   fontSize: 13,
   fontWeight: 600,
-  color: "var(--context-foreground-primary-on-primary, #43c6c1)",
+  color: "var(--on-primary, #43c6c1)",
   fontFamily: "var(--font-family-korean)",
 };
 
@@ -398,7 +398,7 @@ export const Guideline: Story = {
         {/* Component preview panel */}
         <div
           style={{
-            background: "var(--context-background-surface-bg-surface-secondary, #f4f4f5)",
+            background: "var(--bg-surface-secondary, #f4f4f5)",
             borderRadius: 8,
             padding: "32px 48px",
             display: "flex",

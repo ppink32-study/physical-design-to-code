@@ -42,8 +42,8 @@
   width: 100%;
   max-height: 768px;
   border-radius: var(--radius-lg, 8px);
-  border: 1px solid var(--border-border-surface-border-surface-secondary);
-  background: var(--context-background-surface-bg-surface-base);
+  border: 1px solid var(--border-surface-secondary);
+  background: var(--bg-surface-base);
   box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.16);
   box-sizing: border-box;
   overflow: hidden;
@@ -74,7 +74,7 @@
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-lg, 24px);
   letter-spacing: 0;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -90,17 +90,17 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
   cursor: pointer;
   border-radius: 4px;
 }
 
 .closeBtn:hover {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
 }
 
 .closeBtn:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: 2px;
 }
 
@@ -128,7 +128,7 @@
   padding: 0 24px 24px;
   box-sizing: border-box;
   scrollbar-width: thin;
-  scrollbar-color: var(--context-background-surface-bg-surface-base-hover) transparent;
+  scrollbar-color: var(--bg-surface-base-hover) transparent;
 }
 
 .body::-webkit-scrollbar {
@@ -140,7 +140,7 @@
 }
 
 .body::-webkit-scrollbar-thumb {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
   border-radius: 2px;
 }
 
@@ -155,7 +155,7 @@
   gap: var(--spacing-xs, 6px);
   align-self: stretch;
   flex-shrink: 0;
-  border-top: 1px solid var(--border-border-surface-border-surface-secondary);
+  border-top: 1px solid var(--border-surface-secondary);
   box-sizing: border-box;
 }
 

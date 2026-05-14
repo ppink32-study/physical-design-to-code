@@ -18,10 +18,10 @@
  *   <html data-theme="brand">         → brand.css 적용  — Standard 테마 (강조 영역)
  *
  * 컴포넌트 사용 예:
- *   CSS Module   :  background: var(--context-background-surface-bg-surface-base);
+ *   CSS Module   :  background: var(--bg-surface-base);
  *   Tailwind     :  <div className="bg-surface-base text-on-surface-base rounded-md p-md">
- *   임의 값       :  <div className="bg-[var(--seed-color-mint-500)]">
- *   인라인 style :  style={{ color: 'var(--context-foreground-surface-on-surface-base)' }}
+ *   임의 값       :  <div className="bg-[var(--mint-500)]">
+ *   인라인 style :  style={{ color: 'var(--on-surface-base)' }}
  * ========================================================================= */
 
 /* -------------------------------------------------------------------------
@@ -118,333 +118,331 @@
    * ====================================================================== */
 
   /* ───── 기본(호환): bg-background / text-foreground ───── */
-  --color-background: var(--context-background-surface-bg-surface-base);
-  --color-foreground: var(--context-foreground-surface-on-surface-base);
+  --color-background: var(--bg-surface-base);
+  --color-foreground: var(--on-surface-base);
 
   /* ───── Foreground · Surface ───── */
-  --color-on-surface-base: var(--context-foreground-surface-on-surface-base);
-  --color-on-surface-white: var(--context-foreground-surface-on-suface-white);
-  --color-on-surface-black: var(--context-foreground-surface-on-suface-black);
-  --color-on-surface-invert: var(--context-foreground-surface-on-suface-invert);
-  --color-on-surface-secondary: var(--context-foreground-surface-on-surface-secondary);
-  --color-on-surface-tertiary: var(--context-foreground-surface-on-surface-teriary);
-  --color-on-surface-hint: var(--context-foreground-surface-on-surface-hint);
-  --color-on-surface-hint-muted: var(--context-foreground-surface-on-surface-hint-muted);
-  --color-on-surface: var(--context-foreground-surface-on-surface);
-  --color-on-surface-hover: var(--context-foreground-surface-on-surface-hover);
-  --color-on-surface-selected: var(--context-foreground-surface-on-surface-selected);
-  --color-on-surface-disabled: var(--context-foreground-surface-on-surface-disabled);
+  --color-on-surface-base: var(--on-surface-base);
+  --color-on-surface-white: var(--on-surface-white);
+  --color-on-surface-black: var(--on-surface-black);
+  --color-on-surface-invert: var(--on-surface-invert);
+  --color-on-surface-secondary: var(--on-surface-secondary);
+  --color-on-surface-tertiary: var(--on-surface-tertiary);
+  --color-on-surface-hint: var(--on-surface-hint);
+  --color-on-surface-hint-muted: var(--on-surface-hint-muted);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-hover: var(--on-surface-hover);
+  --color-on-surface-selected: var(--on-surface-selected);
+  --color-on-surface-disabled: var(--on-surface-disabled);
 
   /* ───── Foreground · Neutral ───── */
-  --color-on-neutral-base: var(--context-foreground-neutral-on-neutral-base);
-  --color-on-neutral-white: var(--context-foreground-neutral-on-neutral-white);
-  --color-on-neutral-invert: var(--context-foreground-neutral-on-neutral-invert);
-  --color-on-neutral-secondary: var(--context-foreground-neutral-on-neutral-secondary);
-  --color-on-neutral-tertiary: var(--context-foreground-neutral-on-neutral-teriary);
-  --color-on-neutral-hint: var(--context-foreground-neutral-on-neutral-hint);
-  --color-on-neutral-hint-muted: var(--context-foreground-neutral-on-neutral-hint-muted);
-  --color-on-neutral: var(--context-foreground-neutral-on-neutral);
-  --color-on-neutral-hover: var(--context-foreground-neutral-on-neutral-hover);
-  --color-on-neutral-readonly: var(--context-foreground-neutral-on-neutral-readonly);
-  --color-on-neutral-disabled: var(--context-foreground-neutral-on-neutral-disabled);
+  --color-on-neutral-base: var(--on-neutral-base);
+  --color-on-neutral-white: var(--on-neutral-white);
+  --color-on-neutral-invert: var(--on-neutral-invert);
+  --color-on-neutral-secondary: var(--on-neutral-secondary);
+  --color-on-neutral-tertiary: var(--on-neutral-tertiary);
+  --color-on-neutral-hint: var(--on-neutral-hint);
+  --color-on-neutral-hint-muted: var(--on-neutral-hint-muted);
+  --color-on-neutral: var(--on-neutral);
+  --color-on-neutral-hover: var(--on-neutral-hover);
+  --color-on-neutral-readonly: var(--on-neutral-readonly);
+  --color-on-neutral-disabled: var(--on-neutral-disabled);
 
   /* ───── Foreground · Icon ───── */
-  --color-icon-surface-base: var(--context-foreground-icon-surface-icon-surface-base);
-  --color-icon-surface-invert: var(--context-foreground-icon-surface-icon-suface-invert);
-  --color-icon-surface-secondary: var(--context-foreground-icon-surface-icon-surface-secondary);
-  --color-icon-surface-tertiary: var(--context-foreground-icon-surface-icon-surface-teriary);
-  --color-icon-surface: var(--context-foreground-icon-surface-icon-surface);
-  --color-icon-surface-hover: var(--context-foreground-icon-surface-icon-surface-hover);
-  --color-icon-surface-selected: var(--context-foreground-icon-surface-icon-surface-selected);
-  --color-icon-surface-readonly: var(--context-foreground-icon-surface-icon-surface-readonly);
-  --color-icon-surface-disabled: var(--context-foreground-icon-surface-icon-surface-disabled);
+  --color-icon-surface-base: var(--icon-surface-base);
+  --color-icon-surface-invert: var(--icon-surface-invert);
+  --color-icon-surface-secondary: var(--icon-surface-secondary);
+  --color-icon-surface-tertiary: var(--icon-surface-tertiary);
+  --color-icon-surface: var(--icon-surface);
+  --color-icon-surface-hover: var(--icon-surface-hover);
+  --color-icon-surface-selected: var(--icon-surface-selected);
+  --color-icon-surface-readonly: var(--icon-surface-readonly);
+  --color-icon-surface-disabled: var(--icon-surface-disabled);
 
-  --color-icon-neutral-white: var(--context-foreground-icon-neutral-icon-neutral-white);
-  --color-icon-neutral-invert: var(--context-foreground-icon-neutral-icon-neutral-invert);
-  --color-icon-neutral-tertiary: var(--context-foreground-icon-neutral-icon-neutral-teriary);
-  --color-icon-neutral-secondary: var(--context-foreground-icon-neutral-icon-neutral-secondary);
-  --color-icon-neutral: var(--context-foreground-icon-neutral-icon-neutral);
-  --color-icon-neutral-hover: var(--context-foreground-icon-neutral-icon-neutral-hover);
-  --color-icon-neutral-selected: var(--context-foreground-icon-neutral-icon-neutral-selected);
-  --color-icon-neutral-readonly: var(--context-foreground-icon-neutral-icon-neutral-readonly);
-  --color-icon-neutral-disabled: var(--context-foreground-icon-neutral-icon-neutral-disabled);
+  --color-icon-neutral-white: var(--icon-neutral-white);
+  --color-icon-neutral-invert: var(--icon-neutral-invert);
+  --color-icon-neutral-tertiary: var(--icon-neutral-tertiary);
+  --color-icon-neutral-secondary: var(--icon-neutral-secondary);
+  --color-icon-neutral: var(--icon-neutral);
+  --color-icon-neutral-hover: var(--icon-neutral-hover);
+  --color-icon-neutral-selected: var(--icon-neutral-selected);
+  --color-icon-neutral-readonly: var(--icon-neutral-readonly);
+  --color-icon-neutral-disabled: var(--icon-neutral-disabled);
 
   /* ───── Foreground · Status (on-primary / on-error / on-warning / ...) ───── */
-  --color-on-primary: var(--context-foreground-primary-on-primary);
-  --color-on-primary-secondary: var(--context-foreground-primary-on-primary-secondary);
-  --color-on-primary-hover: var(--context-foreground-primary-on-primary-hover);
-  --color-on-primary-selected: var(--context-foreground-primary-on-primary-selected);
-  --color-on-primary-disabled: var(--context-foreground-primary-on-primary-disabled);
+  --color-on-primary: var(--on-primary);
+  --color-on-primary-secondary: var(--on-primary-secondary);
+  --color-on-primary-hover: var(--on-primary-hover);
+  --color-on-primary-selected: var(--on-primary-selected);
+  --color-on-primary-disabled: var(--on-primary-disabled);
 
-  --color-on-error: var(--context-foreground-error-on-error);
-  --color-on-error-secondary: var(--context-foreground-error-on-error-secondary);
-  --color-on-error-hover: var(--context-foreground-error-on-error-hover);
-  --color-on-error-selected: var(--context-foreground-error-on-error-selected);
-  --color-on-error-disabled: var(--context-foreground-error-on-error-disabled);
+  --color-on-error: var(--on-error);
+  --color-on-error-secondary: var(--on-error-secondary);
+  --color-on-error-hover: var(--on-error-hover);
+  --color-on-error-selected: var(--on-error-selected);
+  --color-on-error-disabled: var(--on-error-disabled);
 
-  --color-on-warning: var(--context-foreground-warning-on-warning);
-  --color-on-warning-secondary: var(--context-foreground-warning-on-warning-secondary);
-  --color-on-warning-hover: var(--context-foreground-warning-on-warning-hover);
-  --color-on-warning-selected: var(--context-foreground-warning-on-warning-selected);
-  --color-on-warning-disabled: var(--context-foreground-warning-on-warning-disabled);
+  --color-on-warning: var(--on-warning);
+  --color-on-warning-secondary: var(--on-warning-secondary);
+  --color-on-warning-hover: var(--on-warning-hover);
+  --color-on-warning-selected: var(--on-warning-selected);
+  --color-on-warning-disabled: var(--on-warning-disabled);
 
-  --color-on-success: var(--context-foreground-success-on-success);
-  --color-on-success-secondary: var(--context-foreground-success-on-success-secondary);
-  --color-on-success-hover: var(--context-foreground-success-on-success-hover);
-  --color-on-success-selected: var(--context-foreground-success-on-success-selected);
-  --color-on-success-disabled: var(--context-foreground-success-on-success-disabled);
+  --color-on-success: var(--on-success);
+  --color-on-success-secondary: var(--on-success-secondary);
+  --color-on-success-hover: var(--on-success-hover);
+  --color-on-success-selected: var(--on-success-selected);
+  --color-on-success-disabled: var(--on-success-disabled);
 
-  --color-on-progress: var(--context-foreground-progress-on-progress);
-  --color-on-progress-secondary: var(--context-foreground-progress-on-progress-secondary);
-  --color-on-progress-hover: var(--context-foreground-progress-on-progress-hover);
-  --color-on-progress-selected: var(--context-foreground-progress-on-progress-selected);
-  --color-on-progress-disabled: var(--context-foreground-progress-on-progress-disabled);
+  --color-on-progress: var(--on-progress);
+  --color-on-progress-secondary: var(--on-progress-secondary);
+  --color-on-progress-hover: var(--on-progress-hover);
+  --color-on-progress-selected: var(--on-progress-selected);
+  --color-on-progress-disabled: var(--on-progress-disabled);
 
-  --color-on-blue: var(--context-foreground-blue-on-blue);
-  --color-on-blue-secondary: var(--context-foreground-blue-on-blue-secondary);
-  --color-on-blue-hover: var(--context-foreground-blue-on-blue-hover);
-  --color-on-blue-selected: var(--context-foreground-blue-on-blue-selected);
-  --color-on-blue-disabled: var(--context-foreground-blue-on-blue-disabled);
+  --color-on-blue: var(--on-blue);
+  --color-on-blue-secondary: var(--on-blue-secondary);
+  --color-on-blue-hover: var(--on-blue-hover);
+  --color-on-blue-selected: var(--on-blue-selected);
+  --color-on-blue-disabled: var(--on-blue-disabled);
 
   /* ───── Background · Surface ───── */
-  --color-surface-quaternary: var(--context-background-surface-bg-surface-quarernary);
-  --color-surface-tertiary: var(--context-background-surface-bg-surface-teriary);
-  --color-surface-secondary: var(--context-background-surface-bg-surface-secondary);
-  --color-surface-base: var(--context-background-surface-bg-surface-base);
-  --color-surface-base-hover: var(--context-background-surface-bg-surface-base-hover);
-  --color-surface-base-disabled: var(--context-background-surface-bg-surface-base-disabled);
-  --color-surface-base-selected: var(--context-background-surface-bg-surface-base-selected);
-  --color-surface-white: var(--context-background-surface-bg-surface-white);
-  --color-backdrop-dark: var(--context-background-surface-bg-backdrop-dark);
-  --color-backdrop: var(--context-background-backdrop-bg-backboard);
+  --color-surface-quaternary: var(--bg-surface-quarernary);
+  --color-surface-tertiary: var(--bg-surface-tertiary);
+  --color-surface-secondary: var(--bg-surface-secondary);
+  --color-surface-base: var(--bg-surface-base);
+  --color-surface-base-hover: var(--bg-surface-base-hover);
+  --color-surface-base-disabled: var(--bg-surface-base-disabled);
+  --color-surface-base-selected: var(--bg-surface-base-selected);
+  --color-surface-white: var(--bg-surface-white);
+  --color-backdrop-dark: var(--bg-backdrop-dark);
+  --color-backdrop: var(--bg-backboard);
 
   /* ───── Background · Neutral ───── */
-  --color-neutral-quaternary: var(--context-background-neutral-bg-neutral-quarernary);
-  --color-neutral-tertiary: var(--context-background-neutral-bg-neutral-teriary);
-  --color-neutral-secondary: var(--context-background-neutral-bg-neutral-secondary);
-  --color-neutral: var(--context-background-neutral-bg-neutral);
-  --color-neutral-hover: var(--context-background-neutral-bg-neutral-hover);
-  --color-neutral-quaternary-hover: var(--context-background-neutral-bg-neutral-quarernary-hover);
-  --color-neutral-disabled: var(--context-background-neutral-bg-neutral-disabled);
+  --color-neutral-quaternary: var(--bg-neutral-quarernary);
+  --color-neutral-tertiary: var(--bg-neutral-tertiary);
+  --color-neutral-secondary: var(--bg-neutral-secondary);
+  --color-neutral: var(--bg-neutral);
+  --color-neutral-hover: var(--bg-neutral-hover);
+  --color-neutral-quaternary-hover: var(--bg-neutral-quarernary-hover);
+  --color-neutral-disabled: var(--bg-neutral-disabled);
 
   /* ───── Background · Tints ───── */
-  --color-tint-primary: var(--context-background-tint-bg-primary-tint);
-  --color-tint-primary-hover: var(--context-background-tint-bg-primary-tint-hover);
-  --color-tint-primary-selected: var(--context-background-tint-bg-primary-tint-selected);
-  --color-tint-gray: var(--context-background-tint-bg-gray-tint);
-  --color-tint-gray-hover: var(--context-background-tint-bg-gray-tint-hover);
-  --color-tint-gray-selected: var(--context-background-tint-bg-gray-tint-selected);
-  --color-tint-purple: var(--context-background-tint-bg-purple-tint);
-  --color-tint-purple-hover: var(--context-background-tint-bg-purple-tint-hover);
-  --color-tint-purple-selected: var(--context-background-tint-bg-purple-tint-selected);
-  --color-tint-red: var(--context-background-tint-bg-red-tint);
-  --color-tint-red-hover: var(--context-background-tint-bg-red-tint-hover);
-  --color-tint-red-selected: var(--context-background-tint-bg-red-tint-selected);
-  --color-tint-green: var(--context-background-tint-bg-green-tint);
-  --color-tint-green-hover: var(--context-background-tint-bg-green-tint-hover);
-  --color-tint-green-selected: var(--context-background-tint-bg-green-tint-selected);
-  --color-tint-orange: var(--context-background-tint-bg-orange-tint);
-  --color-tint-orange-hover: var(--context-background-tint-bg-orange-tint-hover);
-  --color-tint-orange-selected: var(--context-background-tint-bg-orange-tint-selected);
-  --color-tint-pink: var(--context-background-tint-bg-pink-tint);
-  --color-tint-pink-hover: var(--context-background-tint-bg-pink-tint-hover);
-  --color-tint-pink-selected: var(--context-background-tint-bg-pink-tint-selected);
-  --color-tint-yellow: var(--context-background-tint-bg-yellow-tint);
-  --color-tint-yellow-hover: var(--context-background-tint-bg-yellow-tint-hover);
-  --color-tint-yellow-selected: var(--context-background-tint-bg-yellow-tint-selected);
-  --color-tint-cyan: var(--context-background-tint-bg-cyan-tint);
-  --color-tint-cyan-hover: var(--context-background-tint-bg-cyan-tint-hover);
-  --color-tint-cyan-selected: var(--context-background-tint-bg-cyan-tint-selected);
-  --color-tint-blue: var(--context-background-tint-bg-blue-tint);
-  --color-tint-blue-hover: var(--context-background-tint-bg-blue-tint-hover);
-  --color-tint-blue-selected: var(--context-background-tint-bg-blue-tint-selected);
-  --color-tint-magenta: var(--context-background-tint-bg-magenta-tint);
-  --color-tint-magenta-hover: var(--context-background-tint-bg-magenta-tint-hover);
-  --color-tint-magenta-selected: var(--context-background-tint-bg-magenta-tint-selected);
-  --color-tint-gold: var(--context-background-tint-bg-gold-tint);
-  --color-tint-gold-hover: var(--context-background-tint-bg-gold-tint-hover);
-  --color-tint-gold-selected: var(--context-background-tint-bg-gold-tint-selected);
+  --color-tint-primary: var(--bg-primary-tint);
+  --color-tint-primary-hover: var(--bg-primary-tint-hover);
+  --color-tint-primary-selected: var(--bg-primary-tint-selected);
+  --color-tint-gray: var(--bg-gray-tint);
+  --color-tint-gray-hover: var(--bg-gray-tint-hover);
+  --color-tint-gray-selected: var(--bg-gray-tint-selected);
+  --color-tint-purple: var(--bg-purple-tint);
+  --color-tint-purple-hover: var(--bg-purple-tint-hover);
+  --color-tint-purple-selected: var(--bg-purple-tint-selected);
+  --color-tint-red: var(--bg-red-tint);
+  --color-tint-red-hover: var(--bg-red-tint-hover);
+  --color-tint-red-selected: var(--bg-red-tint-selected);
+  --color-tint-green: var(--bg-green-tint);
+  --color-tint-green-hover: var(--bg-green-tint-hover);
+  --color-tint-green-selected: var(--bg-green-tint-selected);
+  --color-tint-orange: var(--bg-orange-tint);
+  --color-tint-orange-hover: var(--bg-orange-tint-hover);
+  --color-tint-orange-selected: var(--bg-orange-tint-selected);
+  --color-tint-pink: var(--bg-pink-tint);
+  --color-tint-pink-hover: var(--bg-pink-tint-hover);
+  --color-tint-pink-selected: var(--bg-pink-tint-selected);
+  --color-tint-yellow: var(--bg-yellow-tint);
+  --color-tint-yellow-hover: var(--bg-yellow-tint-hover);
+  --color-tint-yellow-selected: var(--bg-yellow-tint-selected);
+  --color-tint-cyan: var(--bg-cyan-tint);
+  --color-tint-cyan-hover: var(--bg-cyan-tint-hover);
+  --color-tint-cyan-selected: var(--bg-cyan-tint-selected);
+  --color-tint-blue: var(--bg-blue-tint);
+  --color-tint-blue-hover: var(--bg-blue-tint-hover);
+  --color-tint-blue-selected: var(--bg-blue-tint-selected);
+  --color-tint-magenta: var(--bg-magenta-tint);
+  --color-tint-magenta-hover: var(--bg-magenta-tint-hover);
+  --color-tint-magenta-selected: var(--bg-magenta-tint-selected);
+  --color-tint-gold: var(--bg-gold-tint);
+  --color-tint-gold-hover: var(--bg-gold-tint-hover);
+  --color-tint-gold-selected: var(--bg-gold-tint-selected);
 
   /* ───── Background · Status ───── */
-  --color-primary: var(--context-background-primary-bg-primary);
-  --color-primary-secondary: var(--context-background-primary-bg-primary-secondary);
-  --color-primary-hover: var(--context-background-primary-bg-primary-hover);
-  --color-primary-selected-hover: var(--context-background-primary-bg-primary-selectedhover);
-  --color-primary-disabled: var(--context-background-primary-bg-primary-disabled);
+  --color-primary: var(--bg-primary);
+  --color-primary-secondary: var(--bg-primary-secondary);
+  --color-primary-hover: var(--bg-primary-hover);
+  --color-primary-selected-hover: var(--bg-primary-selectedhover);
+  --color-primary-disabled: var(--bg-primary-disabled);
 
-  --color-gray: var(--context-background-gray-bg-gray);
-  --color-gray-dark: var(--context-background-gray-bg-darkgray);
-  --color-gray-hover: var(--context-background-gray-bg-gray-hover);
-  --color-gray-dark-hover: var(--context-background-gray-bg-darkgray-hover);
-  --color-gray-selected-hover: var(--context-background-gray-bg-gray-selectedhover);
-  --color-gray-disabled: var(--context-background-gray-bg-gray-disabled);
+  --color-gray: var(--bg-gray);
+  --color-gray-dark: var(--bg-darkgray);
+  --color-gray-hover: var(--bg-gray-hover);
+  --color-gray-dark-hover: var(--bg-darkgray-hover);
+  --color-gray-selected-hover: var(--bg-gray-selectedhover);
+  --color-gray-disabled: var(--bg-gray-disabled);
 
-  --color-error: var(--context-background-error-bg-error);
-  --color-error-hover: var(--context-background-error-bg-error-hover);
-  --color-error-selected-hover: var(--context-background-error-bg-error-selectedhover);
-  --color-error-disabled: var(--context-background-error-bg-error-disabled);
+  --color-error: var(--bg-error);
+  --color-error-hover: var(--bg-error-hover);
+  --color-error-selected-hover: var(--bg-error-selectedhover);
+  --color-error-disabled: var(--bg-error-disabled);
 
-  --color-warning: var(--context-background-warning-bg-warning);
-  --color-warning-hover: var(--context-background-warning-bg-warning-hover);
-  --color-warning-selected-hover: var(--context-background-warning-bg-warning-selectedhover);
-  --color-warning-disabled: var(--context-background-warning-bg-warning-disabled);
+  --color-warning: var(--bg-warning);
+  --color-warning-hover: var(--bg-warning-hover);
+  --color-warning-selected-hover: var(--bg-warning-selectedhover);
+  --color-warning-disabled: var(--bg-warning-disabled);
 
-  --color-success: var(--context-background-success-bg-success);
-  --color-success-hover: var(--context-background-success-bg-success-hover);
-  --color-success-selected-hover: var(--context-background-success-bg-success-selectedhover);
-  --color-success-disabled: var(--context-background-success-bg-success-disabled);
+  --color-success: var(--bg-success);
+  --color-success-hover: var(--bg-success-hover);
+  --color-success-selected-hover: var(--bg-success-selectedhover);
+  --color-success-disabled: var(--bg-success-disabled);
 
-  --color-progress: var(--context-background-progress-bg-progress);
-  --color-progress-hover: var(--context-background-progress-bg-progress-hover);
-  --color-progress-selected-hover: var(--context-background-progress-bg-progress-selectedhover);
-  --color-progress-disabled: var(--context-background-progress-bg-progress-disabled);
+  --color-progress: var(--bg-progress);
+  --color-progress-hover: var(--bg-progress-hover);
+  --color-progress-selected-hover: var(--bg-progress-selectedhover);
+  --color-progress-disabled: var(--bg-progress-disabled);
 
   /* ───── Accent (라벨/배지 등) ───── */
-  --color-accent-gray-tint: var(--accent-gray-accent-gray-tint);
-  --color-accent-gray-lightest: var(--accent-gray-accent-gray-lightest);
-  --color-accent-gray-light: var(--accent-gray-accent-gray-light);
-  --color-accent-gray: var(--accent-gray-accent-gray);
-  --color-accent-gray-dark: var(--accent-gray-accent-gray-dark);
-  --color-accent-gray-darkest: var(--accent-gray-accent-gray-darkest);
+  --color-accent-gray-tint: var(--accent-gray-tint);
+  --color-accent-gray-lightest: var(--accent-gray-lightest);
+  --color-accent-gray-light: var(--accent-gray-light);
+  --color-accent-gray: var(--accent-gray);
+  --color-accent-gray-dark: var(--accent-gray-dark);
+  --color-accent-gray-darkest: var(--accent-gray-darkest);
 
-  --color-accent-teal-tint: var(--accent-teal-accent-teal-tint);
-  --color-accent-teal-lightest: var(--accent-teal-accent-teal-lightest);
-  --color-accent-teal-light: var(--accent-teal-accent-teal-light);
-  --color-accent-teal: var(--accent-teal-accent-teal);
-  --color-accent-teal-dark: var(--accent-teal-accent-teal-dark);
-  --color-accent-teal-darkest: var(--accent-teal-accent-teal-darkest);
+  --color-accent-teal-tint: var(--accent-teal-tint);
+  --color-accent-teal-lightest: var(--accent-teal-lightest);
+  --color-accent-teal-light: var(--accent-teal-light);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-teal-dark: var(--accent-teal-dark);
+  --color-accent-teal-darkest: var(--accent-teal-darkest);
 
-  --color-accent-purple-tint: var(--accent-purple-accent-purple-tint);
-  --color-accent-purple-lightest: var(--accent-purple-accent-purple-lightest);
-  --color-accent-purple-light: var(--accent-purple-accent-purple-light);
-  --color-accent-purple: var(--accent-purple-accent-purple);
-  --color-accent-purple-dark: var(--accent-purple-accent-purple-dark);
-  --color-accent-purple-darkest: var(--accent-purple-accent-purple-darkest);
+  --color-accent-purple-tint: var(--accent-purple-tint);
+  --color-accent-purple-lightest: var(--accent-purple-lightest);
+  --color-accent-purple-light: var(--accent-purple-light);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-purple-dark: var(--accent-purple-dark);
+  --color-accent-purple-darkest: var(--accent-purple-darkest);
 
-  --color-accent-red-tint: var(--accent-red-accent-red-tint);
-  --color-accent-red-lightest: var(--accent-red-accent-red-lightest);
-  --color-accent-red-light: var(--accent-red-accent-red-light);
-  --color-accent-red: var(--accent-red-accent-red);
-  --color-accent-red-dark: var(--accent-red-accent-red-dark);
-  --color-accent-red-darkest: var(--accent-red-accent-red-darkest);
+  --color-accent-red-tint: var(--accent-red-tint);
+  --color-accent-red-lightest: var(--accent-red-lightest);
+  --color-accent-red-light: var(--accent-red-light);
+  --color-accent-red: var(--accent-red);
+  --color-accent-red-dark: var(--accent-red-dark);
+  --color-accent-red-darkest: var(--accent-red-darkest);
 
-  --color-accent-pink-tint: var(--accent-pink-accent-pink-tint);
-  --color-accent-pink-lightest: var(--accent-pink-accent-pink-lightest);
-  --color-accent-pink-light: var(--accent-pink-accent-pink-light);
-  --color-accent-pink: var(--accent-pink-accent-pink);
-  --color-accent-pink-dark: var(--accent-pink-accent-pink-dark);
-  --color-accent-pink-darkest: var(--accent-pink-accent-pink-darkest);
+  --color-accent-pink-tint: var(--accent-pink-tint);
+  --color-accent-pink-lightest: var(--accent-pink-lightest);
+  --color-accent-pink-light: var(--accent-pink-light);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-pink-dark: var(--accent-pink-dark);
+  --color-accent-pink-darkest: var(--accent-pink-darkest);
 
-  --color-accent-yellow-tint: var(--accent-yellow-accent-yellow-tint);
-  --color-accent-yellow-lightest: var(--accent-yellow-accent-yellow-lightest);
-  --color-accent-yellow-light: var(--accent-yellow-accent-yellow-light);
-  --color-accent-yellow: var(--accent-yellow-accent-yellow);
-  --color-accent-yellow-dark: var(--accent-yellow-accent-yellow-dark);
-  --color-accent-yellow-darkest: var(--accent-yellow-accent-yellow-darkest);
+  --color-accent-yellow-tint: var(--accent-yellow-tint);
+  --color-accent-yellow-lightest: var(--accent-yellow-lightest);
+  --color-accent-yellow-light: var(--accent-yellow-light);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-yellow-dark: var(--accent-yellow-dark);
+  --color-accent-yellow-darkest: var(--accent-yellow-darkest);
 
-  --color-accent-green-tint: var(--accent-green-accent-green-tint);
-  --color-accent-green-lightest: var(--accent-green-accent-green-lightest);
-  --color-accent-green-light: var(--accent-green-accent-green-light);
-  --color-accent-green: var(--accent-green-accent-green);
-  --color-accent-green-dark: var(--accent-green-accent-green-dark);
-  --color-accent-green-darkest: var(--accent-green-accent-green-darkest);
+  --color-accent-green-tint: var(--accent-green-tint);
+  --color-accent-green-lightest: var(--accent-green-lightest);
+  --color-accent-green-light: var(--accent-green-light);
+  --color-accent-green: var(--accent-green);
+  --color-accent-green-dark: var(--accent-green-dark);
+  --color-accent-green-darkest: var(--accent-green-darkest);
 
-  --color-accent-cyan-tint: var(--accent-cyan-accent-cyan-tint);
-  --color-accent-cyan-lightest: var(--accent-cyan-accent-cyan-lightest);
-  --color-accent-cyan-light: var(--accent-cyan-accent-cyan-light);
-  --color-accent-cyan: var(--accent-cyan-accent-cyan);
-  --color-accent-cyan-dark: var(--accent-cyan-accent-cyan-dark);
-  --color-accent-cyan-darkest: var(--accent-cyan-accent-cyan-darkest);
+  --color-accent-cyan-tint: var(--accent-cyan-tint);
+  --color-accent-cyan-lightest: var(--accent-cyan-lightest);
+  --color-accent-cyan-light: var(--accent-cyan-light);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-cyan-dark: var(--accent-cyan-dark);
+  --color-accent-cyan-darkest: var(--accent-cyan-darkest);
 
-  --color-accent-orange-tint: var(--accent-orange-accent-orange-tint);
-  --color-accent-orange-lightest: var(--accent-orange-accent-orange-lightest);
-  --color-accent-orange-light: var(--accent-orange-accent-orange-light);
-  --color-accent-orange: var(--accent-orange-accent-orange);
-  --color-accent-orange-dark: var(--accent-orange-accent-orange-dark);
-  --color-accent-orange-darkest: var(--accent-orange-accent-orange-darkest);
+  --color-accent-orange-tint: var(--accent-orange-tint);
+  --color-accent-orange-lightest: var(--accent-orange-lightest);
+  --color-accent-orange-light: var(--accent-orange-light);
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-orange-dark: var(--accent-orange-dark);
+  --color-accent-orange-darkest: var(--accent-orange-darkest);
 
-  --color-accent-blue-tint: var(--accent-blue-accent-blue-tint);
-  --color-accent-blue-lightest: var(--accent-blue-accent-blue-lightest);
-  --color-accent-blue-light: var(--accent-blue-accent-blue-light);
-  --color-accent-blue: var(--accent-blue-accent-blue);
-  --color-accent-blue-dark: var(--accent-blue-accent-blue-dark);
-  --color-accent-blue-darkest: var(--accent-blue-accent-blue-darkest);
+  --color-accent-blue-tint: var(--accent-blue-tint);
+  --color-accent-blue-lightest: var(--accent-blue-lightest);
+  --color-accent-blue-light: var(--accent-blue-light);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-dark: var(--accent-blue-dark);
+  --color-accent-blue-darkest: var(--accent-blue-darkest);
 
-  --color-accent-magenta-tint: var(--accent-magenta-accent-magenta-tint);
-  --color-accent-magenta-lightest: var(--accent-magenta-accent-magenta-lightest);
-  --color-accent-magenta-light: var(--accent-magenta-accent-magenta-light);
-  --color-accent-magenta: var(--accent-magenta-accent-magenta);
-  --color-accent-magenta-dark: var(--accent-magenta-accent-magenta-dark);
-  --color-accent-magenta-darkest: var(--accent-magenta-accent-magenta-darkest);
+  --color-accent-magenta-tint: var(--accent-magenta-tint);
+  --color-accent-magenta-lightest: var(--accent-magenta-lightest);
+  --color-accent-magenta-light: var(--accent-magenta-light);
+  --color-accent-magenta: var(--accent-magenta);
+  --color-accent-magenta-dark: var(--accent-magenta-dark);
+  --color-accent-magenta-darkest: var(--accent-magenta-darkest);
 
-  --color-accent-gold-tint: var(--accent-gold-accent-gold-tint);
-  --color-accent-gold-lightest: var(--accent-gold-accent-gold-lightest);
-  --color-accent-gold-light: var(--accent-gold-accent-gold-light);
-  --color-accent-gold: var(--accent-gold-accent-gold);
-  --color-accent-gold-dark: var(--accent-gold-accent-gold-dark);
-  --color-accent-gold-darkest: var(--accent-gold-accent-gold-darkest);
+  --color-accent-gold-tint: var(--accent-gold-tint);
+  --color-accent-gold-lightest: var(--accent-gold-lightest);
+  --color-accent-gold-light: var(--accent-gold-light);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-gold-dark: var(--accent-gold-dark);
+  --color-accent-gold-darkest: var(--accent-gold-darkest);
 
   /* ───── Border (border-*) ───── */
-  --color-border-primary: var(--border-border-primary);
-  --color-border-primary-hover: var(--border-border-primary-hover);
-  --color-border-valid: var(--border-border-valid);
-  --color-border-invalid: var(--border-border-invalid);
-  --color-border-gray-tint: var(--border-border-gray-tint);
-  --color-border-purple-tint: var(--border-border-purple-tint);
-  --color-border-pink-tint: var(--border-border-pink-tint);
-  --color-border-red-tint: var(--border-border-red-tint);
-  --color-border-green-tint: var(--border-border-green-tint);
-  --color-border-yellow-tint: var(--border-border-yellow-tint);
-  --color-border-orange-tint: var(--border-border-orange-tint);
-  --color-border-cyan-tint: var(--border-border-cyan-tint);
-  --color-border-blue-tint: var(--border-border-blue-tint);
-  --color-border-teal-tint: var(--border-border-teal-tint);
-  --color-border-magenta-tint: var(--border-border-magenta-tint);
-  --color-border-gold-tint: var(--border-border-gold-tint);
+  --color-border-primary: var(--border-primary);
+  --color-border-primary-hover: var(--border-primary-hover);
+  --color-border-valid: var(--border-valid);
+  --color-border-invalid: var(--border-invalid);
+  --color-border-gray-tint: var(--border-gray-tint);
+  --color-border-purple-tint: var(--border-purple-tint);
+  --color-border-pink-tint: var(--border-pink-tint);
+  --color-border-red-tint: var(--border-red-tint);
+  --color-border-green-tint: var(--border-green-tint);
+  --color-border-yellow-tint: var(--border-yellow-tint);
+  --color-border-orange-tint: var(--border-orange-tint);
+  --color-border-cyan-tint: var(--border-cyan-tint);
+  --color-border-blue-tint: var(--border-blue-tint);
+  --color-border-teal-tint: var(--border-teal-tint);
+  --color-border-magenta-tint: var(--border-magenta-tint);
+  --color-border-gold-tint: var(--border-gold-tint);
 
-  --color-border-neutral: var(--border-neutral-border-neutral);
-  --color-border-neutral-white: var(--border-neutral-border-neutral-white);
-  --color-border-neutral-quaternary: var(--border-neutral-border-neutral-quaternary);
-  --color-border-neutral-tertiary: var(--border-neutral-border-neutral-tertiary);
-  --color-border-neutral-secondary: var(--border-neutral-border-neutral-secondary);
-  --color-border-neutral-secondary-hover: var(--border-neutral-border-neutral-secondary-hover);
-  --color-border-neutral-hover: var(--border-neutral-border-neutral-hover);
-  --color-border-neutral-disabled: var(--border-neutral-border-neutral-disabled);
-  --color-border-neutral-dark: var(--border-neutral-border-neutral-dark);
-  --color-border-neutral-darkest: var(--border-neutral-border-neutral-darkest);
+  --color-border-neutral: var(--border-neutral);
+  --color-border-neutral-white: var(--border-neutral-white);
+  --color-border-neutral-quaternary: var(--border-neutral-quaternary);
+  --color-border-neutral-tertiary: var(--border-neutral-tertiary);
+  --color-border-neutral-secondary: var(--border-neutral-secondary);
+  --color-border-neutral-secondary-hover: var(--border-neutral-secondary-hover);
+  --color-border-neutral-hover: var(--border-neutral-hover);
+  --color-border-neutral-disabled: var(--border-neutral-disabled);
+  --color-border-neutral-dark: var(--border-neutral-dark);
+  --color-border-neutral-darkest: var(--border-neutral-darkest);
 
-  --color-border-surface-white: var(--border-border-surface-border-surface-white);
-  --color-border-surface: var(--border-border-surface-border-surface);
-  --color-border-surface-hover: var(--border-border-surface-border-surface-hover);
-  --color-border-surface-quaternary: var(--border-border-surface-border-surface-quaternary);
-  --color-border-surface-tertiary: var(--border-border-surface-border-surface-tertiary);
-  --color-border-surface-secondary: var(--border-border-surface-border-surface-secondary);
-  --color-border-surface-disabled: var(--border-border-surface-border-surface-disabled);
-  --color-border-surface-darkest: var(--border-border-surface-border-surface-darkest);
-  --color-border-surface-lightest: var(--border-border-surface-border-surface-lightest);
+  --color-border-surface-white: var(--border-surface-white);
+  --color-border-surface: var(--border-surface);
+  --color-border-surface-hover: var(--border-surface-hover);
+  --color-border-surface-quaternary: var(--border-surface-quaternary);
+  --color-border-surface-tertiary: var(--border-surface-tertiary);
+  --color-border-surface-secondary: var(--border-surface-secondary);
+  --color-border-surface-disabled: var(--border-surface-disabled);
+  --color-border-surface-darkest: var(--border-surface-darkest);
+  --color-border-surface-lightest: var(--border-surface-lightest);
 
   /* ───── 반투명 (Opacity · Transparency 컬러) ───── */
-  --color-opacity-surface-secondary-70: var(--opacity-surface-secondary-70);
-  --color-opacity-panel: var(--opacity-opacity-panel);
-  --color-opacity-white-50: var(--opacity-surface-white-opacity-50);
-  --color-opacity-white-70: var(--opacity-surface-white-opacity-70);
-  --color-opacity-white-8: var(--opacity-white-opacity-8);
-  --color-opacity-black-8: var(--opacity-black-opacity-8);
-  --color-opacity-black-50: var(--opacity-black-opacity-50);
-  /* Figma Opacity/BlackOpacity_50 — PageLoaderOverlay 등 */
-  --Opacity-BlackOpacity_50: var(--opacity-black-opacity-50);
-  --color-opacity-black-90: var(--opacity-black-opacity-90);
-  --color-opacity-primary-8: var(--opacity-primary-opacity-8);
-  --color-opacity-primary-15: var(--opacity-primary-opacity-15);
-  --color-opacity-primary-20: var(--opacity-primary-opacity-20);
-  --color-opacity-primary-25: var(--opacity-primary-opacity-25);
-  --color-opacity-primary-30: var(--opacity-primary-opacity-30);
-  --color-opacity-blue-30: var(--opacity-blue-opacity-30);
-  --color-opacity-orange-15: var(--opacity-orange-opacity-15);
-  --color-opacity-cyan-15: var(--opacity-cyan-opacity-15);
-  --color-opacity-cyan-30: var(--opacity-cyan-opacity-30);
-  --color-opacity-pink-8: var(--opacity-pink-opacity-8);
-  --color-opacity-pink-10: var(--opacity-pink-opacity-10);
+  --color-opacity-surface-secondary-70: var(--surface-secondary-70);
+  --color-opacity-panel: var(--opacity-panel);
+  --color-opacity-white-50: var(--surface-white-opacity-50);
+  --color-opacity-white-70: var(--surface-white-opacity-70);
+  --color-opacity-white-8: var(--white-opacity-8);
+  --color-opacity-black-8: var(--black-opacity-8);
+  --color-opacity-black-50: var(--black-opacity-50);
+  --color-opacity-black-90: var(--black-opacity-90);
+  --color-opacity-primary-8: var(--primary-opacity-8);
+  --color-opacity-primary-15: var(--primary-opacity-15);
+  --color-opacity-primary-20: var(--primary-opacity-20);
+  --color-opacity-primary-25: var(--primary-opacity-25);
+  --color-opacity-primary-30: var(--primary-opacity-30);
+  --color-opacity-blue-30: var(--blue-opacity-30);
+  --color-opacity-orange-15: var(--orange-opacity-15);
+  --color-opacity-cyan-15: var(--cyan-opacity-15);
+  --color-opacity-cyan-30: var(--cyan-opacity-30);
+  --color-opacity-pink-8: var(--pink-opacity-8);
+  --color-opacity-pink-10: var(--pink-opacity-10);
 
   --color-transparency-red: var(--bg-transparency-red);
   --color-transparency-orange: var(--bg-transparency-orange);
@@ -457,8 +455,8 @@
  * Body Defaults — 모든 컴포넌트가 상속받는 기본 스타일
  * ------------------------------------------------------------------------- */
 body {
-  background: var(--context-background-surface-bg-surface-base);
-  color: var(--context-foreground-surface-on-surface-base);
+  background: var(--bg-surface-base);
+  color: var(--on-surface-base);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-base);
   line-height: var(--font-line-height-md);

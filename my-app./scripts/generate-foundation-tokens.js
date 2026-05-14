@@ -19,16 +19,71 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const LIGHT_JSON = path.join(ROOT, "src/commons/constants/json/Light.tokens.json");
 const DARK_JSON = path.join(ROOT, "src/commons/constants/json/Dark.tokens.json");
+const SEED_JSON = path.join(ROOT, "src/commons/constants/json/_Seed.json");
 const LIGHT_CSS = path.join(ROOT, "src/commons/constants/css/light.css");
 const DARK_CSS = path.join(ROOT, "src/commons/constants/css/dark.css");
+const SEED_CSS = path.join(ROOT, "src/commons/constants/css/_seed.css");
 const OUT = path.join(
   ROOT,
   "src/app/_ds/demos/foundations/tokens.generated.ts"
 );
 
+function isSeedSegments(segs) {
+  return segs[0] === "_Color";
+}
+
+// Seed 트리 — root segment 인 `_Color` prefix 는 떼고 나머지만 결합한다.
+//  ["_Color", "Gray", "25"]                          → "gray-25"
+//  ["_Color", "Opacity", "Accent", "Primary500_8%"]  → "opacity-accent-primary500-8"
+//
+// 일반 토큰의 toKebabLower 와 달리 PascalCase + 숫자 사이엔 `-` 를 끼우지
+// 않는다 — _seed.css 의 정의(`primary500-8`)와 변수명을 일치시키기 위해.
+function seedSegment(seg) {
+  return String(seg)
+    .replace(/^_/, "")
+    .replace(/%/g, "")
+    .replace(/[\s_]+/g, "-")
+    .toLowerCase()
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function seedKebab(segments) {
+  return segments.slice(1).map(seedSegment).join("-");
+}
+
+function leafKebab(sectionPath, leaf) {
+  const base = toKebabLower(leaf);
+  // bg Transparency 그룹의 leaf 는 `red/orange/...` 처럼 너무 광범위해
+  // 카테고리 prefix 를 leaf 앞에 붙여 식별성을 유지한다.
+  if (sectionPath === "bg Transparency") return "bg-transparency-" + base;
+  return base;
+}
+
 function pathToCssVar(segments) {
-  const joined = segments.join("/").toLowerCase();
-  return "--" + joined.replace(/[\s_/]+/g, "-");
+  if (isSeedSegments(segments)) {
+    return "--" + seedKebab(segments);
+  }
+  const sectionPath = segments.slice(0, -1).join("/");
+  return "--" + leafKebab(sectionPath, segments[segments.length - 1]);
+}
+
+/**
+ * Figma 키(PascalCase / camelCase / 공백·언더스코어 혼합)를 Storybook 표시용
+ * kebab-case 소문자로 정규화. CSS 변수 끝부분 표기와 일관성을 맞추기 위함.
+ * 예) "SurfaceSecondary_70" → "surface-secondary-70"
+ *     "BgBackdrop_Dark"     → "bg-backdrop-dark"
+ *     "BorderOpacity70"     → "border-opacity-70"
+ */
+function toKebabLower(name) {
+  return name
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+    .replace(/([A-Za-z])([0-9])/g, "$1-$2")
+    .replace(/[\s_]+/g, "-")
+    .toLowerCase()
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 function stripAliasPrefix(name) {
@@ -76,6 +131,8 @@ function categoryOf(sectionPath) {
   if (sectionPath === "Border") return "border";
   if (sectionPath === "Opacity") return "opacity";
   if (sectionPath === "bg Transparency") return "bgTransparency";
+  if (sectionPath.startsWith("_Color/Opacity/")) return "seedOpacity";
+  if (sectionPath.startsWith("_Color/")) return "seed";
   return "other";
 }
 
@@ -130,6 +187,16 @@ const CATEGORY_META = {
     description: "Alert 등에서 쓰는 반투명 배경 토큰.",
     order: 10,
   },
+  seed: {
+    title: "Seed (Palette)",
+    description: "Raw 컬러 팔레트 — 시맨틱 토큰의 원천. 직접 컴포넌트에서 사용하지 마세요.",
+    order: 11,
+  },
+  seedOpacity: {
+    title: "Seed · Opacity",
+    description: "Seed 팔레트 기반 반투명 컬러.",
+    order: 12,
+  },
   other: {
     title: "Other",
     description: "분류되지 않은 토큰.",
@@ -140,13 +207,28 @@ const CATEGORY_META = {
 function main() {
   const lightTree = JSON.parse(fs.readFileSync(LIGHT_JSON, "utf8"));
   const darkTree = JSON.parse(fs.readFileSync(DARK_JSON, "utf8"));
+  const seedTree = JSON.parse(fs.readFileSync(SEED_JSON, "utf8"));
   const lightCss = parseCssVars(fs.readFileSync(LIGHT_CSS, "utf8"));
   const darkCss = parseCssVars(fs.readFileSync(DARK_CSS, "utf8"));
+  const seedCss = parseCssVars(fs.readFileSync(SEED_CSS, "utf8"));
 
   const lightLeaves = [];
   const darkLeaves = [];
   walk(lightTree, [], lightLeaves);
   walk(darkTree, [], darkLeaves);
+
+  // _Seed.json 은 light/dark 모드 구분이 없는 raw 팔레트 — 동일 값을
+  // 양쪽 leaves 에 모두 push. `_Color/*` 만 컬러 가이드라인에 노출하고
+  // `_Size & Spacing` 등 비색상 그룹은 categoryOf 에서 "other" 로 떨어져 제외.
+  const seedLeaves = [];
+  walk(seedTree, [], seedLeaves);
+  for (const s of seedLeaves) {
+    if (!isSeedSegments([...s.path, s.leaf])) continue;
+    lightLeaves.push(s);
+    darkLeaves.push(s);
+  }
+  Object.assign(lightCss, seedCss);
+  Object.assign(darkCss, seedCss);
 
   // Index dark leaves by cssVar for merging
   const darkMap = new Map();
@@ -163,9 +245,11 @@ function main() {
     const lightVal = lightCss[L.cssVar] || L.hex || "";
     const darkVal = darkCss[L.cssVar] || D?.hex || lightVal;
 
+    const segs = [...L.path, L.leaf];
+    const isSeed = isSeedSegments(segs);
     const token = {
       name: L.cssVar,
-      leafName: L.leaf,
+      leafName: isSeed ? seedKebab(segs) : leafKebab(sectionPath, L.leaf),
       light: lightVal,
       dark: darkVal,
       lightAlias: L.alias,

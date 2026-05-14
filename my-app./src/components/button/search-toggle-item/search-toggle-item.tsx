@@ -11,11 +11,11 @@
  *   - Select  : 배경 흰색 + primary 보더, 텍스트 primary, font-weight 600
  *
  * 토큰
- *   default bg     : --context-background-surface-bg-surface-secondary (#F4F4F5)
- *   default text   : --context-foreground-surface-on-surface-teriary   (#9698A3)
- *   select  bg     : --context-background-surface-bg-surface-white     (#FFFFFF)
- *   select  border : --border-border-primary                           (#5CC7D0)
- *   select  text   : --context-foreground-primary-on-primary           (#3F9BAE)
+ *   default bg     : --bg-surface-secondary (#F4F4F5)
+ *   default text   : --on-surface-tertiary   (#9698A3)
+ *   select  bg     : --bg-surface-white     (#FFFFFF)
+ *   select  border : --border-primary                           (#5CC7D0)
+ *   select  text   : --on-primary           (#3F9BAE)
  *   font           : Body/Sm (12 / 16, weight 500/600, letter -0.06px)
  *
  * 접근성: `aria-pressed` 로 토글 상태를 알림 (`role="button"` 기본).

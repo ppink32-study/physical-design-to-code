@@ -13,7 +13,7 @@
  * 토큰
  *   - Title   : Heading/H3 (24px / 32px semibold)
  *   - Hint    : Body/Md-Medium (13px / 20px, -0.4)
- *               color: --context-foreground-surface-on-surface-hint (#787a88)
+ *               color: --on-surface-hint (#787a88)
  *   - Bubble  : h=32, pl=16 pr=12, gap=8,
  *               radius tl=50 tr=full br=full bl=8 (Figma 실측)
  *   - Badge/Action 슬롯은 외부에서 주입 (Badge / Button 컴포넌트 재사용)

@@ -11,9 +11,11 @@ const meta: Meta<typeof ListLayoutPage> = {
     docs: { disable: true },
     options: { showPanel: false },
     controls: { hideNoControlsWarning: true, disable: true },
+
     actions: { disable: true },
   },
 };
+
 
 export default meta;
 type Story = StoryObj<typeof ListLayoutPage>;

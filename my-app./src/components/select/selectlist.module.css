@@ -2,8 +2,8 @@
  * SelectList — Figma MCP 매핑 (node 11959:26477)
  * -----------------------------------------------------------------------------
  * 컨테이너
- *   bg     : --context-background-surface-bg-surface-base (white)
- *   border : 1px solid --border-border-surface-border-surface (#d7d8dc)
+ *   bg     : --bg-surface-base (white)
+ *   border : 1px solid --border-surface (#d7d8dc)
  *   radius : --radius-md (6)
  *   padding: --spacing-sm (8)
  *   gap    : --spacing-3xs (2)   ← 아이템 간 2px
@@ -16,11 +16,11 @@
  *   placeholder → on-surface-hint
  *
  * Divider (search 하단)
- *   1px solid --border-border-surface-border-surface-secondary (#ececee)
+ *   1px solid --border-surface-secondary (#ececee)
  *   wrap padding: --spacing-sm (8) 상하
  *
  * Scrollbar (native → custom)
- *   width: 4px, bg: --context-background-surface-bg-surface-quarernary (#d7d8dc)
+ *   width: 4px, bg: --bg-surface-quarernary (#d7d8dc)
  *   radius: 8, track: transparent
  * ========================================================================== */
 
@@ -33,8 +33,8 @@
   align-items: stretch;
   gap: var(--spacing-3xs);
   padding: var(--spacing-sm);
-  background: var(--context-background-surface-bg-surface-base);
-  border: 1px solid var(--border-border-surface-border-surface);
+  background: var(--bg-surface-base);
+  border: 1px solid var(--border-surface);
   border-radius: var(--radius-md);
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.06);
 }
@@ -49,9 +49,9 @@
   box-sizing: border-box;
   height: var(--size-base-4xl); /* 32 */
   padding: 0 var(--spacing-md); /* 12 */
-  border: 1px solid var(--border-border-surface-border-surface);
+  border: 1px solid var(--border-surface);
   border-radius: var(--radius-md);
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
   flex-shrink: 0;
 }
 .searchIcon {
@@ -59,7 +59,7 @@
   display: inline-block;
   width: var(--size-base-lg);  /* 16 */
   height: var(--size-base-lg);
-  background: var(--context-foreground-icon-surface-icon-surface);
+  background: var(--icon-surface);
   -webkit-mask: url(/icon/Search.svg) center / contain no-repeat;
   mask: url(/icon/Search.svg) center / contain no-repeat;
 }
@@ -73,10 +73,10 @@
   font-size: var(--font-size-body-base);
   line-height: var(--font-line-height-sm);
   font-weight: var(--font-weight-regular);
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 .searchField::placeholder {
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
 }
 
 /* ---------------------------------------------------------------------------
@@ -94,7 +94,7 @@
   display: block;
   width: 100%;
   height: 1px;
-  background: var(--border-border-surface-border-surface-secondary);
+  background: var(--border-surface-secondary);
 }
 
 /* ---------------------------------------------------------------------------

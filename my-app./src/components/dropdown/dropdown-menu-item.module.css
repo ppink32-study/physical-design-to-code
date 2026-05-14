@@ -11,8 +11,8 @@
  *     bg   : --color-surface-secondary              (#F4F4F5)
  *     icon : --color-icon-surface-hover             (#434551)
  *   ─ Selected (bg primary tint; 후행 체크는 on-primary)
- *     bg   : --opacity-primary-opacity-8            (rgba(67,198,193,0.08))
- *     trailing(check) : --context-foreground-primary-on-primary (서브메뉴 chevron 제외)
+ *     bg   : --primary-opacity-8            (rgba(67,198,193,0.08))
+ *     trailing(check) : --on-primary (서브메뉴 chevron 제외)
  *   ─ Disabled (fg / icon 만 변화)
  *     fg   : --color-on-surface-disabled            (#b3b4bc)
  *     icon : --color-icon-surface-disabled          (#b3b4bc)
@@ -29,7 +29,7 @@
   --dmi-bg: var(--color-surface-base);
   --dmi-fg: var(--color-on-surface-base);
   --dmi-icon: var(--color-icon-surface);
-  --dmi-arrow: var(--context-foreground-icon-surface-icon-surface-secondary);
+  --dmi-arrow: var(--icon-surface-secondary);
 
   position: relative;
   display: flex;
@@ -78,12 +78,12 @@
  * Figma 마스터: 배경만 primary500-8% (teal 계열 8% opacity).
  * text(fg) / icon 은 base 그대로. */
 .itemSelected {
-  --dmi-bg: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
+  --dmi-bg: var(--primary-opacity-8, rgba(67, 198, 193, 0.08));
 }
 
 /* 체크 아이콘(non-submenu trailing) — 선택 여부 무관하게 항상 on-primary */
 .item:not([data-has-submenu="true"]) .trailing {
-  color: var(--context-foreground-primary-on-primary, #3f9bae);
+  color: var(--on-primary, #3f9bae);
 }
 
 /* disabled 시에는 체크도 disabled 색으로 덮어쓰기 */
@@ -95,7 +95,7 @@
 /* selected + hover : bg 는 selected 유지, icon 만 hover 색.
  * (Figma 매트릭스 미정의 — selected 의 시각 우선) */
 .itemSelected:hover:not(:disabled):not([data-disabled="true"]) {
-  --dmi-bg: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
+  --dmi-bg: var(--primary-opacity-8, rgba(67, 198, 193, 0.08));
   --dmi-icon: var(--color-icon-surface-hover);
 }
 
@@ -103,7 +103,7 @@
  * Figma: drill-down 트리거는 selected 와 동일한 primary500-8% 배경.
  * fg / icon 은 base 그대로. */
 .item[data-submenu-open="true"]:not(:disabled):not([data-disabled="true"]) {
-  --dmi-bg: var(--opacity-primary-opacity-8, rgba(67, 198, 193, 0.08));
+  --dmi-bg: var(--primary-opacity-8, rgba(67, 198, 193, 0.08));
 }
 
 /* -------- Disabled -------- */
@@ -178,7 +178,7 @@
   gap: var(--spacing-sm, 8px);
   align-self: stretch;
   margin: 0;
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-sm);
   line-height: var(--font-line-height-xs);
@@ -195,6 +195,6 @@
   height: 0;
   margin: 0;
   border: 0;
-  border-top: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+  border-top: 1px solid var(--border-surface, #d7d8dc);
 }
 

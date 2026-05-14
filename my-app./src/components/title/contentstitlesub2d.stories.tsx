@@ -36,7 +36,7 @@ const variantCaptionStyle: CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.02em",
   marginBottom: 8,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
 };
 
 const frameWrapStyle: CSSProperties = {

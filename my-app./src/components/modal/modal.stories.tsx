@@ -66,7 +66,7 @@ export const Playground: Story = {
             </>
           }
         >
-          <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>
+          <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--on-surface-base)", lineHeight: "22px" }}>
             모달 본문 영역입니다. 원하는 콘텐츠를 이곳에 배치하세요.
           </p>
         </Modal>
@@ -107,7 +107,7 @@ function ModalPreview({ size }: { size: ModalSize }) {
           </>
         }
       >
-        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>
+        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--on-surface-base)", lineHeight: "22px" }}>
           Swap content
         </p>
       </Modal>
@@ -137,7 +137,7 @@ export const Matrix: Story = {
       />
 
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Modal / Size
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>

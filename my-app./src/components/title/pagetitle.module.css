@@ -76,7 +76,7 @@
   font-size: var(--font-size-heading-h3, 24px);
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-2xl, 32px);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
   white-space: nowrap;
   letter-spacing: 0;
 }
@@ -127,7 +127,7 @@
   width: 11px;
   height: 8px;
   flex-shrink: 0;
-  color: var(--context-foreground-icon-neutral-icon-neutral-teriary, #b3b4bc);
+  color: var(--icon-neutral-tertiary, #b3b4bc);
 }
 
 .bubbleIcon {
@@ -149,7 +149,7 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
   white-space: nowrap;
   min-width: 0;
   overflow: hidden;

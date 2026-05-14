@@ -5,14 +5,14 @@
 // - TabList: horizontal(밑줄 border) / vertical 레이아웃 컨테이너
 //
 // Figma -> Project 토큰 매핑
-//   Context/Foreground/Surface/on-surface-hint        -> --context-foreground-surface-on-surface-hint
-//   Context/Foreground/Neutral/on-neutral-hint-muted  -> --context-foreground-neutral-on-neutral-hint-muted
-//   Context/Foreground/Icon-Surface/Icon-surface-hover-> --context-foreground-icon-surface-icon-surface-hover
-//   Context/Foreground/Icon-Surface/Icon-surface-base -> --context-foreground-icon-surface-icon-surface-base
-//   Context/Foreground/Icon-Surface/Icon-surface      -> --context-foreground-icon-surface-icon-surface
-//   Context/Foreground/Icon-Surface/Icon-surface-disabled -> --context-foreground-icon-surface-icon-surface-disabled
-//   Context/Foreground/Primary/on-primary             -> --context-foreground-primary-on-primary
-//   Context/Background/Surface/bg-surface-secondary   -> --context-background-surface-bg-surface-secondary
+//   Context/Foreground/Surface/on-surface-hint        -> --on-surface-hint
+//   Context/Foreground/Neutral/on-neutral-hint-muted  -> --on-neutral-hint-muted
+//   Context/Foreground/Icon-Surface/Icon-surface-hover-> --icon-surface-hover
+//   Context/Foreground/Icon-Surface/Icon-surface-base -> --icon-surface-base
+//   Context/Foreground/Icon-Surface/Icon-surface      -> --icon-surface
+//   Context/Foreground/Icon-Surface/Icon-surface-disabled -> --icon-surface-disabled
+//   Context/Foreground/Primary/on-primary             -> --on-primary
+//   Context/Background/Surface/bg-surface-secondary   -> --bg-surface-secondary
 //   Border/Neutral/border-neutral-secondary           -> --border-border-neutral-border-neutral-secondary
 
 import type {

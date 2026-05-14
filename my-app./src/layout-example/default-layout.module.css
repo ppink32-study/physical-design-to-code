@@ -13,7 +13,7 @@
   margin: 0 auto;
   height: 100%;
   min-height: 960px;
-  background: var(--context-background-backdrop-bg-backboard);
+  background: var(--bg-backboard);
   box-sizing: border-box;
   container-type: inline-size;
   container-name: default-layout;
@@ -21,14 +21,14 @@
 
 .root[data-theme="standard"] {
   background-image: url("/Dashboard.png");
-  background-color: var(--context-background-backdrop-bg-backboard);
+  background-color: var(--bg-backboard);
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .root[data-theme="focus"] {
-  background: var(--context-background-backdrop-bg-backboard);
+  background: var(--bg-backboard);
 }
 
 /* ----------------------------------------------------------------

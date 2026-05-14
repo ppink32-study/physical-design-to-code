@@ -12,10 +12,10 @@
   border-radius: 6px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 8%,
+    var(--on-surface-base) 8%,
     transparent
   );
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo);
   font-size: 11px;
   font-weight: 700;
@@ -30,9 +30,9 @@
   left: 0;
   right: 0;
   z-index: 50;
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
   border: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 8%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 8%, transparent);
   border-radius: 16px;
   box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.04),
     0 20px 48px -12px rgba(0, 0, 0, 0.18);
@@ -48,7 +48,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 .list {
@@ -74,7 +74,7 @@
 .itemActive {
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 5%,
+    var(--on-surface-base) 5%,
     transparent
   );
 }
@@ -91,7 +91,7 @@
   font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -99,14 +99,14 @@
 
 .itemMeta {
   font-size: 12px;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .mark {
-  color: var(--context-foreground-surface-on-surface-primary);
+  color: var(--on-surface-primary);
   font-weight: 800;
   background: transparent;
 }
@@ -115,7 +115,7 @@
   padding: 24px 16px;
   text-align: center;
   font-size: 13px;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 .footer {
@@ -123,9 +123,9 @@
   gap: 14px;
   padding: 10px 16px;
   border-top: 1px solid
-    color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 6%, transparent);
+    color-mix(in srgb, var(--on-surface-base) 6%, transparent);
   font-size: 11.5px;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   font-weight: 600;
 }
 
@@ -136,7 +136,7 @@
   border-radius: 6px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 6%,
+    var(--on-surface-base) 6%,
     transparent
   );
   font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo);

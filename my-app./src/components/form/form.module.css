@@ -97,11 +97,11 @@
 
 /* ---------------------------------------------------------------------------
  * Helper text (InlineMessage 가 아닌 일반 안내 문구)
- *   - color : --context-foreground-surface-on-surface-secondary
+ *   - color : --on-surface-secondary
  *   - font  : Body/Small (12 / 16, regular)
  * ------------------------------------------------------------------------- */
 .helper {
-  color: var(--context-foreground-surface-on-surface-secondary, #787a88);
+  color: var(--on-surface-secondary, #787a88);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-small, 12px);
   line-height: var(--font-line-height-2xs, 16px);

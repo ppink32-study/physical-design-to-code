@@ -223,7 +223,7 @@ export function FoundationsDemo() {
 
       <DemoSection
         title="Seed Palette"
-        description="시맨틱 토큰의 원천이 되는 raw 컬러 팔레트. 행을 클릭하면 hex 가, 우측 변수명을 누르면 var(--seed-color-*) 가 복사됩니다."
+        description="시맨틱 토큰의 원천이 되는 raw 컬러 팔레트. 행을 클릭하면 hex 가, 우측 변수명을 누르면 var(--{family}-{step}) 가 복사됩니다."
       >
         <div className={styles.section}>
           {PALETTES.map((p) => (

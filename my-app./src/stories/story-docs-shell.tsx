@@ -6,13 +6,13 @@ import type { CSSProperties, ReactNode } from "react";
  */
 
 const font = "var(--font-family-korean)";
-const onBase = "var(--context-foreground-surface-on-surface-base)";
-const onSecondary = "var(--context-foreground-surface-on-surface-secondary)";
-const onHint = "var(--context-foreground-surface-on-surface-hint)";
+const onBase = "var(--on-surface-base)";
+const onSecondary = "var(--on-surface-secondary)";
+const onHint = "var(--on-surface-hint)";
 const borderSubtle =
-  "1px solid var(--border-border-surface-border-surface-secondary)";
+  "1px solid var(--border-surface-secondary)";
 const surfaceMuted =
-  "var(--context-background-surface-bg-surface-secondary, #FAFAFA)";
+  "var(--bg-surface-secondary, #FAFAFA)";
 
 const pageRoot: CSSProperties = {
   boxSizing: "border-box",
@@ -115,7 +115,7 @@ const inlineCodeStyle: CSSProperties = {
 const panelStyle: CSSProperties = {
   borderRadius: 12,
   border: borderSubtle,
-  background: "var(--context-background-surface-bg-surface-base)",
+  background: "var(--bg-surface-base)",
   overflow: "hidden",
 };
 

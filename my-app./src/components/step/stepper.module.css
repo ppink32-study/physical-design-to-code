@@ -1,0 +1,84 @@
+/* =============================================================================
+ * Stepper — Figma node 16722:36406  (Stepper-step / Vertical / Light)
+ * -----------------------------------------------------------------------------
+ * Single step block: left Num indicator + right "Step N · Name of step N" labels.
+ *
+ *   width   : 233
+ *   padding : 8 / 6 (current 만 시각적으로 보이는 박스, finish 는 투명)
+ *   gap     : 8  (indicator ↔ labels)
+ *   radius  : --radius-lg (8)
+ *
+ *   current : bg-surface-base + Num current-brand + label/name 진하게
+ *   finish  : 투명 배경 + Num complete(체크) + label/name 흐리게
+ * ========================================================================== */
+
+.root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm); /* 8 */
+  width: 233px;
+  padding: var(--spacing-sm) var(--spacing-xs); /* 8 6 */
+  border-radius: var(--radius-lg); /* 8 */
+}
+
+.root[data-variant="current"] {
+  background: var(--bg-surface-base);
+}
+
+/* ---- Left: Stepper-step / Item (Num 만 — line 없음) ---- */
+.indicator {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 32px;
+  padding: 0 var(--spacing-3xs); /* 0 2 0 2 */
+}
+
+.numWrap {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-3xs); /* 2 */
+  flex-shrink: 0;
+}
+
+/* ---- Right: v-stepper-label ---- */
+.labels {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs); /* 2 */
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-sm); /* 20 */
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-heading-h6); /* 16 */
+  line-height: var(--font-line-height-md); /* 22 */
+}
+
+.root[data-variant="current"] .label {
+  color: var(--on-surface);
+}
+.root[data-variant="current"] .name {
+  color: var(--on-surface-base);
+}
+.root[data-variant="finish"] .label {
+  color: var(--on-surface-hint);
+}
+.root[data-variant="finish"] .name {
+  color: var(--on-surface);
+}

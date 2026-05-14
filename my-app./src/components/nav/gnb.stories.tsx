@@ -16,7 +16,6 @@ import {
   StoryDocsSection,
 } from "@/stories/story-docs-shell";
 
-import { SearchToggleItem } from "@/components/button/search-toggle-item/search-toggle-item";
 
 import {
   Gnb,
@@ -100,17 +99,6 @@ function ActionButtons() {
       <GnbIconButton aria-label="사용자" iconUrl="/icon/User.svg" />
       <GnbIconButton aria-label="연결" iconUrl="/icon/Connection.svg" />
       <GnbIconButton aria-label="설정" iconUrl="/icon/Gear.svg" />
-      <div
-        style={{
-          display: "inline-flex",
-          borderRadius: 8,
-          background: "var(--context-background-surface-bg-surface-secondary)",
-          flexShrink: 0,
-        }}
-      >
-        <SearchToggleItem selected>Standard</SearchToggleItem>
-        <SearchToggleItem>Focus</SearchToggleItem>
-      </div>
     </>
   );
 }
@@ -121,16 +109,14 @@ function ActionButtons() {
 export const Playground: Story = {
   args: { theme: "light" },
   render: ({ theme = "light" }) => (
-    <div style={{ overflowX: "auto" }}>
-      <div style={{ minWidth: 1920 }}>
-        <Gnb
-          theme={theme}
-          brand={<Logo theme={theme} />}
-          /* 클릭하면 selected 전환되는 인터랙티브 메뉴 */
-          items={<InteractiveNavItems />}
-          actions={<ActionButtons />}
-        />
-      </div>
+    <div style={{ width: 1920 }}>
+      <Gnb
+        theme={theme}
+        brand={<Logo theme={theme} />}
+        /* 클릭하면 selected 전환되는 인터랙티브 메뉴 */
+        items={<InteractiveNavItems />}
+        actions={<ActionButtons />}
+      />
     </div>
   ),
 };
@@ -147,7 +133,7 @@ const labelStyle: CSSProperties = {
   margin: "0 0 8px",
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
   fontFamily: "var(--font-family-korean)",
   textTransform: "uppercase",
   letterSpacing: "0.06em",
@@ -156,15 +142,13 @@ const labelStyle: CSSProperties = {
 /* GNB 전체 바 — Matrix 상단도 클릭으로 selected 전환 가능 */
 function GnbRow({ theme, bg }: { theme: GnbTheme; bg: string }) {
   return (
-    <div style={{ overflowX: "auto", borderRadius: 4, border: "1px solid var(--border-border-surface-border-surface)" }}>
-      <div style={{ minWidth: 1920, background: bg }}>
-        <Gnb
-          theme={theme}
-          brand={<Logo theme={theme} />}
-          items={<InteractiveNavItems />}
-          actions={<ActionButtons />}
-        />
-      </div>
+    <div style={{ width: 1920, background: bg, borderRadius: 4, border: "1px solid var(--border-surface)" }}>
+      <Gnb
+        theme={theme}
+        brand={<Logo theme={theme} />}
+        items={<InteractiveNavItems />}
+        actions={<ActionButtons />}
+      />
     </div>
   );
 }
@@ -244,7 +228,7 @@ export const Matrix: Story = {
 
       {/* 전체 바 */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           GNB
         </h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -259,7 +243,7 @@ export const Matrix: Story = {
 
       {/* GNB / Select */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           GNB / Select
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -286,7 +270,7 @@ export const Matrix: Story = {
 
       {/* GNB / Icon */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           GNB / Icon
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -372,7 +356,7 @@ export const Guideline: Story = {
           <strong>items</strong>: ReactNode — 가운데 GnbItem 목록 슬롯.
         </StoryDocsParagraph>
         <StoryDocsParagraph>
-          <strong>actions</strong>: ReactNode — 우측 GnbIconButton 및 SearchToggleItem 슬롯.
+          <strong>actions</strong>: ReactNode — 우측 GnbIconButton 슬롯.
         </StoryDocsParagraph>
       </StoryDocsSection>
     </StoryDocsPage>

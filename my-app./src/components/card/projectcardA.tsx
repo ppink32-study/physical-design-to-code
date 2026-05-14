@@ -73,6 +73,9 @@ export function ProjectCardA({
       className={[styles.root, typeClass, className].filter(Boolean).join(" ")}
       data-state={state}
       data-type={type}
+      // type="brand" 일 때만 카드 내부 토큰을 brand 팔레트로 강제.
+      // (부모 html 이 light 테마여도 --on-surface-invert 등이 brand.css 값으로 해석되도록)
+      data-theme={type === "brand" ? "brand" : undefined}
       style={styleProp}
     >
       {/* Image area */}

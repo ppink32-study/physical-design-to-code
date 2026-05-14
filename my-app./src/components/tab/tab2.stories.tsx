@@ -73,7 +73,7 @@ export const Matrix: Story = {
 
       {/* State × Type */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           State × Type
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -103,7 +103,7 @@ export const Matrix: Story = {
 
       {/* Tab2List 조합 */}
       <section style={{ marginTop: 32 }}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Tab2List — 가로 조합 (text × 3 + icon)
         </h3>
         <Tab2List>
@@ -116,7 +116,7 @@ export const Matrix: Story = {
 
       {/* Leading icon 포함 */}
       <section style={{ marginTop: 32 }}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Leading icon 포함
         </h3>
         <Tab2List>

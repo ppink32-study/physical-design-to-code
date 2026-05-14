@@ -20,7 +20,7 @@ const build = (id: string, steps: Array<[string, string]>): Palette => ({
   steps: steps.map(([step, hex]) => ({
     step,
     hex,
-    cssVar: `--seed-color-${id}-${step}`,
+    cssVar: `--${id}-${step}`,
   })),
 });
 

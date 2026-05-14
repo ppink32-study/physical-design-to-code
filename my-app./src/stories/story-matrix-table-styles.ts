@@ -14,7 +14,7 @@ export const storyMatrixScrollWrap: CSSProperties = {
 export const storyMatrixTableBase: CSSProperties = {
   borderCollapse: "collapse",
   width: "max-content",
-  background: "var(--context-background-surface-bg-surface-base)",
+  background: "var(--bg-surface-base)",
 };
 
 /** 열 헤더 `<th>` */
@@ -25,8 +25,8 @@ export const storyMatrixColHeaderStyle: CSSProperties = {
   textAlign: "left",
   padding: "10px 12px",
   borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+    "1px solid var(--border-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   whiteSpace: "nowrap",
 };
 
@@ -34,12 +34,12 @@ export const storyMatrixColHeaderStyle: CSSProperties = {
 export const storyMatrixRowHeaderStyle: CSSProperties = {
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   padding: "12px 16px 12px 0",
   whiteSpace: "nowrap",
   verticalAlign: "middle",
   borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
+    "1px solid var(--border-surface-secondary)",
 };
 
 /** Alert 등 본문이 긴 행용 */
@@ -53,7 +53,7 @@ export const storyMatrixCellStyle: CSSProperties = {
   padding: "12px 16px",
   verticalAlign: "middle",
   borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
+    "1px solid var(--border-surface-secondary)",
 };
 
 /** TextArea 등 상단 정렬 셀 */
@@ -72,7 +72,7 @@ export const storyMatrixStickyCornerStyle: CSSProperties = {
   position: "sticky",
   left: 0,
   zIndex: 1,
-  background: "var(--context-background-surface-bg-surface-base)",
+  background: "var(--bg-surface-base)",
   boxShadow: "6px 0 12px -8px rgba(20, 21, 24, 0.12)",
 };
 
@@ -85,7 +85,7 @@ export const storyDocsGuideTableStyle: CSSProperties = {
   borderCollapse: "collapse",
   fontSize: 13,
   lineHeight: 1.5,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 export const storyDocsGuideThStyle: CSSProperties = {
@@ -93,13 +93,13 @@ export const storyDocsGuideThStyle: CSSProperties = {
   fontWeight: 600,
   fontSize: 12,
   padding: "8px 12px",
-  borderBottom: "1px solid var(--border-border-surface-border-surface)",
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  borderBottom: "1px solid var(--border-surface)",
+  color: "var(--on-surface-secondary)",
 };
 
 export const storyDocsGuideTdStyle: CSSProperties = {
   padding: "10px 12px",
   borderBottom:
-    "1px solid var(--border-border-surface-border-surface-secondary)",
+    "1px solid var(--border-surface-secondary)",
   verticalAlign: "top",
 };

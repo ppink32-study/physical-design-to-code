@@ -16,7 +16,7 @@
  * 고정 너비(타임 칸): <10분 32px · ≥10분 & <1h 48px · ≥1h 64px
  *
  * 토큰
- *   pill / progress / handle : 기존 가이드(--opacity-black-opacity-50, primary-hover 등)
+ *   pill / progress / handle : 기존 가이드(--black-opacity-50, primary-hover 등)
  */
 
 import type {

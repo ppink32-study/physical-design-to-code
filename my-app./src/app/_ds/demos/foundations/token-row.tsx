@@ -27,7 +27,7 @@ function DiamondGlyph() {
 }
 
 export type TokenRowProps = {
-  /** Full CSS variable name (e.g. --context-foreground-blue-on-blue-secondary) */
+  /** Full CSS variable name (e.g. --on-blue-secondary) */
   name: string;
   /** Figma leaf key (e.g. `on-blue-secondary`) — row 라벨로 사용 */
   label: string;

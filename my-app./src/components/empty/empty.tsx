@@ -16,9 +16,9 @@
  *   - 또는 임의의 SVG 경로(string) / ReactNode 직접 전달 가능
  *
  * Tokens
- *   - icon  : --context-foreground-icon-surface-icon-surface-secondary
- *   - desc  : --context-foreground-surface-on-surface-hint
- *   - sub   : --context-foreground-neutral-on-neutral-hint-muted
+ *   - icon  : --icon-surface-secondary
+ *   - desc  : --on-surface-hint
+ *   - sub   : --on-neutral-hint-muted
  *   - gap   : --spacing-2xs (4)
  */
 

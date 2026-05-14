@@ -17,9 +17,9 @@
   --shadow-focus-ring-primary: 0 0 0 var(--border-width-lg, 4px)
     var(--color-opacity-accent-primary-50015, rgba(67, 198, 193, 0.15));
   --shadow-focus-ring-gray: 0 0 0 var(--border-width-lg, 4px)
-    var(--context-background-surface-bg-surface-teriary, #ECECEE);
+    var(--bg-surface-tertiary, #ECECEE);
   --shadow-focus-ring-form-valid: 0 0 0 var(--border-width-lg, 4px)
-    var(--seed-color-green-100, #CEF0CC);
+    var(--green-100, #CEF0CC);
   --shadow-focus-ring-form-invalid: 0 0 0 var(--border-width-lg, 4px)
-    var(--seed-color-red-100, #FFD6D5);
+    var(--red-100, #FFD6D5);
 }

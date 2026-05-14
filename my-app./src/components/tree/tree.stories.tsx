@@ -115,7 +115,7 @@ const LEVEL_LABELS_TEXT: Record<NodeLevel, string> = {
 const nodeCellStyle: CSSProperties = {
   ...storyMatrixCellStyle,
   padding: "8px 12px",
-  background: "var(--context-background-surface-bg-surface-base)",
+  background: "var(--bg-surface-base)",
 };
 
 const nodeWrapStyle: CSSProperties = {
@@ -138,7 +138,7 @@ function MatrixSection({
           fontSize: 13,
           fontWeight: 600,
           marginBottom: 12,
-          color: "var(--context-foreground-surface-on-surface-base)",
+          color: "var(--on-surface-base)",
         }}
       >
         {title}
@@ -282,7 +282,7 @@ const treeViewWrapStyle: CSSProperties = {
 const treeViewLabelStyle: CSSProperties = {
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   marginBottom: 8,
   textTransform: "uppercase",
   letterSpacing: "0.04em",
@@ -337,7 +337,7 @@ const anatomyItemStyle: CSSProperties = {
   alignItems: "flex-start",
   fontSize: 14,
   lineHeight: "22px",
-  color: "var(--context-foreground-surface-on-surface-base, #141518)",
+  color: "var(--on-surface-base, #141518)",
 };
 
 const anatomyBadgeStyle: CSSProperties = {
@@ -345,7 +345,7 @@ const anatomyBadgeStyle: CSSProperties = {
   width: 20,
   height: 20,
   borderRadius: 999,
-  background: "var(--context-background-gray-bg-darkgray, #26282e)",
+  background: "var(--bg-darkgray, #26282e)",
   color: "#fff",
   fontSize: 10,
   fontWeight: 700,

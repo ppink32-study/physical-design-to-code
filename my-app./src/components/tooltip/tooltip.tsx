@@ -8,9 +8,9 @@
  *   - helpIconWithTooltip:  13300:13569 (info icon × 4 directions)
  *
  * Design tokens
- *   - bg     : --context-background-surface-bg-backdrop-dark   (#1F2025)
- *   - title  : --context-foreground-neutral-on-neutral-hint-muted (#9698A3)
- *   - text   : --context-foreground-neutral-on-neutral-white   (#FFFFFF)
+ *   - bg     : --bg-backdrop-dark   (#1F2025)
+ *   - title  : --on-neutral-hint-muted (#9698A3)
+ *   - text   : --on-neutral-white   (#FFFFFF)
  *   - padding: --spacing-sm (8px)
  *   - radius : --radius-lg (8px)
  *   - max-width: 240px

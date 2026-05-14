@@ -2,7 +2,7 @@
  *  DatasetCard — Figma node 18397:4135
  *
  *  state=default : bg-surface-secondary, 3px transparent border (inline)
- *  state=hover   : bg-surface-white + 3px gradient border (Mint→Purple)
+ *  state=hover   : bg-surface-base + 3px gradient border (Mint→Purple)
  *
  *  Layout: vertical, padding=20px (--spacing-xl), gap=8px (--spacing-sm)
  *  Border-radius: --radius-xl (12px)
@@ -21,7 +21,7 @@
   width: 355px;
   height: 158px;
   border: 3px solid transparent;
-  background: var(--context-background-surface-bg-surface-secondary);
+  background: var(--bg-surface-secondary);
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
 }
 
@@ -32,8 +32,8 @@
 .root[data-state="hover"] {
   background:
     linear-gradient(
-        var(--context-background-surface-bg-surface-white, #fff),
-        var(--context-background-surface-bg-surface-white, #fff)
+        var(--bg-surface-base, #fff),
+        var(--bg-surface-base, #fff)
       )
       padding-box,
     linear-gradient(to right, #5cc7d0, #d5a5ff) border-box;
@@ -74,7 +74,7 @@
   font-size: var(--font-size-body-lg, 16px);
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-md, 22px);
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -85,7 +85,7 @@
   font-weight: var(--font-weight-regular, 400);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -113,7 +113,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
 }
 
 .detailText {
@@ -121,6 +121,6 @@
   font-weight: var(--font-weight-regular, 400);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
   white-space: nowrap;
 }

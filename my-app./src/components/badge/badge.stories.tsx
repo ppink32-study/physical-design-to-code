@@ -103,7 +103,7 @@ const rowStyle: CSSProperties = {
 
 const sectionLabelStyle: CSSProperties = {
   fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
   marginBottom: 8,
   fontWeight: 500,
 };
@@ -112,7 +112,7 @@ const sectionTitleStyle: CSSProperties = {
   fontSize: 14,
   fontWeight: 600,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const SectionFrame = ({
@@ -646,8 +646,8 @@ export const Matrix: Story = {
 const guideBlockStyle: CSSProperties = {
   padding: 16,
   borderRadius: 8,
-  border: "1px solid var(--border-border-surface-border-surface)",
-  background: "var(--context-background-surface-bg-surface-base)",
+  border: "1px solid var(--border-surface)",
+  background: "var(--bg-surface-base)",
 };
 
 const guideTableStyle = storyDocsGuideTableStyle;

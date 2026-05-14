@@ -37,8 +37,8 @@ const cardStyle: CSSProperties = {
   gap: 16,
   padding: "12px 16px",
   borderRadius: 10,
-  border: "1px solid var(--border-border-surface-border-surface-secondary)",
-  background: "var(--context-background-surface-bg-surface-secondary, #FAFAFA)",
+  border: "1px solid var(--border-surface-secondary)",
+  background: "var(--bg-surface-secondary, #FAFAFA)",
 };
 
 const labelWrapStyle: CSSProperties = {
@@ -52,12 +52,12 @@ const labelTopStyle: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: 0.4,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
 };
 
 const captionStyle: CSSProperties = {
   fontSize: 13,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const anchorStyle: CSSProperties = {
@@ -67,11 +67,11 @@ const anchorStyle: CSSProperties = {
   gap: 6,
   padding: "6px 12px",
   borderRadius: 6,
-  background: "var(--context-background-surface-bg-surface-base)",
-  border: "1px solid var(--border-border-surface-border-surface-secondary)",
+  background: "var(--bg-surface-base)",
+  border: "1px solid var(--border-surface-secondary)",
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--context-foreground-primary-on-primary-hover)",
+  color: "var(--on-primary-hover)",
   textDecoration: "none",
   whiteSpace: "nowrap",
 };

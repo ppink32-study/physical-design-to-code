@@ -30,7 +30,7 @@ const sectionTitleStyle: CSSProperties = {
   fontWeight: 600,
   marginTop: 28,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const verticalStackStyle: CSSProperties = {
@@ -45,7 +45,7 @@ const variantCaptionStyle: CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.02em",
   marginBottom: 8,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
 };
 
 const frameWrapStyle: CSSProperties = {
@@ -72,15 +72,16 @@ function BtnIcon({ src, size = 16 }: { src: string; size?: number }) {
   return <span aria-hidden="true" style={style} />;
 }
 
-/** Figma [Page Title (2d) — 4790-177](https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=4790-177&m=dev) 좌측 뒤로가기 */
+/** Figma [Back button — 17987-48203](https://www.figma.com/design/myQPboBEUAPxUwlvH9MH2R/Physical-AI-Platfrom-Design-Guideline?node-id=17987-48203&m=dev) — Secondary Outline White Invert · Medium · Round · Icon only */
 const backButton2d = (
   <Button
     type="button"
     variant="secondary-outline-white-invert"
-    size="large"
+    size="medium"
+    shape="round"
     iconOnly
     aria-label="뒤로 가기"
-    leftIcon={<BtnIcon src="/icon/ChevronLeft.svg" size={24} />}
+    leftIcon={<BtnIcon src="/icon/ChevronLeft.svg" size={16} />}
   />
 );
 

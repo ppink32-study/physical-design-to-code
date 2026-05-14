@@ -2,18 +2,18 @@
  *  Tooltip — Figma 5543:321819 · arrow/body 연결 5543:321844
  *
  *  ─ panel
- *    background : --context-background-surface-bg-backdrop-dark (#1F2025)
+ *    background : --bg-backdrop-dark (#1F2025)
  *    padding    : --spacing-sm (8px)
  *    radius     : --radius-lg (8px)
  *    max-width  : 240px (Figma)
  *
  *  ─ title (Body/Sm_SemiB)
  *    12px / 16px / weight 600 / letter-spacing -0.5% → -0.06px
- *    color: --context-foreground-neutral-on-neutral-hint-muted (#9698A3)
+ *    color: --on-neutral-hint-muted (#9698A3)
  *
  *  ─ text (Body/Md_Regular)
  *    13px / 20px / weight 400 / letter-spacing -0.4% → -0.052px
- *    color: --context-foreground-neutral-on-neutral-white (#FFFFFF)
+ *    color: --on-neutral-white (#FFFFFF)
  *
  *  ─ arrow : 12 × 5 (top/bottom), 5 × 12 (left/right) CSS border triangle
  * =============================================================== */
@@ -42,9 +42,9 @@
   flex-direction: column;
   gap: 0;
   padding: var(--spacing-sm, 8px);
-  background: var(--context-background-surface-bg-backdrop-dark, #1f2025);
+  background: var(--bg-backdrop-dark, #1f2025);
   border-radius: var(--radius-lg, 8px);
-  color: var(--context-foreground-neutral-on-neutral-white, #ffffff);
+  color: var(--on-neutral-white, #ffffff);
   font-family: var(--font-family-korean, "Pretendard", system-ui, sans-serif);
   font-size: 13px;
   line-height: 20px;
@@ -96,7 +96,7 @@
 
 .title {
   display: block;
-  color: var(--context-foreground-neutral-on-neutral-hint-muted, #9698a3);
+  color: var(--on-neutral-hint-muted, #9698a3);
   font-size: 12px;
   line-height: 16px;
   letter-spacing: -0.06px;
@@ -132,7 +132,7 @@
   transform: translate3d(-50%, -1px, 0);
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+  border-top: 5px solid var(--bg-backdrop-dark, #1f2025);
 }
 
 /* panel 이 아래에 있으므로 arrow 는 상단, 꼭짓점은 위 */
@@ -142,7 +142,7 @@
   transform: translate3d(-50%, 1px, 0);
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+  border-bottom: 5px solid var(--bg-backdrop-dark, #1f2025);
 }
 
 /* panel 이 좌측에 있으므로 arrow 는 우측, 꼭짓점은 오른쪽 */
@@ -152,7 +152,7 @@
   transform: translate3d(-1px, -50%, 0);
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
-  border-left: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+  border-left: 5px solid var(--bg-backdrop-dark, #1f2025);
 }
 
 /* panel 이 우측에 있으므로 arrow 는 좌측, 꼭짓점은 왼쪽 */
@@ -162,7 +162,7 @@
   transform: translate3d(1px, -50%, 0);
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
-  border-right: 5px solid var(--context-background-surface-bg-backdrop-dark, #1f2025);
+  border-right: 5px solid var(--bg-backdrop-dark, #1f2025);
 }
 
 .panel[data-arrow="false"] .arrow {
@@ -206,17 +206,17 @@
   padding: 0;
   background: none;
   border: 0;
-  color: var(--context-foreground-icon-neutral-icon-neutral-base, #434551);
+  color: var(--icon-neutral-base, #434551);
   cursor: help;
   border-radius: 50%;
 }
 
 .helpButton:hover {
-  color: var(--context-foreground-surface-on-surface-base, #1f2025);
+  color: var(--on-surface-base, #1f2025);
 }
 
 .helpButton:focus-visible {
-  outline: 2px solid var(--accent-cyan-accent-cyan, #0aa2c0);
+  outline: 2px solid var(--accent-cyan, #0aa2c0);
   outline-offset: 2px;
 }
 

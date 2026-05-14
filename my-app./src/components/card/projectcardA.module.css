@@ -43,11 +43,11 @@
 }
 
 .root.typeBrand {
-  border-color: var(--border-neutral-border-neutral);
+  border-color: var(--border-neutral);
 }
 
 .root.typeLight {
-  border-color: var(--border-border-surface-border-surface);
+  border-color: var(--border-surface);
 }
 
 /* hover —
@@ -96,16 +96,14 @@
   overflow: hidden;
 }
 
-/* brand 기본 이미지 bg — backgrounddefault.svg + on-surface-invert */
+/* brand 기본 — on-neutral-secondary 단색 */
 .typeBrand .imageArea {
-  background:
-    url("/robot/backgrounddefault.svg") center / cover no-repeat,
-    var(--context-foreground-surface-on-suface-invert);
+  background: var(--on-neutral-secondary);
 }
 
 /* light 기본 이미지 bg */
 .typeLight .imageArea {
-  background: var(--context-background-surface-bg-surface-secondary);
+  background: var(--bg-surface-secondary);
 }
 
 /* brand hover — backgroundhover.svg + on-surface-invert */
@@ -113,7 +111,7 @@
 .root.typeBrand[data-state="hover"] .imageArea {
   background:
     url("/robot/backgroundhover.svg") center / cover no-repeat,
-    var(--context-foreground-surface-on-suface-invert);
+    var(--on-surface-invert);
 }
 
 /* light hover — Gradient/Light Gradient_01 (Figma raw, no token) */
@@ -150,11 +148,11 @@
 }
 
 .typeBrand .content {
-  background: var(--context-background-neutral-bg-neutral);
+  background: var(--bg-neutral);
 }
 
 .typeLight .content {
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
 }
 
 /* -----------------------------------------------------------------
@@ -175,11 +173,11 @@
 }
 
 .typeBrand .title {
-  color: var(--context-foreground-neutral-on-neutral-base);
+  color: var(--on-neutral-base);
 }
 
 .typeLight .title {
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 .description {
@@ -193,11 +191,11 @@
 }
 
 .typeBrand .description {
-  color: var(--context-foreground-neutral-on-neutral-hint);
+  color: var(--on-neutral-hint);
 }
 
 .typeLight .description {
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
 }
 
 /* -----------------------------------------------------------------
@@ -224,11 +222,11 @@
 }
 
 .typeBrand .memberIcon {
-  color: var(--context-foreground-icon-neutral-icon-neutral);
+  color: var(--icon-neutral);
 }
 
 .typeLight .memberIcon {
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
 }
 
 .memberText {
@@ -240,10 +238,10 @@
 }
 
 .typeBrand .memberText {
-  color: var(--context-foreground-neutral-on-neutral-hint);
+  color: var(--on-neutral-hint);
 }
 
 .typeLight .memberText {
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
 }
 

@@ -13,7 +13,7 @@
  * 토큰
  *   - title  : Heading/H4 (20/24 semibold) on-surface-base
  *   - hint   : Body/Sm-Medium (12/16 -0.5) on-surface-hint
- *            + leading Icon/InfoFill (16×16, icon-surface teriary)
+ *            + leading Icon/InfoFill (16×16, icon-surface tertiary)
  *   - gap    : 좌영역 inner gap=md(12) / 배지 gap=sm(8) / 우 actions gap=sm(8)
  */
 

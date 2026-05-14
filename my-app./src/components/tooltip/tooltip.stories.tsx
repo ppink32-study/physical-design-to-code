@@ -47,8 +47,8 @@ const triggerStyle: CSSProperties = {
   fontFamily: "var(--font-family-korean, Pretendard)",
   fontSize: 12,
   lineHeight: "16px",
-  color: "var(--context-foreground-surface-on-surface-base)",
-  borderBottom: "1px dashed var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-base)",
+  borderBottom: "1px dashed var(--on-surface-hint)",
   cursor: "default",
   outline: "none",
   padding: "2px 4px",
@@ -82,14 +82,14 @@ const sectionHeadingStyle: CSSProperties = {
   margin: "40px 0 8px",
   fontSize: 14,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const sectionLeadStyle: CSSProperties = {
   margin: "0 0 20px",
   fontSize: 13,
   lineHeight: 1.55,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
 };
 
 const helpGridCellStyle: CSSProperties = {
@@ -115,7 +115,7 @@ function MatrixCell({
         style={{
           display: "inline-block",
           minHeight: 24,
-          color: "var(--context-foreground-surface-on-surface-hint)",
+          color: "var(--on-surface-hint)",
           fontSize: 11,
         }}
         aria-hidden

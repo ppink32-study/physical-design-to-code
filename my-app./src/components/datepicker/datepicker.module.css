@@ -20,8 +20,8 @@
   padding: var(--spacing-none, 0) var(--spacing-md, 13px);
   border-radius: var(--radius-md, 6px);
   border: 1px solid
-    var(--border-border-surface-border-surface, #d7d8dc);
-  background-color: var(--context-background-surface-bg-surface-base, #ffffff);
+    var(--border-surface, #d7d8dc);
+  background-color: var(--bg-surface-base, #ffffff);
   cursor: pointer;
   overflow: clip;
   width: 226px;
@@ -30,7 +30,7 @@
     box-shadow 0.15s ease,
     background-color 0.15s ease;
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
 }
 
 .root:focus {
@@ -66,11 +66,11 @@
  * Tone (border color)
  * ------------------------------------------------------------------------- */
 .root[data-tone="success"] {
-  border-color: var(--border-border-valid, #3ac133);
+  border-color: var(--border-valid, #3ac133);
 }
 
 .root[data-tone="error"] {
-  border-color: var(--border-border-invalid, #ff5a58);
+  border-color: var(--border-invalid, #ff5a58);
 }
 
 /* ---------------------------------------------------------------------------
@@ -78,26 +78,26 @@
  * ------------------------------------------------------------------------- */
 /* Focus — Normal (Figma: Focus Ring / Primary → --shadow-focus-ring-primary) */
 .root[data-state="focus"][data-tone="normal"] {
-  border-color: var(--border-border-primary, #5cc7d0);
+  border-color: var(--border-primary, #5cc7d0);
   box-shadow: var(--shadow-focus-ring-primary);
 }
 
 /* Focus — Success (Figma: Focus Ring / Form Valid → --shadow-focus-ring-form-valid) */
 .root[data-state="focus"][data-tone="success"] {
-  border-color: var(--border-border-valid, #3ac133);
+  border-color: var(--border-valid, #3ac133);
   box-shadow: var(--shadow-focus-ring-form-valid);
 }
 
 /* Focus — Error (Figma: Focus Ring / Form Invalid → --shadow-focus-ring-form-invalid) */
 .root[data-state="focus"][data-tone="error"] {
-  border-color: var(--border-border-invalid, #ff5a58);
+  border-color: var(--border-invalid, #ff5a58);
   box-shadow: var(--shadow-focus-ring-form-invalid);
 }
 
 /* Disable */
 .root[data-state="disable"] {
   background-color: var(
-    --context-background-surface-bg-surface-base-disabled,
+    --bg-surface-base-disabled,
     #f4f4f5
   );
   cursor: not-allowed;
@@ -106,7 +106,7 @@
 /* Readonly */
 .root[data-state="readonly"] {
   background-color: var(
-    --context-background-surface-bg-surface-base-disabled,
+    --bg-surface-base-disabled,
     #f4f4f5
   );
   cursor: default;
@@ -132,7 +132,7 @@
   font-size: var(--font-size-body-md, 13px);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
   white-space: nowrap;
 }
 
@@ -152,7 +152,7 @@
   min-width: 0;
   font-family: inherit;
   font-weight: var(--font-weight-regular, 400);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -163,28 +163,28 @@
   flex-shrink: 0;
   font-family: inherit;
   font-weight: var(--font-weight-regular, 400);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
   white-space: nowrap;
 }
 
 /* 빈 값 (placeholder) 컬러 */
 .singleText[data-empty="true"],
 .dateText[data-empty="true"] {
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
 }
 
 /* Disable / Readonly 시 텍스트 컬러 override */
 .root[data-state="disable"] .singleText,
 .root[data-state="disable"] .dateText {
-  color: var(--context-foreground-surface-on-surface-disabled, #b3b4bc);
+  color: var(--on-surface-disabled, #b3b4bc);
 }
 .root[data-state="disable"] .label {
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
 }
 
 .root[data-state="readonly"] .singleText[data-empty="false"],
 .root[data-state="readonly"] .dateText[data-empty="false"] {
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
 }
 
 /* ---------------------------------------------------------------------------
@@ -204,13 +204,13 @@
 
 /* range arrow */
 .rangeArrow {
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
   flex-shrink: 0;
 }
 
 .root[data-state="disable"] .rangeArrow {
   color: var(
-    --context-foreground-icon-surface-icon-surface-disabled,
+    --icon-surface-disabled,
     #b3b4bc
   );
 }
@@ -230,23 +230,23 @@
 }
 
 .root[data-tone="success"] .statusIcon {
-  color: var(--border-border-valid, #3ac133);
+  color: var(--border-valid, #3ac133);
 }
 
 .root[data-tone="error"] .statusIcon {
-  color: var(--border-border-invalid, #ff5a58);
+  color: var(--border-invalid, #ff5a58);
 }
 
 /* Calendar icon (기본) */
 .calendarIcon {
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
   flex-shrink: 0;
 }
 
 .root[data-state="disable"] .calendarIcon,
 .root[data-state="readonly"] .calendarIcon {
   color: var(
-    --context-foreground-icon-surface-icon-surface-disabled,
+    --icon-surface-disabled,
     #b3b4bc
   );
 }
@@ -264,17 +264,17 @@
   border: 0;
   border-radius: var(--radius-full, 1000px);
   background-color: var(
-    --context-background-surface-bg-surface-secondary,
+    --bg-surface-secondary,
     #f4f4f5
   );
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .clearBtn:hover {
   background-color: var(
-    --context-background-surface-bg-surface-secondary-hover,
+    --bg-surface-secondary-hover,
     #e4e5e9
   );
 }

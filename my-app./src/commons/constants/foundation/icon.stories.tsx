@@ -26,7 +26,7 @@ const linkStyle: CSSProperties = {
   marginTop: 12,
   fontSize: 15,
   fontWeight: 600,
-  color: "var(--context-foreground-primary-on-primary-hover)",
+  color: "var(--on-primary-hover)",
   wordBreak: "break-all",
 };
 

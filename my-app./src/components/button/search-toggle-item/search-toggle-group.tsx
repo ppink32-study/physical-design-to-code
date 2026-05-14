@@ -11,7 +11,7 @@
  *   - 선택되지 않은 아이템은 같은 회색이라 컨테이너에 자연스럽게 녹는다
  *
  * 토큰
- *   container bg     : --context-background-surface-bg-surface-secondary (#F4F4F5)
+ *   container bg     : --bg-surface-secondary (#F4F4F5)
  *   container radius : --radius-lg (8)
  */
 

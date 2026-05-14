@@ -6,13 +6,13 @@
  *   - Checkbox (input + label)         : 17995:61510
  *
  * 색상 토큰 (variable_defs 기준)
- *   - unchecked bg : --context-background-surface-bg-surface-base
- *   - unchecked bd : --border-border-surface-border-surface
- *   - focused  bd  : --border-border-primary
- *   - checked  bg  : --context-background-primary-bg-primary-hover
- *   - check    fg  : --context-foreground-surface-on-suface-white  (← 오타 유지)
- *   - disabled bg  : --context-background-surface-bg-surface-base-disabled
- *   - disabled label : --context-foreground-surface-on-surface-disabled
+ *   - unchecked bg : --bg-surface-base
+ *   - unchecked bd : --border-surface
+ *   - focused  bd  : --border-primary
+ *   - checked  bg  : --bg-primary-hover
+ *   - check    fg  : --on-surface-white  (← 오타 유지)
+ *   - disabled bg  : --bg-surface-base-disabled
+ *   - disabled label : --on-surface-disabled
  *   - focus ring   : --shadow-focus-ring-primary (shadow.css / Focus Ring · Primary)
  *
  * 구조 : <label><input hidden/> <box/> <text/></label>
@@ -26,7 +26,7 @@
   font-size: var(--font-size-body-base); /* 14 */
   line-height: var(--font-line-height-sm); /* 20 */
   font-weight: var(--font-weight-regular);
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -34,7 +34,7 @@
 
 .root[data-disabled="true"] {
   cursor: not-allowed;
-  color: var(--context-foreground-surface-on-surface-disabled);
+  color: var(--on-surface-disabled);
 }
 
 /* 네이티브 input 은 숨기고 키보드/스크린리더 접근성 유지 */
@@ -62,14 +62,14 @@
   width: var(--size-base-lg); /* 16 */
   height: var(--size-base-lg); /* 16 */
   border-radius: var(--radius-sm); /* 4 */
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
   border: var(--border-width-xs, 1px) solid
-    var(--border-border-surface-border-surface);
+    var(--border-surface);
   transition:
     background-color 120ms ease,
     border-color 120ms ease,
     box-shadow 120ms ease;
-  color: var(--context-foreground-surface-on-suface-white);
+  color: var(--on-surface-white);
 }
 
 /* -- Unchecked Focused --
@@ -80,14 +80,14 @@
 .root[data-state="unchecked"]:focus-within:not([data-disabled="true"]) .box,
 .root[data-state="unchecked"] .input:focus + .box,
 .root[data-state="unchecked"][data-force-state="focused"] .box {
-  border-color: var(--border-border-primary);
+  border-color: var(--border-primary);
   box-shadow: var(--shadow-focus-ring-primary);
 }
 
 /* -- Checked / Indeterminate 공통 -- */
 .root[data-state="checked"] .box,
 .root[data-state="indeterminate"] .box {
-  background: var(--context-background-primary-bg-primary-hover);
+  background: var(--bg-primary-hover);
   border-color: transparent;
 }
 
@@ -103,8 +103,8 @@
 
 /* -- Disabled -- */
 .root[data-disabled="true"][data-state="unchecked"] .box {
-  background: var(--context-background-surface-bg-surface-base-disabled);
-  border-color: var(--border-border-surface-border-surface);
+  background: var(--bg-surface-base-disabled);
+  border-color: var(--border-surface);
 }
 .root[data-disabled="true"] .box {
   box-shadow: none !important;
@@ -121,7 +121,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  color: var(--context-foreground-surface-on-suface-white);
+  color: var(--on-surface-white);
   pointer-events: none;
   opacity: 0;
 }
@@ -138,7 +138,7 @@
   left: 50%;
   width: 8px;
   height: 2px;
-  background: var(--context-foreground-surface-on-suface-white);
+  background: var(--on-surface-white);
   border-radius: var(--radius-full);
   transform: translate(-50%, -50%);
   pointer-events: none;

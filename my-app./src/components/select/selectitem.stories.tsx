@@ -46,7 +46,7 @@ const sectionTitleStyle: CSSProperties = {
   fontSize: 14,
   fontWeight: 600,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const SectionFrame = ({

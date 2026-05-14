@@ -69,19 +69,19 @@ export const Matrix: Story = {
       <FigmaLinkCard nodeId="18404-755" caption="Components / Project Card A (light)" />
 
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Type × State
         </h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {TYPES.map((t) => (
             <div key={t}>
-              <span style={{ display: "block", marginBottom: 8, fontSize: 11, fontWeight: 600, color: "var(--context-foreground-surface-on-surface-hint)", fontFamily: "var(--font-family-korean)", textTransform: "uppercase", letterSpacing: "0.4px" }}>
+              <span style={{ display: "block", marginBottom: 8, fontSize: 11, fontWeight: 600, color: "var(--on-surface-hint)", fontFamily: "var(--font-family-korean)", textTransform: "uppercase", letterSpacing: "0.4px" }}>
                 {t}
               </span>
               <div style={{ display: "flex", flexDirection: "row", gap: 16 }}>
                 {STATES.map((s) => (
                   <div key={s} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                    <span style={{ fontSize: 11, fontWeight: 600, color: "var(--context-foreground-surface-on-surface-hint)", fontFamily: "var(--font-family-korean)" }}>{s}</span>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: "var(--on-surface-hint)", fontFamily: "var(--font-family-korean)" }}>{s}</span>
                     <ProjectCardA type={t} state={s} />
                   </div>
                 ))}

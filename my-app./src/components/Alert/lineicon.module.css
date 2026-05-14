@@ -22,11 +22,11 @@
  * 타입별 토큰 매핑 (globals.css)
  *   type      | bg                        | border                       | icon (공통)
  *   ----------|---------------------------|------------------------------|----------------------------------
- *   info      | --color-tint-cyan         | --color-accent-cyan-light    | Icon-surface-teriary
- *   success   | --color-tint-green        | --color-accent-green-light   | Icon-surface-teriary
- *   warning   | --color-tint-yellow       | --color-accent-yellow-light  | Icon-surface-teriary
- *   error     | --color-tint-red          | --color-accent-red-light     | Icon-surface-teriary
- *   grayscale | --color-surface-secondary | --color-border-surface       | Icon-surface-teriary
+ *   info      | --color-tint-cyan         | --color-accent-cyan-light    | Icon-surface-tertiary
+ *   success   | --color-tint-green        | --color-accent-green-light   | Icon-surface-tertiary
+ *   warning   | --color-tint-yellow       | --color-accent-yellow-light  | Icon-surface-tertiary
+ *   error     | --color-tint-red          | --color-accent-red-light     | Icon-surface-tertiary
+ *   grayscale | --color-surface-secondary | --color-border-surface       | Icon-surface-tertiary
  * ============================================================ */
 
 /* -------- Root -------- */
@@ -101,7 +101,7 @@
   mask-position: center;
   color: var(
     --al-icon,
-    var(--context-foreground-icon-surface-icon-surface-teriary, #787a88)
+    var(--icon-surface-tertiary, #787a88)
   );
 }
 
@@ -145,7 +145,7 @@
 }
 
 .text--pbLg {
-  padding-bottom: 16px;
+  padding-bottom: var(--spacing-lg);
 }
 
 .bodyText {
@@ -171,5 +171,5 @@
   display: block;
   width: 100%;
   height: 1px;
-  background: var(--border-border-surface-border-surface, #d7d8dc);
+  background: var(--border-surface, #d7d8dc);
 }

@@ -7,9 +7,9 @@
  *      .badgeSlot: variant=badge — Badge 슬롯
  *
  *  Token 매핑
- *    bg     : --context-background-surface-bg-surface-base
- *    border : --border-border-surface-border-surface-secondary  (right + bottom)
- *    text   : --context-foreground-surface-on-surface-base
+ *    bg     : --bg-surface-base
+ *    border : --border-surface-secondary  (right + bottom)
+ *    text   : --on-surface-base
  * =============================================================== */
 
 .root {
@@ -19,9 +19,9 @@
   height: 40px;
   padding-left: var(--spacing-md, 12px);
   padding-right: var(--spacing-md, 12px);
-  background: var(--context-background-surface-bg-surface-base);
-  border-right: 1px solid var(--border-border-surface-border-surface-secondary);
-  border-bottom: 1px solid var(--border-border-surface-border-surface-secondary);
+  background: var(--bg-surface-base);
+  border-right: 1px solid var(--border-surface-secondary);
+  border-bottom: 1px solid var(--border-surface-secondary);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -34,7 +34,7 @@
   font-weight: var(--font-weight-regular, 400);
   line-height: var(--font-line-height-sm, 20px);
   letter-spacing: -0.052px;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

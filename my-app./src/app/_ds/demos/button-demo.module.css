@@ -11,23 +11,23 @@
   border: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 8%,
+      var(--on-surface-base) 8%,
       transparent
     );
   overflow: hidden;
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
 }
 
 .headerCell {
   padding: 12px 16px;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.005em;
   border-bottom: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 8%,
+      var(--on-surface-base) 8%,
       transparent
     );
 }
@@ -39,12 +39,12 @@
   font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
   font-size: 13px;
   font-weight: 600;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   letter-spacing: -0.005em;
   border-top: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 5%,
+      var(--on-surface-base) 5%,
       transparent
     );
 }
@@ -57,24 +57,24 @@
   border-top: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 5%,
+      var(--on-surface-base) 5%,
       transparent
     );
   border-left: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 5%,
+      var(--on-surface-base) 5%,
       transparent
     );
   min-height: 80px;
 }
 
 .cellOnDark {
-  background: var(--seed-color-gray-900);
+  background: var(--gray-900);
 }
 
 .cellOnLight {
-  background: var(--seed-color-gray-white);
+  background: var(--gray-white);
 }
 
 /* Variants overview (Badge 가이드와 동일 패턴) ------------------- */
@@ -99,10 +99,10 @@
   border: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 8%,
+      var(--on-surface-base) 8%,
       transparent
     );
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
 }
 
 .variantStage {
@@ -114,24 +114,24 @@
   border-radius: 8px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 3%,
+    var(--on-surface-base) 3%,
     transparent
   );
 }
 
 .variantStageOnDark {
-  background: var(--seed-color-gray-900);
+  background: var(--gray-900);
 }
 
 .variantStageOnLight {
-  background: var(--seed-color-gray-white);
+  background: var(--gray-white);
 }
 
 .variantTitle {
   font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   letter-spacing: -0.01em;
   word-break: break-all;
 }
@@ -139,13 +139,13 @@
 .variantDesc {
   font-size: 12px;
   line-height: 1.5;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 .variantNote {
   font-size: 11px;
   line-height: 1.45;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   font-style: italic;
 }
 
@@ -160,12 +160,12 @@
   border: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 8%,
+      var(--on-surface-base) 8%,
       transparent
     );
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
   font-size: 13px;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   letter-spacing: -0.005em;
 }
 
@@ -174,18 +174,18 @@
   padding: 12px 14px;
   font-size: 12px;
   font-weight: 700;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 4%,
+    var(--on-surface-base) 4%,
     transparent
   );
   border-bottom: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 8%,
+      var(--on-surface-base) 8%,
       transparent
     );
 }
@@ -196,7 +196,7 @@
   border-top: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 5%,
+      var(--on-surface-base) 5%,
       transparent
     );
   line-height: 1.55;
@@ -213,22 +213,22 @@
   border-radius: 4px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 6%,
+    var(--on-surface-base) 6%,
     transparent
   );
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   white-space: nowrap;
 }
 
 .mono {
   font-family: var(--font-family-monospace, "SF Mono", ui-monospace, monospace);
   font-size: 12.5px;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   letter-spacing: -0.005em;
 }
 
 .muted {
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 .numCol {
@@ -260,10 +260,10 @@
   border: 1px solid
     color-mix(
       in srgb,
-      var(--context-foreground-surface-on-surface-base) 8%,
+      var(--on-surface-base) 8%,
       transparent
     );
-  background: var(--context-background-surface-bg-surface-base);
+  background: var(--bg-surface-base);
 }
 
 .anatomyStage {
@@ -276,7 +276,7 @@
   border-radius: 8px;
   background: color-mix(
     in srgb,
-    var(--context-foreground-surface-on-surface-base) 3%,
+    var(--on-surface-base) 3%,
     transparent
   );
 }
@@ -284,13 +284,13 @@
 .anatomyTitle {
   font-size: 14px;
   font-weight: 600;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 .anatomyDesc {
   font-size: 12px;
   line-height: 1.55;
-  color: var(--context-foreground-surface-on-surface-sub);
+  color: var(--on-surface-sub);
 }
 
 /* =================================================================
@@ -304,19 +304,19 @@
   border-radius: 12px;
   font-size: 13px;
   line-height: 1.55;
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
 }
 
 .calloutDo {
   background: color-mix(
     in srgb,
-    var(--seed-color-green-500, #10b981) 8%,
-    var(--context-background-surface-bg-surface-base)
+    var(--green-500, #10b981) 8%,
+    var(--bg-surface-base)
   );
   border: 1px solid
     color-mix(
       in srgb,
-      var(--seed-color-green-500, #10b981) 30%,
+      var(--green-500, #10b981) 30%,
       transparent
     );
 }
@@ -324,13 +324,13 @@
 .calloutDont {
   background: color-mix(
     in srgb,
-    var(--seed-color-red-500, #ef4444) 8%,
-    var(--context-background-surface-bg-surface-base)
+    var(--red-500, #ef4444) 8%,
+    var(--bg-surface-base)
   );
   border: 1px solid
     color-mix(
       in srgb,
-      var(--seed-color-red-500, #ef4444) 30%,
+      var(--red-500, #ef4444) 30%,
       transparent
     );
 }

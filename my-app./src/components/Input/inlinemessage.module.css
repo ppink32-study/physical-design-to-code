@@ -45,17 +45,17 @@
 
 /* type --------------------------------------------------------------- */
 .type-info {
-  color: var(--context-foreground-surface-on-surface-hint, #787a88);
+  color: var(--on-surface-hint, #787a88);
 }
 .type-success {
-  color: var(--context-foreground-success-on-success, #09b200);
+  color: var(--on-success, #09b200);
 }
 .type-warning {
-  color: var(--context-foreground-warning-on-warning, #ff8f0e);
+  color: var(--on-warning, #ff8f0e);
 }
 .type-error {
-  color: var(--context-foreground-error-on-error, #ff312e);
+  color: var(--on-error, #ff312e);
 }
 .type-loading {
-  color: var(--accent-cyan-accent-cyan, #0aa2c0);
+  color: var(--accent-cyan, #0aa2c0);
 }

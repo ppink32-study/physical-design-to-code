@@ -97,7 +97,7 @@ export const Matrix: Story = {
 
       {/* 타입별 패널 (클릭 없이 바로 보이는 정적 표시) */}
       <section>
-        <h3 style={{ margin: "0 0 16px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 16px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Modal Alert / Type
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>

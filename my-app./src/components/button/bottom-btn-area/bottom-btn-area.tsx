@@ -11,7 +11,7 @@
  *   - Custom  : children 슬롯 — 임의 콘텐츠 자유 배치
  *
  * 토큰
- *   container bg : --context-background-neutral-bg-neutral (#FFFFFF)
+ *   container bg : --bg-neutral (#FFFFFF)
  *   container padding : --spacing-2xl (24)
  *   group gap     : --spacing-sm (8)  — 버튼 사이
  *

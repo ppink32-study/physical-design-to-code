@@ -10,8 +10,8 @@
  *   knob    : 14 × 14, circle, bg icon-neutral-white
  *   unchecked bg : surface-quarernary (#d7d8dc)
  *   checked   bg : primary bg-primary-hover (#5cc7d0)
- *   unchecked disabled bg : surface-teriary (#ececee)
- *   focus ring unchecked : surface-teriary (4px spread)
+ *   unchecked disabled bg : surface-tertiary (#ececee)
+ *   focus ring unchecked : surface-tertiary (4px spread)
  *   focus ring checked   : primary-opacity-15 (4px spread)
  *   disabled : opacity / readonly
  * ========================================================================== */
@@ -24,7 +24,7 @@
   font-size: var(--font-size-body-base); /* 14 */
   line-height: var(--font-line-height-sm); /* 20 */
   font-weight: var(--font-weight-regular);
-  color: var(--context-foreground-surface-on-surface-base);
+  color: var(--on-surface-base);
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -34,7 +34,7 @@
 }
 .root[data-disabled="true"] {
   cursor: not-allowed;
-  color: var(--context-foreground-surface-on-surface-disabled);
+  color: var(--on-surface-disabled);
 }
 
 .input {
@@ -62,7 +62,7 @@
   height: 20px;
   padding: 2px 3px;
   border-radius: var(--radius-full);
-  background: var(--context-background-surface-bg-surface-quarernary);
+  background: var(--bg-surface-quarernary);
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
@@ -73,25 +73,25 @@
 
 /* -- Checked -- */
 .root[data-state="checked"] .track {
-  background: var(--context-background-primary-bg-primary-hover);
+  background: var(--bg-primary-hover);
   justify-content: flex-end;
 }
 
 /* -- Focused unchecked -- */
 .root[data-state="unchecked"] .input:focus + .track,
 .root[data-state="unchecked"][data-force-state="focused"] .track {
-  box-shadow: 0 0 0 4px var(--context-background-surface-bg-surface-teriary);
+  box-shadow: 0 0 0 4px var(--bg-surface-tertiary);
 }
 
 /* -- Focused checked -- */
 .root[data-state="checked"] .input:focus + .track,
 .root[data-state="checked"][data-force-state="focused"] .track {
-  box-shadow: 0 0 0 4px var(--opacity-primary-opacity-15);
+  box-shadow: 0 0 0 4px var(--primary-opacity-15);
 }
 
 /* -- Disabled unchecked -- */
 .root[data-disabled="true"][data-state="unchecked"] .track {
-  background: var(--context-background-surface-bg-surface-teriary);
+  background: var(--bg-surface-tertiary);
 }
 .root[data-disabled="true"][data-state="checked"] .track {
   opacity: 0.65;
@@ -108,7 +108,7 @@
   width: 14px;
   height: 14px;
   border-radius: var(--radius-full);
-  background: var(--context-foreground-icon-neutral-icon-neutral-white);
+  background: var(--icon-neutral-white);
   transition: transform 160ms ease;
 }
 

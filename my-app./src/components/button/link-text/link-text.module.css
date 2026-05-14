@@ -8,12 +8,12 @@
  * - font-weight: regular (400)
  *
  * 토큰
- *   neutral default  : --context-foreground-surface-on-surface
- *   neutral hover    : --context-foreground-surface-on-surface-selected
- *   neutral disabled : --context-foreground-surface-on-surface-disabled
- *   accent  default  : --context-foreground-blue-on-blue
- *   accent  hover    : --context-foreground-blue-on-blue-hover
- *   accent  disabled : --context-foreground-blue-on-blue-disabled
+ *   neutral default  : --on-surface
+ *   neutral hover    : --on-surface-selected
+ *   neutral disabled : --on-surface-disabled
+ *   accent  default  : --on-blue
+ *   accent  hover    : --on-blue-hover
+ *   accent  disabled : --on-blue-disabled
  * ========================================================================== */
 
 .root {
@@ -68,28 +68,28 @@
  * Variant — Neutral
  * ------------------------------------------------------------------------- */
 .variantNeutral {
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
 }
 .variantNeutral:hover,
 .variantNeutral[data-force-state="hover"] {
-  color: var(--context-foreground-surface-on-surface-selected);
+  color: var(--on-surface-selected);
 }
 .variantNeutral[aria-disabled="true"],
 .variantNeutral[data-force-state="disabled"] {
-  color: var(--context-foreground-surface-on-surface-disabled);
+  color: var(--on-surface-disabled);
 }
 
 /* ---------------------------------------------------------------------------
  * Variant — Accent
  * ------------------------------------------------------------------------- */
 .variantAccent {
-  color: var(--context-foreground-blue-on-blue);
+  color: var(--on-blue);
 }
 .variantAccent:hover,
 .variantAccent[data-force-state="hover"] {
-  color: var(--context-foreground-blue-on-blue-hover);
+  color: var(--on-blue-hover);
 }
 .variantAccent[aria-disabled="true"],
 .variantAccent[data-force-state="disabled"] {
-  color: var(--context-foreground-blue-on-blue-disabled);
+  color: var(--on-blue-disabled);
 }

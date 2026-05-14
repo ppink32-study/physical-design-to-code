@@ -31,37 +31,37 @@ function pickUsage(value: string | LocalizedString, locale: "ko" | "en"): string
 
 const SHADOW_TOKENS: ShadowToken[] = [
   {
-    name: "Shadow / Xs",
+    name: "shadow-xs",
     cssVar: "--shadow-xs",
     value: "0 2px 4px 0 rgba(0, 0, 0, 0.06)",
     usage: "—",
   },
   {
-    name: "Shadow / Sm",
+    name: "shadow-sm",
     cssVar: "--shadow-sm",
     value: "0 4px 14px 0 rgba(0, 0, 0, 0.06)",
     usage: "Master Area, Dropdown List, Popover",
   },
   {
-    name: "Shadow / Md",
+    name: "shadow-md",
     cssVar: "--shadow-md",
     value: "0 6px 20px 0 rgba(0, 0, 0, 0.16)",
     usage: "Bottom Drawer",
   },
   {
-    name: "Shadow / Lg",
+    name: "shadow-lg",
     cssVar: "--shadow-lg",
     value: "0 12px 32px 0 rgba(0, 0, 0, 0.16)",
     usage: "Modal, Toast, Side Drawer",
   },
   {
-    name: "Shadow / Xl",
+    name: "shadow-xl",
     cssVar: "--shadow-xl",
     value: "0 16px 48px 0 rgba(0, 0, 0, 0.18)",
     usage: "—",
   },
   {
-    name: "Shadow / Primary",
+    name: "shadow-primary",
     cssVar: "--shadow-primary",
     value:
       "0 6px 20px 0 var(--color-opacity-accent-primary-50020, rgba(67, 198, 193, 0.20))",
@@ -84,7 +84,7 @@ type FocusRingToken = {
 
 const FOCUS_RING_TOKENS: FocusRingToken[] = [
   {
-    name: "Focus Ring / Primary",
+    name: "shadow-focus-ring-primary",
     cssVar: "--shadow-focus-ring-primary",
     value:
       "0 0 0 var(--border-width-lg, 4px) var(--color-opacity-accent-primary-50015, rgba(67, 198, 193, 0.15))",
@@ -95,10 +95,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     ringColor: "rgba(67, 198, 193, 0.15)",
   },
   {
-    name: "Focus Ring / Gray",
+    name: "shadow-focus-ring-gray",
     cssVar: "--shadow-focus-ring-gray",
     value:
-      "0 0 0 var(--border-width-lg, 4px) var(--context-background-surface-bg-surface-teriary, #ECECEE)",
+      "0 0 0 var(--border-width-lg, 4px) var(--bg-surface-tertiary, #ECECEE)",
     usage: {
       ko: "보조 컨트롤·중립 톤 요소의 Focus 상태",
       en: "Focus state for secondary controls and neutral-tone elements",
@@ -106,10 +106,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     ringColor: "#ECECEE",
   },
   {
-    name: "Focus Ring / Form Valid",
+    name: "shadow-focus-ring-form-valid",
     cssVar: "--shadow-focus-ring-form-valid",
     value:
-      "0 0 0 var(--border-width-lg, 4px) var(--seed-color-green-100, #CEF0CC)",
+      "0 0 0 var(--border-width-lg, 4px) var(--green-100, #CEF0CC)",
     usage: {
       ko: "Form Validation 통과(성공) 상태",
       en: "Form Validation pass (success) state",
@@ -117,10 +117,10 @@ const FOCUS_RING_TOKENS: FocusRingToken[] = [
     ringColor: "#CEF0CC",
   },
   {
-    name: "Focus Ring / Form Invalid",
+    name: "shadow-focus-ring-form-invalid",
     cssVar: "--shadow-focus-ring-form-invalid",
     value:
-      "0 0 0 var(--border-width-lg, 4px) var(--seed-color-red-100, #FFD6D5)",
+      "0 0 0 var(--border-width-lg, 4px) var(--red-100, #FFD6D5)",
     usage: {
       ko: "Form Validation 실패(에러) 상태",
       en: "Form Validation fail (error) state",
@@ -151,14 +151,14 @@ type Story = StoryObj;
  * ----------------------------------------------------------- */
 const tokens = {
   borderColor: "var(--context-border-neutral-border-base)",
-  borderColorMuted: "var(--border-neutral-border-neutral-secondary)",
-  surface: "var(--context-background-surface-bg-surface-base)",
-  surfaceMuted: "var(--context-background-neutral-bg-neutral-secondary)",
-  backboard: "var(--context-background-backdrop-bg-backboard)",
-  textBase: "var(--context-foreground-surface-on-surface-base)",
-  textMuted: "var(--context-foreground-surface-on-surface)",
-  textSubtle: "var(--context-foreground-surface-on-surface-secondary)",
-  textHint: "var(--context-foreground-neutral-on-neutral-hint)",
+  borderColorMuted: "var(--border-neutral-secondary)",
+  surface: "var(--bg-surface-base)",
+  surfaceMuted: "var(--bg-neutral-secondary)",
+  backboard: "var(--bg-backboard)",
+  textBase: "var(--on-surface-base)",
+  textMuted: "var(--on-surface)",
+  textSubtle: "var(--on-surface-secondary)",
+  textHint: "var(--on-neutral-hint)",
 } as const;
 
 const TABLE_MAX_WIDTH = 1280;
@@ -381,7 +381,7 @@ function TokenChip({ label }: { label: string }) {
         aria-hidden
         style={{
           display: "inline-flex",
-          color: "var(--context-foreground-primary-on-primary)",
+          color: "var(--on-primary)",
         }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

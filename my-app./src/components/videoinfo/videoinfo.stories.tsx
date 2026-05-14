@@ -67,7 +67,7 @@ export const Matrix: Story = {
 
       {/* Badge 단독 */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Badge — 텍스트 길이별
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -96,7 +96,7 @@ export const Matrix: Story = {
 
       {/* Card */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Card — 썸네일 영역 + Badge / Close 오버레이 (8px 여백)
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>

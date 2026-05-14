@@ -42,6 +42,10 @@ const TITLE_TO_NODE: Record<string, string | null> = {
   /** Form 레이아웃·필드 배치 가이드 (Guideline 스토리 기준) */
   "Components/Form": "7119:411152",
   "Components/Empty": "12368:26042",
+  "Components/Step/Num": "18374:238",
+  "Components/Step/StepItem": "18505:14797",
+  "Components/Step/Stepper": "16722:36406",
+  "Components/Step/StepCard": "16861:17888",
   "Components/Table/GridHeader": "4456:290401",
   "Components/Table/BodyCell": "4456:290858",
   "Components/Title/PageTitle": "4790:161",

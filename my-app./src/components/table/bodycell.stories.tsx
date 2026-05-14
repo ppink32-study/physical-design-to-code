@@ -111,7 +111,7 @@ const sectionTitleStyle: CSSProperties = {
   fontWeight: 600,
   marginTop: 8,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const STATE_COLS: Array<{

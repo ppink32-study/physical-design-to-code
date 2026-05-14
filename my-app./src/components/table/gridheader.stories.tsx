@@ -124,7 +124,7 @@ export const Guideline: Story = {
           <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%" }}>
             <div
               style={{
-                borderBottom: "1px solid var(--border-neutral-border-neutral, #d7d8dc)",
+                borderBottom: "1px solid var(--border-neutral, #d7d8dc)",
                 borderRadius: "6px 6px 0 0",
                 overflow: "hidden",
               }}

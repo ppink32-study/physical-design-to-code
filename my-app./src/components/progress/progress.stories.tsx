@@ -144,7 +144,7 @@ export const Matrix: Story = {
               fontSize: 13,
               fontWeight: 600,
               fontFamily: "var(--font-family-korean)",
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
             }}
           >
             Single — {sizeLabel} × Color × Pattern
@@ -190,7 +190,7 @@ export const Matrix: Story = {
               fontSize: 13,
               fontWeight: 600,
               fontFamily: "var(--font-family-korean)",
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
             }}
           >
             Multiple — {sizeLabel} × No × Pattern
@@ -265,7 +265,7 @@ export const Guideline: Story = {
                 style={{
                   width: 64,
                   fontSize: 12,
-                  color: "var(--context-foreground-surface-on-surface)",
+                  color: "var(--on-surface)",
                   fontFamily: "var(--font-family-korean)",
                   flexShrink: 0,
                 }}
@@ -295,7 +295,7 @@ export const Guideline: Story = {
                 style={{
                   width: 64,
                   fontSize: 12,
-                  color: "var(--context-foreground-surface-on-surface)",
+                  color: "var(--on-surface)",
                   fontFamily: "var(--font-family-korean)",
                   flexShrink: 0,
                 }}
@@ -325,7 +325,7 @@ export const Guideline: Story = {
                 style={{
                   width: 64,
                   fontSize: 12,
-                  color: "var(--context-foreground-surface-on-surface)",
+                  color: "var(--on-surface)",
                   fontFamily: "var(--font-family-korean)",
                   flexShrink: 0,
                 }}
@@ -355,7 +355,7 @@ export const Guideline: Story = {
                 style={{
                   width: 64,
                   fontSize: 12,
-                  color: "var(--context-foreground-surface-on-surface)",
+                  color: "var(--on-surface)",
                   fontFamily: "var(--font-family-korean)",
                   flexShrink: 0,
                 }}
@@ -384,7 +384,7 @@ export const Guideline: Story = {
                 style={{
                   width: 64,
                   fontSize: 12,
-                  color: "var(--context-foreground-surface-on-surface)",
+                  color: "var(--on-surface)",
                   fontFamily: "var(--font-family-korean)",
                   flexShrink: 0,
                 }}

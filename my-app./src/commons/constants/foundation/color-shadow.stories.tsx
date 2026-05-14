@@ -6,6 +6,7 @@ import lightCssRaw    from "@/commons/constants/css/light.css?raw";
 import darkCssRaw     from "@/commons/constants/css/dark.css?raw";
 import brandCssRaw    from "@/commons/constants/css/brand.css?raw";
 import gradientCssRaw from "@/commons/constants/css/gradient.css?raw";
+import seedCssRaw     from "@/commons/constants/css/_seed.css?raw";
 import globalsCssRaw  from "@/app/globals.css?raw";
 
 import {
@@ -38,13 +39,13 @@ type Story = StoryObj;
  * ----------------------------------------------------------- */
 const tokens = {
   borderColor: "var(--context-border-neutral-border-base)",
-  borderColorMuted: "var(--border-neutral-border-neutral-secondary)",
-  surface: "var(--context-background-surface-bg-surface-base)",
-  surfaceMuted: "var(--context-background-neutral-bg-neutral-secondary)",
-  surfaceSubtle: "var(--context-background-surface-bg-surface-secondary)",
-  textBase: "var(--context-foreground-surface-on-surface-base)",
-  textMuted: "var(--context-foreground-surface-on-surface)",
-  textSubtle: "var(--context-foreground-surface-on-surface-secondary)",
+  borderColorMuted: "var(--border-neutral-secondary)",
+  surface: "var(--bg-surface-base)",
+  surfaceMuted: "var(--bg-neutral-secondary)",
+  surfaceSubtle: "var(--bg-surface-secondary)",
+  textBase: "var(--on-surface-base)",
+  textMuted: "var(--on-surface)",
+  textSubtle: "var(--on-surface-secondary)",
 } as const;
 
 const TABLE_MAX_WIDTH = 1280;
@@ -214,7 +215,7 @@ function TokenChip({ leafName }: { leafName: string }) {
         aria-hidden
         style={{
           display: "inline-flex",
-          color: "var(--context-foreground-primary-on-primary)",
+          color: "var(--on-primary)",
         }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -453,7 +454,7 @@ function BrandGradientExample() {
       >
         <div
           style={{
-            background: "var(--context-background-gray-bg-darkgray)",
+            background: "var(--bg-darkgray)",
             borderRadius: 10,
             padding: "10px 14px",
             display: "flex",
@@ -940,7 +941,7 @@ function GradientCard({
 
         <div
           style={{
-            background: "var(--context-background-backdrop-bg-backboard)",
+            background: "var(--bg-backboard)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1154,8 +1155,8 @@ function ThemeOverviewSection({ locale }: { locale: "ko" | "en" }) {
             </span>
           }
           tokenColor="#0AA2C0"
-          badgeBg="var(--context-background-tint-bg-cyan-tint, #E7FBFF)"
-          badgeColor="var(--accent-cyan-accent-cyan, #0AA2C0)"
+          badgeBg="var(--bg-cyan-tint, #E7FBFF)"
+          badgeColor="var(--accent-cyan, #0AA2C0)"
           accent="linear-gradient(105deg, #9EF7EE 50%, #971EFF 89.69%)"
         />
 
@@ -1183,8 +1184,8 @@ function ThemeOverviewSection({ locale }: { locale: "ko" | "en" }) {
             </code>
           }
           tokenColor="#3F9BAE"
-          badgeBg="var(--context-background-tint-bg-blue-tint, #E7F1FF)"
-          badgeColor="var(--accent-blue-accent-blue, #316CF4)"
+          badgeBg="var(--bg-blue-tint, #E7F1FF)"
+          badgeColor="var(--accent-blue, #316CF4)"
           accent="#3F9BAE"
           note={
             isKo
@@ -1241,7 +1242,8 @@ type TabId =
   | "border"
   | "opacity"
   | "bgTransparency"
-  | "gradient";
+  | "gradient"
+  | "seed";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "overview",      label: "Overview" },
@@ -1253,10 +1255,14 @@ const TABS: { id: TabId; label: string }[] = [
   { id: "opacity",       label: "Opacity" },
   { id: "bgTransparency",label: "BG · Transparency" },
   { id: "gradient",      label: "Gradient" },
+  { id: "seed",          label: "Seed" },
 ];
 
 /* Border 탭은 border / borderNeutral / borderSurface / borderOpacity 4개 그룹을 합친다 */
 const BORDER_GROUP_IDS = new Set(["border", "borderNeutral", "borderSurface", "borderOpacity"]);
+
+/* Seed 탭은 seed (raw palette) + seedOpacity 두 그룹을 합친다 */
+const SEED_GROUP_IDS = new Set(["seed", "seedOpacity"]);
 
 function ColorTabPage({ locale }: { locale: "ko" | "en" }) {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
@@ -1287,6 +1293,7 @@ function ColorTabPage({ locale }: { locale: "ko" | "en" }) {
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <DownloadButton fileName="globals.css"  css={globalsCssRaw} />
+          <DownloadButton fileName="_seed.css"    css={seedCssRaw} />
           <DownloadButton fileName="light.css"    css={lightCssRaw} />
           <DownloadButton fileName="dark.css"     css={darkCssRaw} />
           <DownloadButton fileName="brand.css"    css={brandCssRaw} />
@@ -1444,6 +1451,20 @@ function ColorTabPage({ locale }: { locale: "ko" | "en" }) {
         )}
 
         {activeTab === "gradient" && <GradientSection locale={locale} />}
+
+        {activeTab === "seed" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
+            {SEMANTIC_GROUPS.filter((g) => SEED_GROUP_IDS.has(g.id)).map((g, idx) => (
+              <GroupBlock
+                key={g.id}
+                index={`09.${idx + 1} — ${g.title.toUpperCase()}`}
+                title={g.title}
+                description={g.description}
+                sections={g.sections}
+              />
+            ))}
+          </div>
+        )}
 
       </div>
     </div>

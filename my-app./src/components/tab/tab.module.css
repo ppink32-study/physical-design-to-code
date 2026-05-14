@@ -29,7 +29,7 @@
 }
 
 .tab:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -97,7 +97,7 @@
   display: block;
   height: 2px;
   width: 100%;
-  background-color: var(--context-foreground-icon-surface-icon-surface-base);
+  background-color: var(--icon-surface-base);
   border-radius: 1px;
 }
 
@@ -110,14 +110,14 @@
   height: 20px;
   padding: var(--spacing-3xs, 2px);
   border-radius: var(--radius-full, 1000px);
-  background: var(--context-background-surface-bg-surface-secondary);
-  color: var(--context-foreground-icon-surface-icon-surface);
+  background: var(--bg-surface-secondary);
+  color: var(--icon-surface);
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .closeBtn:hover {
-  color: var(--context-foreground-icon-surface-icon-surface-hover);
+  color: var(--icon-surface-hover);
 }
 
 /* ---- type=more ---------------------------------------------------- */
@@ -163,63 +163,63 @@
 
 /* count 는 disabled 외 모든 상태에서 on-primary */
 .count {
-  color: var(--context-foreground-primary-on-primary);
+  color: var(--on-primary);
 }
 
 /* default */
 .state-default .label {
-  color: var(--context-foreground-surface-on-surface-hint);
+  color: var(--on-surface-hint);
 }
 .state-default .leading {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
 }
 .state-default .count {
-  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  color: var(--on-neutral-hint-muted);
 }
 .state-default.type-more .moreIcon {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
 }
 
 /* hover state (명시적 prop) */
 .state-hover .label {
-  color: var(--context-foreground-icon-surface-icon-surface-hover);
+  color: var(--icon-surface-hover);
 }
 .state-hover .leading {
-  color: var(--context-foreground-icon-surface-icon-surface-hover);
+  color: var(--icon-surface-hover);
 }
 .state-hover .count {
-  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  color: var(--on-neutral-hint-muted);
 }
 .state-hover.type-more {
-  background: var(--context-background-surface-bg-surface-secondary);
+  background: var(--bg-surface-secondary);
   border-radius: var(--radius-sm, 4px);
 }
 .state-hover.type-more .moreIcon {
-  color: var(--context-foreground-icon-surface-icon-surface-hover);
+  color: var(--icon-surface-hover);
 }
 
 /* :hover 실제 mouse hover (state=default 일 때만 hover 스타일 적용) */
 .state-default:not([disabled]):hover .label,
 .state-default:not([disabled]):hover .leading {
-  color: var(--context-foreground-icon-surface-icon-surface-hover);
+  color: var(--icon-surface-hover);
 }
 .state-default:not([disabled]):hover .count {
-  color: var(--context-foreground-neutral-on-neutral-hint-muted);
+  color: var(--on-neutral-hint-muted);
 }
 .state-default.type-more:not([disabled]):hover {
-  background: var(--context-background-surface-bg-surface-secondary);
+  background: var(--bg-surface-secondary);
   border-radius: var(--radius-sm, 4px);
 }
 .state-default.type-more:not([disabled]):hover .moreIcon {
-  color: var(--context-foreground-icon-surface-icon-surface-hover);
+  color: var(--icon-surface-hover);
 }
 
 /* selected */
 .state-selected .label {
-  color: var(--context-foreground-icon-surface-icon-surface-base);
+  color: var(--icon-surface-base);
 }
 .state-selected .leading {
-  color: var(--context-foreground-icon-surface-icon-surface-base);
+  color: var(--icon-surface-base);
 }
 
 /* disabled */
@@ -230,7 +230,7 @@
 .state-disabled .leading,
 .state-disabled .count,
 .state-disabled .moreIcon {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
 }
 
 /* =======================================================================
@@ -263,6 +263,6 @@
   box-shadow: inset 0 -1px 0 0
     var(
       --border-border-neutral-border-neutral-secondary,
-      var(--border-neutral-border-neutral-secondary, #ececee)
+      var(--border-neutral-secondary, #ececee)
     );
 }

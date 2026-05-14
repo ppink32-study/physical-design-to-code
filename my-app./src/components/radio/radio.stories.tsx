@@ -48,7 +48,7 @@ const sectionTitleStyle: CSSProperties = {
   fontSize: 14,
   fontWeight: 600,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const SectionFrame = ({
@@ -72,7 +72,7 @@ const cellStyle: CSSProperties = {
 
 const headerStyle: CSSProperties = {
   fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
   fontWeight: 600,
   textTransform: "uppercase",
   letterSpacing: 0.4,
@@ -80,7 +80,7 @@ const headerStyle: CSSProperties = {
 
 const rowLabelStyle: CSSProperties = {
   fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface)",
+  color: "var(--on-surface)",
 };
 
 const COLS: Array<{ key: string; label: string; checked: boolean }> = [
@@ -113,7 +113,7 @@ function ControlledRadioVerticalDemo() {
         <Radio value="tablet">Tablet</Radio>
         <Radio value="desktop">Desktop</Radio>
       </RadioGroup>
-      <code style={{ fontSize: 12, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+      <code style={{ fontSize: 12, color: "var(--on-surface-hint)" }}>
         value = {JSON.stringify(value)}
       </code>
     </div>
@@ -247,7 +247,7 @@ function ControlledRadioGroupSnippet() {
         <Radio value="b">B</Radio>
         <Radio value="c">C</Radio>
       </RadioGroup>
-      <code style={{ fontSize: 12, color: "var(--context-foreground-surface-on-surface-hint)" }}>
+      <code style={{ fontSize: 12, color: "var(--on-surface-hint)" }}>
         value = {JSON.stringify(value)}
       </code>
     </div>
@@ -262,14 +262,14 @@ const groupSpacingCardLabelStyle: CSSProperties = {
   fontSize: 15,
   fontWeight: 700,
   letterSpacing: "-0.02em",
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const groupSpacingCardDescStyle: CSSProperties = {
   margin: 0,
   fontSize: 14,
   lineHeight: 1.65,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
 };
 
 const groupSpacingPreviewBoxStyle: CSSProperties = {
@@ -354,14 +354,14 @@ const groupExampleLabelStyle: CSSProperties = {
   marginBottom: 8,
   fontSize: 13,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const guideBlockStyle: CSSProperties = {
   padding: 16,
   borderRadius: 8,
-  border: "1px solid var(--border-border-surface-border-surface)",
-  background: "var(--context-background-surface-bg-surface-base)",
+  border: "1px solid var(--border-surface)",
+  background: "var(--bg-surface-base)",
 };
 
 const guideTableStyle = storyDocsGuideTableStyle;

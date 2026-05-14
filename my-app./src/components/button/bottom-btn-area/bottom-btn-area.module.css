@@ -4,7 +4,7 @@
  * Variants (2): Default (좌·우 그룹) / Custom (children 슬롯)
  *
  * 토큰
- *   container bg     : --context-background-neutral-bg-neutral (#FFFFFF)
+ *   container bg     : --bg-surface-base (#FFFFFF)
  *   container padding: --spacing-2xl (24)
  *   group gap        : --spacing-sm (8)
  * ========================================================================== */
@@ -15,7 +15,7 @@
   flex-direction: column;
   width: 100%;
   padding: var(--spacing-2xl); /* 24px */
-  background: var(--context-background-neutral-bg-neutral);
+  background: var(--bg-surface-base);
 }
 
 /* ---------------------------------------------------------------------------

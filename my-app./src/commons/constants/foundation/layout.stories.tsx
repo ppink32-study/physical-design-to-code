@@ -211,14 +211,14 @@ type Story = StoryObj;
 const tokens = {
   borderColor: "var(--context-border-neutral-border-base)",
   /** Figma 36:25219 테이블 전용 — border-surface-secondary (#ECECEE) */
-  cellBorder: "var(--border-border-surface-border-surface-secondary)",
+  cellBorder: "var(--border-surface-secondary)",
   /** Figma 36:25219 테이블 헤더 셀 bg (#F4F4F5) */
-  cellHeaderBg: "var(--context-background-surface-bg-surface-secondary)",
-  surface: "var(--context-background-surface-bg-surface-base)",
-  surfaceMuted: "var(--context-background-neutral-bg-neutral-secondary)",
-  textBase: "var(--context-foreground-surface-on-surface-base)",
-  textMuted: "var(--context-foreground-surface-on-surface)",
-  textSubtle: "var(--context-foreground-surface-on-surface-secondary)",
+  cellHeaderBg: "var(--bg-surface-secondary)",
+  surface: "var(--bg-surface-base)",
+  surfaceMuted: "var(--bg-neutral-secondary)",
+  textBase: "var(--on-surface-base)",
+  textMuted: "var(--on-surface)",
+  textSubtle: "var(--on-surface-secondary)",
   accentRed: "#f13e3e",
   accentGray: "#636b74",
 } as const;

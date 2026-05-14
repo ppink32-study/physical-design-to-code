@@ -52,8 +52,8 @@
   border-radius: 50%;
   background: conic-gradient(
     from 180deg at 50% 50%,
-    var(--loader-arc-start, var(--seed-color-mint-500, #7ef2f1)) 0deg,
-    var(--loader-arc-end, var(--seed-color-mint-300, #b2fbed))
+    var(--loader-arc-start, var(--mint-500, #7ef2f1)) 0deg,
+    var(--loader-arc-end, var(--mint-300, #b2fbed))
       63.243deg,
     rgba(255, 255, 255, 0) 360deg
   );
@@ -81,7 +81,7 @@
   width: calc(var(--loader-dim, 48px) * 0.15);
   height: calc(var(--loader-dim, 48px) * 0.15);
   border-radius: 50%;
-  background: var(--loader-dot, var(--seed-color-mint-500, #7ef2f1));
+  background: var(--loader-dot, var(--mint-500, #7ef2f1));
   left: 50%;
   top: calc(50% + var(--loader-dim, 48px) * 0.425);
   transform: translate(-50%, -50%);
@@ -91,15 +91,15 @@
  *  Color presets — data-color
  * =============================================================== */
 .root[data-color="mint"] {
-  --loader-arc-start: var(--seed-color-mint-500, #7ef2f1);
-  --loader-arc-end: var(--seed-color-mint-300, #b2fbed);
-  --loader-dot: var(--seed-color-mint-500, #7ef2f1);
+  --loader-arc-start: var(--mint-500, #7ef2f1);
+  --loader-arc-end: var(--mint-300, #b2fbed);
+  --loader-dot: var(--mint-500, #7ef2f1);
 }
 
 .root[data-color="gray"] {
-  --loader-arc-start: var(--accent-gray-accent-gray, #787a88);
-  --loader-arc-end: var(--accent-gray-accent-gray-lightest, #b3b4bc);
-  --loader-dot: var(--accent-gray-accent-gray, #787a88);
+  --loader-arc-start: var(--accent-gray, #787a88);
+  --loader-arc-end: var(--accent-gray-lightest, #b3b4bc);
+  --loader-dot: var(--accent-gray, #787a88);
 }
 
 .root[data-color="white"] {

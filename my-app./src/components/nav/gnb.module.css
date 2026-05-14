@@ -4,18 +4,18 @@
  *  - data-theme="light" | "brand" 로 토큰 자동 전환
  *
  *  Light 토큰 (data-theme="light")
- *    bg            : --context-background-surface-bg-surface-white  = #FFFFFF
- *    item default  : --context-foreground-surface-on-surface        = #565967
- *    item selected : --context-foreground-primary-on-primary        = #3F9BAE
- *    icon          : --context-foreground-icon-surface-icon-surface = #565967
- *    icon hover bg : --context-background-surface-bg-surface-base-hover = #ECECEE
+ *    bg            : --bg-surface-white  = #FFFFFF
+ *    item default  : --on-surface        = #565967
+ *    item selected : --on-primary        = #3F9BAE
+ *    icon          : --icon-surface = #565967
+ *    icon hover bg : --bg-surface-base-hover = #ECECEE
  *
  *  Brand 토큰 (data-theme="brand")
- *    bg            : --context-background-surface-bg-surface-white  = #141518
- *    item default  : --context-foreground-surface-on-surface        = #9698A3
- *    item selected : --context-foreground-primary-on-primary        = #9EF7EE
- *    icon          : --context-foreground-icon-surface-icon-surface = #9698A3
- *    icon hover bg : --context-background-surface-bg-surface-base-hover = #26282E
+ *    bg            : --bg-surface-white  = #141518
+ *    item default  : --on-surface        = #9698A3
+ *    item selected : --on-primary        = #9EF7EE
+ *    icon          : --icon-surface = #9698A3
+ *    icon hover bg : --bg-surface-base-hover = #26282E
  * =============================================================== */
 
 .gnb {
@@ -28,8 +28,8 @@
   gap: 80px;
   height: 56px;
   padding: 0 24px 0 16px;
-  background: var(--context-background-surface-bg-surface-white);
-  color: var(--context-foreground-surface-on-surface-base);
+  background: var(--bg-surface-white);
+  color: var(--on-surface-base);
 }
 
 .brandSlot {
@@ -72,7 +72,7 @@
   font-size: var(--font-size-body-lg, 16px);
   line-height: var(--font-line-height-lg, 24px);
   letter-spacing: 0;
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
   font-weight: var(--font-weight-regular, 400);
   text-decoration: none;
   cursor: pointer;
@@ -82,13 +82,13 @@
 }
 
 .item:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: -2px;
   border-radius: 4px;
 }
 
 .item[data-selected="true"] {
-  color: var(--context-foreground-primary-on-primary);
+  color: var(--on-primary);
   font-weight: var(--font-weight-semibold, 600);
 }
 
@@ -112,7 +112,7 @@
   border: 0;
   border-radius: 4px;
   background: transparent;
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
   cursor: pointer;
   transition: background-color 0.12s ease;
   flex-shrink: 0;
@@ -121,11 +121,11 @@
 .iconButton:hover,
 .iconButton[data-selected="true"],
 .iconButton[data-force-state="hover"] {
-  background: var(--context-background-surface-bg-surface-base-hover);
+  background: var(--bg-surface-base-hover);
 }
 
 .iconButton:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: 2px;
 }
 
@@ -157,7 +157,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--context-foreground-error-on-error);
+  background: var(--on-error);
   pointer-events: none;
 }
 

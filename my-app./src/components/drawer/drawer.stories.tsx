@@ -46,7 +46,7 @@ const BookmarkBtn = () => (
     style={{
       display: "inline-flex", alignItems: "center", justifyContent: "center",
       width: 32, height: 32, padding: 0, border: "none", background: "transparent",
-      color: "var(--context-background-surface-bg-surface-quarernary)", cursor: "pointer",
+      color: "var(--bg-surface-quarernary)", cursor: "pointer",
       borderRadius: "var(--radius-xs, 2px)",
     }}
   >
@@ -99,7 +99,7 @@ export const Playground: Story = {
             </>
           }
         >
-          <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>
+          <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--on-surface-base)", lineHeight: "22px" }}>
             드로어 본문 영역입니다. 원하는 콘텐츠를 이곳에 배치하세요.
           </p>
         </Drawer>
@@ -128,7 +128,7 @@ function DrawerPreview({ size }: { size: DrawerSize }) {
           </>
         }
       >
-        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--context-foreground-surface-on-surface-base)", lineHeight: "22px" }}>Swap content</p>
+        <p style={{ margin: 0, fontFamily: "var(--font-family-korean)", fontSize: 14, color: "var(--on-surface-base)", lineHeight: "22px" }}>Swap content</p>
       </Drawer>
     </>
   );
@@ -188,7 +188,7 @@ export const Matrix: Story = {
 
       {/* Size 매트릭스 */}
       <section>
-        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Drawer / Size
         </h3>
         <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
@@ -209,10 +209,10 @@ export const Matrix: Story = {
 
       {/* Header 케이스 인라인 미리보기 */}
       <section style={{ marginTop: 32 }}>
-        <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-base)" }}>
+        <h3 style={{ margin: "0 0 4px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Drawer / Header Cases
         </h3>
-        <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--context-foreground-surface-on-surface-secondary)" }}>
+        <p style={{ margin: "0 0 12px", fontSize: 12, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-secondary)" }}>
           Figma node 8252-1461 — 순서: [Back] [Bookmark] [Badges] [Title] [Edit Actions] | [Toggle] [X]
         </p>
         <table style={{ ...storyMatrixTableBase, fontSize: 12, width: "100%" }}>
@@ -230,8 +230,8 @@ export const Matrix: Story = {
                 </td>
                 <td style={{ ...storyMatrixCellStyle, padding: 0, verticalAlign: "middle" }}>
                   <div style={{
-                    background: "var(--context-background-surface-bg-surface-base)",
-                    border: "1px solid var(--border-border-surface-border-surface-secondary)",
+                    background: "var(--bg-surface-base)",
+                    border: "1px solid var(--border-surface-secondary)",
                     borderRadius: "var(--radius-lg, 8px)",
                     overflow: "hidden",
                   }}>

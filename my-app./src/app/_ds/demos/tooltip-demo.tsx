@@ -18,23 +18,23 @@ const cellStyle: CSSProperties = {
   padding: "64px 24px",
   borderRadius: 12,
   border:
-    "1px solid color-mix(in srgb, var(--context-foreground-surface-on-surface-base) 8%, transparent)",
-  background: "var(--context-background-surface-bg-surface-base)",
+    "1px solid color-mix(in srgb, var(--on-surface-base) 8%, transparent)",
+  background: "var(--bg-surface-base)",
   minHeight: 160,
 };
 
 const captionStyle: CSSProperties = {
   fontSize: 12,
   fontWeight: 500,
-  color: "var(--context-foreground-surface-on-surface-sub)",
+  color: "var(--on-surface-sub)",
 };
 
 const triggerTextStyle: CSSProperties = {
   fontFamily: "var(--font-family-korean, Pretendard)",
   fontSize: 14,
   lineHeight: "20px",
-  color: "var(--context-foreground-surface-on-surface-base)",
-  borderBottom: "1px dashed var(--context-foreground-surface-on-surface-sub)",
+  color: "var(--on-surface-base)",
+  borderBottom: "1px dashed var(--on-surface-sub)",
   cursor: "help",
   outline: "none",
   padding: "2px 0",
@@ -152,7 +152,7 @@ export function TooltipDemo() {
               gap: 4,
               fontSize: 14,
               fontWeight: 500,
-              color: "var(--context-foreground-surface-on-surface-base)",
+              color: "var(--on-surface-base)",
             }}
           >
             프로젝트 이름

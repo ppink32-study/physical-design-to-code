@@ -24,8 +24,8 @@
   height: var(--size-base-4xl, 32px);
   padding: 0 var(--spacing-sm, 8px);
   border-radius: var(--radius-full, 100px);
-  background-color: var(--opacity-black-opacity-50, rgba(0, 0, 0, 0.5));
-  color: var(--context-foreground-icon-neutral-icon-neutral-white, #ffffff);
+  background-color: var(--black-opacity-50, rgba(0, 0, 0, 0.5));
+  color: var(--icon-neutral-white, #ffffff);
   font-family: var(--font-family-korean, "Pretendard", sans-serif);
   font-size: var(--font-size-body-base, 14px);
   font-weight: var(--font-weight-semibold, 600);
@@ -100,7 +100,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background-color: var(--context-background-primary-bg-primary-hover, #5cc7d0);
+  background-color: var(--bg-primary-hover, #5cc7d0);
   border-radius: var(--radius-full, 1000px);
   transition: width 0.1s linear;
 }
@@ -110,7 +110,7 @@
   top: 50%;
   width: 16px;
   height: 16px;
-  background-color: var(--context-background-primary-bg-primary-hover, #5cc7d0);
+  background-color: var(--bg-primary-hover, #5cc7d0);
   border-radius: 999px;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -126,7 +126,7 @@
 }
 
 .progressTrack:focus-visible {
-  outline: 2px solid var(--context-background-primary-bg-primary, #4cb8c2);
+  outline: 2px solid var(--bg-primary, #4cb8c2);
   outline-offset: 2px;
 }
 
@@ -150,19 +150,19 @@
   margin: 0;
   border: 0;
   border-radius: var(--radius-full, 100px);
-  background-color: var(--opacity-black-opacity-50, rgba(0, 0, 0, 0.5));
-  color: var(--context-foreground-icon-neutral-icon-neutral-white, #ffffff);
+  background-color: var(--black-opacity-50, rgba(0, 0, 0, 0.5));
+  color: var(--icon-neutral-white, #ffffff);
   cursor: pointer;
   flex-shrink: 0;
   transition: background-color 0.15s ease;
 }
 
 .iconBtn:hover {
-  background-color: var(--opacity-black-opacity-70, rgba(0, 0, 0, 0.7));
+  background-color: var(--black-opacity-70, rgba(0, 0, 0, 0.7));
 }
 
 .iconBtn:focus-visible {
-  outline: 2px solid var(--context-background-primary-bg-primary, #4cb8c2);
+  outline: 2px solid var(--bg-primary, #4cb8c2);
   outline-offset: 2px;
 }
 

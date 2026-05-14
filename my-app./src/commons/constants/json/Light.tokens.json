@@ -28,7 +28,7 @@
             "com.figma.isOverride": true
           }
         },
-        "on-suface-white": {
+        "on-surface-white": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -54,7 +54,7 @@
             "com.figma.isOverride": true
           }
         },
-        "on-suface-black": {
+        "on-surface-black": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -80,7 +80,7 @@
             "com.figma.isOverride": true
           }
         },
-        "on-suface-invert": {
+        "on-surface-invert": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -132,7 +132,7 @@
             "com.figma.isOverride": true
           }
         },
-        "on-surface-teriary": {
+        "on-surface-tertiary": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -420,7 +420,7 @@
             "com.figma.isOverride": true
           }
         },
-        "on-neutral-teriary": {
+        "on-neutral-tertiary": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -630,7 +630,7 @@
             "com.figma.isOverride": true
           }
         },
-        "Icon-suface-invert": {
+        "Icon-surface-invert": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -682,7 +682,7 @@
             "com.figma.isOverride": true
           }
         },
-        "Icon-surface-teriary": {
+        "Icon-surface-tertiary": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -892,7 +892,7 @@
             "com.figma.isOverride": true
           }
         },
-        "icon-neutral-teriary": {
+        "icon-neutral-tertiary": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -1890,7 +1890,7 @@
             "com.figma.isOverride": true
           }
         },
-        "bg-surface-teriary": {
+        "bg-surface-tertiary": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",
@@ -2127,7 +2127,7 @@
             "com.figma.isOverride": true
           }
         },
-        "bg-neutral-teriary": {
+        "bg-neutral-tertiary": {
           "$type": "color",
           "$value": {
             "colorSpace": "srgb",

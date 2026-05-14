@@ -5,22 +5,22 @@
  *  type=icon  : h=32, px=8          / [Icon center]
  *
  *  State 토큰 매핑
- *    default  bg : --context-background-surface-bg-surface-base
- *    hover    bg : --context-background-surface-bg-surface-base-hover
- *    selected bg : --context-background-gray-bg-darkgray
- *    disabled bg : --context-background-neutral-bg-neutral
- *    border-right: --border-border-surface-border-surface-secondary
+ *    default  bg : --bg-surface-base
+ *    hover    bg : --bg-surface-base-hover
+ *    selected bg : --bg-darkgray
+ *    disabled bg : --bg-neutral
+ *    border-right: --border-surface-secondary
  *
- *    label default/hover : --context-foreground-surface-on-surface
- *    label selected      : --context-foreground-surface-on-suface-white
- *    label disabled      : --context-foreground-surface-on-surface-disabled
- *    count default/hover : --context-foreground-surface-on-surface-hint-muted
- *    count selected      : --context-foreground-surface-on-suface-white
- *    icon  default       : --context-foreground-icon-surface-icon-surface-disabled
- *    icon  hover         : --context-foreground-icon-neutral-icon-neutral
- *    close hover         : --context-foreground-icon-neutral-icon-neutral-hover
- *    icon  selected      : --context-foreground-icon-surface-icon-surface
- *    icon  disabled      : --border-border-surface-border-surface-disabled
+ *    label default/hover : --on-surface
+ *    label selected      : --on-surface-white
+ *    label disabled      : --on-surface-disabled
+ *    count default/hover : --on-surface-hint-muted
+ *    count selected      : --on-surface-white
+ *    icon  default       : --icon-surface-disabled
+ *    icon  hover         : --icon-neutral
+ *    close hover         : --icon-neutral-hover
+ *    icon  selected      : --icon-surface
+ *    icon  disabled      : --border-surface-disabled
  * =============================================================== */
 
 /* -----------------------------------------------------------------
@@ -41,7 +41,7 @@
 }
 
 .root:focus-visible {
-  outline: 2px solid var(--context-foreground-primary-on-primary);
+  outline: 2px solid var(--on-primary);
   outline-offset: -2px;
 }
 
@@ -121,25 +121,25 @@
  *  State: default
  * ----------------------------------------------------------------- */
 .state-default {
-  background: var(--context-background-surface-bg-surface-base);
-  box-shadow: inset -1px 0 0 var(--border-border-surface-border-surface-secondary);
+  background: var(--bg-surface-base);
+  box-shadow: inset -1px 0 0 var(--border-surface-secondary);
 }
 
 .state-default .label {
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
 }
 
 .state-default .count {
-  color: var(--context-foreground-surface-on-surface-hint-muted);
+  color: var(--on-surface-hint-muted);
 }
 
 .state-default .leadingIcon,
 .state-default .iconCenter {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
 }
 
 .state-default .closeBtn {
-  color: var(--context-foreground-icon-surface-icon-surface-disabled);
+  color: var(--icon-surface-disabled);
 }
 
 /* -----------------------------------------------------------------
@@ -147,72 +147,72 @@
  * ----------------------------------------------------------------- */
 .state-hover,
 .state-default:not([disabled]):hover {
-  background: var(--context-background-surface-bg-surface-base-hover);
-  box-shadow: inset -1px 0 0 var(--border-border-surface-border-surface-secondary);
+  background: var(--bg-surface-base-hover);
+  box-shadow: inset -1px 0 0 var(--border-surface-secondary);
 }
 
 .state-hover .label,
 .state-default:not([disabled]):hover .label {
-  color: var(--context-foreground-surface-on-surface);
+  color: var(--on-surface);
 }
 
 .state-hover .count,
 .state-default:not([disabled]):hover .count {
-  color: var(--context-foreground-surface-on-surface-hint-muted);
+  color: var(--on-surface-hint-muted);
 }
 
 .state-hover .leadingIcon,
 .state-hover .iconCenter,
 .state-default:not([disabled]):hover .leadingIcon,
 .state-default:not([disabled]):hover .iconCenter {
-  color: var(--context-foreground-icon-neutral-icon-neutral);
+  color: var(--icon-neutral);
 }
 
 .state-hover .closeBtn,
 .state-default:not([disabled]):hover .closeBtn {
-  color: var(--context-foreground-icon-neutral-icon-neutral-hover);
+  color: var(--icon-neutral-hover);
 }
 
 /* -----------------------------------------------------------------
  *  State: selected — 어두운 bg + 흰 텍스트/아이콘, border 없음
  * ----------------------------------------------------------------- */
 .state-selected {
-  background: var(--context-background-gray-bg-darkgray);
+  background: var(--bg-darkgray);
 }
 
 .state-selected .label,
 .state-selected .count {
-  color: var(--context-foreground-surface-on-suface-white);
+  color: var(--on-surface-white);
 }
 
 .state-selected .leadingIcon,
 .state-selected .iconCenter,
 .state-selected .closeBtn {
-  color: var(--context-foreground-icon-surface-icon-surface);
+  color: var(--icon-surface);
 }
 
 /* -----------------------------------------------------------------
  *  State: disabled
  * ----------------------------------------------------------------- */
 .state-disabled {
-  background: var(--context-background-neutral-bg-neutral);
-  box-shadow: inset -1px 0 0 var(--border-border-surface-border-surface-secondary);
+  background: var(--bg-neutral);
+  box-shadow: inset -1px 0 0 var(--border-surface-secondary);
 }
 
 .state-disabled .label,
 .state-disabled .count {
-  color: var(--context-foreground-surface-on-surface-disabled);
+  color: var(--on-surface-disabled);
 }
 
 .state-disabled .leadingIcon,
 .state-disabled .iconCenter,
 .state-disabled .closeBtn {
-  color: var(--border-border-surface-border-surface-disabled);
+  color: var(--border-surface-disabled);
 }
 
 /* -----------------------------------------------------------------
  *  Tab2List (그룹 컨테이너) — Figma node 6565:223085
- *    border: 1px solid --border-neutral-border-neutral
+ *    border: 1px solid --border-neutral
  *    border-radius: 6px
  *    overflow: hidden  (첫/마지막 탭 모서리 클리핑)
  * ----------------------------------------------------------------- */
@@ -221,7 +221,7 @@
   align-items: stretch;
   height: 32px;
   box-sizing: border-box;
-  border: 1px solid var(--border-neutral-border-neutral, #D7D8DC);
+  border: 1px solid var(--border-neutral, #D7D8DC);
   border-radius: var(--radius-md, 6px);
   overflow: hidden;
 }

@@ -31,7 +31,7 @@ const cellStyle: CSSProperties = {
 };
 const captionStyle: CSSProperties = {
   fontSize: 12,
-  color: "var(--context-foreground-surface-on-surface-sub)",
+  color: "var(--on-surface-sub)",
 };
 
 const SIZES: Array<{ key: LoaderSize; label: string; px: number }> = [
@@ -68,7 +68,7 @@ export const FullPageOverlay: Story = {
           height: 520,
           borderRadius: 12,
           overflow: "hidden",
-          border: "1px solid var(--border-border-surface-border-surface-secondary)",
+          border: "1px solid var(--border-surface-secondary)",
         }}
       >
         <PageLoaderOverlay container="parent" />
@@ -120,7 +120,7 @@ export const Matrix: Story = {
                 padding: 16,
                 borderRadius: 12,
                 background:
-                  bg ?? "var(--context-background-surface-bg-surface-base)",
+                  bg ?? "var(--bg-surface-base)",
               }}
             >
               <Loader size="large" color={key} />

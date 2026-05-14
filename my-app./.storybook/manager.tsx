@@ -1,11 +1,12 @@
 import React from "react";
 import { addons, types, useGlobals } from "storybook/manager-api";
 
-/** 상단 툴바: 한국어 / English 언어 전환
- *   storybook globals.locale 값(ko / en)을 갱신.
- *   각 story 의 render 함수가 ctx.globals.locale 으로 언어를 읽어 분기.
+/** 상단 툴바
+ *   - 한국어 / English 언어 전환 → globals.locale (ko/en)
+ *   - 라이트 / 다크 테마 전환    → globals.theme (light/dark, html[data-theme])
  */
-const ADDON_ID = "ds-locale-toggle";
+const LOCALE_ADDON_ID = "ds-locale-toggle";
+const THEME_ADDON_ID  = "ds-theme-toggle";
 
 const wrapStyle: React.CSSProperties = {
   display: "flex",
@@ -58,12 +59,51 @@ function LocaleToggle() {
   );
 }
 
-addons.register(ADDON_ID, () => {
-  addons.add(`${ADDON_ID}/tool`, {
+function ThemeLightDarkToggle() {
+  const [{ theme }, updateGlobals] = useGlobals();
+  const resolved: "light" | "dark" = theme === "dark" ? "dark" : "light";
+
+  return (
+    <div style={wrapStyle} title="html data-theme (라이트 / 다크)">
+      <button
+        type="button"
+        style={{
+          ...segment(resolved === "light"),
+          borderRight: "1px solid rgba(0, 0, 0, 0.12)",
+        }}
+        aria-pressed={resolved === "light"}
+        onClick={() => updateGlobals({ theme: "light" })}
+      >
+        라이트
+      </button>
+      <button
+        type="button"
+        style={segment(resolved === "dark")}
+        aria-pressed={resolved === "dark"}
+        onClick={() => updateGlobals({ theme: "dark" })}
+      >
+        다크
+      </button>
+    </div>
+  );
+}
+
+addons.register(LOCALE_ADDON_ID, () => {
+  addons.add(`${LOCALE_ADDON_ID}/tool`, {
     title: "언어",
     type: types.TOOL,
     match: ({ viewMode, tabId }) =>
       Boolean(viewMode?.match(/^(story|docs)$/)) && !tabId,
     render: LocaleToggle,
+  });
+});
+
+addons.register(THEME_ADDON_ID, () => {
+  addons.add(`${THEME_ADDON_ID}/tool`, {
+    title: "테마",
+    type: types.TOOL,
+    match: ({ viewMode, tabId }) =>
+      Boolean(viewMode?.match(/^(story|docs)$/)) && !tabId,
+    render: ThemeLightDarkToggle,
   });
 });

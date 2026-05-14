@@ -46,6 +46,7 @@ const preview: Preview = {
           "Input",
           "Form",
           "Empty",
+          "Step",
           "Table",
           "Title",
           "PlaybookControlBar",

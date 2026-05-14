@@ -2,11 +2,11 @@
  * GridHeader — Data Grid/Header (Figma node 4456:290401)
  * -----------------------------------------------------------------------------
  * Tokens (variable_defs 실측)
- *   - bg         : --context-background-surface-bg-surface-secondary (#f4f4f5)
- *   - border     : --border-border-surface-border-surface (#d7d8dc)
- *   - text       : --context-foreground-surface-on-surface (#565967)
- *   - icon       : --context-foreground-icon-surface-icon-surface (#565967)
- *   - icon-hint  : --context-foreground-icon-surface-icon-surface-teriary (#787a88)
+ *   - bg         : --bg-surface-secondary (#f4f4f5)
+ *   - border     : --border-surface (#d7d8dc)
+ *   - text       : --on-surface (#565967)
+ *   - icon       : --icon-surface (#565967)
+ *   - icon-hint  : --icon-surface-tertiary (#787a88)
  *   - font       : Body/Md Semibold (13/20, letter-spacing -0.4% → -0.052px)
  *   - padding    : px = --spacing-md (12) / gap = --spacing-xs (6)
  *   - cell size  : single 32 / double 64
@@ -16,10 +16,10 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  background: var(--context-background-surface-bg-surface-secondary, #f4f4f5);
+  background: var(--bg-surface-secondary, #f4f4f5);
   border-bottom: var(--border-width-xs, 1px) solid
-    var(--border-border-surface-border-surface, #d7d8dc);
-  color: var(--context-foreground-surface-on-surface, #565967);
+    var(--border-surface, #d7d8dc);
+  color: var(--on-surface, #565967);
   font-family: var(--font-family-korean);
   font-size: var(--font-size-body-md, 13px);
   line-height: var(--font-line-height-sm, 20px);
@@ -115,9 +115,9 @@
   mask-size: contain;
 }
 
-/* Title 안 InfoFill 은 neutral teriary 톤 */
+/* Title 안 InfoFill 은 neutral tertiary 톤 */
 .title .icon {
-  color: var(--context-foreground-icon-neutral-icon-neutral-teriary, #b3b4bc);
+  color: var(--icon-neutral-tertiary, #b3b4bc);
 }
 
 /* ---------------------------------------------------------------------------
@@ -134,7 +134,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--context-foreground-icon-surface-icon-surface-teriary, #787a88);
+  color: var(--icon-surface-tertiary, #787a88);
 }
 
 /* ---------------------------------------------------------------------------
@@ -144,7 +144,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 .chevronWrap[data-mirror="true"] {
   transform: scaleX(-1);
@@ -157,8 +157,8 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: var(--context-background-surface-bg-surface-base, #ffffff);
-  border: 1px solid var(--border-border-surface-border-surface, #d7d8dc);
+  background: var(--bg-surface-base, #ffffff);
+  border: 1px solid var(--border-surface, #d7d8dc);
   border-radius: 4px;
 }
 
@@ -166,7 +166,7 @@
   display: inline-block;
   width: 36px;
   height: 20px;
-  background: var(--context-background-surface-bg-surface-quarernary, #d7d8dc);
+  background: var(--bg-surface-quarernary, #d7d8dc);
   border-radius: 999px;
   position: relative;
 }
@@ -178,7 +178,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--context-background-surface-bg-surface-base, #ffffff);
+  background: var(--bg-surface-base, #ffffff);
 }
 
 /* ---------------------------------------------------------------------------
@@ -189,7 +189,7 @@
 .pipe {
   flex-shrink: 0;
   width: 1px;
-  background: var(--border-border-surface-border-surface, #d7d8dc);
+  background: var(--border-surface, #d7d8dc);
   display: inline-block;
 }
 .root[data-size="single"] .pipe {

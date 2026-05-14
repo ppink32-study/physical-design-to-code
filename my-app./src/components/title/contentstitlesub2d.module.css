@@ -5,8 +5,8 @@
  *
  * Tokens
  *   - title    : Body/Base_SemiB (14/20 semibold) on-surface-base
- *   - bullet   : 4×4 circle, --accent-red-accent-red (#ff312e)
- *   - badge    : bg --context-background-tint-bg-purple-tint / text accent-purple
+ *   - bullet   : 4×4 circle, --accent-red (#ff312e)
+ *   - badge    : bg --bg-purple-tint / text accent-purple
  *                (20h, min-w 32, pl=4 pr=6, radius-full, inner wrapper pl=2)
  *   - addBtn   : 24×24 버튼, AddFill 16, icon-surface
  *   - height   : 32px
@@ -56,7 +56,7 @@
   font-size: var(--font-size-body-base, 14px);
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-sm, 20px);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
   white-space: nowrap;
   letter-spacing: 0;
 }
@@ -65,7 +65,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--accent-red-accent-red, #ff312e);
+  background: var(--accent-red, #ff312e);
   flex-shrink: 0;
   align-self: flex-start;
   margin-top: 4px;
@@ -82,7 +82,7 @@
   min-width: 32px;
   padding: 0 var(--spacing-xs, 6px) 0 var(--spacing-2xs, 4px);
   border-radius: var(--radius-full, 1000px);
-  background: var(--context-background-tint-bg-purple-tint, #f6ebff);
+  background: var(--bg-purple-tint, #f6ebff);
   flex-shrink: 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -97,7 +97,7 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: var(--font-line-height-xs, 16px);
   letter-spacing: -0.06px;
-  color: var(--accent-purple-accent-purple, #971eff);
+  color: var(--accent-purple, #971eff);
   white-space: nowrap;
 }
 
@@ -116,10 +116,10 @@
   border-radius: var(--radius-sm, 4px);
   cursor: pointer;
   flex-shrink: 0;
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 .addBtn:hover {
-  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+  background: var(--bg-surface-base-hover, #ececee);
 }
 
 /* ---------------------------------------------------------------------------

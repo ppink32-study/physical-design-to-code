@@ -79,7 +79,7 @@ const sectionTitleStyle: CSSProperties = {
   fontWeight: 600,
   marginTop: 32,
   marginBottom: 12,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 const Section = ({ title, children }: { title: string; children: ReactNode }) => (
@@ -187,7 +187,7 @@ function TabLevel1MatrixTable() {
                   <span
                     style={{
                       fontSize: 12,
-                      color: "var(--context-foreground-surface-on-surface-secondary)",
+                      color: "var(--on-surface-secondary)",
                     }}
                   >
                     —
@@ -498,7 +498,7 @@ function VerticalGroupingMatrixBlock({
           fontSize: 12,
           fontWeight: 600,
           marginBottom: 8,
-          color: "var(--context-foreground-surface-on-surface-secondary)",
+          color: "var(--on-surface-secondary)",
         }}
       >
         {title}

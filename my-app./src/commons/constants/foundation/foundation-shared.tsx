@@ -54,7 +54,7 @@ export function DownloadButton({ fileName, css }: { fileName: string; css: strin
 
 export const PAGE_STYLE: CSSProperties = {
   fontFamily: "var(--font-family-korean)",
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 export const SECTION_STYLE: CSSProperties = {
@@ -65,7 +65,7 @@ export const SECTION_TITLE_STYLE: CSSProperties = {
   fontSize: "var(--font-size-heading-h4)",
   fontWeight: 700,
   marginBottom: "1rem",
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 export function FoundationSection({
@@ -86,7 +86,7 @@ export function FoundationSection({
             margin: "0 0 1rem",
             fontSize: 13,
             lineHeight: 1.6,
-            color: "var(--context-foreground-surface-on-surface)",
+            color: "var(--on-surface)",
           }}
         >
           {description}

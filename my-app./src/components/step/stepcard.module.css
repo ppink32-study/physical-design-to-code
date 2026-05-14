@@ -1,191 +1,162 @@
 /* =============================================================================
- * StepCard — Figma 16861:17888
+ * StepCard — Figma node 16861:17888
  * -----------------------------------------------------------------------------
- * 세로 step 목록의 한 행. StepItem(좌측 Num+선) + 카드(우측 정보).
- *
- * Layout
- *   root   : flex row, gap spacing-md(12px), align-items stretch
- *   card   : flex 1, white bg, 1px border-neutral-secondary, radius-xl(12px),
- *            padding-y 12px, overflow hidden
- *   header : flex row, padding-x spacing-xl(20px), align-items center
- *
- * Typography
- *   title       : body-base(14px) / semibold / line-height-sm(20px)
- *   description : body-md(13px) / regular / line-height-sm(20px) / tracking -0.4px
- *   infoLabel   : body-sm(12px) / semibold / line-height-xs(16px) / tracking -0.06px
- *   infoValue   : body-sm(12px) / medium / line-height-xs(16px) / tracking -0.06px
- *   metaText    : body-sm(12px) / medium / line-height-xs(16px) / tracking -0.06px
- *
- * Icons (mask-image, 12×12)
- *   Calendar.svg, Clock.svg — color: on-surface-hint
+ * 좌측 StepItem (Num + 세로선) + 우측 Data Pipeline Card.
+ * 카드 내부: Title/Description + Info (Person · Date · Time) + 우측 Badge.
  * ========================================================================== */
 
-/* Root row */
 .root {
+  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
+  gap: var(--spacing-md); /* 12 */
   align-items: stretch;
-  gap: var(--spacing-md, 12px);
   width: 100%;
-  font-family: var(--font-family-korean, "Pretendard", sans-serif);
 }
 
-/* StepCard 목록 래퍼 — 카드 간 간격 spacing-md(12px) */
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md, 12px);
+.indicatorWrap {
+  display: inline-flex;
+  flex-shrink: 0;
 }
 
-/* StepItem 높이 오버라이드 — 카드 높이에 맞춰 stretch */
-.stepItemStretch {
+/* StepCard 에서는 StepItem 의 높이가 카드 높이만큼 늘어남 */
+.indicatorWrap > * {
   height: auto;
   align-self: stretch;
+  min-height: 100%;
 }
 
-/* ── Card ───────────────────────────────────────────────────────────────── */
+/* ---------------------------------------------------------------------------
+ * Data Pipeline Card
+ * ------------------------------------------------------------------------- */
 .card {
   flex: 1 0 0;
   min-width: 0;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  background: var(--context-background-surface-bg-surface-white, #ffffff);
-  border: 1px solid var(--border-neutral-border-neutral-secondary);
-  border-radius: var(--radius-xl, 12px);
-  padding: 12px 0;
+  align-items: stretch;
+  justify-content: center;
   overflow: hidden;
-  box-sizing: border-box;
+  padding: var(--spacing-md) 0; /* 12 0 */
+  background: var(--bg-surface-base);
+  border: var(--border-width-xs, 1px) solid var(--border-surface-secondary);
+  border-radius: var(--radius-xl); /* 12 */
 }
 
-/* ── Header row ─────────────────────────────────────────────────────────── */
 .header {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  padding: 0 var(--spacing-xl, 20px);
   width: 100%;
-  box-sizing: border-box;
+  padding: 0 var(--spacing-xl); /* 0 20 */
+  gap: var(--spacing-md); /* 12 */
 }
 
-/* ── 좌측 콘텐츠 (제목 + 메타) ─────────────────────────────────────────── */
-.content {
-  flex: 1 0 0;
-  min-width: 0;
+.headerBody {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  flex: 1 0 0;
+  min-width: 0;
+  gap: var(--spacing-sm); /* 8 */
   justify-content: center;
 }
 
-/* 제목 그룹 */
+/* ---- Title + Description ---- */
 .titleGroup {
   display: flex;
   flex-direction: column;
   width: 100%;
+  line-height: var(--font-line-height-sm); /* 20 */
 }
 
 .title {
-  font-size: var(--font-size-body-base, 14px);
-  font-weight: var(--font-weight-semibold, 600);
-  line-height: var(--font-line-height-sm, 20px);
-  color: var(--context-foreground-neutral-on-neutral-base);
+  margin: 0;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-body-base); /* 14 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  color: var(--on-surface-base);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .description {
-  font-size: var(--font-size-body-md, 13px);
-  font-weight: var(--font-weight-regular, 400);
-  line-height: var(--font-line-height-sm, 20px);
-  letter-spacing: -0.4px;
-  color: var(--context-foreground-surface-on-surface);
+  margin: 0;
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body-md); /* 13 */
+  line-height: var(--font-line-height-sm); /* 20 */
+  color: var(--on-surface);
+  letter-spacing: -0.052px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* 메타 정보 행 */
-.infoRow {
+/* ---- Info row ---- */
+.info {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: var(--spacing-lg, 16px);
-  width: 100%;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg); /* 16 */
+  font-size: var(--font-size-body-sm); /* 12 */
+  line-height: var(--font-line-height-xs); /* 16 */
 }
 
-/* Owner / ID */
-.personGroup {
-  display: flex;
-  flex-direction: row;
+.person {
+  display: inline-flex;
   align-items: center;
-  gap: var(--spacing-sm, 8px);
-  flex-shrink: 0;
-}
-
-.infoItem {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-2xs, 4px);
-}
-
-.infoLabel {
-  font-size: var(--font-size-body-sm, 12px);
-  font-weight: var(--font-weight-semibold, 600);
-  line-height: var(--font-line-height-xs, 16px);
+  gap: var(--spacing-sm); /* 8 */
   letter-spacing: -0.06px;
-  color: var(--context-foreground-surface-on-surface);
   white-space: nowrap;
 }
 
-.infoValue {
-  font-size: var(--font-size-body-sm, 12px);
-  font-weight: var(--font-weight-medium, 500);
-  line-height: var(--font-line-height-xs, 16px);
-  letter-spacing: -0.06px;
-  color: var(--context-foreground-surface-on-surface-hint);
-  white-space: nowrap;
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  font-family: var(--font-family-korean);
 }
 
-/* Date / Time */
-.metaItem {
-  display: flex;
-  flex-direction: row;
+.fieldLabel {
+  font-weight: var(--font-weight-semibold);
+  color: var(--on-surface);
+}
+
+.fieldValue {
+  font-weight: var(--font-weight-medium);
+  color: var(--on-surface-hint);
+}
+
+.meta {
+  display: inline-flex;
   align-items: center;
-  gap: var(--spacing-3xs, 2px);
-  flex-shrink: 0;
+  gap: var(--spacing-3xs); /* 2 */
+  font-family: var(--font-family-korean);
+  font-weight: var(--font-weight-medium);
+  color: var(--on-surface-hint);
+  letter-spacing: -0.06px;
+  white-space: nowrap;
 }
 
 .metaIcon {
-  display: block;
+  display: inline-block;
   width: 12px;
   height: 12px;
-  flex-shrink: 0;
-  background: currentColor;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  background-color: currentColor;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
-  color: var(--context-foreground-surface-on-surface-hint);
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 
-.metaText {
-  font-size: var(--font-size-body-sm, 12px);
-  font-weight: var(--font-weight-medium, 500);
-  line-height: var(--font-line-height-xs, 16px);
-  letter-spacing: -0.06px;
-  color: var(--context-foreground-surface-on-surface-hint);
-  white-space: nowrap;
-}
-
-/* ── 우측: 상태 배지 ────────────────────────────────────────────────────── */
+/* ---- Badge slot ---- */
 .badgeWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   flex-shrink: 0;
-  width: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 72px;
 }

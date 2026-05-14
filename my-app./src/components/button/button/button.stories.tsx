@@ -92,6 +92,7 @@ const meta: Meta<typeof Button> = {
         "secondary-outline-white-invert",
         "secondary-outline-dark-invert",
         "secondary-ghost",
+        "white",
         "gray",
       ] satisfies ButtonVariant[],
     },
@@ -160,7 +161,7 @@ type ColumnDef = {
   key: ButtonVariant;
   label: string;
   /** Figma 에서 컬럼 자체에 깔린 배경(Dark / White Invert) */
-  bg?: "dark" | "lightPink";
+  bg?: "dark" | "lightPink" | "softGray";
 };
 
 const SQUARE_COLUMNS: ColumnDef[] = [
@@ -173,6 +174,7 @@ const SQUARE_COLUMNS: ColumnDef[] = [
   { key: "secondary-outline-white-invert", label: "Sec Outline · White Invert", bg: "lightPink" },
   { key: "primary-ghost", label: "Primary Ghost" },
   { key: "secondary-ghost", label: "Secondary Ghost" },
+  { key: "white", label: "White button", bg: "softGray" },
   { key: "gray", label: "Gray button" },
 ];
 
@@ -199,8 +201,11 @@ const SIZE_GROUPS: Array<{ key: ButtonSize; label: string }> = [
 ];
 
 const COLUMN_BG: Record<NonNullable<ColumnDef["bg"]>, string> = {
-  dark: "var(--context-background-gray-bg-darkgray-hover, #26282E)",
+  dark: "var(--bg-darkgray-hover, #26282E)",
   lightPink: "#FBEEEF",
+  // White button 은 bg-surface-base(#FFFFFF) 위에 놓이므로 페이지에 묻힘.
+  // 매트릭스 가시성 확보용으로 옅은 회색 띠를 적용.
+  softGray: "#F4F4F5",
 };
 
 const matrixScrollStyle: CSSProperties = {
@@ -212,13 +217,13 @@ const sectionTitleStyle: CSSProperties = {
   fontSize: 15,
   fontWeight: 700,
   letterSpacing: "-0.02em",
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
   marginBottom: 8,
 };
 
 const sectionDescStyle: CSSProperties = {
   fontSize: 14,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   margin: "0 0 20px",
   lineHeight: 1.65,
 };
@@ -227,7 +232,7 @@ const columnHeaderStyle: CSSProperties = {
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: 0.4,
-  color: "var(--context-foreground-surface-on-surface-secondary)",
+  color: "var(--on-surface-secondary)",
   padding: "10px 12px",
   whiteSpace: "nowrap",
   textAlign: "left",
@@ -238,7 +243,7 @@ const matrixRowLabelColumnPadding = "10px 24px 10px 16px";
 
 const rowLabelStyle: CSSProperties = {
   fontSize: 11,
-  color: "var(--context-foreground-surface-on-surface-hint)",
+  color: "var(--on-surface-hint)",
   padding: matrixRowLabelColumnPadding,
   whiteSpace: "nowrap",
   fontFamily: "ui-monospace, SFMono-Regular, monospace",
@@ -247,11 +252,11 @@ const rowLabelStyle: CSSProperties = {
 const sizeBandStyle: CSSProperties = {
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
   padding: "12px 16px",
-  background: "var(--context-background-neutral-bg-neutral-secondary, #F4F4F5)",
-  borderTop: "1px solid var(--border-border-surface-border-surface-secondary)",
-  borderBottom: "1px solid var(--border-border-surface-border-surface-secondary)",
+  background: "var(--bg-neutral-secondary, #F4F4F5)",
+  borderTop: "1px solid var(--border-surface-secondary)",
+  borderBottom: "1px solid var(--border-surface-secondary)",
   whiteSpace: "nowrap",
 };
 
@@ -358,7 +363,7 @@ function SizeBlock({
                 .map((c) => `${getColWidth(c)}px`)
                 .join(" ")}`,
               alignItems: "center",
-              borderTop: "1px solid var(--border-border-surface-border-surface-secondary)",
+              borderTop: "1px solid var(--border-surface-secondary)",
             }}
           >
             <div style={rowLabelStyle}>
@@ -388,7 +393,7 @@ function MatrixHeader({ columns }: { columns: ColumnDef[] }) {
         gridTemplateColumns: `${ROW_LABEL_WIDTH}px ${columns
           .map((c) => `${getColWidth(c)}px`)
           .join(" ")}`,
-        background: "var(--context-background-surface-bg-surface-base)",
+        background: "var(--bg-surface-base)",
       }}
     >
       <div style={{ ...columnHeaderStyle, padding: matrixRowLabelColumnPadding }}>
@@ -438,7 +443,7 @@ function MatrixSection({
                   minWidth: getTotalWidth(columns),
                   borderTop:
                     idx === 0
-                      ? "1px solid var(--border-border-surface-border-surface-secondary)"
+                      ? "1px solid var(--border-surface-secondary)"
                       : sizeBandStyle.borderTop,
                 }}
               >
@@ -529,7 +534,7 @@ const buttonsCardLabelStyle: CSSProperties = {
   fontSize: 15,
   fontWeight: 700,
   letterSpacing: "-0.02em",
-  color: "var(--context-foreground-surface-on-surface-base)",
+  color: "var(--on-surface-base)",
 };
 
 

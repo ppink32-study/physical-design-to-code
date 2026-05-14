@@ -5,10 +5,10 @@
  *
  * Tokens
  *   - title        : Heading/H6 (16/22 semibold) on-surface-base
- *   - required dot : 4×4 circle, --accent-red-accent-red (#ff312e)
- *   - info icon    : 16×16 icon-surface-teriary
- *   - count badge  : bg --context-background-tint-bg-purple-tint (#f6ebff)
- *                    text --accent-purple-accent-purple
+ *   - required dot : 4×4 circle, --accent-red (#ff312e)
+ *   - info icon    : 16×16 icon-surface-tertiary
+ *   - count badge  : bg --bg-purple-tint (#f6ebff)
+ *                    text --accent-purple
  *                    body/sm-medium (12/16 -0.5), h=20 pl=4 pr=6 radius full
  *   - accordion    : 24×24 버튼, chevron 16×16 icon-surface
  *   - text button  : border-surface 1px, h=24 minw=44 px=7 py=1, radius 4
@@ -63,7 +63,7 @@
   font-size: var(--font-size-heading-h6, 16px);
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-md, 22px);
-  color: var(--context-foreground-surface-on-surface-base, #141518);
+  color: var(--on-surface-base, #141518);
   white-space: nowrap;
   letter-spacing: 0;
 }
@@ -72,7 +72,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--accent-red-accent-red, #ff312e);
+  background: var(--accent-red, #ff312e);
   flex-shrink: 0;
   align-self: flex-start;
   margin-top: 4px;
@@ -91,7 +91,7 @@
   min-width: 32px;
   padding: 0 var(--spacing-xs, 6px) 0 var(--spacing-2xs, 4px);
   border-radius: var(--radius-full, 1000px);
-  background: var(--context-background-tint-bg-purple-tint, #f6ebff);
+  background: var(--bg-purple-tint, #f6ebff);
   flex-shrink: 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -106,7 +106,7 @@
   font-weight: var(--font-weight-medium, 500);
   line-height: var(--font-line-height-xs, 16px);
   letter-spacing: -0.06px;
-  color: var(--accent-purple-accent-purple, #971eff);
+  color: var(--accent-purple, #971eff);
   white-space: nowrap;
 }
 
@@ -125,10 +125,10 @@
   border-radius: var(--radius-sm, 4px);
   cursor: pointer;
   flex-shrink: 0;
-  color: var(--context-foreground-icon-surface-icon-surface, #565967);
+  color: var(--icon-surface, #565967);
 }
 .accordionBtn:hover {
-  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+  background: var(--bg-surface-base-hover, #ececee);
 }
 
 /* ---------------------------------------------------------------------------
@@ -143,7 +143,7 @@
   min-width: 44px;
   padding: 1px var(--spacing-xs, 7px);
   border: var(--border-width-xs, 1px) solid
-    var(--border-border-surface-border-surface, #d7d8dc);
+    var(--border-surface, #d7d8dc);
   border-radius: var(--radius-sm, 4px);
   background: transparent;
   cursor: pointer;
@@ -151,7 +151,7 @@
   overflow: hidden;
 }
 .textBtn:hover {
-  background: var(--context-background-surface-bg-surface-base-hover, #ececee);
+  background: var(--bg-surface-base-hover, #ececee);
 }
 
 .textBtnInner {
@@ -163,7 +163,7 @@
   font-weight: var(--font-weight-semibold, 600);
   line-height: var(--font-line-height-xs, 16px);
   letter-spacing: -0.06px;
-  color: var(--context-foreground-surface-on-surface, #565967);
+  color: var(--on-surface, #565967);
   white-space: nowrap;
 }
 
@@ -188,7 +188,7 @@
   mask-size: contain;
 }
 
-/* InfoFill 아이콘은 teriary 톤으로 */
+/* InfoFill 아이콘은 tertiary 톤으로 */
 .titleIcon .icon {
-  color: var(--context-foreground-icon-neutral-icon-neutral-teriary, #b3b4bc);
+  color: var(--icon-neutral-tertiary, #b3b4bc);
 }
