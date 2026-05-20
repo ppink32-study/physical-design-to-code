@@ -78,6 +78,7 @@ const meta: Meta<typeof BodyCell> = {
         "multi-normal",
         "multi-sub-text",
         "video",
+        "progress",
       ],
     },
     state: {
@@ -466,6 +467,64 @@ function BodyCellStateMatrixTable({
   );
 }
 
+/* -------------------------------------------------------------------------
+ * Progress — 별도 페이지 (Figma 5962:153132)
+ *   default / completed / draft / error
+ * ---------------------------------------------------------------------- */
+const PROGRESS_ROWS: Array<{
+  status: "default" | "completed" | "draft" | "error";
+  label: string;
+  value?: number;
+}> = [
+  { status: "default", label: "Default", value: 76.9 },
+  { status: "completed", label: "Completed" },
+  { status: "draft", label: "Draft" },
+  { status: "error", label: "Error", value: 8 },
+];
+
+export const Progress: Story = {
+  name: "Progress",
+  parameters: { layout: "padded" },
+  render: () => (
+    <StoryDocsMatrixPage
+      title="BodyCell · Progress"
+      description="진행률 graph(Progress 컴포넌트) + 상태 아이콘으로 구성한 progress 타입. default / completed / draft / error."
+      figmaNode="5962-153132"
+    >
+      <FigmaLinkCard
+        nodeId="5962-153132"
+        caption="Components / Table — Body cell (Progress)"
+      />
+      <section aria-labelledby="bodycell-progress">
+        <div style={{ display: "flex", flexDirection: "column", width: 468 }}>
+          {PROGRESS_ROWS.map((row, i) => (
+            <div key={row.status} style={{ display: "flex", alignItems: "center" }}>
+              <span
+                style={{
+                  width: 96,
+                  fontSize: 12,
+                  color: "var(--on-surface-secondary)",
+                  fontFamily: "var(--font-family-korean)",
+                  flexShrink: 0,
+                }}
+              >
+                {row.label}
+              </span>
+              <BodyCell
+                type="progress"
+                progressStatus={row.status}
+                progressValue={row.value}
+                lastCol
+                lastRow={i === PROGRESS_ROWS.length - 1}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    </StoryDocsMatrixPage>
+  ),
+};
+
 export const Playground: Story = {
   decorators: [
     (Story) => (
@@ -568,3 +627,4 @@ export const MatrixPhase5: Story = {
     );
   },
 };
+

@@ -281,6 +281,57 @@
 }
 
 /* ---------------------------------------------------------------------------
+ * Progress cell (Figma 5962:153132) — graph(Progress) + % 텍스트 / 상태 아이콘
+ * ------------------------------------------------------------------------- */
+.root[data-type="progress"] {
+  width: 468px;
+  padding: var(--spacing-2xs, 4px) 12px;
+}
+
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* graph 영역 — 가변 폭 */
+.progressBar {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+}
+.progressBar[data-status="completed"] {
+  opacity: 0.5;
+}
+
+/* 우측 고정 영역(40px) — % 텍스트 또는 상태 아이콘 */
+.progressEnd {
+  flex-shrink: 0;
+  width: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--icon-surface, #565967);
+}
+.progressEnd[data-status="completed"] {
+  color: var(--accent-green);
+  opacity: 0.5;
+}
+.progressEnd[data-status="error"] {
+  color: var(--accent-red);
+}
+
+.progressText {
+  font-size: var(--font-size-body-base, 14px);
+  line-height: var(--font-line-height-sm, 20px);
+  color: var(--on-surface, #565967);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
  * Link — LinkText 컴포넌트 레이아웃 오버라이드
  *   색상/hover/disabled 는 LinkText 컴포넌트가 처리
  * ------------------------------------------------------------------------- */

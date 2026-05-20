@@ -24,19 +24,22 @@
  *   showPerPage    : "N per page" 영역 표시 여부
  *   pageSizeOptions: [10,20,50,100] 등
  *   onPageSizeChange : (n) => void
- *   showGoTo       : "Go to" 레이블(박스 밖) + 테두리 입력 박스 안에 페이지 번호만(placeholder
- *                    "Page", hint 색). type=text, Enter 로 이동 — Figma 13286:33784
+ *   showGoTo       : "Page" 레이블(박스 밖) + 입력 박스(placeholder "Page", hint 색) +
+ *                    "Go" 버튼(secondary-ghost). Enter 또는 Go 클릭으로 이동 — Figma 5030:28833
  *   onGoToPage     : (n) => void   (미지정 시 onPageChange 호출)
  *   forceItemState : 스토리북 강제 상태 확인용. 모든 item 에 data-force-state 전파.
  */
 
 import type {
-  ChangeEvent,
   CSSProperties,
   KeyboardEvent,
 } from "react";
-import { forwardRef, useMemo, useState } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 
+import { Button } from "../button/button/button";
+import { Input } from "../Input/input";
+import { SelectItem } from "../select/selectitem";
+import { SelectList } from "../select/selectlist";
 import styles from "./pagination.module.css";
 
 /* ----------------------------------------------------------------
@@ -209,18 +212,39 @@ function PaginationInner(
 
   /* ---------------- Go-to input state ---------------- */
   const [goToValue, setGoToValue] = useState("");
-  const handleGoToKey = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter") return;
+  const submitGoTo = () => {
     const n = Number(goToValue);
     if (!Number.isFinite(n) || n <= 0) return;
     (onGoToPage ?? goto)(n);
     setGoToValue("");
   };
+  const handleGoToKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") submitGoTo();
+  };
 
-  /* ---------------- Per-page select ----------------- */
-  const handlePageSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    const n = Number(e.target.value);
+  /* ---------------- Per-page dropdown ---------------- */
+  const [perPageOpen, setPerPageOpen] = useState(false);
+  const perPageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!perPageOpen) return;
+    const onDown = (e: globalThis.MouseEvent) => {
+      if (perPageRef.current && !perPageRef.current.contains(e.target as Node)) {
+        setPerPageOpen(false);
+      }
+    };
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") setPerPageOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [perPageOpen]);
+  const selectPageSize = (n: number) => {
     onPageSizeChange?.(n);
+    setPerPageOpen(false);
   };
 
   /* ---------------- Item renderers ------------------- */
@@ -307,33 +331,57 @@ function PaginationInner(
 
       {showPerPage ? (
         <div className={styles.helper}>
-          <label className={styles.selectBox}>
-            <select
-              value={pageSize}
-              onChange={handlePageSize}
+          <div className={styles.perPageRoot} ref={perPageRef}>
+            <button
+              type="button"
+              className={styles.selectBox}
+              data-open={perPageOpen || undefined}
+              aria-haspopup="listbox"
+              aria-expanded={perPageOpen}
               aria-label="Items per page"
+              onClick={() => setPerPageOpen((o) => !o)}
             >
-              {pageSizeOptions.map((n) => (
-                <option key={n} value={n}>
-                  {n}
-                </option>
-              ))}
-            </select>
-            <span className={styles.selectChevron} aria-hidden="true" />
-          </label>
+              <span className={styles.selectValue}>{pageSize}</span>
+              <span
+                className={styles.selectChevron}
+                data-open={perPageOpen || undefined}
+                aria-hidden="true"
+              />
+            </button>
+
+            {perPageOpen ? (
+              /* 클릭 시 SelectList 가 trigger 위로 4px 간격으로 열림 (Figma 18867:6602) */
+              <div className={styles.perPagePopover}>
+                <SelectList width={120} aria-label="Items per page">
+                  {pageSizeOptions.map((n) => (
+                    <SelectItem
+                      key={n}
+                      size={size === "large" ? "large" : "medium"}
+                      selected={n === pageSize}
+                      onClick={() => selectPageSize(n)}
+                    >
+                      {n}
+                    </SelectItem>
+                  ))}
+                </SelectList>
+              </div>
+            ) : null}
+          </div>
           <span>Per page</span>
         </div>
       ) : null}
 
       {showGoTo ? (
         <div className={styles.goToSection}>
-          <span className={styles.goToLabel}>Go to</span>
-          <div className={styles.goToBox}>
-            <input
-              className={styles.goToInput}
+          <span className={styles.goToLabel}>Page</span>
+          <div className={styles.goToControls}>
+            <Input
+              size={size === "large" ? "large" : "medium"}
+              width={size === "large" ? 62 : 58}
               type="text"
               inputMode="numeric"
               autoComplete="off"
+              trailingIcon={false}
               value={goToValue}
               placeholder="Page"
               onChange={(e) => {
@@ -343,6 +391,15 @@ function PaginationInner(
               onKeyDown={handleGoToKey}
               aria-label="Go to page"
             />
+            <Button
+              variant="secondary-ghost"
+              size={size === "large" ? "large" : "medium"}
+              className={styles.goBtn}
+              onClick={submitGoTo}
+              aria-label="Go to page"
+            >
+              Go
+            </Button>
           </div>
         </div>
       ) : null}

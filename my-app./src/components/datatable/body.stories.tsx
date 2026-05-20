@@ -2,11 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
-  storyMatrixCellStyle,
-  storyMatrixColHeaderStyle,
-  storyMatrixTableBase,
-} from "@/stories/story-matrix-table-styles";
-import {
   StoryDocsMatrixPage,
 } from "@/stories/story-docs-shell";
 
@@ -24,7 +19,7 @@ const meta: Meta<typeof DataTableBody> = {
     docs: { disable: true },
   },
   argTypes: {
-    variant: { control: "inline-radio", options: ["text", "badge"] },
+    variant: { control: "inline-radio", options: ["text", "badge", "input", "textarea"] },
     children: { control: "text" },
     width: { control: "text" },
   },
@@ -73,24 +68,30 @@ export const Matrix: Story = {
         <h3 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600, fontFamily: "var(--font-family-korean)", color: "var(--on-surface-base)" }}>
           Body / Variant
         </h3>
-        <table style={{ ...storyMatrixTableBase, fontSize: 12 }}>
-          <thead>
-            <tr>
-              <th style={storyMatrixColHeaderStyle}>text</th>
-              <th style={storyMatrixColHeaderStyle}>badge</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle" }}>
-                <DataTableBody variant="text" width={405}>v1.0</DataTableBody>
-              </td>
-              <td style={{ ...storyMatrixCellStyle, padding: 16, verticalAlign: "middle" }}>
-                <DataTableBody variant="badge" width={405}>Badge</DataTableBody>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {[
+            { variant: "text" as const, node: <DataTableBody variant="text" width={405}>v1.0</DataTableBody> },
+            { variant: "badge" as const, node: <DataTableBody variant="badge" width={405}>Badge</DataTableBody> },
+            { variant: "input" as const, node: <DataTableBody variant="input" width={405} placeholder="Placeholder" /> },
+            { variant: "textarea" as const, node: <DataTableBody variant="textarea" width={405} placeholder="Text" /> },
+          ].map((row) => (
+            <div key={row.variant} style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
+              <span
+                style={{
+                  width: 80,
+                  flexShrink: 0,
+                  fontSize: 12,
+                  fontFamily: "var(--font-family-korean)",
+                  color: "var(--on-surface-secondary)",
+                  paddingTop: 10,
+                }}
+              >
+                {row.variant}
+              </span>
+              {row.node}
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* -------------------------------------------------------

@@ -88,6 +88,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto; /* flex 로 인한 sub-pixel 리사이즈 방지 */
   width: var(--pg-size, 32px);
   height: var(--pg-size, 32px);
   min-width: var(--pg-size, 32px);
@@ -98,18 +99,28 @@
     border-color 120ms ease;
   outline: none;
   position: relative;
-
-  /* separator : 오른쪽 1px (Figma border-r) */
-  border-right: 1px solid var(--border-surface-secondary);
 }
 
-.item:last-child {
-  border-right: 0;
+/* separator : 오른쪽 1px 오버레이 (Figma border-r).
+ * 레이아웃 border 대신 ::after 로 그려 item 콘텐츠 박스를 정확히 32/40 정사각형으로 유지한다. */
+.item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-surface-secondary);
+  pointer-events: none;
+}
+
+.item:last-child::after {
+  display: none;
 }
 
 /* selected 직전 아이템의 separator 제거 */
-.item:has(+ [data-selected="true"]) {
-  border-right: 0;
+.item:has(+ [data-selected="true"])::after {
+  display: none;
 }
 
 .item[data-icon="true"] {
@@ -137,8 +148,11 @@
    * 가려지고, 좌/우 1px 는 인접 separator 가 제거되어 깨끗하게 보인다. */
   box-shadow:
     inset 0 0 0 1px var(--bg-primary-secondary);
-  /* selected 자체의 separator 제거 (오른쪽) */
-  border-right: 0;
+}
+
+/* selected 자체의 separator 제거 (오른쪽) */
+.item[data-selected="true"]::after {
+  display: none;
 }
 
 /* --- Disabled ------------------------------------------------------------- */
@@ -194,9 +208,19 @@
   line-height: var(--font-line-height-sm);
 }
 
+/* Large : Per page 텍스트·셀렉트 = Body/Lg 16/24 (Figma 5030:28900) */
+.root[data-size="large"] .helper {
+  font-size: var(--font-size-body-lg);
+  line-height: var(--font-line-height-lg);
+}
+
+/* Select box — Figma 5030:5949(M) / 5030:28901(L)
+ *   M: h size-base-4xl(32), padding 0 spacing-md(12), gap spacing-2xs(4)
+ *   L: h size-base-6xl(40) (= --pg-size) */
 .selectBox {
   box-sizing: border-box;
-  display: inline-flex;
+  appearance: none;
+  display: flex;
   align-items: center;
   gap: var(--spacing-2xs); /* 4 */
   padding: var(--spacing-none) var(--spacing-md); /* 0 12 */
@@ -206,14 +230,71 @@
   border-radius: var(--radius-md);
   font: inherit;
   color: var(--on-surface-base);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
-/* Go to — Figma 13286:33784: 레이블은 박스 밖, 입력만 테두리 박스 + placeholder "Page" */
+/* 열림 / 포커스 — Select 트리거와 동일한 Primary Focus Ring */
+.selectBox[data-open],
+.selectBox:focus-visible {
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-focus-ring-primary);
+}
+
+/* 텍스트 영역 — Figma input: padding-right spacing-lg(16) 로 chevron 과 여유 확보.
+ * 세 자리수(예: 100)는 이 영역이 늘어나며 박스가 자연스럽게 가로로 길어진다. */
+.selectValue {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs); /* 4 */
+  padding-right: var(--spacing-lg, 16px);
+  white-space: nowrap;
+}
+
+/* Per page 드롭다운: 트리거 위로 4px 간격 (Figma 18867:6602 — 페이지 하단이라 위로 열림) */
+.perPageRoot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.perPagePopover {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  z-index: 20;
+}
+
+/* Go to — Figma 5030:28833: "Page" 레이블(박스 밖) + 입력 박스 + "Go" 버튼 */
 .goToSection {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-sm, 8px);
   color: var(--on-surface-base);
+}
+
+/* 입력 박스 + Go 버튼 묶음 (Figma gap = numUnit*1 = 4px) */
+.goToControls {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs, 4px);
+}
+
+/* Go 버튼: 표준 secondary-ghost 보다 컴팩트하게 좌우 패딩 축소.
+ * 높이·radius·gap·타이포·색은 Button size(M/L) 그대로.
+ *   M (Figma 18786:19774) : 6px  (spacing-xs)
+ *   L (Figma 18787:1968)  : 8px  (spacing-sm) */
+.goToControls .goBtn {
+  padding-left: var(--spacing-xs, 6px);
+  padding-right: var(--spacing-xs, 6px);
+}
+
+.root[data-size="large"] .goToControls .goBtn {
+  padding-left: var(--spacing-sm, 8px);
+  padding-right: var(--spacing-sm, 8px);
 }
 
 .goToLabel {
@@ -225,69 +306,17 @@
   color: var(--on-surface-base);
 }
 
-.goToBox {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  width: 58px;
-  height: var(--size-base-4xl); /* 32 */
-  padding: var(--spacing-none) var(--spacing-md); /* 0 12 */
-  gap: var(--spacing-2xs); /* 4 */
-  border-radius: var(--radius-md); /* 6 */
-  border: 1px solid var(--border-surface);
-  background: var(--bg-surface-base);
-  overflow: hidden;
-}
-
-.root[data-size="large"] .goToBox {
-  width: 62px;
-  height: var(--size-base-6xl); /* 40 */
+.root[data-size="large"] .goToLabel {
   font-size: var(--font-size-body-lg);
   line-height: var(--font-line-height-lg);
 }
 
-.goToInput {
-  box-sizing: border-box;
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  font: inherit;
-  font-size: var(--font-size-body-base);
-  line-height: var(--font-line-height-sm);
-  color: var(--on-surface-base);
-  text-align: start;
-  outline: none;
-}
-
-.root[data-size="large"] .goToInput {
-  font-size: var(--font-size-body-lg);
-  line-height: var(--font-line-height-lg);
-}
-
-.goToInput::placeholder {
-  color: var(--on-surface-hint);
-}
+/* Go-to 입력은 공용 Input 컴포넌트 사용 (size M/L · width 58/62) */
 
 .root[data-size="large"] .selectBox {
   --pg-size: 40px;
   font-size: var(--font-size-body-lg);
   line-height: var(--font-line-height-lg);
-}
-
-.selectBox select {
-  appearance: none;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  color: inherit;
-  font: inherit;
-  outline: none;
-  cursor: pointer;
 }
 
 .selectChevron {
@@ -299,4 +328,14 @@
   -webkit-mask: url(/icon/ChevronDown.svg) center / contain no-repeat;
   mask: url(/icon/ChevronDown.svg) center / contain no-repeat;
   pointer-events: none;
+  transition: transform 0.12s ease;
+}
+
+.root[data-size="large"] .selectChevron {
+  width: 20px;
+  height: 20px;
+}
+
+.selectChevron[data-open] {
+  transform: rotate(180deg);
 }

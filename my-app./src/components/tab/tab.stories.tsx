@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "../button/button/button";
 import { Tab, TabList } from "./tab";
+import { Tab2, Tab2List } from "./tab2";
 import { FigmaLinkCard } from "@/stories/figma-link-card";
 import {
   storyMatrixCellStyle,
@@ -15,6 +16,9 @@ import {
 } from "@/stories/story-matrix-table-styles";
 import {
   StoryDocsMatrixPage,
+  StoryDocsPage,
+  StoryDocsParagraph,
+  StoryDocsSection,
   StoryPlaygroundFrame,
 } from "@/stories/story-docs-shell";
 
@@ -551,6 +555,232 @@ function VerticalGroupingMatrixBlock({
     </>
   );
 }
+
+/* -------------------------------------------------------------------------
+ * Guideline 헬퍼 — 간격 측정 밴드 / contents 박스 / Edit 버튼
+ *   GapMarker: 밴드 높이 자체가 실제 간격(px) — Figma 핑크 점선 주석과 동일
+ * ---------------------------------------------------------------------- */
+function GapMarker({ size }: { size: number }) {
+  return (
+    <div
+      style={{
+        height: size,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "1px dashed #E5008D",
+        background: "rgba(229, 0, 141, 0.05)",
+        borderRadius: 2,
+        boxSizing: "border-box",
+      }}
+      aria-hidden
+    >
+      <span style={{ fontSize: 10, fontWeight: 600, color: "#E5008D", lineHeight: 1 }}>
+        {size}
+      </span>
+    </div>
+  );
+}
+
+function GuideIcon({ src, size = 16 }: { src: string; size?: number }) {
+  return (
+    <span
+      aria-hidden
+      style={{
+        display: "inline-block",
+        width: size,
+        height: size,
+        background: "currentColor",
+        WebkitMaskImage: `url(${src})`,
+        maskImage: `url(${src})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+      }}
+    />
+  );
+}
+
+function EditButton() {
+  return (
+    <Button
+      variant="secondary-outline"
+      size="medium"
+      leftIcon={<GuideIcon src="/icon/Pencil-Line.svg" size={16} />}
+    >
+      Edit
+    </Button>
+  );
+}
+
+const contentsBox: CSSProperties = {
+  height: 120,
+  borderRadius: 6,
+  background: "var(--bg-surface-secondary, #f5f5f6)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: 13,
+  color: "var(--on-surface-secondary)",
+};
+
+const guideFrame: CSSProperties = {
+  maxWidth: 720,
+};
+
+/* Tab Level 2 + 우측 Edit 버튼 한 줄 */
+function Level2Row({
+  selected,
+  onSelect,
+}: {
+  selected: string;
+  onSelect: (id: string) => void;
+}) {
+  const items = [
+    { id: "all", label: "All", count: "5" },
+    { id: "success", label: "Success", count: "5" },
+    { id: "failed", label: "Failed", count: "5" },
+  ];
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 12,
+      }}
+    >
+      <Tab2List>
+        {items.map((it) => (
+          <Tab2
+            key={it.id}
+            tabType="text"
+            count={it.count}
+            state={selected === it.id ? "selected" : "default"}
+            onClick={() => onSelect(it.id)}
+          >
+            {it.label}
+          </Tab2>
+        ))}
+      </Tab2List>
+      <EditButton />
+    </div>
+  );
+}
+
+/* Tab Level 1 — Episodes / Job Source */
+function Level1Row({
+  selected,
+  onSelect,
+}: {
+  selected: string;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <TabList orientation="horizontal" showBorder>
+      {["Episodes", "Job Source"].map((label) => (
+        <Tab key={label} selected={selected === label} onClick={() => onSelect(label)}>
+          {label}
+        </Tab>
+      ))}
+    </TabList>
+  );
+}
+
+/* 가이드 1 — Tab Level 1 (contents ↔ tab = 16px) */
+function GuideTabLevel1() {
+  const [sel, setSel] = useState("Episodes");
+  return (
+    <div style={guideFrame}>
+      <Level1Row selected={sel} onSelect={setSel} />
+      <GapMarker size={16} />
+      <div style={contentsBox}>contents</div>
+    </div>
+  );
+}
+
+/* 가이드 2 — Tab Level 2 (contents ↔ tab = 24px) */
+function GuideTabLevel2() {
+  const [sel, setSel] = useState("all");
+  return (
+    <div style={guideFrame}>
+      <Level2Row selected={sel} onSelect={setSel} />
+      <GapMarker size={24} />
+      <div style={contentsBox}>contents</div>
+    </div>
+  );
+}
+
+/* 가이드 3 — Tab Level 1 + 2 (1↔2 = 12px, contents ↔ tab = 24px) */
+function GuideTabLevel1and2() {
+  const [lv1, setLv1] = useState("Episodes");
+  const [lv2, setLv2] = useState("all");
+  return (
+    <div style={guideFrame}>
+      <Level1Row selected={lv1} onSelect={setLv1} />
+      <GapMarker size={12} />
+      <Level2Row selected={lv2} onSelect={setLv2} />
+      <GapMarker size={24} />
+      <div style={contentsBox}>contents</div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------
+ * Guideline — Tab Level 1 / 2 / 1+2 간격 가이드 (Figma 5995-34247)
+ * ---------------------------------------------------------------------- */
+export const Guideline: Story = {
+  name: "Guideline",
+  parameters: { layout: "padded" },
+  render: (_args, ctx) => {
+    const locale = ctx.globals && ctx.globals.locale === "en" ? "en" : "ko";
+    return (
+      <StoryDocsPage
+        eyebrow="Components"
+        title="Tabs"
+        description={locale === "en"
+          ? "Spacing rules for Tab Level 1, Level 2, and the Level 1 + 2 combination. The pink dashed band marks the actual gap (px) between the tab and the content below."
+          : "Tab Level 1 · Level 2 · Level 1+2 조합의 간격 규칙입니다. 핑크 점선 밴드의 높이가 탭과 하단 콘텐츠 사이의 실제 간격(px)을 나타냅니다."}
+      >
+        <StoryDocsSection
+          title="Tab Level 1"
+          description={locale === "en"
+            ? "Gap between the tab and the content below is 16px (--spacing-lg)."
+            : "탭과 하단 contents 사이 간격은 16px(--spacing-lg) 입니다."}
+        >
+          <GuideTabLevel1 />
+        </StoryDocsSection>
+
+        <StoryDocsSection
+          title="Tab Level 2"
+          description={locale === "en"
+            ? "Gap between the tab and the content below is 24px (--spacing-2xl)."
+            : "탭과 하단 contents 사이 간격은 24px(--spacing-2xl) 입니다."}
+        >
+          <GuideTabLevel2 />
+        </StoryDocsSection>
+
+        <StoryDocsSection
+          title="Tab Level 1 + 2"
+          description={locale === "en"
+            ? "Gap between Level 1 and Level 2 is 12px (--spacing-md); gap between Level 2 and the content below is 24px (--spacing-2xl)."
+            : "Tab 1 ↔ 2 사이 간격은 12px(--spacing-md), Level 2 ↔ 하단 contents 사이 간격은 24px(--spacing-2xl) 입니다."}
+        >
+          <GuideTabLevel1and2 />
+        </StoryDocsSection>
+
+        <StoryDocsParagraph>
+          {locale === "en"
+            ? "16px = --spacing-lg, 12px = --spacing-md, 24px = --spacing-2xl."
+            : "16px = --spacing-lg, 12px = --spacing-md, 24px = --spacing-2xl."}
+        </StoryDocsParagraph>
+      </StoryDocsPage>
+    );
+  },
+};
 
 export const Matrix: Story = {
   name: "Matrix",

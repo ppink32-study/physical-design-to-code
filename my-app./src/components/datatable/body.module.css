@@ -18,7 +18,7 @@
   width: 405px;
   height: 40px;
   padding-left: var(--spacing-md, 12px);
-  padding-right: var(--spacing-md, 12px);
+  padding-right: 13px;
   background: var(--bg-surface-base);
   border-right: 1px solid var(--border-surface-secondary);
   border-bottom: 1px solid var(--border-surface-secondary);
@@ -44,4 +44,18 @@
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+/* variant=input — 공용 Input 이 셀 폭을 채움 (Figma 18857:56773) */
+.root[data-variant="input"] {
+  overflow: visible;
+}
+
+/* variant=textarea — 높이 가변(TextArea 80px + py 8 = 88), 공용 TextArea (Figma 18857:56790) */
+.root[data-variant="textarea"] {
+  height: auto;
+  align-items: stretch;
+  padding-top: var(--spacing-2xs, 4px);
+  padding-bottom: var(--spacing-2xs, 4px);
+  overflow: visible;
 }

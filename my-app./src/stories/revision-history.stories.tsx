@@ -191,6 +191,54 @@ const STATUS_LABELS: Record<RevisionStatus, LocalizedString> = {
 const REVISION_HISTORY_ENTRIES: RevisionHistoryEntry[] = [
   {
     status: "added",
+    target: "Components > DataTable > Body (input · textarea 타입)",
+    change: {
+      ko: "DataTable Body 에 `input`, `textarea` variant 를 추가했습니다.",
+      en: "Added `input` and `textarea` variants to DataTable Body.",
+    },
+    date: "2026-05-20",
+    href: "?path=/story/components-datatable-body--matrix",
+  },
+  {
+    status: "added",
+    target: "Components > Table > BodyCell (progress 타입)",
+    change: {
+      ko: "Table BodyCell 에 `progress` 타입을 추가했습니다. default, completed, draft, error 타입으로 구성됩니다.",
+      en: "Added a `progress` type to Table BodyCell. It comprises the default, completed, draft, and error types.",
+    },
+    date: "2026-05-20",
+    href: "?path=/story/components-table-bodycell--progress",
+  },
+  {
+    status: "modified",
+    target: "Components > Pagination",
+    change: {
+      ko: [
+        "1. Go 버튼 추가 — 페이지 이동 영역을 `Page 라벨 + 입력 + Go 버튼` 구성으로 바꿨습니다. 입력에 페이지 번호를 넣고 Enter 키 또는 Go 버튼 클릭으로 해당 페이지로 이동합니다.",
+        "2. Select·Input 을 공용 컴포넌트로 교체 — Per page 셀렉트는 공용 `SelectList`, Page 입력은 공용 `Input` 컴포넌트로 교체했습니다. 따로 만든 마크업 대신 디자인시스템 컴포넌트를 써서 포커스 링·사이즈(M/L) 동작이 다른 곳과 동일합니다.",
+        "3. Per page 클릭 시 리스트 4px 간격 — Per page 셀렉트를 클릭하면 옵션 리스트가 셀렉트에서 4px 간격을 두고 열립니다. (페이지 하단 배치라 위로 펼쳐짐, 현재 선택값에 체크 표시)",
+      ].join("\n"),
+      en: [
+        "1. Added a Go button — the page-jump area is now `Page label + input + Go button`. Type a page number and press Enter or click Go to navigate.",
+        "2. Swapped in shared components — the Per page select now uses the shared `SelectList` and the Page input uses the shared `Input`. Using design-system components (instead of bespoke markup) keeps focus ring and M/L sizing consistent with the rest of the app.",
+        "3. List opens 4px from the select — clicking the Per page select opens the option list 4px away from the trigger (opens upward since pagination sits at the page bottom; the current value is checked).",
+      ].join("\n"),
+    },
+    date: "2026-05-20",
+    href: "?path=/story/components-pagination--guideline",
+  },
+  {
+    status: "modified",
+    target: "Components > Tab (Tab1 / Sub Tab 테두리)",
+    change: {
+      ko: "Tab1 하단 underline 과 Sub Tab(Tab2List) 그룹 컨테이너의 테두리 색상 토큰을 `border-neutral` 계열 → `border-surface` 계열로 변경했습니다.",
+      en: "Changed the border color token of the Tab1 bottom underline and the Sub Tab (Tab2List) group container from the `border-neutral` family to the `border-surface` family.",
+    },
+    date: "2026-05-20",
+    href: "?path=/story/components-tab-tab2--matrix",
+  },
+  {
+    status: "added",
     target: "Components > Button > White button",
     change: {
       ko: "`white` variant 추가",

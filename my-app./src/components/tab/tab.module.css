@@ -157,7 +157,7 @@
  *      hover    = icon-surface-hover, bg = bg-surface-secondary
  *      disabled = icon-surface-disabled
  *  - underline
- *      default / hover / disabled = border-neutral-secondary (회색)
+ *      default / hover / disabled = border-surface-secondary (회색)
  *      selected                   = icon-surface-base       (검정)
  */
 
@@ -260,9 +260,5 @@
   height: var(--size-base-5xl, 36px);
   max-height: var(--size-base-5xl, 36px);
   border-bottom: none;
-  box-shadow: inset 0 -1px 0 0
-    var(
-      --border-border-neutral-border-neutral-secondary,
-      var(--border-neutral-secondary, #ececee)
-    );
+  box-shadow: inset 0 -1px 0 0 var(--border-surface-secondary, #ececee);
 }

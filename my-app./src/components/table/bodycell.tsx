@@ -52,6 +52,7 @@ import { Toggle } from "../toggle/toggle";
 import { Input } from "../Input/input";
 import { Select } from "../select/select";
 import { DatePicker } from "../datepicker/datepicker";
+import { Progress } from "../progress/progress";
 
 import styles from "./bodycell.module.css";
 
@@ -85,7 +86,15 @@ export type BodyCellType =
   | "tree"
   | "multi-normal"
   | "multi-sub-text"
-  | "video";
+  | "video"
+  | "progress";
+
+/** progress 셀 상태 (Figma 5962:153132) */
+export type BodyCellProgressStatus =
+  | "default"
+  | "completed"
+  | "draft"
+  | "error";
 
 /** state 셀의 dot 색상 톤 */
 export type BodyCellStateDotTone =
@@ -157,6 +166,10 @@ export type BodyCellProps = NativeDivProps & {
   fileIcon?: string;
   /** video 셀 썸네일 이미지 src */
   thumbnailSrc?: string;
+  /** progress 셀 상태 (default: 진행률+%텍스트 / completed: 100%+체크 / draft: 0% / error: 진행률+에러아이콘) */
+  progressStatus?: BodyCellProgressStatus;
+  /** progress 셀 진행률(0–100). default·error 에서 막대·% 텍스트에 사용 (completed=100, draft=0 고정) */
+  progressValue?: number;
 
   /** Cell width override (number=px / css value) */
   width?: number | string;
@@ -234,6 +247,8 @@ function BodyCellInner(
     badge,
     fileIcon = "/icon/%E2%9D%96%20Data%20Grid/Data%20Grid/ic_file.svg",
     thumbnailSrc,
+    progressStatus = "default",
+    progressValue = 0,
     width,
     lastCol = false,
     lastRow = false,
@@ -586,6 +601,35 @@ function BodyCellInner(
             />
           ) : (
             <div className={styles.videoThumbFallback} aria-hidden="true" />
+          )}
+        </div>
+      );
+      break;
+    }
+
+    case "progress": {
+      const isCompleted = progressStatus === "completed";
+      const isError = progressStatus === "error";
+      const isDraft = progressStatus === "draft";
+      const pct = isCompleted ? 100 : isDraft ? 0 : progressValue;
+      const color = isError ? "danger" : isCompleted ? "success" : "info";
+      const showIcon = isCompleted || isError;
+      content = (
+        <div className={styles.progressWrapper}>
+          <span className={styles.progressBar} data-status={progressStatus}>
+            <Progress size="sm" striped value={pct} color={color} />
+          </span>
+          {showIcon ? (
+            <span className={styles.progressEnd} data-status={progressStatus}>
+              <MaskIcon
+                src={isError ? "/icon/CloseCircleFill.svg" : "/icon/CheckCircleFill.svg"}
+                size={20}
+              />
+            </span>
+          ) : (
+            <span className={styles.progressEnd}>
+              <span className={styles.progressText}>{`${pct}%`}</span>
+            </span>
           )}
         </div>
       );

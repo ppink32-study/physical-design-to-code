@@ -254,8 +254,8 @@ export const Matrix: Story = {
       title="Pagination"
       description={
         <>
-          상단: 전체 바 구성(Total · 페이지 네비 · Per page · Go to 레이블 + 입력 박스, 빈 값일 때
-          안내 문구 Page). 하단:
+          상단: 전체 바 구성(Total · 페이지 네비 · Per page · Page 레이블 + 입력 박스 + Go 버튼,
+          빈 값일 때 안내 문구 Page). 하단:
           Figma <strong>Pagination / Item</strong> 매트릭스(Prev / Next / Number / Ellipsis ×
           Normal / Hover / Selected / Disable), Medium·Large 각각.
         </>
@@ -270,7 +270,7 @@ export const Matrix: Story = {
       <section>
         <h4 style={{ margin: "0 0 12px", fontSize: 13, fontWeight: 600 }}>Pagination</h4>
         <p style={{ ...labelStyle, marginTop: 0 }}>
-          Total · First/Prev/Numbers/Ellipsis/Next/Last · Per page · Go to (박스 안 입력, Enter)
+          Total · First/Prev/Numbers/Ellipsis/Next/Last · Per page · Page 입력 + Go 버튼 (Enter/클릭)
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <div>
@@ -380,6 +380,27 @@ export const Guideline: Story = {
         </div>
         <StoryDocsNote>
           Pagination은 테이블 우측 하단에 배치하며, 테이블과의 간격은 <strong>16px</strong>입니다.
+        </StoryDocsNote>
+      </StoryDocsSection>
+
+      <StoryDocsSection title={locale === "en" ? "Per page dropdown" : "Per page 드롭다운"}>
+        <StoryDocsParagraph>
+          {locale === "en"
+            ? "Clicking the Per page select opens a SelectList 4px away from the trigger. Since pagination usually sits at the bottom of the page, the list opens upward. The list is 120px fixed width, and the current value is marked with a check."
+            : "Per page 셀렉트를 클릭하면 SelectList 가 트리거에서 4px 간격을 두고 열립니다. Pagination 은 보통 페이지 하단에 위치하므로 리스트는 위쪽으로 펼쳐집니다. 리스트 너비는 120px 고정이며, 현재 선택값에는 체크 표시가 붙습니다."}
+        </StoryDocsParagraph>
+        <StoryDocsParagraph>
+          {locale === "en"
+            ? "Position is set with position: absolute + bottom: calc(100% + 4px) — the 4px gap matches Figma 18867:6602."
+            : "위치는 position: absolute + bottom: calc(100% + 4px) 로 잡습니다 — 4px 간격은 Figma 18867:6602 기준입니다."}
+        </StoryDocsParagraph>
+        <div style={{ padding: "120px 0 20px", display: "flex", justifyContent: "center" }}>
+          <Pagination total={85} page={6} pageSize={30} showTotal showPerPage showGoTo pageSizeOptions={[10, 30, 100]} />
+        </div>
+        <StoryDocsNote>
+          {locale === "en"
+            ? "Click the “30” select above to see the list open 4px upward."
+            : "위 “30” 셀렉트를 클릭하면 리스트가 위로 4px 간격을 두고 열리는 것을 확인할 수 있습니다."}
         </StoryDocsNote>
       </StoryDocsSection>
     </StoryDocsPage>
